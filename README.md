@@ -1038,10 +1038,10 @@
 			action:接收控制器中的方法名的参数。action关键字可以在控制器中自定义
 			view：调用对应控制器中的方法（对应着视图文件名）
 	//controllers/index.html
-	
-1. Controller 范例一、参考 [LAM](https://github.com/haohonglong/LAM)
+
+  1. Controller 范例一、参考 [LAM](https://github.com/haohonglong/LAM)
 													
-2. Controller 范例二、(面向对象方式)
+  2. Controller 范例二、(面向对象方式):
 
 		LAMJS.run(function() {
 				'use strict';
