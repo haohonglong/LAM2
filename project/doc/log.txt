@@ -1,0 +1,22 @@
+2015-11月 项目名称：
+一、插件集合
+	1.boostrap
+	2.jquery
+
+二、技术分析
+
+三、布局分析
+	header
+		logo
+		headerDataShow
+	sidebar
+	content
+		nav
+			crumb
+			logout
+		summary
+			site-images
+			site-summary
+			site-situation
+		detail
+

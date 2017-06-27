@@ -1,0 +1,43 @@
+<ul class="list sectionFloat clearfix">
+	<li class="cur">111</li>
+	<li>222</li>
+	<li>333</li>
+</ul>
+<div class="block">{{D.content}}</div>
+<div class="block hide">22222</div>
+<div class="block hide">33333</div>
+<script type="text/javascript">
+	LAMJS.run(function() {
+		'use strict';
+		var System=this;
+		var ROOT = System.Config.Public.ROOT;
+
+		System.import([
+			'/Tab.class'
+		],System.classPath);
+	});
+</script>
+
+<script type="text/javascript">
+
+	LAMJS.wait(function() {
+		'use strict';
+		var System=this;
+		var ROOT = System.Config.Public.ROOT;
+
+		new System.Tab({
+			'list':$('.list li'),
+			'event':'click',
+			'hover':false,
+			'or':true,
+			'class':'cur',
+			'block':$('.block'),
+			'fn':function(obj){
+				var index=obj.this_index;
+				obj.current.block.hide();
+				obj.current.block.eq(index).show();
+
+			}
+		}).run();
+	},50);
+</script>

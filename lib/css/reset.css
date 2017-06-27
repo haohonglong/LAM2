@@ -1,0 +1,119 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*init box*/
+*,
+*:before,
+*:after {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+
+/*设定的尺寸不包含 内边距和边框(W3C 标准)*/
+.box－content,
+.box－content:before,
+.box－content:after{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
+
+/*设定的尺寸包含 内边距和边框(IE 标准 推荐用这个)
+百分比为宽度的容器设置padding时,容器的宽度就会像外扩展相应的padding值,要使宽度不被撑开,那么就是用box-sizing:border-box;会控制这种情况
+这属性只能在ie8以上的浏览器中使用
+*/
+.box－border,
+.box－border:before,
+.box－border:after {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+/*======================================================================================================================================*/
+html {/*此属性还支持百分比，这在当前的桌面版的webkit浏览器是不支持的，所以如果不想让iPhone横坚屏切换的时候调节文字，用 -webkit-text-size-adjust: 100%; 绝对不能用 -webkit-text-size-adjust: none; 这会导致仍然支持 -webkit-text-size-adjust: none;的桌面版的webkit浏览器无法人为放大文字大小，严重影响可用性。*/
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  overflow-y: scroll;
+  font-size: 100%;
+
+  /*字体抗锯齿,字体更清晰舒服*/
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd,
+q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody,tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption,footer, header, hgroup, menu, nav, output, ruby, section,summary, time, mark, audio,
+video{margin: 0;padding: 0;border: 0;font-size: 100%;vertical-align: baseline;}
+
+body{background:#fff;line-height: 1;overflow-x:hidden;}
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;}
+h1,h2,h3,h4,h5,h6{font-size:100%;clear: both;}
+em,i{font-style:normal;}
+ul,ol,li{list-style:none;}
+a{text-decoration:none;outline:none;background: transparent;}
+a:link,a:visited{color:#333;text-decoration:none;}
+a:hover,a:active{ text-decoration:underline;outline: 0;}
+button,input,select,textarea{font-size:100%;outline:none}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit}
+table{border-collapse:collapse;border-spacing:0;}
+textarea{resize:vertical;overflow: auto;vertical-align: top;padding: 10px;}
+fieldset,img{border:none;border:0;}
+img {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -ms-interpolation-mode: bicubic;
+  /* 1 */
+  max-width: 100%;
+  /* 2 */
+  height: auto;
+  /* 2 */
+  vertical-align: middle;
+  /* 3 */
+  border: 0;
+  /* 4 */
+}
+blockquote,q{quotes: none;}
+q{quotes: "\201C" "\201D" "\2018" "\2019";}
+blockquote:before,blockquote:after,q:before,q:after{content: '';content: none;}
+caption,th,td{font-weight: normal;text-align: left;}
+a:focus{outline: thin dotted;}
+article,aside,
+details,figcaption,figure,footer,header,hgroup,nav,section{display: block;}
+audio,canvas,video{display: inline-block;}
+audio:not([controls]){display: none;}
+del{color: #333;}
+ins{background: #fff9c0;text-decoration: none;}
+hr{background-color: #ccc;border: 0;height: 1px;margin: 24px;margin-bottom: 1.714285714rem;}
+small{font-size: smaller;}
+pre {white-space: pre-wrap;}
+/*上标下标*/
+sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline;}
+sup{top: -0.5em;}
+sub{bottom: -0.25em;}
+
+::selection {
+  background: #0e90d2;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.label,
+.select,
+.button,
+.input[type="button"],
+.input[type="reset"],
+.input[type="submit"],
+.input[type="radio"],
+.input[type="checkbox"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+  cursor:hand;
+}
+
+
+
+.input[type="radio"],
+.input[type="checkbox"] {
+  cursor: pointer;
+  /*1*/
+  padding: 0;
+  /*2*/
+  box-sizing: border-box;
+  /* 3 */
+}
+
+
+

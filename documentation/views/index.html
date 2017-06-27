@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文档说明</title>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript">
+        var VIEWS;
+        LAMJS.run(function() {
+            'use strict';
+            var System = this;
+            var COMMON = System.Config.Public.COMMON;
+            VIEWS = System.ROOT+'/views';
+
+            System
+                    .import(['/common'],COMMON)
+                    .import(['/Tab.class'],System.classPath);
+
+        });
+    </script>
+
+
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a data-var="tpl" id="title" href="{#VIEWS#}/index.html">首页</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <include file="{#VIEWS#}/include/menu.html"></include>
+        </div>
+        <div id="content" class="col-md-9">
+            <include file="{#VIEWS#}/content/content.html"></include>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+   LAMJS.run(function(){
+        'use strict';
+        var System=this;
+       System.Html.include($('include'));
+       System.Html.analysisTpl();
+       var url='data-url';
+       System.replaceTpl('[data-url]',url);
+
+       $(function(){
+           var $title=$('title');
+
+           $('.list-group [data-url]').hover(function(){
+               $(this).addClass('hover');
+           },function(){
+               $(this).removeClass('hover');
+           });
+           new System.Tab({
+               'list':'.list-group .list-group-item',
+               'event':{'click':'active'},
+               'or':true,
+               'on':'on',
+               'fn':function(obj){
+                   var $this=$(this);
+                   if(!$this.is('[data-url]')){
+                       $this.removeClass('active');
+                       $this.next().toggle();
+                       if(obj.temp.is('[data-url]')){
+                           obj.temp.addClass('active');
+                       }
+                   }else{
+                       $(obj.current.list).removeClass('active');
+
+                       $('.list-group .list-group-item').not('[data-url]').removeClass('p-active');
+                       $this.addClass('active');
+                       if(!$this.parent().prev().is('[data-url]')){
+                           $this.parent().prev().addClass('p-active');
+                       }
+                   }
+
+                   if($this.attr(url)){
+                       var data=System.eval($this.attr(url));
+                       if(System.isObject(data)){
+                           $title.text(data.title);
+                           $('#title').text(data.title);
+                           $('#content').load(data.url);
+                       }
+                   }
+
+
+
+               }
+           }).run();
+
+       })
+
+
+    });
+</script>
+</html> 

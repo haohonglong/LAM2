@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document 
+just here is interface
+
+note:本页内容禁止修改!!! 在子类中被继承 如要修改可在子类中修改
+Example:
+
+<span class="section-AutoBtn section-AutoBtn-A1 clear">
+	<span class="L">
+		<input class="L" type="button" value="" />
+	</span>
+</span>
+
+圆角切图法:
+|---------------------------------------------|
+|(|||										  |
+|    ||||||||||||||||||||||||||||||||||||||||)|
+|---------------------------------------------|
+
+*/
+
+.section-AutoBtn,
+.section-AutoBtn span{cursor:pointer;display: inline-block;font-size:14px;background:url(images/auto_buttons.png) no-repeat 0 0;outline:0;overflow:hidden;}
+.section-AutoBtn{padding: 0;}
+.section-AutoBtn span{padding: 0 5px;color: #fff;margin: 0;}
+.section-AutoBtn input,
+.section-AutoBtn a{border: none;background: none;color: #fff;padding-top: 5px;font-size: 12px;}
+.section-AutoBtn a{text-decoration: none;}
+
+
+
+/*二图自适应按钮*/
+/*auto button begin*/
+	._lhh_buttomAuto,
+	._lhh_buttomAuto-span{display: block;height:24px;line-height: 24px;color:#333; cursor:pointer;font-size:12px;background:url(img/buttons_auto.png) no-repeat 0 0;outline:0;overflow:hidden;font-family:"Microsoft Yahei";}
+	._lhh_buttomAuto{position: relative;}
+	._lhh_buttomAuto-span{padding: 0 12px;padding-left: 5px; margin: 0;background-position: right -24px;color:#333;margin-left: 30px;}
+	._lhh_buttomAuto-i{position: absolute;left: 10px;top:0;margin-top:4px; width:20px;height:20px;background:url(img/buttonIcons.png) no-repeat 0 0;}
+	._lhh_buttomAuto-i.search{background-position: 0 0;}
+	._lhh_buttomAuto-i.export {background-position: 0 -20px;}
+	._lhh_buttomAuto-i.del   {background-position: 0 -40px;}
+	._lhh_buttomAuto-i.add   {background-position: 0 -60px;}
+	._lhh_buttomAuto-i.save  {background-position: 0 0;}
+	._lhh_buttomAuto-i.back  {background-position: 0 0;}
+	._lhh_buttomAuto-i.print{background-position: 0 0;}
+/*auto button end*/

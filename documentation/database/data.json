@@ -1,0 +1,40 @@
+{
+  "menu":[
+     {
+        "url":"{{VIEWS}}/content/basis.html",
+        "title":"/Basis"
+     },
+     {
+        "url":"{{VIEWS}}/content/loader.html",
+        "title":"/Loader"
+      },
+     {
+        "url":"{{VIEWS}}/content/biObject.html",
+        "title":"/BiObject"
+     },
+     {
+        "url":"{{VIEWS}}/content/browser.html",
+        "title":"/Browser"
+     },
+     {
+        "url":"{{VIEWS}}/content/cache.html",
+        "title":"/Cache"
+      },
+     {
+        "url":"{{VIEWS}}/content/controller.html",
+        "title":"/Controller"
+      },
+     {
+        "url":"{{VIEWS}}/content/cookie.html",
+        "title":"/Cookie"
+      },
+     {
+        "url":"{{VIEWS}}/content/component.html",
+        "title":"/Component"
+      }
+
+
+
+
+  ]
+}

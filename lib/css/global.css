@@ -1,0 +1,544 @@
+@charset "utf-8";
+/* CSS Document */
+/*float li*/
+.sectionFloat{position:relative;}
+.sectionFloat li,.sectionFloat .item{float:left;display: inline;}
+.sectionFloat .R{float:right;}
+.sectionFloat .N{float:none;}
+
+
+/*float*/
+.L,.R,.fl,.fr{_display: inline;}
+.L,.fl,.pull-left{float:left;}
+.R,.fr,.pull-right{float: right;}
+.f-none{float: none; float: none!important;}
+
+/*clear float*/
+.clearfix:before,
+.clearfix:after{content: ".";display: block;overflow: hidden;visibility: hidden;font-size: 0;line-height: 0;width: 0;height: 0;}
+.clearfix:after{clear: both;}
+.clearfix {zoom:1;}
+.clear{clear:both;display:block;overflow:hidden;visibility: hidden;width: 0;height:0;}
+.clear-L,.clear-fl{clear: left;}
+.clear-R,.clear-fr{clear: right;}
+
+/*text*/
+.notext{font-size:0;line-height:0;text-indent:-9999px}/*去掉文字*/
+.sectionWord{word-break: break-all;word-wrap: break-word;white-space: pre-wrap;}
+.text-idt15{text-indent: 15px;}
+.text-idt25{text-indent: 25px;}
+.text-idt30{text-indent: 30px;}
+
+/*overflow*/
+.over-h{overflow:hidden;}
+.over-auto{overflow:auto;}
+.over-x-h{overflow-x:hidden;}
+.over-y-h{overflow-y:hidden;}
+
+
+/*position*/
+.p-rel{position: relative;}
+.p-abs{position: absolute;}
+.p-fixed,.p-f{position: fixed;}
+.T0{top: 0;}
+.L0{left: 0;}
+.R0{right: 0;}
+.B0{bottom: 0;}
+
+/*responsive*/
+
+
+/*margin*/
+.MT1{margin-top:1px;}
+.MT5{margin-top:5px;}
+.MT10{margin-top:10px;}
+.MT20{margin-top:20px;}
+.MT15{margin-top:15px;}
+.MT20{margin-top:20px;}
+.MT30{margin-top:30px;}
+.MT50{margin-top:50px;}
+.MT0{margin-top:0px;}
+.MB1{margin-bottom:1px;}
+.MB2{margin-bottom:2px;}
+.MB3{margin-bottom:3px;}
+.MB5{margin-bottom:5px;}
+.MB10{margin-bottom:10px;}
+.MB15{margin-bottom:15px;}
+.MB20{margin-bottom:20px;}
+.MB25{margin-bottom:25px;}
+.MB30{margin-bottom:30px;}
+.MB40{margin-bottom:40px;}
+.MB0{margin-bottom:0;}
+.MR1{margin-right:1px;}
+.MR2{margin-right:2px;}
+.MR5{margin-right:5px;}
+.MR10{margin-right:10px;}
+.MR12{margin-right:12px;}
+.MR15{margin-right:15px;}
+.MR20{margin-right:20px;}
+.MR23{margin-right:23px;}
+.MR25{margin-right:25px;}
+.MR30{margin-right:30px;}
+.MR0{margin-right: 0;}
+.ML2{margin-left: 2px;}
+.ML5{margin-left: 5px;}
+.ML10{margin-left:10px}
+.ML15{margin-left:15px}
+.ML20{margin-left: 20px;}
+.ML30{margin-left: 30px;}
+.ML0{margin-left: 0;}
+.M5{margin:5px;}
+.M10{margin:10px;}
+.M15{margin:15px;}
+.M20{margin:20px;}
+.M25{margin:25px;}
+.M0-10{margin: 0 10px;}
+.M0-25{margin: 0 25px;}
+.M0-50{margin: 0 50px;}
+.M0{margin:0px;}
+
+/*padding*/
+.PB5{padding-bottom:5px;}
+.PB10{padding-bottom:10px;}
+.PB15{padding-bottom:15px;}
+.PB0{padding-bottom:0px;}
+.PT5{padding-top:5px;}
+.PT10{padding-top:10px;}
+.PT15{padding-top: 15px;}
+.PT20{padding-top:20px;}
+.PT30{padding-top:30px;}
+.PT0{padding-top:0;}
+.PL5{padding-left: 5px;}
+.PL10{padding-left: 10px;}
+.PL15{padding-left: 15px;}
+.PL20{padding-left: 20px;}
+.PL25{padding-left: 25px;}
+.PL35{padding-left: 35px;}
+.PL0{padding-left: 0px;}
+.PR5{padding-right: 5px;}
+.PR10{padding-right: 10px;}
+.PR20{padding-right: 20px;}
+.PR0{padding-right: 0;}
+.P1{padding:1px;}
+.P2{padding:2px;}
+.P5{padding:5px;}
+.P10{padding: 10px;}
+.P15{padding: 15px;}
+.P20{padding: 20px;}
+.P25{padding: 25px;}
+.P30{padding: 30px;}
+.P0{padding:0;}
+
+/*align*/
+.align-center,.auto{margin-right: auto;margin-left: auto;}
+.align-left{margin-right: auto;}
+.align-right{margin-left: auto;}
+
+/*text align*/
+.text-left{text-align:left}
+.text-right{text-align:right}
+.text-center{text-align:center}
+.text-justify{text-align:justify}
+.text-nowrap{white-space:nowrap}
+.text-lowercase{text-transform:lowercase}
+.text-uppercase{text-transform:uppercase}
+.text-capitalize{text-transform:capitalize}
+.v-top{vertical-align:top;}
+.v-middle{vertical-align:middle;}
+.v-bottom{vertical-align: bottom;}
+.v-to3{vertical-align: 3px;}
+.v-to-3{vertical-align: -3px;}
+
+/*display*/
+.inline{display: inline;}
+.table-cell{display: table-cell;}
+.inline-block{display: inline-block;}
+.block{display: block;}
+.none{display: none;}
+.visible{visibility: visible;}
+.hidden{visibility: hidden;}
+
+/*size*/
+.H100{height: 100%;}
+.W100{width:100%;}
+.W50{width:50%;}
+.w-page{width:960px;margin-right: auto;margin-left: auto; position:relative;}
+.w-min{width:1200px;}
+.w-auto{width:auto!important;}
+.w-percent-of105{width:105%;}
+.w-percent-of110{width:110%;}
+.max-w{max-width: 100%;}
+
+/*960 grid system*/
+.size1of1{width:100%;}        /*100%宽度*/
+.size1of2{width:50%;}         /*占总宽度的一半：1/2*/
+.size1of3{width:33.33333%;}   /*占总宽度的三分之一:1/3*/
+.size2of3{width:66.66666%;}   /*占总宽度的三分之二：2/3*/
+.size1of4{width:25%;}         /*占总宽度的四分之一:1/4*/
+.size3of4{width:75%;}         /*占总宽度的四分之 三:3/4*/
+.size1of5{width:20%;}         /*占总宽度的五分之一：1/5*/
+.size2of5{width:40%;}         /*占总宽度的五分之二：2/5*/
+.size3of5{width:60%;}         /*占总宽度的五分之三：3/5*/
+.size4of5{width:80%;}         /*占总宽度的五分之四：4/5*/
+.size1of6{width:16.66666%;}   /*占总宽度的六分之一：1/6*/
+.size1of12{width:8.33333333%;}/*占总宽度的十二分之一：1/12*/
+
+/*网格布局分列*/
+.grids {margin-left: -20px;*zoom: 1;}
+.grids .g1   {width:40px;}
+.grids .g2   {width:100px;}
+.grids .g3   {width:160px;}
+.grids .g4   {width:220px;}
+.grids .g5   {width:280px;}
+.grids .g6   {width:340px}
+.grids .g7   {width:400px}
+.grids .g8   {width:460px}
+.grids .g9   {width:520px}
+.grids .g10  {width:580px}
+.grids .g11  {width:640px}
+.grids .g12  {width:700px}
+.grids .g13  {width:760px}
+.grids .g14  {width:820px}
+.grids .g15  {width:880px}
+.grids .g16  {width:940px}
+
+/*font size*/
+.fSize-12{font-size: 12px;font-size: 12px!important;}
+.fSize-13{font-size: 13px;font-size: 13px!important;}
+.fSize-14{font-size: 14px;font-size: 14px!important;}
+.fSize-15{font-size: 15px;font-size: 15px!important;}
+.fSize-16{font-size: 16px;font-size: 16px!important;}
+.fSize-18{font-size: 18px;font-size: 18px!important;}
+.fSize-20{font-size: 20px;font-size: 20px!important;}
+.fSize-24{font-size: 24px;font-size: 24px!important;}
+.fSize-26{font-size: 26px;font-size: 26px!important;}
+.fSize-28{font-size: 28px;font-size: 28px!important;}
+.fSize-30{font-size: 30px;font-size: 30px!important;}
+.fSize-32{font-size: 32px;font-size: 32px!important;}
+
+/*font family*/
+.tahoma{font-family:"tahoma";}
+.arial {font-family:"arial";}
+.SimSun{font-family:"SimSun";}
+.Yahei {font-family:"Microsoft Yahei";}
+
+/*font style*/
+.font-italic{font-style: italic!important;}
+.font-normal{font-style: normal!important;}
+.font-bold,.strong {font-weight:bold!important;}
+.font-unline{text-decoration: underline!important;}
+.font-unline-none{text-decoration: none!important;}
+
+/*background*/
+.bg-color{}
+.bg-c-black{background: #000;}
+.bg-c-white{background: #fff;}
+.bg-c-yellow{background-color:#f1e6d5;}
+.bg-c-blue{background-color:#2099ff;}
+.bg-c-orange{background-color:#ff8c40;}
+.bg-c-green{background-color:#e1f9cd;}
+.bg-c-grey{background-color:#f8f8f8;}
+.bg-c-dark-gray{background-color:#4c4c4c}
+.bg-auto{background-size: cover;}/*背景图自适应大小*/
+
+
+/*鼠标形状*/
+.mouse-style-hand{cursor: pointer; *cursor:hand;}
+.mouse-style-move{cursor: move;}
+.mouse-style-default{cursor: default;}
+
+/*border*/
+.border{border:1px solid #e5e5e5;}
+.border-B1{border-bottom:1px solid #ccc;}
+.border-B0{border-bottom: none!important;}
+.border-T0{border-top: none!important;}
+.border-L0{border-left: none!important;}
+.border-R0{border-right: none!important;}
+.border-none{border: none!important;}
+.underline{height: 1px;line-height: 1px;overflow: hidden;border:none;border-bottom:1px solid #ccc;border-radius: 0px;}
+
+/*border-radius*/
+.border-radius-TL-TR-BL-BR-2{border-top-left-radius: 2px;border-top-right-radius: 2px;border-bottom-left-radius: 2px;border-bottom-right-radius: 2px;}
+.border-radius-TL-2{border-top-left-radius: 2px;}
+.border-radius-TR-2{border-top-right-radius: 2px;}
+.border-radius-BL-2{border-bottom-left-radius: 2px;}
+.border-radius-BR-2{border-bottom-right-radius: 2px;}
+.border-radius-2 {border-radius: 2px;}
+.border-radius-3 {border-radius: 3px;}
+.border-radius-5 {border-radius: 5px;}
+.border-radius-10{border-radius: 10px;}
+.border-radius-0 {border-radius: 0px;}
+
+
+/*angle 角度*/
+/*============================================================================*/
+/*顺时针45度旋转*/
+.clockwise-45{transform:rotate(45deg);-moz-transform:rotate(45deg);-webkit-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);}
+
+/*逆时针45度旋转*/
+.anti-clockwise-45{transform:rotate(-45deg);-moz-transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg);}
+
+/*顺时针90度旋转*/
+.clockwise-90{transform:rotate(90deg);-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);-o-transform:rotate(90deg);-ms-transform:rotate(90deg);}
+
+/*逆时针90度旋转*/
+.anti-clockwise-90{transform:rotate(-90deg);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);-ms-transform:rotate(-90deg);}
+/*============================================================================*/
+
+/*z-index 大Z*/
+.Z1{z-index: 1;}
+.Z2{z-index: 2;}
+.Z3{z-index: 3;}
+.Z4{z-index: 4;}
+.Z5{z-index: 5;}
+.Z10{z-index: 10;}
+.Z15{z-index: 15;}
+.Z20{z-index: 20;}
+.Z30{z-index: 30;}
+.Z50{z-index: 50;}
+.Z100{z-index: 100;}
+.Z1000{z-index: 1000;}
+.Z10000{z-index: 10000;}
+
+
+/*屏幕居中 推荐*/
+.block-autocenter{width: 100px;height: 100px; position: absolute; top: 50%; left: 50%;margin: -50px 0 0 -50px; }
+
+/*元素居中到屏幕中央*/
+/*============================================================================================================================================*/
+/**绝对定位居中(Absolute Centering)
+参数：尺寸可改成固定尺寸
+缺点：
+1.必须声明高度
+2.建议设置overflow:auto来防止内容越界溢出
+3.在Windows Phone设备上不起作用*/
+.sectionAbs-center{width:50%;height:50%;overflow:auto;margin:auto;position:absolute;top:0;bottom:0;left:0;right:0;}
+
+/**边栏 (Offsets)
+如果你要设置一个固顶的头或增加其他的边栏，只需要在内容块的样式中加入像这样的CSS样式代码：top:70px;bottom:auto;由于已经声明了margin:auto;
+该内容块将会垂直居中于你通过top,left,bottom和right属性定义的边界框内。
+你可以将内容块固定与屏幕的左侧或右侧，并且保持内容块垂直居中。使用right:0;left:auto;固定于屏幕右侧，使用left:0;right:auto;固定与屏幕左侧。*/
+.sectionAbs-center.is-right{left:auto;right:20px;}
+.sectionAbs-center.is-left{right:auto;left:20px;}
+
+/**响应式/自适应(Responsive)
+绝对居中最大的优势应该就是对百分比形式的宽高支持的非常完美。
+甚至min-width/max-width 和min-height/max-height这些属性在自适应盒子内的表现也和预期很一致。*/
+.sectionAbs-center.is-responsive{width:60%;height:60%;min-width:200px;max-width:400px;padding:40px;;}
+
+/**重绘(Resizing)
+绝对居中（AbsoluteCentering）是唯一支持resize:both属性实现垂直居中的技术。
+你可以使用其他class类或javascript代码来重绘内容块同时保证居中，无须手动重新计算中心尺寸。当然，你也可以添加resize属性来让用户拖拽实现内容块的重绘。
+绝对居中（Absolute Centering）可以保证内容块始终居中，无论内容块是否重绘。可以通过设置min-/max-来根据自己需要限制内容块的大小，并防止内容溢出窗口/容器。
+如果不使用resize:both属性，可以使用CSS3动画属性transition来实现重绘的窗口之间平滑的过渡。一定要设置overflow:auto;以防重绘的内容块尺寸小于内容的实际尺寸这种情况出现。
+注意：
+要设置max-width/max-height属性来弥补内容块padding，否则可能溢出。
+手机浏览器和IE8-IE10浏览器不支持resize属性，所以如果对你来说，这部分用户体验很必要，务必保证对resizing你的用户有可行的退路。
+联合使用resize 和 transition属性会在用户重绘时，产生一个transition动画延迟时间。*/
+.sectionAbs-center.is-resizable{min-width:20%;max-width:80%;min-height:20%;max-height:80%;resize:both;overflow:auto;}
+
+/**溢出情况(Overflow)
+内容高度大于块元素或容器（视区viewport或设为position:relative的父容器）会溢出，这时内容可能会显示到块与容器的外面，或者被截断出现显示不全（分别对应内容块overflow属性设置为visible和hidden的表现）。
+加上overflow: auto会在内容高度超过容器高度的情况下给内容块显示滚动条而不越界。*/
+.sectionAbs-center.is-overflow{overflow: auto;}
+ 
+/**
+缺点：
+浏览器兼容性不太好，若Modernizr不能满足你的需求，你需要寻找其他方法解决。
+1.与上述重绘(Resizing)情况的方法不兼容
+2.Firefox/IE8:使用display:table会使内容块垂直居上，不过水平还是居中的。
+3.IE9/10: 使用display:table会使内容块显示在容器左上角。
+4.Mobile Safari:内容块垂直居中；若使用百分比宽度，水平方向居中会稍微偏离中心*/
+.sectionAbs-center.is-variable{display:table;height:auto;}
+
+
+
+.sectionAbs-center.is-image{height:auto;}
+.sectionAbs-center.is-image-img{width:100%;height:auto;}
+
+/**变形（Transforms）
+这是最简单的方法，不近能实现绝对居中同样的效果，也支持联合可变高度方式使用。
+内容块定义transform: translate(-50%,-50%)必须带上浏览器厂商的前缀，还要加上top: 50%; left: 50%;
+优点：
+1.内容可变高度
+2.代码量少
+缺点：
+1.IE8不支持
+2.属性需要写浏览器厂商前缀
+3.可能干扰其他transform效果
+4.某些情形下会出现文本或元素边界渲染模糊的现象*/
+.sectionis-Transformed {   
+  width: 50%;  
+  margin: auto;  
+  position: absolute;  
+  top: 50%; left: 50%;  
+  -webkit-transform: translate(-50%,-50%);  
+      -ms-transform: translate(-50%,-50%);  
+          transform: translate(-50%,-50%);  
+} 
+
+
+
+
+/**变形（Transforms）
+总的说来这可能是最好的居中实现方法，因为内容块高度会随着实际内容的高度变化，浏览器对此的兼容性也好。
+最大的缺点是需要大量额外的标记，需要三层元素让最内层的元素居中。
+html:
+  <div class="transforms-table">
+    <div class="transforms-table-cell">
+      <div class="transforms-table-content">
+      <!-- CONTENT -->  
+      </div>  
+    </div>  
+  </div>  */
+.transforms-table {display:table;}
+.transforms-table-cell{display: table-cell;vertical-align: middle;}
+.transforms-table-cell-content{width: 50%;margin: 0 auto;}
+
+/*负外边距居中(Negative Margins)
+外边距margin取负数，大小为width/height（不使用box-sizing: border-box时包括padding，）的一半，再加上top: 50%; left: 50%;
+优点：
+1.良好的跨浏览器特性，兼容IE6-IE7。
+2.代码量少。
+缺点：
+1.不能自适应。不支持百分比尺寸和min-/max-属性设置。
+2.内容可能溢出容器。
+3.边距大小与padding,和是否定义box-sizing: border-box有关，计算需要根据不同情况。*/
+.sectionis-negative {
+        width: 300px;  
+        height: 200px;  
+        padding: 20px;  
+        position: absolute;  
+        top: 50%; left: 50%;  
+        margin-left: -170px; /* (width + padding)/2 */  
+        margin-top: -120px; /* (height + padding)/2 */  
+}
+
+
+
+/*============================================================================================================================================*/
+
+
+
+/*stretched 拉伸*/
+.sectionStretched{position:absolute;width: auto;height: auto; top:0;bottom: 0;left: 0;right: 0;}
+.sectionStretched-tb{position:absolute;height: auto; top:0;bottom: 0;}
+.sectionStretched-LR{position:absolute;height: auto; top:0;bottom: 0;}
+
+
+/*自适应两列布局*/
+/*=================================================================================================================*/
+/*自适应两列布局结构原型*/
+.sectionAutoTwoLayer{position: relative;}
+.sectionAutoTwoLayer-primary{position: absolute;}
+.sectionAutoTwoLayer-secondary{}
+
+/*固定宽度左浮动自适应两列布局*/
+/*example
+  <div class="sectionAutoTwoLayer sectionAutoTwoLayer-f sectionAutoTwoLayer-fl p-rel clear">
+    <div class="sectionAutoTwoLayer-f-secondary L"></div>
+    <div class="sectionAutoTwoLayer-f-primary sectionStretched"></div>
+  </div>
+*/
+.sectionAutoTwoLayer-f{}
+.sectionAutoTwoLayer-f-primary{}
+.sectionAutoTwoLayer-f-secondary{_display: inline;}
+
+.sectionAutoTwoLayer-fl{}
+.sectionAutoTwoLayer-fl-primary{margin-left: 210px;}
+.sectionAutoTwoLayer-fl-secondary{width: 200px;float: left;}
+
+
+
+/*固定宽度右浮动自适应两列布局*/
+/*example
+  <div class="sectionAutoTwoLayer sectionAutoTwoLayer-f sectionAutoTwoLayer-fr p-rel clear">
+    <div class="secondary"></div>
+    <div class="primary sectionStretched"></div>
+  </div>
+*/
+.sectionAutoTwoLayer-fr{}
+.sectionAutoTwoLayer-fr-primary{margin-left: -200px;padding-left: 200px;width: 100%;height: 100%;}
+.sectionAutoTwoLayer-fr-secondary{width: 200px;float: right;}
+
+
+/*固定宽度绝对左右定位自适应两列布局*/
+/*example syntax :( left | right)
+  <div class="sectionAutoTwoLayer sectionAutoTwoLayer-abs (sectionAutoTwoLayer-absl | sectionAutoTwoLayer-absr) p-rel">
+    <div class="sectionAutoTwoLayer-abs-secondary"></div>
+    <div class="sectionAutoTwoLayer-abs-primary sectionStretched"></div>
+  </div>
+*/
+.sectionAutoTwoLayer-abs{}
+.sectionAutoTwoLayer-abs-primary{}
+.sectionAutoTwoLayer-abs-secondary{position: absolute;top: 0;width: 380px;}
+
+.sectionAutoTwoLayer-absl-secondary{width: 380px;left: 0;}
+.sectionAutoTwoLayer-absl-primary{margin-left: 400px;}
+
+.sectionAutoTwoLayer-absr-secondary{width: 380px;right: 0;}
+.sectionAutoTwoLayer-absr-primary{margin-right: 400px;}
+
+
+
+/*=================================================================================================================*/
+
+/*浏览器兼容*/
+/*=============================================================================*/
+/*仅被firefox支持*/ 
+@-moz-document url-prefix() {}
+
+/*Webkit枘核浏览器(chrome and safari)*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {}
+/*Opera浏览器*/
+@media all and (min-width:0){}
+
+
+/*响应式*/
+/*=============================================================================*/
+
+/* 超小屏幕
+手机 (<768px) */
+@media (max-width: 767px) {}
+
+/*
+小屏幕 平板 (≥768px)
+中等屏幕 桌面 (≥992px)*/
+@media (min-width:768px)and (max-width:991px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:768px){}
+
+@media screen and (min-width:768px) {}
+
+/*移动设备整个显示区域的宽度480px 并且是横屏时*/
+@media (max-device-width:480px)and (orientation:landscape) {}
+
+
+/* 横向放置的手机及分辨率更小的设备的样式 */
+@media (max-width: 522px) {}
+@media (max-width: 255px) {}
+
+/*中等屏幕
+桌面 (≥992px)*/
+@media (min-width:992px)and (max-width:1199px){}
+
+/*大屏幕
+桌面 (≥1200px)*/
+@media (min-width:1200px) {}
+
+/* 只要屏幕小于767就执行里面的样式*/
+@media only screen and (max-width: 767px) {}
+
+@media screen and (max-width:767px) {}
+
+/*打印*/
+@media print {}
+
+
+/*end=============================================================================*/
+
+
+
+

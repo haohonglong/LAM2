@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+/*页面架子 begin*/
+    ._lhh_container{position: relative;}
+    ._lhh_secondary{}
+    ._lhh_primary{}
+/*页面架子 end*/
+
+.wrap-container{}
+.wrap-wrapper{}
+.wrap-grid-one{}
+.wrap-grid-two{}
+.wrap-grid-three{}
+.wrap-grid-four{}
+.wrap-grid-five{}
+
+
+
+/*f:final 整站框架 这个是唯一的不可被复用*/
+.f-container{}
+.f-wrapper{}
+.f-primary{}
+.f-secondary{}
+.f-row{}
+.f-col-1{}
+
+
+/*通用框架 如果是只针对某个单独页面的结构 就把section 换成页面的名字*/
+.section-container{}
+.section-wrapper{}
+.section-primary{}
+.section-secondary{}
+.section-row{}
+.section-col-1{}
+
+/*
+双飞翼布局
+*/
+.brid{ width:100%; margin-right:auto; margin-left:auto;}
+.brid-main{float:left; width:100%; min-height:30px; background:#ccc;}
+.brid-main-warp{
+    margin-left:200px;  /*与col-sub产生10像素距离*/
+    margin-right:200px; /*与col-extra产生10像素距离*/
+    background:#e5e5e5;
+    min-height:30px;}
+.brid-sub{float:left; width:190px; min-height:30px; background:#eee; margin-left:-100%;}
+.brid-extra{float:left; width:190px; min-height:30px; background:#ddd; margin-left:-190px; }
+
+

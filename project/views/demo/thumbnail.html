@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <script type="text/javascript">
+        LAMJS.run(function() {
+            'use strict';
+            var System=this;
+            var ROOT = System.Config.Public.ROOT;
+            System.use();
+            System.Loader
+                    .load({
+                        'css':[
+                             '/project/public/common/css/bootstrap'
+                            ,'/lib/css/global'
+                        ]
+                    }).print();
+
+
+            System.import([
+                '/Sport.class'
+                ,'/Layout.class'
+                ,'/Thumbnail.class'
+            ],System.classPath);
+        });
+    </script>
+    <style type="text/css">
+        .w-page{}
+        html,body,#container,.sidbar,.content{height:100%;}
+        #container{}
+        .sidbar{width:200px;position: fixed;top:0;bottom:0; left:0;background:red;}
+        #content{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            left: 200px;
+            background:green;
+        }
+        ul li{min-height:250px;overflow: hidden;}
+
+    </style>
+
+</head>
+
+<body>
+<!--嵌套三层 每一层是一个对象-->
+<div id="container" class="">
+    <div class="sidbar"><include file="{{ROOT}}/project/controllers/include/test.html" dataType="html"></include></div>
+
+    <div class="content over-h" id="content">
+        <ul id="ul1" class="sectionFloat clearfix P10">
+            <script type="text/javascript">
+                LAMJS.main(function() {
+                    'use strict';
+                    var System = this;
+                    var tag=System.Html.tag;
+                    var li,arr=[];
+                    li=tag('li',{},
+                            tag('div',{'class':'H100 M10 P10','style':'background: #fff;'},'{{D.content}}')
+                    );
+                    for(var i=0;i<10;i++){
+                        arr.push(li);
+                    }
+                    System.print(arr.join(''));
+
+                });
+            </script>
+            <!--<li><div class="H100 M10 P10" style="background: #fff;">{{D.content}}</div></li>-->
+
+        </ul>
+
+
+    </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+    LAMJS.run(function(){
+        'use strict';
+        var System=this;
+        System.Html.include($('include'));
+
+        var ul1;
+        function layout(){
+            ul1=new System.Thumbnail({'$view':$('#ul1'),'baseWidth':200,'baseHeight':150,'$li':$('#ul1 > li')}).run();
+        }
+        $(function(){
+
+            layout();
+
+        });
+
+        $(window).resize(function(){
+            ul1.resize();
+
+
+        });
+
+
+
+    });
+
+
+</script>

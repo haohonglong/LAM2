@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选项卡实例</title>
+
+	<script type="text/javascript" src="config.js"></script>
+	<script type="text/javascript">
+		LAMJS.run(function() {
+			'use strict';
+			var System = this;
+			System.use();
+			System.Loadcommon.
+					load({
+						'baseUrl':System.ROOT+'/lib/css',
+						'suffix':'.css',
+						'rel':'stylesheet',
+						'css':[
+							'/lib'
+						]
+					})
+					.print();
+
+
+			System.import([
+				'/Tab.class'
+			],System.classPath);
+		});
+
+
+
+
+</script>
+
+
+
+
+
+<style type="text/css">
+	.list li{color:#333;width:100px;}
+	.list .cur{color:red;}
+	.hide{display:none;}
+</style>
+</head>
+
+<body>
+<div data-controller="body" class="hide">
+	<ul class="list sectionFloat clearfix">
+		<li class="cur">111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+	<div class="block"><a data-var="tpl" href="{{_ROOT_}}/hhh">1111</a> </div>
+	<img data-var="tpl" src="{{_ROOT_}}/333"/>
+	<div class="block hide">22222</div>
+	<div class="block hide">33333</div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+
+	LAMJS.run(function(){
+		'use strict';
+		var System=this;
+
+		$(function(){
+			System.Html.analysisTpl();
+			$('[data-controller=body]').show();
+			new System.Tab({
+				'list':$('.list li'),
+				'event':'click',
+				'hover':false,
+				'or':true,
+				'class':'cur',
+				'block':$('.block'),
+				'fn':function(obj){
+					var index=obj.this_index;
+					obj.current.block.hide();
+					obj.current.block.eq(index).show();
+
+				}
+			}).run();
+
+
+
+
+
+		});
+
+
+	});
+
+</script>
+</html>
+

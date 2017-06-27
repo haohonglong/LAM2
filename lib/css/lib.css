@@ -1,0 +1,540 @@
+@charset "utf-8";
+@import url("global.css");
+/* CSS Document */
+/*
+just here is interface
+@autho: lhh
+命名规则(避免多人开发或者和别的插件命名冲突)：
+   1.模块命名
+        __i__item-model{}
+        __i__   :命名空间,i代表是整个项目通用(取item 的首字母)
+        item    :项目名称
+        model   :模块名称
+   2.多模版互相嵌套避免命名冲突法：
+        __i__item-tpl-model{}
+        __i__   :命名空间
+        item    :项目名称
+        tpl     :模板名称
+        model   :模块名称
+*/
+
+/*mouse selected bg-color*/
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;}
+::selection {}
+
+/*文字有鼠标移入移除渐隐渐变的效果*/
+a{
+    -webkit-transition:all 0.5s linear;
+    -moz-transition:all 0.5s linear;
+    -ms-transition:all 0.5s linear;
+    -o-transition:all 0.5s linear
+}
+
+/*移动动画*/
+.transition__move{
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+/*移动动画-鼠标移入移除隐藏的信息切换时之间的效果-缓慢*/
+.transition__move--slow{
+    transition: left 0.5s,top 0.5s;
+    -moz-transition: left 0.5s,top 0.5s;
+    -webkit-transition: left 0.5s,top 0.5s;
+}
+
+/*移动动画-底部遮罩层文字渐入渐出-缓慢*/
+.transition__move2--slow{
+    transition: bottom 0.8s;
+    -moz-transition: bottom 0.8s;
+    -webkit-transition: bottom 0.8s;
+    -o-transition: bottom 0.8s;
+}
+
+
+
+
+/*X符号 旋转动画－旋转180度*/
+.transition__rotate{
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+}
+
+
+
+
+
+/*自定义字体*/
+@font-face { 
+  font-family: fz; /*这里是说明调用来的字体名字*/ 
+  src: url('font/AGENCYB.ttf'); /*这里是字体文件路径*/ 
+} 
+.__i__custom-font{
+  font-family: fz; /*这里设置某参数的字体值，在这里是“my_CSS3_class”调用了你刚才声明的字体值"fz"*/ 
+  font-size: 5.2em; /*这里是字体大小*/ 
+}
+
+
+/*弹出层*/
+.__i__pop{width: 1100px;position: fixed;background: #fff;z-index:11111;}
+.__i__pop-content{}
+
+
+/*整屏遮罩*/
+.__i__mask{width: 100%;height: 100%;position: fixed; z-index:10000;left:0px;top:0px;background:#000;opacity:0.3;filter:Alpha(opacity=30);}
+
+
+/*局部透明遮罩层(oo css example)
+
+*/
+/*=================================================================================================================================*/
+
+/*
+<div class="__i__mask-text">
+    <div class="__i__mask-text-wrap">
+        <div class="__i__mask-text-bg"></div>
+        <div class="__i__mask-text-desc"> 描述文字</div>
+    </div>
+</div>
+*/
+.__i__mask-text{width: 100%; position: relative;z-index: 10;}
+.__i__mask-text-wrap{width: 100%; position: absolute;top:-30px;}
+.__i__mask-text-bg{position: relative;opacity:0.4;filter:Alpha(opacity=30);background:#000;}
+.__i__mask-text-desc{z-index:15;margin-top: -30px;color: #fff;line-height: 30px;}
+.__i__mask-text-wrap-hover{display: none;top:0;}
+.__i__mask-text-wrap,
+.__i__mask-text-bg,
+.__i__mask-text-desc{height: 30px;}
+.__i__mask-text-bg,
+.__i__mask-text-desc{position: relative;}
+
+
+/*
+<div class="__i__mask-text">
+    <div class="__i__mask-text-wrap">
+        <div class="__i__mask-text-bg"></div>
+        <div class="__i__mask-text-desc __i__mask-text1-desc"> 描述文字</div>
+    </div>
+</div>
+*/
+.__i__mask-text1{}
+.__i__mask-text1-wrap{}
+.__i__mask-text1-bg{}
+.__i__mask-text1-desc{position: absolute;}
+.__i__mask-text1-wrap-hover{}
+.__i__mask-text1-wrap,
+.__i__mask-text1-bg,
+.__i__mask-text1-desc{}
+/*=================================================================================================================================*/
+
+
+
+/*透明层*/
+.__i__opacity{opacity:0.3;filter:Alpha(opacity=30);}
+
+
+/* fix-position */
+.__i__fixed{position: fixed;z-index: 1000;}
+.__i__fixed-top{top: 0;left: 0;}
+.__i__fixed-bottom{bottom: 0;left: 0;}
+
+/*伪 placeholder*/
+.__i__placeholder{padding:11px;position: absolute;left: 0;top: 0;}
+.__i__placeholder-p{white-space:pre-line; line-height:18px; }
+
+
+/*
+双飞翼布局
+*/
+.__i__brid-main{background:red;width:100%;}
+.__i__brid-main-content{margin:0 200px 0 150px;padding:20px;}
+.__i__brid-col1{width:150px; background:blue;margin-left:-100%;}
+.__i__brid-col2{width:200px;margin-left:-200px; background:green;}
+
+
+
+
+/*文字*/
+/*=================================================================================================================================*/
+/*link*/
+.linkBlue,.linkBlue a:link,.linkBlue a:visited,.linkBlue:link,.linkBlue a:visited,.linkBlue:visited{color:#4a759f!important;}
+.linkBlue a:hover,.linkBlue:hover{color:#4a759f!important;}
+.linkBlack,.linkBlack a:link,.linkBlack a:visited,.linkBlack:link,.linkBlack:visited{color:#000!important;}
+.linkBlack a:hover.linkBlack:hover{color:#000!important;}
+.linkRed,.linkRed a:link,.linkRed a:visited,a.linkRed:link,a.linkRed:visited{color:#ff3300!important;}
+.linkRed a:hover,.linkRed:hover{color:#ff3300!important;}
+.linkWhite,.linkWhite a:link,.linkWhite a:visited,.linkWhite:link,.linkWhite:visited{color:#ffffff!important;}
+.linkWhite a:hover,.linkWhite:hover{color:#ffffff!important;}
+.linkGreen,.linkGreen a:link,.linkGreen a:visited,.linkGreen:link,.linkGreen:visited{color:#009900 !important;}
+.linkGreen a:hover.linkGreen:hover{color:#009900!important;}
+.linkYellow,.linkYellow a:link,.linkYellow a:visited,.linkYellow:link,.linkYellow:visited{color:#fb4410!important;}
+.linkYellow a:hover,.linkYellow:hover{color:#fb4410!important;}
+.linkGrey,.linkGrey a:link,.linkGrey a:visited,.linkGrey:link,.linkGrey:visited{color:#999999!important;}
+.linkGrey a:hover.linkGrey:hover{color:#999999!important;}
+.linkOrange,.linkOrange a:link,.linkOrange a:visited,.linkOrange:link,.linkOrange:visited{color:#f60!important;}
+.linkOrange a:hover.linkOrange:hover{color:#f60!important;}
+.linkRose,.linkRose a:link,.linkRose a:visited,.linkRose:link,.linkRose:visited{color:#e80274!important;}
+.linkRose a:hover.linkRose:hover{color:#e80274!important;}
+
+/*文字样式*/
+.__i__font,          .__i__font a{color: #666;font-size: 12px;}
+.__i__font-grey,     .__i__font-grey a{color: #ccc;}
+.__i__font-333,      .__i__font-333 a{color: #333;}
+.__i__font-f60,      .__i__font-f60 a{color: #f60;}
+.__i__font-lightgrey,.__i__font-lightgrey a{color: #999;}
+.__i__font-ccc,      .__i__font-ccc a{color: #ccc;}
+.__i__font-red,      .__i__font-red a{color: #cc0000;}
+.__i__font-white,    .__i__font-white a{color: #fff;}
+.__i__font-green,    .__i__font-green a{color: #41bd39;}
+.__i__font-blue,     .__i__font-blue a{color: #33a5f7;}
+
+/*传统标题*/
+h1,h2,h3,h4,h5,h6{font-family:"Microsoft Yahei";font-weight:bold;letter-spacing:normal;}
+h1{font-size: 35px;}
+h2{font-size: 30px;}
+h3{font-size: 18px;}
+h4{}
+h5{}
+h6{}
+
+/*自定义标题*/
+.H1,.H2,.H3,.H4,.H5,.H6{}
+.H1{}
+.H2{}
+.H3{}
+.H4{}
+.H5{}
+.H6{}
+
+/*通用抽象模块样式*/
+.__i__box{position: relative;}
+.__i__box h1,.__i__box h2,.__i__box h3,.__i__box h4,.__i__box h5,.__i__box h6{font-family:"Microsoft Yahei";font-weight:bold;letter-spacing:normal;}
+.__i__box h1{}
+.__i__box h2{}
+.__i__box h3{}
+.__i__box h4{}
+.__i__box h5{}
+.__i__box h6{}
+.__i__box-more{ position:absolute;top: 0;right: 0;left: auto;}
+
+/*段落样式*/
+p{}
+section,.section{}
+
+/*cms 规定的格式*/
+.__i__cms,
+.__i__cms-p{line-height: 25px;}
+
+/*图文文字样式*/
+.__i__text{}
+
+
+/*shadow*/
+/*=================================================================================================================================*/
+.__i__shadow-a1{box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);background-color:#000;}
+.__i__shadow-a2{box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);background-color:#000;}
+.__i__shadow-a3{box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);background-color:#000;}
+.__i__shadow-a4{box-shadow:1px 0 1px rgba(0, 0, 0, 0.1)}
+.__i__shadow-a5{box-shadow:2px 2px 5px #eee;}
+.__i__shadow-a6{box-shadow:0 0 4px 4px rgba(0, 0, 0, 0.2); box-sizing:border-box; -webkit-transform:translate3d(0,0,0);}
+.__i__shadow-a7{box-shadow:2px 2px 1px #eee;}
+.__i__shadow-a8{
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+/*文字阴影*/
+.__i__text-shadow{text-shadow: 1px 1px 1px #333;}
+
+/*价格类*/
+.__i__price{color: #cc0000;font-size: 16px;font-family:"Microsoft Yahei";font-weight: bold;}
+.__i__price-number{}
+.__i__price-symbol{font-size: 15px;}
+.__i__price-word{font-size: 16px;margin-left: -2px;}
+.__i__price-del{text-decoration: line-through;color:#999;font-size: 12px;font-weight: normal; }
+.__i__price-call{ font-size:16px;font-weight: normal;}
+.__i__price-i{}
+
+/*borders*/
+.__i__border-a1{}
+
+/*一根线的样式
+col : 竖线
+row : 横线
+*/
+.__i__line-col{background:#e5e5e5;height: 100%;width: 1px;}
+.__i__line-row{background:#e5e5e5;width: 100%; height: 1px;}
+
+/*全局图标
+gi ： 全局图标(global icon)
+*/
+.__i__gi{position: relative;}
+.__i__gi-i{width: 20px;height: 20px;position: absolute;top: 0;left: 0; z-index: 1000;}
+
+
+
+
+/*三角箭头
+iup     :上边图标样式
+idown   :下边图标样式
+il      :左边图标样式
+ir      :右边图标样式
+
+*/
+/*==============================================================================================================================================*/
+.__i__arrow       {position: relative;}
+.__i__arrow-i {width: 0;height: 0;position: absolute;overflow: hidden;border-width: 5px;font-size:0;line-height: 0; margin: 0;}
+.__i__arrow-iup{border-style: dashed dashed solid; border-color:transparent transparent #b8b8b8;  }
+.__i__arrow-idown{border-style: solid dashed dashed; border-color: #b8b8b8 transparent transparent;bottom: -10px; }
+.__i__arrow-il {border-style: dashed solid dashed dashed; border-color:transparent #b8b8b8 transparent transparent;}
+.__i__arrow-ir {border-style: dashed dashed dashed solid; border-color:transparent transparent transparent #b8b8b8;}
+
+/*双箭头重叠
+fill    :填充颜色
+border  :边线颜色
+*/
+.__i__arrow-overlap-i{border-width: 7px;}
+.__i__arrow-overlap-fill{}
+.__i__arrow-overlap-border{}
+
+
+
+/*css3 旋转 在IE7下有兼容的问题影响整个页面！这个当前css文件解析问题不推荐用*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+.__i__rotate-a1{position: relative;}
+.__i__rotate-a1-i{position:absolute;left:50%;width:8px;height:8px;overflow:hidden;font-size:0;background-color:#F3F3F3;border-top:1px solid #D9D9D9;border-right:1px solid #D9D9D9;}
+.__i__rotate-a1-iup{
+    margin-left:-5px;
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+    filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.7660444431189777, M12=-0.6427876096865394, M21=0.6427876096865398, M22=0.7660444431189779); 
+}
+
+/*==============================================================================================================================================*/
+
+
+/*basis*/
+/*===============================================================================================================*/
+/*头部*/
+.__i__header{}
+
+/*脚部*/
+.__i__foot{}
+
+/*顶部*/
+.__i__top{height: 46px;line-height: 46px; text-align: right;background:url(images/title_bg.png) repeat-x 0 0; position: relative;z-index: 10;}
+.__i__top-a{color: #565656;}
+.__i__top-span{margin: 0 5px;}
+
+/*导航条*/
+.__i__nav{}
+
+/*Menu*/
+.__i__menu{}
+
+
+/*Logo*/
+.__i__logo{width: 80px; height:80px;position:absolute; left:0; top:0; background:url(images/logo.png) no-repeat 0 0;}
+.__i__logo-a{display:block; width:80px; height:80px;overflow: hidden;}
+.__i__logo-img{width: 100%;height: auto;}
+.__i__Logo-i{}
+
+/*处理方式：图片自适应 超出大小溢出隐藏*/
+.__i__logo-auto{ display:block;width:80px; height:80px;overflow: hidden}
+.__i__logo-auto-a{width:80px; height:80px;overflow: hidden;display: table-cell;vertical-align: middle;text-align: center;
+  *display: block;
+  *font-size: 175px;/*约为高度的0.873，200*0.873 约为175*/
+  *font-family:Arial;/*防止非utf-8引起的hack失效问题，如gbk编码*/
+}
+.__i__logo-auto-img{width: 100%;height: auto;vertical-align: middle;}
+/*end basis===============================================================================================================*/
+
+
+
+
+
+/*searchBox*/
+.__i__searchBox{}
+
+
+/*缩略图*/
+.__i__thumbnail{
+  -webkit-box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  box-sizing:content-box;
+  position: relative;
+}
+.__i__thumbnail-img{text-align: center;}
+
+
+
+/*媒体对象*/
+.__i__media{}
+
+/*面板
+
+*/
+.__i__panel{}
+.__i__panel-t{}
+.__i__panel-c{}
+.__i__panel-i{}
+
+
+/*Tab*/
+.__i__tab{position: relative;}
+.__i__tab-more{}
+
+/*Title*/
+.__i__title{position: relative;}
+.__i__title-h2{color: #333;font-size: 14px;font-family:"Microsoft Yahei";}
+.__i__title-more{right:25px; top:0;background-position: 0 0;}
+
+
+/*带图标的标题
+
+*/
+.__i__titleIcon{position: relative; background: #fafafa; height: 65px;line-height: normal;}
+.__i__titleIcon-h2{font-size: 16px;font-family:"Microsoft Yahei";font-weight: normal;padding-left: 55px;}
+.__i__titleIcon-i{width: 55px;height: 65px;background: url(images/mapSearchBox_title_icon.png) no-repeat 0 0;position: absolute;top: 0;left: 0;}
+
+/*lists*/
+.__i__list-li{height: 26px; line-height:26px; background:url(images/li.png) 0 12px no-repeat; padding-left:12px; }
+.__i__list-a{color: #333;font-size: 12px;}
+.__i__list-date{color: #999;font-size: 12px;}
+.__i__list a:hover,.__i__list-hover{}
+
+.__i__message{}
+/*提示*/
+.__i__tips{}
+.__i__alert{}
+.__i__map{}
+/*use global.css*/
+.__i__bg-color{}
+/*广告*/
+.__i__ad{}
+.__i__banner{}
+.__i__tel{}
+
+/* 友情链接 */
+.__i__links{}
+
+/*版权*/
+.__i__copyright{}
+
+/*标签类*/
+.__i__label{}
+.__i__label-li{width:auto;color:#04639d;padding: 10px;margin-right: 10px;margin-bottom: 10px;background: #f8f8f8;}
+.__i__label-a{width:auto;}
+
+
+
+/*button*/
+.__i__button-btn{background: #00a99d;}
+.__i__button-btn:hover,
+.__i__button-btn-hover{background: #009389;}
+
+
+/*use autoBtn.css*/
+.__i__button-auto-btn{background-position:0 0;position: relative;top: 1px;}
+.__i__button-auto-btn-span{background-position:right -37px;padding: 0 10px;margin-left: 20px;}
+.__i__button-auto-btn,
+.__i__button-auto-btn-span{height:37px;line-height: 37px; font-size:12px;}
+
+
+
+/*GotoTop*/
+.__i__gotoTop{position: fixed;bottom:10px;right:100px;width: 40px;height: 40px;background-image: url(images/icon.png) no-repeat 0 -439px;cursor: pointer;}
+.__i__gotoTop-hover{background-position: -40px -439px;}
+
+/*当前位置*/
+.__i__crumb{height: 30px; line-height:30px;font-size:12px;position:relative;}
+.__i__crumb-ul{padding: 0 10px;}
+.__i__crumb-ul-li{}
+.__i__crumb-border{border-color: #ccc;padding:5px;}
+.__i__crumb-ul-li,
+.__i__crumb-ul-li-a{font-family:"SimSun";color: #de8fa0;}
+
+/*pageing*/
+.__i__pageing{}
+
+
+ /*star*/
+ /*===============================================================================================================*/
+.__i__star{background:url(images/star.png) no-repeat 0 0;display: inline-block; overflow: hidden; }
+/*small star*/
+.__i__star-small{height:12px;}
+.__i__star-small-5{ width:60px;}
+.__i__star-small-4{ width:48px;}
+.__i__star-small-3{ width:36px;}
+.__i__star-small-2{ width:24px;}
+.__i__star-small-1{ width:12px;}
+/*big star*/
+.__i__star-big{background-position:0 -15px;height:14px;}
+.__i__star-big-5{ width:74px;}
+.__i__star-big-4{ width:60px;}
+.__i__star-big-3{ width:45px;}
+.__i__star-big-2{ width:30px;}
+.__i__star-big-1{ width:15px;}
+
+
+
+/*slider*/
+.__i__slider{}
+.__i__slider-ul{}
+.__i__slider-li{}
+.__i__slider-li-img{}
+/*slider button*/
+.__i__slider-btn{width:92px;height:18px;position:absolute;top:auto;right:5px;left:auto;bottom:10px;z-index:100;}
+.__i__slider-btn-li{height:18px;width:18px;overflow:hidden;float:left;_display: inline; cursor:pointer;margin-right:5px;text-align:center;line-height:18px;background:#fff;color:#000;font-weight:bold;}
+.__i__slider-btn-cur{background:#f60;color:#fff;}
+
+
+/*抽象模块*/
+.__i__box1{}
+
+
+
+
+
+
+
+
+
+/*
+
+页面统一标准
+注意：没有的话就空着
+
+页面min-width   ：1200px
+页面固定宽度    ：
+侧边栏宽度      ：
+主要内容宽度    ：
+body背景颜色    ：
+全局字体(字体,大小,颜色) ：("SimSun",12px,#3b3b3b)
+最大号标题(字体,大小,颜色,行高)   ：("Microsoft Yahei",12px,#3b3b3b,16px)
+通用标题(字体,大小,颜色,行高)     ：
+导航    (字体,大小,颜色,行高)     ：("Microsoft Yahei",18px,#3b3b3b)
+导航链接                          ：
+全局边框颜色    ：#e5e5e5
+全局间距                          ：
+全局链接颜色                      ：#227AB9
+全局红颜色                        ：#f10000
+全局黄颜色                        ：
+全局蓝颜色                        ：
+全局绿颜色                        ：#6abf70 
+全局橙颜色                        ：#fd6f35
+全局黑颜色                        ：
+全局深灰颜色                      ：
+全局灰颜色                        ：
+全局浅灰颜色                      ：
+价格字体(字体,大小,颜色,行高)     ：("Microsoft Yahei",14px,#f10000)
+加入购物车按钮：默认 #fd6f35，高亮#fd5916
+*/

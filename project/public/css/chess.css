@@ -1,0 +1,8 @@
+@charset "utf-8";
+canvas{
+    display: block;
+    margin: 50px auto;
+    box-shadow:
+                -2px -2px 2px #efefef,
+                5px 5px 5px #b9b9b9;
+}
