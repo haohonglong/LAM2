@@ -2,13 +2,13 @@
 继承用basejs 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：1.1.6
+	version ：2.0.1
 	author  ：lhh
-	创建日期 ：2015-8-19
-	修改日期 ：2017-6-9
+	创建日期 ：2015-8-27
+	修改日期 ：2017-8-27
 
 
-产品介绍：
+# 产品介绍：
 
 	LamborghiniJS 不是插件，是一种javascript OO思想实现的类库，它可以为生产应用框架做更好的基础服务。
 	LamborghiniJS 的诞生初衷是自2013年起,为解决自己工作方便写的小工具,发展到现在的一个类库思想实现.
@@ -29,32 +29,32 @@
 	(继承参考 六、继承)
 
 
-文件说明：
+# 文件说明：
 		
-	文件夹结构：
-			|-LAM      		 #项目根目录
-				|-documentation  #手册文档
-				|-demo 		 #
-					|-views	 #html文件
-						|-index	 #html文件
-							|-config.js	 #当前配置文件
-				|-lib  		 #
-					|-class  #类文件
-					|-css  	 #样式文件
-				|-common  #公共文件
-					|-config  #配置文件存放位置
-						|-config.js  #主配置文件
-						|-init.js  #每个页面公用的.js文件
-				|-lamborghiniJS  #lamborghiniJS 核心类库文件
-				|-project  	 #项目demo文件
-					|-common #公共文件
-					|-controllers #控制器渲染对应的页面
-					|-views   #项目中所有页面
-					|-plugins #插件存放地
-					|-doc #文档说明
-					|-css #只关联当前项目
-					|-js  #只关联当前项目
-					|-images #只关联当前项目
+#### 文件夹结构：
+		|-LAM      		 #项目根目录
+			|-documentation  #手册文档
+			|-demo 		 #
+				|-views	 #html文件
+					|-index	 #html文件
+						|-config.js	 #当前配置文件
+			|-lib  		 #
+				|-class  #类文件
+				|-css  	 #样式文件
+			|-common  #公共文件
+				|-config  #配置文件存放位置
+					|-config.js  #主配置文件
+					|-init.js  #每个页面公用的.js文件
+			|-lamborghiniJS  #lamborghiniJS 核心类库文件
+			|-project  	 #项目demo文件
+				|-common #公共文件
+				|-controllers #控制器渲染对应的页面
+				|-views   #项目中所有页面
+				|-plugins #插件存放地
+				|-doc #文档说明
+				|-css #只关联当前项目
+				|-js  #只关联当前项目
+				|-images #只关联当前项目
 
 	类成员属性：
 		 class:
@@ -69,11 +69,11 @@
          
 
 
-类库声明：
+# 类库声明：
 	
-类库说明：
+# 类库说明：
 	
-	使用：
+### 使用：
 		1.给全局变量_ROOT_ 分配路径
 			<script type="text/javascript">var _ROOT_ = '../..'</script>
 		2.引入当前配置文件或主配置文件,文件的位置可以随便放，也可放在项目根目录（具体配置参考 一、配置）
@@ -112,7 +112,7 @@
 			<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		
 
-	一、主配置文件配置 参考 二、开发约定
+## 一、主配置文件配置 参考 二、开发约定
 		tip:
 			只有主配置文件和当前配置文件跟项目绑定的,类库文件可以在开发过程中任何时候，更改到其它地方（多个项目公用一个类库文件夹，此时类库文件夹就可移动项目文件夹外面）,移动后只要重新修改主配置文件 vendorPath 的值即可。
 	    主配置文件详细内容见 common/config/config.js
@@ -135,7 +135,7 @@
 		 (参考 五、文件加载器)
 
 
-	二、开发约定
+## 二、开发约定
 	
 		'GRN_LHH'(GRN 是 'GLOBAL—REGISTER-NAMESPACE' 的缩写) 在'config.js'里设定,常量名: GRN_LHH 是框架里定死的禁止改动，可以修改变量的值,
 		也就是说框架的命名空间可以用户自定义（参考 四、命名空间灵活 与其他插件无冲突）。
@@ -267,7 +267,7 @@
 				});
 
 
-	三、功能模块扩充
+## 三、功能模块扩充
 		功能独立 易于扩充 不影响原有功能
 		1.归并对象LAMJS.merge();(参考 八、框架里的属性和方法)
 			
@@ -281,7 +281,7 @@
 					@param :(Boolean)override 是否覆盖同名键名值,默认 false 是不覆盖
 			上面的方法是在当前实例中扩充成员
 
-	四、命名空间灵活 与其他插件无冲突
+## 四、命名空间灵活 与其他插件无冲突
 		命名空间接口设计的宗旨是:只要修改一处即可搞定一切与第三方插件的冲突，命名空间的命名权限提供给用户，用户可以随意命名。
 		命名空间接口定义: var GRN_LHH='interfaceName';
         命名空间接口调用: window[GRN_LHH]  或者 window['interfaceName'] 或者 LamborghiniJS_20150910123700_ 或者 LAMJS
@@ -290,7 +290,7 @@
         note:不能在框架加载完成后修改 'GRN_LHH' 里的值，必须在没加载前修改！！！ 
 
 
-	五、文件加载器
+## 五、文件加载器
 		文件加载器检测机制(参考 十、检测机制 文件加载器)
 		文件加载器有load()和import()两种调用方法。import() 不但封装了load() 方法 还封装了 importScript()方法,当importScript()可用时，就不去调用load()方法了。
 			1.下面这种不仅适合脚本文件和样式文件的引入还适合less文件的引入。load方法是加载指定的文件到加载器中，load方法可以链式调用多个不同类型文件，当调用到print方法的时候才会一次性从加载器里输出到页面中
@@ -364,7 +364,7 @@
 
 
 
-	六、继承
+## 六、继承
 		在类继承之前要先进行检测。
 		每一个组件除了继承基类中的配置属性以外, 还会根据需要增加自己的配置属性, 另外 子类中有的时候还会把父类的一些配置属性的含义及用途重新定义
 		System.is方法是检测的作用。检测父类是否已注册过。检测子类名称是否与已注册的类名重名了。这句话必须放在第一行。
@@ -378,7 +378,7 @@
 		3.子类调用父类的成员方法(父类方法被子类覆写)
 			this.Super.父类成员方法();
 
-	七、原始对象的原型链上扩充的方法列表
+## 七、原始对象的原型链上扩充的方法列表
 			Function.method();
 			
 			Date.format();
@@ -423,7 +423,7 @@
                  		a.merge(b).merge(c).merge(e).merge(f);
                   		a.merge(b.merge(c.merge(d.merge(e.merge(f)))));
 
-	八、框架里的属性和方法
+## 八、框架里的属性和方法
 		属性：	
 			
 			LAMJS.app//这个属性代表当前实例化后的对象  
@@ -883,9 +883,9 @@
                  @return {void}
 				
 		
-	九、错误机制
+## 九、错误机制
 			throw new Error(msg);
-	十、检测机制
+## 十、检测机制
 			1.数据类型检测
 				LAMJS.isNull(); 	 	
 				LAMJS.isUndefined(); 	
@@ -921,8 +921,8 @@
 				要查看带.class 后缀的所有文件可访问 window['interfaceName'].classes，这也是个数组。window['interfaceName'] 也可以用 LAMJS
 				之前在别的地方引入的文件它也能会检测到是否是同名文件。
 
-	十一、基础类非独立浏览器环境（浏览器有专用的类）， 可应用服务器nodejs 。
-	十二、说明格式
+## 十一、基础类非独立浏览器环境（浏览器有专用的类）， 可应用服务器nodejs 。
+## 十二、说明格式
 		
 			/**
 			 * @author: lhh
@@ -938,9 +938,9 @@
 			 * Example：
 			 */
 
-	十三、组件的配置属性
+## 十三、组件的配置属性
 	
-	十四、沙箱(Sandbox)
+## 十四、沙箱(Sandbox)
 		
 		LAMJS.run()是LamborghiniJS 的沙箱机制 
 		沙箱的作用防止全局变量污染
@@ -948,7 +948,7 @@
 		
 		
 	
-	十五、hashcode
+## 十五、hashcode
 		this.equals(Object) 方法
 		equals()方法的作用是比较俩对象是否是同一个对象。
 		 _hashCode 属性值, 这个值是一个字符串 是new 一个对象时随机生成的，不同的对象的_hashCode 是不同的，由此根据这个原理可以比对两个对象是否相等。
@@ -957,12 +957,12 @@
 		2.调用静态的 BiObject.toHashCode()方法生成(如果检查对象里已有_hashCode 就返回,不会重新生成新的值)
 		当前实例的对象的toHashCode()方法可以返回_hashCode 如果没有就创建并返回
 		
-	十六、标签创建方式(在配置文件中设置)
+## 十六、标签创建方式(在配置文件中设置)
 			标签创建方式有两种：
 				1.document.createElement()
 				2.document.write()
 		
-	十七、页面里包含另一个页面(.html include 另一个.html文件)
+## 十七、页面里包含另一个页面(.html include 另一个.html文件)
         功能：
 			1.设定一个占位符标签
 			2.根据占位符里file参数请求另一个页面，然后替换掉当前占位符
@@ -994,7 +994,7 @@
 
 				 });
 				 
-	十八、模版标签
+## 十八、模版标签
 				 查找解析指定元素属性里的模板标签
 					 1. 只能在 link,a,img,iframe 这几种标签范围内解析模板标签
 					    <link data-var="tpl" rel="stylesheet" type="text/xxx" href="{{LAMJS.ROOT}}/"/>
@@ -1029,177 +1029,133 @@
 				 note:  用MVC方式渲染页面就不用这种方式，MVC渲染请参考 十九、MVC。
 				        修改模板标签分隔符参考 二十、配置参数 一、模板标签分隔符
 	
-	十九、MVC (详细demo看project目录里)
+## 十九、MVC (详细demo看project目录里)
 				
-				访问url格式：
-					localhost/project/controllers/controllerName.html?action=view
-						controllers:控制器文件夹
-						controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
-						action:接收控制器中的方法名的参数。action关键字可以在控制器中自定义
-						view：调用对应控制器中的方法（对应着视图文件名）
-				//controllers/index.html
-				
-				Controller 范例一、
-						    LAMJS.run([
-									LAMJS.Config.Public.ROOT,
-									LAMJS.Config.Public.ROOT+'/project/views/index'
-								],function(ROOT,views) {
-									'use strict';
-									var System = this;
-									//note:变量都在这里声明
-									
-									eval(System.Controller.get_url_name('action')+'Action')();
+	访问url格式：
+		localhost/project/controllers/controllerName.html?action=view
+			controllers:控制器文件夹
+			controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
+			action:接收控制器中的方法名的参数。action关键字可以在控制器中自定义
+			view：调用对应控制器中的方法（对应着视图文件名）
+	//controllers/index.html
+	
+1. Controller 范例一、参考 [LAM](https://github.com/haohonglong/LAM)
+													
+2. Controller 范例二、(面向对象方式)
+
+		LAMJS.run(function() {
+				'use strict';
+				var System = this;
+				var __this__=null;
+				System.is(System,'Controller','IndexController');
+				var ROOT  = System.ROOT;
+				var views = System.Config.Public.ROOT+'/project/views/index';
+				var IndexController = System.Controller.extend({
+					constructor: function (init){
+						this.base(init || {});
+						__this__=this;
+	
+				},
+				'_className':'IndexController',
+				'indexAction':function(){
+					new System.Template().render(views+'/index.html',{
+						'ROOT':ROOT,
+						'D':{
+							'title':'你好，世界！',
+							'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+						}
+	
+					},function(content){
+						System.print(content);
+					},{
+						beforeSend:function(a,b){
+							this.async=true;
+						}
+					});
+				},
+	
+	
+	
+				/**
+				 *
+				 * @author lhh
+				 * 产品介绍：析构方法
+				 * 创建日期：2015-4-2
+				 * 修改日期：2015-4-2
+				 * 名称：destructor
+				 * 功能：在注销IndexController对象时调用此方法
+				 * 说明：
+				 * 注意：
+				 * @return  ()
+				 * Example：
+				 */
+				'destructor':function(){}
+			});
+			new IndexController();
+		});
+		
+		render参数：
+			参数1：请求视图的路径
+			参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
+			参数3：视图路径请求成功后返回视图文件(String) 
+			参数4：设置请求Ajax 的参数(必须是json类型)
+		  
+    	note:
+    
+			不要忘了方法名称前缀action
+			注1： System.Html.include($('include'))是可选的， 要放在渲染视图的下面。
+					MVC方式的include标签的action属性值是请求的控制器，而后通过控制器请求视图，而不是直接去请求视图。
+					错误的方式：System.Html.include($('include'))放在视图里。
+			注2：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
+											render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
+											函数里的两个参数请参考jQuery Ajax API。
+		//views/index/index.html
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<title>{{title}}</title>
+				<link rel="stylesheet" type="text/css" href="{{ROOT}}/project/common/css/bootstrap.css"/>
+				<!--[if lt IE 8]>
+				<script>
+					alert('请使用谷歌、火狐浏览器！');
+				</script>
+				<![endif]-->
 			
-									function indexAction(){
-										new System.Template().render(views+'/index.html',{
-											'ROOT':ROOT,
-											'title':'Bootstrap Template',
-											'D':{
-												'title':'hello word！',
-												'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
-											}
 			
-										},function(content){
-											System.print(content);
-											//注1
-											 System.Html.include($('include'));
-										},{
-											'async':true,
-											//注2
-											beforeSend:function(a,b){
-			                                    //this：就是Ajax的settings
-			                                    //下面的意思是发送之前把async属性设置为false,等于把上面的相同设置给覆盖掉，上面的设置就无效了
-			                                    this.async=false;
-			                                }
-										});
-									}
-			
-			                });
-			                
-			           render参数：
-		                        参数1：请求视图的路径
-		                        参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
-		                        参数3：视图路径请求成功后返回视图文件(String) 
-		                        参数4：设置请求Ajax 的参数(必须是json类型)
-                          
-	                   note:
-	                          不要忘了方法名称前缀action
-	                          注1： System.Html.include($('include'))是可选的， 要放在渲染视图的下面。
-	                                MVC方式的include标签的action属性值是请求的控制器，而后通过控制器请求视图，而不是直接去请求视图。
-	                                错误的方式：System.Html.include($('include'))放在视图里。
-	                                    
-	                          注2：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
-	                                                            render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
-	                                                            函数里的两个参数请参考jQuery Ajax API。
-	                                                            
-	                                                            
-	                                                            
-	            Controller 范例二、(面向对象方式)
-	            		LAMJS.run([
-                            LAMJS.Config.Public.ROOT,
-                            LAMJS.Config.Public.ROOT+'/project/views/index'
-                        ],function(ROOT,views) {
-                            'use strict';
-                            var System = this;
-                            var __this__=null;
-                            System.is(System,'Controller','IndexController');
-                    
-                            function IndexController(){
-                                System.Basis.extends.call(this,System.Controller);
-                                __this__=this;
-                    
-                            }
-                    
-                    
-                            IndexController.prototype = {
-                                'constructor':IndexController,
-                                'indexAction':function(){
-                                    new System.Template().render(views+'/index.html',{
-                                        'ROOT':ROOT,
-                                        'D':{
-                                            'title':'你好，世界！',
-                                            'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
-                                        }
-                    
-                                    },function(content){
-                                        System.print(content);
-                                    },{
-                                        beforeSend:function(a,b){
-                                            this.async=true;
-                                        }
-                                    });
-                                },
-                    
-                    
-                    
-                                /**
-                                 *
-                                 * @author lhh
-                                 * 产品介绍：析构方法
-                                 * 创建日期：2015-4-2
-                                 * 修改日期：2015-4-2
-                                 * 名称：destructor
-                                 * 功能：在注销IndexController对象时调用此方法
-                                 * 说明：
-                                 * 注意：
-                                 * @return  ()
-                                 * Example：
-                                 */
-                                'destructor':function(){}
-                            };
-                            System.extends(IndexController,System.Controller,1);
-                            new IndexController();
-                    
-                    
-                        });
-	                
-	            //views/index/index.html
-		                <!DOCTYPE html>
-	                    <html>
-	                    <head>
-	                        <title>{{title}}</title>
-	                        <link rel="stylesheet" type="text/css" href="{{ROOT}}/project/common/css/bootstrap.css"/>
-	                        <!--[if lt IE 8]>
-	                        <script>
-	                            alert('请使用谷歌、火狐浏览器！');
-	                        </script>
-	                        <![endif]-->
-	                    
-	                    
-	                    </head>
-	                    <body>
-		                    <div class="container">
-		                        <div class="jumbotron">
-		                            <h1>{{D.title}}</h1>
-		                            <p>{{D.content}}</p>
-		                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-		                        </div>
-		                    </div>
-	                    </body>
-	                    </html>
+			</head>
+			<body>
+				<div class="container">
+					<div class="jumbotron">
+						<h1>{{D.title}}</h1>
+						<p>{{D.content}}</p>
+						<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+					</div>
+				</div>
+			</body>
+			</html>
                 
                
                 
-    二十、配置参数
-            一、模板标签分隔符设置与修改
-                1.设置模板分隔符： 
-                     在配置文件 的templat里配置左右分隔符是个数组：delimiters
-                     也可在单独视图里定义，只匹配当前页面里的分隔符与别的页面没关系，不会改变全局配置
-                 2.修改模板分隔符：(用MVC方式：设置在控制器方法里)
-                     LAMJS.Config.templat.delimiters[0]  = '${{';
-                     LAMJS.Config.templat.delimiters[1] = '}}$';
+## 二十、配置参数
+	一、模板标签分隔符设置与修改
+		1.设置模板分隔符： 
+			 在配置文件 的templat里配置左右分隔符是个数组：delimiters
+			 也可在单独视图里定义，只匹配当前页面里的分隔符与别的页面没关系，不会改变全局配置
+		 2.修改模板分隔符：(用MVC方式：设置在控制器方法里)
+			 LAMJS.Config.templat.delimiters[0]  = '${{';
+			 LAMJS.Config.templat.delimiters[1] = '}}$';
                      
                      
 
-    二十一、缓存机制
+## 二十一、缓存机制
     
-    二十二、参考附录
-            一、闭包：
-                      AB俩函数，A包裹B并返回B的原型后被A外的变量c引用，此时B就是闭包。闭包在外面可以访问到A里面的变量。
-                      闭包的作用就是在A执行完并返回后，闭包使得Javascript的垃圾回收机制GC不会收回A所占用的资源，因为A的内部函数B的执行需要依赖A中的变量。
-            二、回收机制：
-                        在Javascript中，如果一个对象不再被引用，那么这个对象就会被GC回收。如果两个对象互相引用，而不再被第3者所引用，那么这两个互相引用的对象也会被回收。
-                        因为函数A被B引用，B又被A外的c引用，这就是为什么函数A执行后不会被回收的原因。
+## 二十二、参考附录
+	一、闭包：
+			  AB俩函数，A包裹B并返回B的原型后被A外的变量c引用，此时B就是闭包。闭包在外面可以访问到A里面的变量。
+			  闭包的作用就是在A执行完并返回后，闭包使得Javascript的垃圾回收机制GC不会收回A所占用的资源，因为A的内部函数B的执行需要依赖A中的变量。
+	二、回收机制：
+				在Javascript中，如果一个对象不再被引用，那么这个对象就会被GC回收。如果两个对象互相引用，而不再被第3者所引用，那么这两个互相引用的对象也会被回收。
+				因为函数A被B引用，B又被A外的c引用，这就是为什么函数A执行后不会被回收的原因。
                      
                      
 
