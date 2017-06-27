@@ -995,39 +995,39 @@
 				 });
 				 
 ## 十八、模版标签
-				 查找解析指定元素属性里的模板标签
-					 1. 只能在 link,a,img,iframe 这几种标签范围内解析模板标签
-					    <link data-var="tpl" rel="stylesheet" type="text/xxx" href="{{LAMJS.ROOT}}/"/>
-					    <a data-var="tpl" rel="stylesheet" href="{{LAMJS.ROOT}}/"/>跳转</a>
-					    <img data-var="tpl" src="{{LAMJS.ROOT}}/"/>
-					    怎么工作的？
-					    1.在需要解析的标签上放指定的自定义属性 data-var="tpl"(也可以通过 common/config/config.js 文件的 'Config.templat.custom_attr' 属性 修改自定义属性)
-					    2.在window.onload 函数里 调用 LAMJS.Html.analysisTpl(); 静态方法
-					    note:
-					        1.自定义属性data-var="tpl"一定要有。否则不会解析模板标签。
-					        2一定要在页面元素加载完毕才能调用LAMJS.Html.analysisTpl()
-					    
-					 2.解析指定HTML元素的模板标签 (不需要放指定的自定义属性 data-var="tpl")
-					    LAMJS.replaceTpl(selector,attr_name);
-                             功能：替换模版标签
-                             说明：
-                             注意：
-                             @param (String)selector 		NO NULL:选择器标示符
-                             @param (String)attr_name 	NO NULL:标签属性
-                        example:解析所有link 标签 href 的模板标签
-						    <link rel="stylesheet" type="text/css" href="{{LAMJS.ROOT}}/project/common/css/bootstrap.css"/>
-						    LAMJS.replaceTpl('link','href');     
-					    
-					 3.模板标签: {{LAMJS.ROOT}} 等同于 {{LAMJS.Config.Public.ROOT}} 
-                        这里的 LAMJS.Config.Public.ROOT 是变量(模板标签里内容就是js 变量)，LAMJS会解析换成变量的值。{{LAMJS.Config.Public.ROOT}} 跟{{_ROOT_}}意思相同，都是项目根目录位置
-                         这里推荐使用LAMJS.Config.Public.ROOT 或 LAMJS.ROOT 因为 _ROOT_ 是全局变量容易被外部人为修改。（_ROOT_ 的值修改 不会影响到 LAMJS.Config.Public.ROOT 的值）。
-                         note:模板标签里一定要放已定义过的变量才能被解析正常工作，否则将会报错，不能正常工作！
-                        模板标签分隔符设置与修改   （参考 二十、配置参数 一、模板标签分隔符设置与修改）
-                         
-					    
-				 
-				 note:  用MVC方式渲染页面就不用这种方式，MVC渲染请参考 十九、MVC。
-				        修改模板标签分隔符参考 二十、配置参数 一、模板标签分隔符
+	 查找解析指定元素属性里的模板标签
+		 1. 只能在 link,a,img,iframe 这几种标签范围内解析模板标签
+			<link data-var="tpl" rel="stylesheet" type="text/xxx" href="{{LAMJS.ROOT}}/"/>
+			<a data-var="tpl" rel="stylesheet" href="{{LAMJS.ROOT}}/"/>跳转</a>
+			<img data-var="tpl" src="{{LAMJS.ROOT}}/"/>
+			怎么工作的？
+			1.在需要解析的标签上放指定的自定义属性 data-var="tpl"(也可以通过 common/config/config.js 文件的 'Config.templat.custom_attr' 属性 修改自定义属性)
+			2.在window.onload 函数里 调用 LAMJS.Html.analysisTpl(); 静态方法
+			note:
+				1.自定义属性data-var="tpl"一定要有。否则不会解析模板标签。
+				2一定要在页面元素加载完毕才能调用LAMJS.Html.analysisTpl()
+			
+		 2.解析指定HTML元素的模板标签 (不需要放指定的自定义属性 data-var="tpl")
+			LAMJS.replaceTpl(selector,attr_name);
+				 功能：替换模版标签
+				 说明：
+				 注意：
+				 @param (String)selector 		NO NULL:选择器标示符
+				 @param (String)attr_name 	NO NULL:标签属性
+			example:解析所有link 标签 href 的模板标签
+				<link rel="stylesheet" type="text/css" href="{{LAMJS.ROOT}}/project/common/css/bootstrap.css"/>
+				LAMJS.replaceTpl('link','href');     
+			
+		 3.模板标签: {{LAMJS.ROOT}} 等同于 {{LAMJS.Config.Public.ROOT}} 
+			这里的 LAMJS.Config.Public.ROOT 是变量(模板标签里内容就是js 变量)，LAMJS会解析换成变量的值。{{LAMJS.Config.Public.ROOT}} 跟{{_ROOT_}}意思相同，都是项目根目录位置
+			 这里推荐使用LAMJS.Config.Public.ROOT 或 LAMJS.ROOT 因为 _ROOT_ 是全局变量容易被外部人为修改。（_ROOT_ 的值修改 不会影响到 LAMJS.Config.Public.ROOT 的值）。
+			 note:模板标签里一定要放已定义过的变量才能被解析正常工作，否则将会报错，不能正常工作！
+			模板标签分隔符设置与修改   （参考 二十、配置参数 一、模板标签分隔符设置与修改）
+			 
+			
+	 
+	 note:  用MVC方式渲染页面就不用这种方式，MVC渲染请参考 十九、MVC。
+			修改模板标签分隔符参考 二十、配置参数 一、模板标签分隔符
 	
 ## 十九、MVC (详细demo看project目录里)
 				
