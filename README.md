@@ -1042,97 +1042,97 @@
   1. Controller 范例一、参考 [LAM](https://github.com/haohonglong/LAM)
 													
   2. Controller 范例二、(面向对象方式):
-
-		LAMJS.run(function() {
-				'use strict';
-				var System = this;
-				var __this__=null;
-				System.is(System,'Controller','IndexController');
-				var ROOT  = System.ROOT;
-				var views = System.Config.Public.ROOT+'/project/views/index';
-				var IndexController = System.Controller.extend({
-					constructor: function (init){
-						this.base(init || {});
-						__this__=this;
 	
-				},
-				'_className':'IndexController',
-				'indexAction':function(){
-					new System.Template().render(views+'/index.html',{
-						'ROOT':ROOT,
-						'D':{
-							'title':'你好，世界！',
-							'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
-						}
-	
-					},function(content){
-						System.print(content);
-					},{
-						beforeSend:function(a,b){
-							this.async=true;
-						}
-					});
-				},
-	
-	
-	
-				/**
-				 *
-				 * @author lhh
-				 * 产品介绍：析构方法
-				 * 创建日期：2015-4-2
-				 * 修改日期：2015-4-2
-				 * 名称：destructor
-				 * 功能：在注销IndexController对象时调用此方法
-				 * 说明：
-				 * 注意：
-				 * @return  ()
-				 * Example：
-				 */
-				'destructor':function(){}
-			});
-			new IndexController();
-		});
+			LAMJS.run(function() {
+					'use strict';
+					var System = this;
+					var __this__=null;
+					System.is(System,'Controller','IndexController');
+					var ROOT  = System.ROOT;
+					var views = System.Config.Public.ROOT+'/project/views/index';
+					var IndexController = System.Controller.extend({
+						constructor: function (init){
+							this.base(init || {});
+							__this__=this;
 		
-		render参数：
-			参数1：请求视图的路径
-			参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
-			参数3：视图路径请求成功后返回视图文件(String) 
-			参数4：设置请求Ajax 的参数(必须是json类型)
-		  
-    	note:
-    
-			不要忘了方法名称前缀action
-			注1： System.Html.include($('include'))是可选的， 要放在渲染视图的下面。
-					MVC方式的include标签的action属性值是请求的控制器，而后通过控制器请求视图，而不是直接去请求视图。
-					错误的方式：System.Html.include($('include'))放在视图里。
-			注2：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
-											render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
-											函数里的两个参数请参考jQuery Ajax API。
-		//views/index/index.html
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<title>{{title}}</title>
-				<link rel="stylesheet" type="text/css" href="{{ROOT}}/project/common/css/bootstrap.css"/>
-				<!--[if lt IE 8]>
-				<script>
-					alert('请使用谷歌、火狐浏览器！');
-				</script>
-				<![endif]-->
+					},
+					'_className':'IndexController',
+					'indexAction':function(){
+						new System.Template().render(views+'/index.html',{
+							'ROOT':ROOT,
+							'D':{
+								'title':'你好，世界！',
+								'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+							}
+		
+						},function(content){
+							System.print(content);
+						},{
+							beforeSend:function(a,b){
+								this.async=true;
+							}
+						});
+					},
+		
+		
+		
+					/**
+					 *
+					 * @author lhh
+					 * 产品介绍：析构方法
+					 * 创建日期：2015-4-2
+					 * 修改日期：2015-4-2
+					 * 名称：destructor
+					 * 功能：在注销IndexController对象时调用此方法
+					 * 说明：
+					 * 注意：
+					 * @return  ()
+					 * Example：
+					 */
+					'destructor':function(){}
+				});
+				new IndexController();
+			});
 			
-			
-			</head>
-			<body>
-				<div class="container">
-					<div class="jumbotron">
-						<h1>{{D.title}}</h1>
-						<p>{{D.content}}</p>
-						<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+			render参数：
+				参数1：请求视图的路径
+				参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
+				参数3：视图路径请求成功后返回视图文件(String) 
+				参数4：设置请求Ajax 的参数(必须是json类型)
+			  
+			note:
+		
+				不要忘了方法名称前缀action
+				注1： System.Html.include($('include'))是可选的， 要放在渲染视图的下面。
+						MVC方式的include标签的action属性值是请求的控制器，而后通过控制器请求视图，而不是直接去请求视图。
+						错误的方式：System.Html.include($('include'))放在视图里。
+				注2：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
+												render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
+												函数里的两个参数请参考jQuery Ajax API。
+			//views/index/index.html
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<title>{{title}}</title>
+					<link rel="stylesheet" type="text/css" href="{{ROOT}}/project/common/css/bootstrap.css"/>
+					<!--[if lt IE 8]>
+					<script>
+						alert('请使用谷歌、火狐浏览器！');
+					</script>
+					<![endif]-->
+				
+				
+				</head>
+				<body>
+					<div class="container">
+						<div class="jumbotron">
+							<h1>{{D.title}}</h1>
+							<p>{{D.content}}</p>
+							<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+						</div>
 					</div>
-				</div>
-			</body>
-			</html>
+				</body>
+				</html>
                 
                
                 
