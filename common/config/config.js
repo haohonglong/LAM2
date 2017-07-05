@@ -46,7 +46,7 @@ if(!GRN_LHH){
         'Public':{
              'ROOT':_ROOT_
             ,'COMMON':_ROOT_+'/common'
-            ,'PLUGINS':_ROOT_+'/plugins'
+            ,'PLUGINS':_ROOT_+'/common/plugins'
         },
         //hashcode 随机种子
         'random':10000,

@@ -246,6 +246,7 @@ if(!GRN_LHH){
 		'Loader': {},
 		'Component': {},
 		'Cache': {},
+		'Dropdown': {},
 		'Helper': {},
 		'Controller': {},
 		'Model': {},
