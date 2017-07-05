@@ -1692,7 +1692,34 @@ if(!GRN_LHH){
 				}
 			}
 			return max;
+		})
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017.07.05
+		 * 修改日期：2017.07.05
+		 * 名称：array_chunk
+		 * 功能：将一个数组分割成多个
+		 * 说明：
+		 * 注意：
+		 * 调用方式：
+		 * @param size  每个数组的单元数目
+		 * @param array 需要操作的数组
+		 * @returns {Array}
+		 * Example：
+		 */
+		.method('array_chunk',function(size,array) {
+			array = array || this;
+			var result = [];
+			for (var x = 0; x < Math.ceil(array.length / size); x++) {
+				var start = x * size;
+				var end = start + size;
+				result.push(array.slice(start, end));
+			}
+			return result;
 		});
+
 
 	/**
 	 * @author: lhh
