@@ -1,61 +1,60 @@
-/**
- * @author: lhh
- * 产品介绍：
- * 创建日期：2017-7-2
- * 修改日期：2017-7-4
- * 名称： dropdownMenu
- * 功能：bootstrap下拉框选中所选的放入输入框
- * 说明：boot-dropdown-tag="input" 这个属性放到 显示内容的元素。
- * 注意：
- * @param   (Object)D            		  NULL :初始化数据
- * @param   (String)D.delimiter    NULL :分隔符
- * @param   (String)D.delimiter.text    NULL :显示内容，每个词之间分隔符 默认" , "
- * @param   (String)D.delimiter.input    NULL :传给后台id之间分隔符 默认","
- * @param   (String)D.select             NULL :下拉框的包裹层
- * @param   (String)D.text             NULL :显示在输入框的信息
- * @param   (String)D.list            NULL :
- * @param   (String)D.option            NULL :
- * @param   (String)D.event             NULL :触发下拉框的事件，默认时click
- * @return (void)
- *html_strure:
- <div boot-dropdown-tag="parent_1">
-     <div class="dropdown" boot-dropdown-tag="select_1">
-         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-             <span boot-dropdown-tag="text"></span>
-             <span class="caret"></span>
-         </button>
-         <input type="hidden" boot-dropdown-tag="input">
-         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" boot-dropdown-tag="list">
-             <li data-id="1"><a href="#">北京</a></li>
-             <li data-id="2"><a href="#">天津</a></li>
-             <li data-id="3"><a href="#">上海</a></li>
-             <li data-id="8"><a href="#">江苏</a></li>
-         </ul>
-     </div>
-     <div class="dropdown" boot-dropdown-tag="select_2">
-         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-             <span boot-dropdown-tag="text"></span>
-             <span class="caret"></span>
-         </button>
-         <input type="hidden" boot-dropdown-tag="input">
-         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" boot-dropdown-tag="list">
-             <li data-id="1"><a href="#">北京</a></li>
-             <li data-id="2"><a href="#">天津</a></li>
-             <li data-id="3"><a href="#">上海</a></li>
-             <li data-id="8"><a href="#">江苏</a></li>
-         </ul>
-     </div>
- </div>
- *
- */
-
-window[GRN_LHH].run([window],function(window,undefined){
+window[GRN_LHH].run([jQuery],function($,undefined){
     'use strict';
     var System=this;
     System.is(System,'Browser','Dropdown');
     var __this__=null;
 
     var Dropdown = System.Browser.extend({
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2017-7-2
+         * 修改日期：2017-7-4
+         * 名称： dropdownMenu
+         * 功能：bootstrap下拉框选中所选的放入输入框
+         * 说明：boot-dropdown-tag="input" 这个属性放到 显示内容的元素。
+         * 注意：
+         * @param   (Object)D            		  NULL :初始化数据
+         * @param   (String)D.delimiter    NULL :分隔符
+         * @param   (String)D.delimiter.text    NULL :显示内容，每个词之间分隔符 默认" , "
+         * @param   (String)D.delimiter.input    NULL :传给后台id之间分隔符 默认","
+         * @param   (String)D.select             NULL :下拉框的包裹层
+         * @param   (String)D.text             NULL :显示在输入框的信息
+         * @param   (String)D.list            NULL :
+         * @param   (String)D.option            NULL :
+         * @param   (String)D.event             NULL :触发下拉框的事件，默认时click
+         * @return (void)
+         *html_strure:
+         <div boot-dropdown-tag="parent_1">
+         <div class="dropdown" boot-dropdown-tag="select_1">
+         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+         <span boot-dropdown-tag="text"></span>
+         <span class="caret"></span>
+         </button>
+         <input type="hidden" boot-dropdown-tag="input">
+         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" boot-dropdown-tag="list">
+         <li data-id="1"><a href="#">北京</a></li>
+         <li data-id="2"><a href="#">天津</a></li>
+         <li data-id="3"><a href="#">上海</a></li>
+         <li data-id="8"><a href="#">江苏</a></li>
+         </ul>
+         </div>
+         <div class="dropdown" boot-dropdown-tag="select_2">
+         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+         <span boot-dropdown-tag="text"></span>
+         <span class="caret"></span>
+         </button>
+         <input type="hidden" boot-dropdown-tag="input">
+         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" boot-dropdown-tag="list">
+         <li data-id="1"><a href="#">北京</a></li>
+         <li data-id="2"><a href="#">天津</a></li>
+         <li data-id="3"><a href="#">上海</a></li>
+         <li data-id="8"><a href="#">江苏</a></li>
+         </ul>
+         </div>
+         </div>
+         *
+         */
         'constructor': function(D) {
             var defaults={
                 'delimiter':{
@@ -164,6 +163,7 @@ window[GRN_LHH].run([window],function(window,undefined){
         },
         'delOption':function(id){
             this.$list.find('[data-id="'+id+'"]').remove();
+            return this;
         },
 
         /**
