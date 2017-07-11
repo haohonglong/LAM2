@@ -207,62 +207,36 @@
 				},
         	}
 
-			类结构:(继承参考 六、继承)
-
-				window[GRN_LHH].run([window],function(window,undefined){
-                        'use strict';
-                        var System=this;
-                        System.import([class]).import([class],System.classPath);
-
-                });
-				上面的是类框架代码块
-				System是一个对象,用来向外提供模块接口
-				
-
-			Example:
+			类结构:(继承参考 六、继承) 继承用basejs方式 
+			Example: 
 				window[GRN_LHH].run([window],function(window,undefined){
 					'use strict';
 					var System=this;
 					System.is(System,'superName','className');
-					System.className={};
-					//如要定义一个类首先要定义一个同名的接口名, 定义的接口名是一个对象,像上面这样方式定义
+					
 					var __this__=null;
 
-					function className(){
-						//无构造参数的方法
-						System.Basis.extends.call(this,System.superName);
-						//有构造参数的方法
-						System.Basis.extends.call(this,System.superName,2,[dom,init]);
-						__this__=this;
-
-
-
-					}
-
-					静态方法：
-					className.functionName=function(){};
-
-
-					className.prototype = {
-							'constructor':className,
-							/**
-							 *
-							 * @author lhh
-							 * 产品介绍：析构方法
-							 * 创建日期：2015-4-2
-							 * 修改日期：2015-4-2
-							 * 名称：destructor
-							 * 功能：在注销className对象时调用此方法
-							 * 说明：
-							 * 注意：
-							 * @return  ()						:
-							 * Example：
-							 */
-							'destructor':function(){}
-						};
-
-					System.extends(className,System.superName,1);
-					System['className']=className;
+					var className = System.superName.extend({
+                    		constructor: function (D){
+                    			
+                    		},
+                    		/**
+                    		 *
+                    		 * @author lhh
+                    		 * 产品介绍：析构方法
+                    		 * 创建日期：2015-4-2
+                    		 * 修改日期：2015-4-2
+                    		 * 名称：destructor
+                    		 * 功能：在注销Fsc对象时调用此方法
+                    		 * 说明：
+                    		 * 注意：
+                    		 * @return  ()						:
+                    		 * Example：
+                    		 */
+                    		'destructor':function(){}
+                    	});
+                    
+                    	System['className']=className;
 
 				});
 
