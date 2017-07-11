@@ -55,19 +55,19 @@ window[GRN_LHH].run([jQuery],function($,undefined){
          </div>
          *
          */
-        'constructor': function(D) {
+        "constructor": function(D) {
             var defaults={
-                'delimiter':{
-                    'text':' , ',
-                    'input':','
+                "delimiter":{
+                    "text":' , ',
+                    "input":','
                 },
-                'parent' : '#parent',
-                'select' : '[boot-dropdown-tag="select"]',
-                'text'  : '[boot-dropdown-tag="text"]',
-                'input' : '[boot-dropdown-tag="input"]',
-                'list': '[boot-dropdown-tag="list"]',
-                'option': 'li',
-                'event' : 'click'
+                "parent" : '#parent',
+                "select" : '[boot-dropdown-tag="select"]',
+                "text"   : '[boot-dropdown-tag="text"]',
+                "input"  : '[boot-dropdown-tag="input"]',
+                "list"   : '[boot-dropdown-tag="list"]',
+                "option" : 'li',
+                "event"  : 'click'
             };
             D = $.isPlainObject(D) ? $.extend({},defaults,D) : defaults;
             this.D = D;
@@ -82,8 +82,11 @@ window[GRN_LHH].run([jQuery],function($,undefined){
             this.ID = -1;
             this.guid = 0;
         },
-
-        'event':function(callBack){
+        /**
+         *
+         * @param callBack
+         */
+        "event":function(callBack){
             var D = this.D;
             var __this__ = this;
             $(__this__.$list).closest(__this__.$select).off(D.event,D.option);
@@ -109,7 +112,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
          *
          * @param callBack  NULL :回调返回三参数:this (当前点击的li元素); $text(当前输入框) ;$input(input )
          */
-        'run':function(callBack){
+        "run":function(callBack){
             if(this.D.event){
                 this.event(callBack);
             }
@@ -120,48 +123,76 @@ window[GRN_LHH].run([jQuery],function($,undefined){
         /**
          *
          * @param D
-         * @param D.$text
-         * @param D.$input
          */
-        'add':function(D){
-            if(!D){
-                D = {};
-            }
+        "set":function(D){
+            D = D || this;
+            D.$text.html(this.contents.join(this.delimiter.text));
+            D.$input.val(this.vals.join(this.delimiter.input));
+        },
 
-            var $text  = D.$text  || this.$text;
-            var $input = D.$input || this.$input;
-            var $eventTarget = $(this.eventTarget);
-            var text = $.trim($eventTarget.text());
-            var id = $.trim($eventTarget.data().id);
-            var t_i = $.inArray(text, this.contents);
-            var v_i = $.inArray(id, this.vals);
-            var old_text,old_input;
+        /**
+         *
+          * @returns {Dropdown}
+         */
+        "add":function(){
+            var $eventTarget,text,id,i,old_text,old_input;
+            $eventTarget = $(this.eventTarget);
+            text = $.trim($eventTarget.text());
+            id = $.trim($eventTarget.data().id);
+            i = $.inArray(id, this.vals);
             if(0 === this.guid){
-                old_text = $.trim($text.text());
-                old_input = $.trim($input.val());
+                old_text = $.trim(this.$text.text());
+                old_input = $.trim(this.$input.val());
                 if(!System.empty(old_text)){this.contents.push(old_text);}
                 if(!System.empty(old_input)){this.vals.push(old_input);}
             }
             this.guid++;
 
-            if(-1 === t_i){
+            if(-1 === i){
                 this.contents.push(text);
-            }else{
-                this.contents.splice(t_i,1);
-            }
-            if(-1 === v_i){
                 this.vals.push(id);
             }else{
-                this.vals.splice(v_i,1);
+                this.contents.splice(i,1);
+                this.vals.splice(i,1);
             }
 
-            $text.text(this.contents.join(this.delimiter.text));
-            $input.val(this.vals.join(this.delimiter.input));
-
-
+            this.set();
             return this;
         },
-        'delOption':function(id){
+        /**
+         * 移除已经添加过的内容及id
+         * @param id
+         * @returns {{}}
+         */
+        "remove":function(id){
+            var i = $.inArray(id, this.vals);
+            var option = null;
+            if(i > -1){
+                option={
+                    "id"   : id,
+                    "text" : this.contents[i]
+                };
+                this.vals.splice(i,1);
+                this.contents.splice(i,1);
+                this.set();
+            }
+            return option;
+        },
+        /**
+         *
+          * @param li
+         * @returns {Dropdown}
+         */
+        "appendLi":function(li){
+            this.$list.append(li);
+            return this;
+        },
+        /**
+         *
+          * @param id
+         * @returns {Dropdown}
+         */
+        "delOption":function(id){
             this.$list.find('[data-id="'+id+'"]').remove();
             return this;
         },
@@ -179,7 +210,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
          * @return  ()						:
          * Example：
          */
-        'destructor':function(){}
+        "destructor":function(){}
     });
 
     System['Dropdown']=Dropdown;
