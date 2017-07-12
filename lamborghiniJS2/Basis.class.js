@@ -1762,8 +1762,8 @@ if(!GRN_LHH){
 	 *
 	 */
 	function arr_Object_key_has(key){
-		arr_Object_key = System.arr_Object_key || arr_Object_key;
-		if(System.isArray(arr_Object_key) && arr_Object_key.in_array(key)){
+		var arr = System.arr_Object_key;
+		if(System.isArray(arr) && arr.in_array(key)){
 			return true;
 		}
 		return false;
