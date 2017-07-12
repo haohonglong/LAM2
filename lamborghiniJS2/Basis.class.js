@@ -1213,6 +1213,7 @@ if(!GRN_LHH){
 	System.isXMLHttpRequest = isXMLHttpRequest;
 	System.isXMLSerializer  = isXMLSerializer;
 
+	System.arr_Object_key = arr_Object_key;
 	System.arr_Object_key_has = arr_Object_key_has;
 	System.contains = contains;
 	//check Number
@@ -2123,7 +2124,7 @@ window[GRN_LHH].run([window],function(W,Config){
 	};
 
 
-	System.arr_Object_key=null;
+
 	var __this__=null;
 	/**
 	 *
