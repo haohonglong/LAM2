@@ -12,12 +12,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 		var __this__=null;
 		var fixEvent = System.Browser.fixEvt;
 
-		var defaultOptions = {
-			cloneProperties: ['padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
-				'text-align', 'font', 'font-size', 'font-family', 'font-weight',
-				'border', 'border-top', 'border-bottom', 'border-left', 'border-right'],
-			editor: $('<input>')
-		};
+
 
 		/**
 		 *设置多个表格可编辑
@@ -27,9 +22,13 @@ window[GRN_LHH].run([window,window.document,jQuery],
 		 */
 		var EditTables = System.Dom.extend({
 			constructor: function(table,D) {
-				__this__=this;
+				var __this__=this;
 				var defaults={
-					'event':'click'
+					"add":'[data-input="add"]',
+					"del":'[data-input="del"]',
+					"reset":'[data-input="reset"]',
+					"submit":'[data-input="submit"]',
+					"event":'click'
 				};
 				var init = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
 				var parent= table[0] || document;
@@ -37,19 +36,6 @@ window[GRN_LHH].run([window,window.document,jQuery],
 				this.init   = init;
 				this.table  = table;
 				this.parent = parent;
-
-				this.run();
-
-			},
-			'_className':'EditTables',
-			/**
-			 *
-			 */
-			'run':function(){
-				var __this__ = this;
-				var init     = this.init;
-				var parent   = this.parent;
-				var table    = this.table;
 
 				$(parent).off(init['event'],'[data-input="add"]');
 				$(parent).on(init['event'],'[data-input="add"]',function(){
@@ -72,15 +58,17 @@ window[GRN_LHH].run([window,window.document,jQuery],
 				});
 
 
-				this.setTableCanEdit(this.table);
-				return this;
+				this.setTableCanEdit();
+
 			},
+
 			/**
 			 * 设置表格是可编辑的
 			 * @param table
 			 * @returns {EditTables}
 			 */
 			'setTableCanEdit':function(table) {
+				table = table || this.table;
 				for (var i = 1; i < table.rows.length; i++) {
 					this.setRowCanEdit(table.rows[i]);
 				}
@@ -98,6 +86,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 					var editType = $(this).attr("edit-type");
 					if (!editType) {
 						//如果当前单元格没有指定，则查看当前列是否指定
+
 						editType = row.parentNode.rows[0].cells[j].getAttribute("edit-type");
 						//editType = $(this).closest('tr').attr("edit-type");
 					}
@@ -152,7 +141,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 						value = element.getAttribute("Value");
 					}
 					//创建文本框
-					var input=System.Html.tag('input',true,{'type':'text','EditTables':'editCell_TextBox','value':value});
+					var input=System.Html.tag(true,'input',{'type':'text','EditTables':'editCell_TextBox','value':value});
 					var $input = $(input);
 					var textBox = $input[0];
 

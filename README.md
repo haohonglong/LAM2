@@ -307,19 +307,19 @@
 				用对象的方式可以传自定义参数
 				
 			2.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
-				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],' ',' ');
+				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js']);
 
 				System
 					.import([
 						'/Browser.class'
 					],classPath);
 					
-					classPath 不填的话 默认是 项目的根目录（_ROOT_）
+					classPath 不填的话 默认是 项目的根目录（System.ROOT）
 
 				或者像下面这样可以添加自定义参数
 				System
 					.import([
-						{'src':'/Browser.class','data-main':'scripts/main.js',' ',' '},
+						{'src':'/Browser.class','data-main':'scripts/main.js'},
 						{'src':'/Drag.class','attr':2},
 						{'src':'/Drag_xy.class','attr':3},
 						{'src':'/Dom.class','attr':4}
@@ -342,15 +342,7 @@
 		在类继承之前要先进行检测。
 		每一个组件除了继承基类中的配置属性以外, 还会根据需要增加自己的配置属性, 另外 子类中有的时候还会把父类的一些配置属性的含义及用途重新定义
 		System.is方法是检测的作用。检测父类是否已注册过。检测子类名称是否与已注册的类名重名了。这句话必须放在第一行。
-		继承的两种方式：
-		1.构造器式继承
-			System.Basis.extends.call(this);
-			上面这句必须放在构造函数中
-		2.原型链式继承
-			System.extends(className,superName,1);
-			上面这句必须放在类框架代码块末尾；(参考 二、开发约定 里的 类结构)
-		3.子类调用父类的成员方法(父类方法被子类覆写)
-			this.Super.父类成员方法();
+		LAM2 继承用basejs方式 
 
 ## 七、原始对象的原型链上扩充的方法列表
 			Function.method();

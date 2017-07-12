@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>dropdown example</title>
+    <title>城市分配</title>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript">
         LAMJS.run(function() {
@@ -117,12 +117,12 @@
                     objs.push(city);
                 }
 
-                $.each(objs,function(){
+                System.each(objs,function(){
                     (function(city){
                         city.run(function(){
                             city.add();
                             city.delOption(city.ID);
-                            $.each(objs,function(){
+                            System.each(objs,function(){
                                 (function(city2){
                                     if(city2 === city){
                                         return;
@@ -146,7 +146,7 @@
 
             $.getJSON( COMMON+"/data/data.json", function( data ) {
 
-                $.each(data.cities,function(){
+                System.each(data.cities,function(){
                     if(index > 6) return true;
                     index++;
                     cities.push(this.area_name);

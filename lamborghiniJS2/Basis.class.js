@@ -672,7 +672,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-2-29
-		 * 修改日期：2017-3-8
+		 * 修改日期：2017-7-12
 		 * 名称： each
 		 * 功能：遍历数组或对象
 		 * 说明：
@@ -702,7 +702,7 @@ if(!GRN_LHH){
 				return obj.each(callback);
 			} else {
 				for (key in obj ) {
-					if (false === callback.call( obj[ key ], key, obj[ key ])) {
+					if (System.arr_Object_key_has(key) || false === callback.call( obj[ key ], key, obj[ key ])) {
 						break;
 					}
 				}
@@ -1726,7 +1726,7 @@ if(!GRN_LHH){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-27
-	 * 修改日期：2015-8-27
+	 * 修改日期：2017-7-12
 	 * 名称：getObjectLength
 	 * 功能：获取对象成员的长度
 	 * 说明：
@@ -1735,23 +1735,22 @@ if(!GRN_LHH){
 	 * Example：
 	 */
 	function getObjectLength(){
+		var n= 0,k;
 		if(Object.keys){
 			return Object.keys(this).length;
 		}
 
-		var n=0;
-		var k;
 		for(k in this){
 			n++;
 		}
-		return n-1;
+		return n;
 	}
 
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-9-1
-	 * 修改日期：2015-9-1
+	 * 修改日期：2017-7-12
 	 * 名称： arr_Object_key_has
 	 * 功能：检查 arr_Object_key 这个数组里是否有相同的关键字。有返回true 否则 false;
 	 * 说明：
@@ -1763,10 +1762,8 @@ if(!GRN_LHH){
 	 */
 	function arr_Object_key_has(key){
 		arr_Object_key = System.arr_Object_key || arr_Object_key;
-		for(var i= 0,len=arr_Object_key.length;i < len;i++){
-			if(key === arr_Object_key[i]){
-				return true;
-			}
+		if(System.isArray(arr_Object_key) && arr_Object_key.in_array(key)){
+			return true;
 		}
 		return false;
 	}
@@ -2144,7 +2141,7 @@ window[GRN_LHH].run([window],function(W,Config){
 	 *
 	 */
 	System.isClassFile=function(path) {
-		var arr,path,className;
+		var arr,className;
 		//查找是否有.class这个关键字
 		if(path.search(/.class/g) != -1){
 			if(path.indexOf("/") != -1){

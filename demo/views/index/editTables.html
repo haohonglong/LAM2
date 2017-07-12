@@ -75,14 +75,7 @@
             <td bgcolor="#FFFFFF">0</td>
             <td bgcolor="#FFFFFF">0</td>
         </tr>
-        <tr>
-            <td align="center" bgcolor="#FFFFFF"><input type="checkbox" name="checkbox22" value="checkbox" /></td>
-            <td bgcolor="#FFFFFF">2</td>
-            <td bgcolor="#FFFFFF" value="d">D</td>
-            <td bgcolor="#FFFFFF">0</td>
-            <td bgcolor="#FFFFFF">0</td>
-            <td bgcolor="#FFFFFF">0</td>
-        </tr>
+
     </table>
 
     <br />
@@ -92,6 +85,8 @@
     <input type="submit" name="Submit3"  data-input="submit" value="提交" />
 </form>
 
+
+
 <script type="text/javascript">
 
 
@@ -99,7 +94,14 @@
         'use strict';
         var System=this;
 
-        new System.EditTables( document.getElementById("tabProduct"));
+        $(function(){
+            new System.EditTables( document.getElementById("tabProduct"));
+
+
+
+
+        });
+
 
 
 
