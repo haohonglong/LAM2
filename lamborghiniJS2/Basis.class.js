@@ -746,7 +746,7 @@ if(!GRN_LHH){
 				}
 				//算出找到指定内容，所需要遍历的次数
 				loop++;
-				return System.each(D,function(k,v){
+				System.each(D,function(k,v){
 					totalLoop++;
 					if (false === callback.apply(D,[k,v,loop,totalLoop])) {
 						if(System.LAM_DEBUG){
