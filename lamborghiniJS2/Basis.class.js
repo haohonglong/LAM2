@@ -672,7 +672,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-2-29
-		 * 修改日期：2017-7-12
+		 * 修改日期：2017-7-13
 		 * 名称： each
 		 * 功能：遍历数组或对象
 		 * 说明：
@@ -686,7 +686,7 @@ if(!GRN_LHH){
 				throw new Error('Warning : 两个参数是必传的');
 
 			}
-			if(System.isString(obj) || System.isNumeric(obj)){
+			if(System.isNumber(obj) || System.isBoolean(obj)){
 				throw new Error('Warning '+obj+': 数据类型非法！');
 				return obj;
 			}
@@ -701,9 +701,17 @@ if(!GRN_LHH){
 			if (System.isArray( obj ) ) {
 				return obj.each(callback);
 			} else {
-				for (key in obj ) {
-					if (System.arr_Object_key_has(key) || false === callback.call( obj[ key ], key, obj[ key ])) {
-						break;
+				if(System.isPlainObject(obj)){
+					for (key in obj ) {
+						if (false === callback.call( obj[ key ], key, obj[ key ])) {
+							break;
+						}
+					}
+				}else{
+					for(var i= 0,len=obj.length;i<len;i++) {
+						if (false === callback.call( obj[i], i, obj[i])) {
+							break;
+						}
 					}
 				}
 			}

@@ -326,7 +326,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-9-4
-	 * 修改日期：2016-10-26
+	 * 修改日期：2017-7-13
 	 * 名称： Html.renderTagAttributes
 	 * 功能：
 	 * 说明：
@@ -340,10 +340,10 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		Attr = !Attr || !System.isPlainObject(Attr) ? {} : Attr;
 		if(System.isEmptyObject(Attr)){return '';}
 		var attrs=[];
-		for(var key in Attr){
-			if(System.arr_Object_key_has(key)){continue;}
-			attrs.push(' ',key,'="',Attr[key],'"');
-		}
+		System.each(Attr,function(k,v){
+			attrs.push(' ',k,'="',v,'"');
+		});
+
 		return attrs.join('');
 	};
 
