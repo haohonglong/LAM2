@@ -162,6 +162,17 @@
 
             });
 
+            $.getJSON( COMMON+"/data/cities_2.json", function( data ) {
+
+                System.search(data,function(k,v){
+                    if('code' == k && '1302' == v){
+                        console.log(this.area_name)
+                        return false;
+                    }
+                });
+
+            });
+
             function main(){
                 citySelect.run();
 
