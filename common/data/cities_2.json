@@ -1,0 +1,1867 @@
+[
+  {
+    "area_name": "北京市",
+    "childCity": [
+      {
+        "code": "1101",
+        "area_name": "北京市",
+        "parent": "11"
+      }
+    ]
+  },
+  {
+    "area_name": "天津市",
+    "childCity": [
+      {
+        "code": "1201",
+        "area_name": "天津市",
+        "parent": "12"
+      }
+    ]
+  },
+  {
+    "area_name": "河北省",
+    "childCity": [
+      {
+        "code": "1301",
+        "area_name": "石家庄市",
+        "parent": "13"
+      },
+      {
+        "code": "1302",
+        "area_name": "唐山市",
+        "parent": "13"
+      },
+      {
+        "code": "1303",
+        "area_name": "秦皇岛市",
+        "parent": "13"
+      },
+      {
+        "code": "1304",
+        "area_name": "邯郸市",
+        "parent": "13"
+      },
+      {
+        "code": "1305",
+        "area_name": "邢台市",
+        "parent": "13"
+      },
+      {
+        "code": "1306",
+        "area_name": "保定市",
+        "parent": "13"
+      },
+      {
+        "code": "1307",
+        "area_name": "张家口市",
+        "parent": "13"
+      },
+      {
+        "code": "1308",
+        "area_name": "承德市",
+        "parent": "13"
+      },
+      {
+        "code": "1309",
+        "area_name": "沧州市",
+        "parent": "13"
+      },
+      {
+        "code": "1310",
+        "area_name": "廊坊市",
+        "parent": "13"
+      },
+      {
+        "code": "1311",
+        "area_name": "衡水市",
+        "parent": "13"
+      },
+      {
+        "code": "1390",
+        "area_name": "省直辖县级行政区划",
+        "parent": "13"
+      }
+    ]
+  },
+  {
+    "area_name": "山西省",
+    "childCity": [
+      {
+        "code": "1401",
+        "area_name": "太原市",
+        "parent": "14"
+      },
+      {
+        "code": "1402",
+        "area_name": "大同市",
+        "parent": "14"
+      },
+      {
+        "code": "1403",
+        "area_name": "阳泉市",
+        "parent": "14"
+      },
+      {
+        "code": "1404",
+        "area_name": "长治市",
+        "parent": "14"
+      },
+      {
+        "code": "1405",
+        "area_name": "晋城市",
+        "parent": "14"
+      },
+      {
+        "code": "1406",
+        "area_name": "朔州市",
+        "parent": "14"
+      },
+      {
+        "code": "1407",
+        "area_name": "晋中市",
+        "parent": "14"
+      },
+      {
+        "code": "1408",
+        "area_name": "运城市",
+        "parent": "14"
+      },
+      {
+        "code": "1409",
+        "area_name": "忻州市",
+        "parent": "14"
+      },
+      {
+        "code": "1410",
+        "area_name": "临汾市",
+        "parent": "14"
+      },
+      {
+        "code": "1411",
+        "area_name": "吕梁市",
+        "parent": "14"
+      }
+    ]
+  },
+  {
+    "area_name": "内蒙古自治区",
+    "childCity": [
+      {
+        "code": "1501",
+        "area_name": "呼和浩特市",
+        "parent": "15"
+      },
+      {
+        "code": "1502",
+        "area_name": "包头市",
+        "parent": "15"
+      },
+      {
+        "code": "1503",
+        "area_name": "乌海市",
+        "parent": "15"
+      },
+      {
+        "code": "1504",
+        "area_name": "赤峰市",
+        "parent": "15"
+      },
+      {
+        "code": "1505",
+        "area_name": "通辽市",
+        "parent": "15"
+      },
+      {
+        "code": "1506",
+        "area_name": "鄂尔多斯市",
+        "parent": "15"
+      },
+      {
+        "code": "1507",
+        "area_name": "呼伦贝尔市",
+        "parent": "15"
+      },
+      {
+        "code": "1508",
+        "area_name": "巴彦淖尔市",
+        "parent": "15"
+      },
+      {
+        "code": "1509",
+        "area_name": "乌兰察布市",
+        "parent": "15"
+      },
+      {
+        "code": "1522",
+        "area_name": "兴安盟",
+        "parent": "15"
+      },
+      {
+        "code": "1525",
+        "area_name": "锡林郭勒盟",
+        "parent": "15"
+      },
+      {
+        "code": "1529",
+        "area_name": "阿拉善盟",
+        "parent": "15"
+      }
+    ]
+  },
+  {
+    "area_name": "辽宁省",
+    "childCity": [
+      {
+        "code": "2101",
+        "area_name": "沈阳市",
+        "parent": "21"
+      },
+      {
+        "code": "2102",
+        "area_name": "大连市",
+        "parent": "21"
+      },
+      {
+        "code": "2103",
+        "area_name": "鞍山市",
+        "parent": "21"
+      },
+      {
+        "code": "2104",
+        "area_name": "抚顺市",
+        "parent": "21"
+      },
+      {
+        "code": "2105",
+        "area_name": "本溪市",
+        "parent": "21"
+      },
+      {
+        "code": "2106",
+        "area_name": "丹东市",
+        "parent": "21"
+      },
+      {
+        "code": "2107",
+        "area_name": "锦州市",
+        "parent": "21"
+      },
+      {
+        "code": "2108",
+        "area_name": "营口市",
+        "parent": "21"
+      },
+      {
+        "code": "2109",
+        "area_name": "阜新市",
+        "parent": "21"
+      },
+      {
+        "code": "2110",
+        "area_name": "辽阳市",
+        "parent": "21"
+      },
+      {
+        "code": "2111",
+        "area_name": "盘锦市",
+        "parent": "21"
+      },
+      {
+        "code": "2112",
+        "area_name": "铁岭市",
+        "parent": "21"
+      },
+      {
+        "code": "2113",
+        "area_name": "朝阳市",
+        "parent": "21"
+      },
+      {
+        "code": "2114",
+        "area_name": "葫芦岛市",
+        "parent": "21"
+      }
+    ]
+  },
+  {
+    "area_name": "吉林省",
+    "childCity": [
+      {
+        "code": "2201",
+        "area_name": "长春市",
+        "parent": "22"
+      },
+      {
+        "code": "2202",
+        "area_name": "吉林市",
+        "parent": "22"
+      },
+      {
+        "code": "2203",
+        "area_name": "四平市",
+        "parent": "22"
+      },
+      {
+        "code": "2204",
+        "area_name": "辽源市",
+        "parent": "22"
+      },
+      {
+        "code": "2205",
+        "area_name": "通化市",
+        "parent": "22"
+      },
+      {
+        "code": "2206",
+        "area_name": "白山市",
+        "parent": "22"
+      },
+      {
+        "code": "2207",
+        "area_name": "松原市",
+        "parent": "22"
+      },
+      {
+        "code": "2208",
+        "area_name": "白城市",
+        "parent": "22"
+      },
+      {
+        "code": "2224",
+        "area_name": "延边朝鲜族自治州",
+        "parent": "22"
+      }
+    ]
+  },
+  {
+    "area_name": "黑龙江省",
+    "childCity": [
+      {
+        "code": "2301",
+        "area_name": "哈尔滨市",
+        "parent": "23"
+      },
+      {
+        "code": "2302",
+        "area_name": "齐齐哈尔市",
+        "parent": "23"
+      },
+      {
+        "code": "2303",
+        "area_name": "鸡西市",
+        "parent": "23"
+      },
+      {
+        "code": "2304",
+        "area_name": "鹤岗市",
+        "parent": "23"
+      },
+      {
+        "code": "2305",
+        "area_name": "双鸭山市",
+        "parent": "23"
+      },
+      {
+        "code": "2306",
+        "area_name": "大庆市",
+        "parent": "23"
+      },
+      {
+        "code": "2307",
+        "area_name": "伊春市",
+        "parent": "23"
+      },
+      {
+        "code": "2308",
+        "area_name": "佳木斯市",
+        "parent": "23"
+      },
+      {
+        "code": "2309",
+        "area_name": "七台河市",
+        "parent": "23"
+      },
+      {
+        "code": "2310",
+        "area_name": "牡丹江市",
+        "parent": "23"
+      },
+      {
+        "code": "2311",
+        "area_name": "黑河市",
+        "parent": "23"
+      },
+      {
+        "code": "2312",
+        "area_name": "绥化市",
+        "parent": "23"
+      },
+      {
+        "code": "2327",
+        "area_name": "大兴安岭地区",
+        "parent": "23"
+      }
+    ]
+  },
+  {
+    "area_name": "上海市",
+    "childCity": [
+      {
+        "code": "3101",
+        "area_name": "上海市",
+        "parent": "31"
+      }
+    ]
+  },
+  {
+    "area_name": "江苏省",
+    "childCity": [
+      {
+        "code": "3201",
+        "area_name": "南京市",
+        "parent": "32"
+      },
+      {
+        "code": "3202",
+        "area_name": "无锡市",
+        "parent": "32"
+      },
+      {
+        "code": "3203",
+        "area_name": "徐州市",
+        "parent": "32"
+      },
+      {
+        "code": "3204",
+        "area_name": "常州市",
+        "parent": "32"
+      },
+      {
+        "code": "3205",
+        "area_name": "苏州市",
+        "parent": "32"
+      },
+      {
+        "code": "3206",
+        "area_name": "南通市",
+        "parent": "32"
+      },
+      {
+        "code": "3207",
+        "area_name": "连云港市",
+        "parent": "32"
+      },
+      {
+        "code": "3208",
+        "area_name": "淮安市",
+        "parent": "32"
+      },
+      {
+        "code": "3209",
+        "area_name": "盐城市",
+        "parent": "32"
+      },
+      {
+        "code": "3210",
+        "area_name": "扬州市",
+        "parent": "32"
+      },
+      {
+        "code": "3211",
+        "area_name": "镇江市",
+        "parent": "32"
+      },
+      {
+        "code": "3212",
+        "area_name": "泰州市",
+        "parent": "32"
+      },
+      {
+        "code": "3213",
+        "area_name": "宿迁市",
+        "parent": "32"
+      }
+    ]
+  },
+  {
+    "area_name": "浙江省",
+    "childCity": [
+      {
+        "code": "3301",
+        "area_name": "杭州市",
+        "parent": "33"
+      },
+      {
+        "code": "3302",
+        "area_name": "宁波市",
+        "parent": "33"
+      },
+      {
+        "code": "3303",
+        "area_name": "温州市",
+        "parent": "33"
+      },
+      {
+        "code": "3304",
+        "area_name": "嘉兴市",
+        "parent": "33"
+      },
+      {
+        "code": "3305",
+        "area_name": "湖州市",
+        "parent": "33"
+      },
+      {
+        "code": "3306",
+        "area_name": "绍兴市",
+        "parent": "33"
+      },
+      {
+        "code": "3307",
+        "area_name": "金华市",
+        "parent": "33"
+      },
+      {
+        "code": "3308",
+        "area_name": "衢州市",
+        "parent": "33"
+      },
+      {
+        "code": "3309",
+        "area_name": "舟山市",
+        "parent": "33"
+      },
+      {
+        "code": "3310",
+        "area_name": "台州市",
+        "parent": "33"
+      },
+      {
+        "code": "3311",
+        "area_name": "丽水市",
+        "parent": "33"
+      }
+    ]
+  },
+  {
+    "area_name": "安徽省",
+    "childCity": [
+      {
+        "code": "3401",
+        "area_name": "合肥市",
+        "parent": "34"
+      },
+      {
+        "code": "3402",
+        "area_name": "芜湖市",
+        "parent": "34"
+      },
+      {
+        "code": "3403",
+        "area_name": "蚌埠市",
+        "parent": "34"
+      },
+      {
+        "code": "3404",
+        "area_name": "淮南市",
+        "parent": "34"
+      },
+      {
+        "code": "3405",
+        "area_name": "马鞍山市",
+        "parent": "34"
+      },
+      {
+        "code": "3406",
+        "area_name": "淮北市",
+        "parent": "34"
+      },
+      {
+        "code": "3407",
+        "area_name": "铜陵市",
+        "parent": "34"
+      },
+      {
+        "code": "3408",
+        "area_name": "安庆市",
+        "parent": "34"
+      },
+      {
+        "code": "3410",
+        "area_name": "黄山市",
+        "parent": "34"
+      },
+      {
+        "code": "3411",
+        "area_name": "滁州市",
+        "parent": "34"
+      },
+      {
+        "code": "3412",
+        "area_name": "阜阳市",
+        "parent": "34"
+      },
+      {
+        "code": "3413",
+        "area_name": "宿州市",
+        "parent": "34"
+      },
+      {
+        "code": "3415",
+        "area_name": "六安市",
+        "parent": "34"
+      },
+      {
+        "code": "3416",
+        "area_name": "亳州市",
+        "parent": "34"
+      },
+      {
+        "code": "3417",
+        "area_name": "池州市",
+        "parent": "34"
+      },
+      {
+        "code": "3418",
+        "area_name": "宣城市",
+        "parent": "34"
+      }
+    ]
+  },
+  {
+    "area_name": "福建省",
+    "childCity": [
+      {
+        "code": "3501",
+        "area_name": "福州市",
+        "parent": "35"
+      },
+      {
+        "code": "3502",
+        "area_name": "厦门市",
+        "parent": "35"
+      },
+      {
+        "code": "3503",
+        "area_name": "莆田市",
+        "parent": "35"
+      },
+      {
+        "code": "3504",
+        "area_name": "三明市",
+        "parent": "35"
+      },
+      {
+        "code": "3505",
+        "area_name": "泉州市",
+        "parent": "35"
+      },
+      {
+        "code": "3506",
+        "area_name": "漳州市",
+        "parent": "35"
+      },
+      {
+        "code": "3507",
+        "area_name": "南平市",
+        "parent": "35"
+      },
+      {
+        "code": "3508",
+        "area_name": "龙岩市",
+        "parent": "35"
+      },
+      {
+        "code": "3509",
+        "area_name": "宁德市",
+        "parent": "35"
+      }
+    ]
+  },
+  {
+    "area_name": "江西省",
+    "childCity": [
+      {
+        "code": "3601",
+        "area_name": "南昌市",
+        "parent": "36"
+      },
+      {
+        "code": "3602",
+        "area_name": "景德镇市",
+        "parent": "36"
+      },
+      {
+        "code": "3603",
+        "area_name": "萍乡市",
+        "parent": "36"
+      },
+      {
+        "code": "3604",
+        "area_name": "九江市",
+        "parent": "36"
+      },
+      {
+        "code": "3605",
+        "area_name": "新余市",
+        "parent": "36"
+      },
+      {
+        "code": "3606",
+        "area_name": "鹰潭市",
+        "parent": "36"
+      },
+      {
+        "code": "3607",
+        "area_name": "赣州市",
+        "parent": "36"
+      },
+      {
+        "code": "3608",
+        "area_name": "吉安市",
+        "parent": "36"
+      },
+      {
+        "code": "3609",
+        "area_name": "宜春市",
+        "parent": "36"
+      },
+      {
+        "code": "3610",
+        "area_name": "抚州市",
+        "parent": "36"
+      },
+      {
+        "code": "3611",
+        "area_name": "上饶市",
+        "parent": "36"
+      }
+    ]
+  },
+  {
+    "area_name": "山东省",
+    "childCity": [
+      {
+        "code": "3701",
+        "area_name": "济南市",
+        "parent": "37"
+      },
+      {
+        "code": "3702",
+        "area_name": "青岛市",
+        "parent": "37"
+      },
+      {
+        "code": "3703",
+        "area_name": "淄博市",
+        "parent": "37"
+      },
+      {
+        "code": "3704",
+        "area_name": "枣庄市",
+        "parent": "37"
+      },
+      {
+        "code": "3705",
+        "area_name": "东营市",
+        "parent": "37"
+      },
+      {
+        "code": "3706",
+        "area_name": "烟台市",
+        "parent": "37"
+      },
+      {
+        "code": "3707",
+        "area_name": "潍坊市",
+        "parent": "37"
+      },
+      {
+        "code": "3708",
+        "area_name": "济宁市",
+        "parent": "37"
+      },
+      {
+        "code": "3709",
+        "area_name": "泰安市",
+        "parent": "37"
+      },
+      {
+        "code": "3710",
+        "area_name": "威海市",
+        "parent": "37"
+      },
+      {
+        "code": "3711",
+        "area_name": "日照市",
+        "parent": "37"
+      },
+      {
+        "code": "3712",
+        "area_name": "莱芜市",
+        "parent": "37"
+      },
+      {
+        "code": "3713",
+        "area_name": "临沂市",
+        "parent": "37"
+      },
+      {
+        "code": "3714",
+        "area_name": "德州市",
+        "parent": "37"
+      },
+      {
+        "code": "3715",
+        "area_name": "聊城市",
+        "parent": "37"
+      },
+      {
+        "code": "3716",
+        "area_name": "滨州市",
+        "parent": "37"
+      },
+      {
+        "code": "3717",
+        "area_name": "菏泽市",
+        "parent": "37"
+      }
+    ]
+  },
+  {
+    "area_name": "河南省",
+    "childCity": [
+      {
+        "code": "4101",
+        "area_name": "郑州市",
+        "parent": "41"
+      },
+      {
+        "code": "4102",
+        "area_name": "开封市",
+        "parent": "41"
+      },
+      {
+        "code": "4103",
+        "area_name": "洛阳市",
+        "parent": "41"
+      },
+      {
+        "code": "4104",
+        "area_name": "平顶山市",
+        "parent": "41"
+      },
+      {
+        "code": "4105",
+        "area_name": "安阳市",
+        "parent": "41"
+      },
+      {
+        "code": "4106",
+        "area_name": "鹤壁市",
+        "parent": "41"
+      },
+      {
+        "code": "4107",
+        "area_name": "新乡市",
+        "parent": "41"
+      },
+      {
+        "code": "4108",
+        "area_name": "焦作市",
+        "parent": "41"
+      },
+      {
+        "code": "4109",
+        "area_name": "濮阳市",
+        "parent": "41"
+      },
+      {
+        "code": "4110",
+        "area_name": "许昌市",
+        "parent": "41"
+      },
+      {
+        "code": "4111",
+        "area_name": "漯河市",
+        "parent": "41"
+      },
+      {
+        "code": "4112",
+        "area_name": "三门峡市",
+        "parent": "41"
+      },
+      {
+        "code": "4113",
+        "area_name": "南阳市",
+        "parent": "41"
+      },
+      {
+        "code": "4114",
+        "area_name": "商丘市",
+        "parent": "41"
+      },
+      {
+        "code": "4115",
+        "area_name": "信阳市",
+        "parent": "41"
+      },
+      {
+        "code": "4116",
+        "area_name": "周口市",
+        "parent": "41"
+      },
+      {
+        "code": "4117",
+        "area_name": "驻马店市",
+        "parent": "41"
+      },
+      {
+        "code": "4190",
+        "area_name": "省直辖县级行政区划",
+        "parent": "41"
+      }
+    ]
+  },
+  {
+    "area_name": "湖北省",
+    "childCity": [
+      {
+        "code": "4201",
+        "area_name": "武汉市",
+        "parent": "42"
+      },
+      {
+        "code": "4202",
+        "area_name": "黄石市",
+        "parent": "42"
+      },
+      {
+        "code": "4203",
+        "area_name": "十堰市",
+        "parent": "42"
+      },
+      {
+        "code": "4205",
+        "area_name": "宜昌市",
+        "parent": "42"
+      },
+      {
+        "code": "4206",
+        "area_name": "襄阳市",
+        "parent": "42"
+      },
+      {
+        "code": "4207",
+        "area_name": "鄂州市",
+        "parent": "42"
+      },
+      {
+        "code": "4208",
+        "area_name": "荆门市",
+        "parent": "42"
+      },
+      {
+        "code": "4209",
+        "area_name": "孝感市",
+        "parent": "42"
+      },
+      {
+        "code": "4210",
+        "area_name": "荆州市",
+        "parent": "42"
+      },
+      {
+        "code": "4211",
+        "area_name": "黄冈市",
+        "parent": "42"
+      },
+      {
+        "code": "4212",
+        "area_name": "咸宁市",
+        "parent": "42"
+      },
+      {
+        "code": "4213",
+        "area_name": "随州市",
+        "parent": "42"
+      },
+      {
+        "code": "4228",
+        "area_name": "恩施土家族苗族自治州",
+        "parent": "42"
+      },
+      {
+        "code": "4290",
+        "area_name": "省直辖县级行政区划",
+        "parent": "42"
+      }
+    ]
+  },
+  {
+    "area_name": "湖南省",
+    "childCity": [
+      {
+        "code": "4301",
+        "area_name": "长沙市",
+        "parent": "43"
+      },
+      {
+        "code": "4302",
+        "area_name": "株洲市",
+        "parent": "43"
+      },
+      {
+        "code": "4303",
+        "area_name": "湘潭市",
+        "parent": "43"
+      },
+      {
+        "code": "4304",
+        "area_name": "衡阳市",
+        "parent": "43"
+      },
+      {
+        "code": "4305",
+        "area_name": "邵阳市",
+        "parent": "43"
+      },
+      {
+        "code": "4306",
+        "area_name": "岳阳市",
+        "parent": "43"
+      },
+      {
+        "code": "4307",
+        "area_name": "常德市",
+        "parent": "43"
+      },
+      {
+        "code": "4308",
+        "area_name": "张家界市",
+        "parent": "43"
+      },
+      {
+        "code": "4309",
+        "area_name": "益阳市",
+        "parent": "43"
+      },
+      {
+        "code": "4310",
+        "area_name": "郴州市",
+        "parent": "43"
+      },
+      {
+        "code": "4311",
+        "area_name": "永州市",
+        "parent": "43"
+      },
+      {
+        "code": "4312",
+        "area_name": "怀化市",
+        "parent": "43"
+      },
+      {
+        "code": "4313",
+        "area_name": "娄底市",
+        "parent": "43"
+      },
+      {
+        "code": "4331",
+        "area_name": "湘西土家族苗族自治州",
+        "parent": "43"
+      }
+    ]
+  },
+  {
+    "area_name": "广东省",
+    "childCity": [
+      {
+        "code": "4401",
+        "area_name": "广州市",
+        "parent": "44"
+      },
+      {
+        "code": "4402",
+        "area_name": "韶关市",
+        "parent": "44"
+      },
+      {
+        "code": "4403",
+        "area_name": "深圳市",
+        "parent": "44"
+      },
+      {
+        "code": "4404",
+        "area_name": "珠海市",
+        "parent": "44"
+      },
+      {
+        "code": "4405",
+        "area_name": "汕头市",
+        "parent": "44"
+      },
+      {
+        "code": "4406",
+        "area_name": "佛山市",
+        "parent": "44"
+      },
+      {
+        "code": "4407",
+        "area_name": "江门市",
+        "parent": "44"
+      },
+      {
+        "code": "4408",
+        "area_name": "湛江市",
+        "parent": "44"
+      },
+      {
+        "code": "4409",
+        "area_name": "茂名市",
+        "parent": "44"
+      },
+      {
+        "code": "4412",
+        "area_name": "肇庆市",
+        "parent": "44"
+      },
+      {
+        "code": "4413",
+        "area_name": "惠州市",
+        "parent": "44"
+      },
+      {
+        "code": "4414",
+        "area_name": "梅州市",
+        "parent": "44"
+      },
+      {
+        "code": "4415",
+        "area_name": "汕尾市",
+        "parent": "44"
+      },
+      {
+        "code": "4416",
+        "area_name": "河源市",
+        "parent": "44"
+      },
+      {
+        "code": "4417",
+        "area_name": "阳江市",
+        "parent": "44"
+      },
+      {
+        "code": "4418",
+        "area_name": "清远市",
+        "parent": "44"
+      },
+      {
+        "code": "4419",
+        "area_name": "东莞市",
+        "parent": "44"
+      },
+      {
+        "code": "4420",
+        "area_name": "中山市",
+        "parent": "44"
+      },
+      {
+        "code": "4451",
+        "area_name": "潮州市",
+        "parent": "44"
+      },
+      {
+        "code": "4452",
+        "area_name": "揭阳市",
+        "parent": "44"
+      },
+      {
+        "code": "4453",
+        "area_name": "云浮市",
+        "parent": "44"
+      }
+    ]
+  },
+  {
+    "area_name": "广西壮族自治区",
+    "childCity": [
+      {
+        "code": "4501",
+        "area_name": "南宁市",
+        "parent": "45"
+      },
+      {
+        "code": "4502",
+        "area_name": "柳州市",
+        "parent": "45"
+      },
+      {
+        "code": "4503",
+        "area_name": "桂林市",
+        "parent": "45"
+      },
+      {
+        "code": "4504",
+        "area_name": "梧州市",
+        "parent": "45"
+      },
+      {
+        "code": "4505",
+        "area_name": "北海市",
+        "parent": "45"
+      },
+      {
+        "code": "4506",
+        "area_name": "防城港市",
+        "parent": "45"
+      },
+      {
+        "code": "4507",
+        "area_name": "钦州市",
+        "parent": "45"
+      },
+      {
+        "code": "4508",
+        "area_name": "贵港市",
+        "parent": "45"
+      },
+      {
+        "code": "4509",
+        "area_name": "玉林市",
+        "parent": "45"
+      },
+      {
+        "code": "4510",
+        "area_name": "百色市",
+        "parent": "45"
+      },
+      {
+        "code": "4511",
+        "area_name": "贺州市",
+        "parent": "45"
+      },
+      {
+        "code": "4512",
+        "area_name": "河池市",
+        "parent": "45"
+      },
+      {
+        "code": "4513",
+        "area_name": "来宾市",
+        "parent": "45"
+      },
+      {
+        "code": "4514",
+        "area_name": "崇左市",
+        "parent": "45"
+      }
+    ]
+  },
+  {
+    "area_name": "海南省",
+    "childCity": [
+      {
+        "code": "4601",
+        "area_name": "海口市",
+        "parent": "46"
+      },
+      {
+        "code": "4602",
+        "area_name": "三亚市",
+        "parent": "46"
+      },
+      {
+        "code": "4603",
+        "area_name": "三沙市",
+        "parent": "46"
+      },
+      {
+        "code": "4690",
+        "area_name": "省直辖县级行政区划",
+        "parent": "46"
+      }
+    ]
+  },
+  {
+    "area_name": "重庆市",
+    "childCity": [
+      {
+        "code": "5001",
+        "area_name": "重庆市",
+        "parent": "50"
+      }
+    ]
+  },
+  {
+    "area_name": "四川省",
+    "childCity": [
+      {
+        "code": "5101",
+        "area_name": "成都市",
+        "parent": "51"
+      },
+      {
+        "code": "5103",
+        "area_name": "自贡市",
+        "parent": "51"
+      },
+      {
+        "code": "5104",
+        "area_name": "攀枝花市",
+        "parent": "51"
+      },
+      {
+        "code": "5105",
+        "area_name": "泸州市",
+        "parent": "51"
+      },
+      {
+        "code": "5106",
+        "area_name": "德阳市",
+        "parent": "51"
+      },
+      {
+        "code": "5107",
+        "area_name": "绵阳市",
+        "parent": "51"
+      },
+      {
+        "code": "5108",
+        "area_name": "广元市",
+        "parent": "51"
+      },
+      {
+        "code": "5109",
+        "area_name": "遂宁市",
+        "parent": "51"
+      },
+      {
+        "code": "5110",
+        "area_name": "内江市",
+        "parent": "51"
+      },
+      {
+        "code": "5111",
+        "area_name": "乐山市",
+        "parent": "51"
+      },
+      {
+        "code": "5113",
+        "area_name": "南充市",
+        "parent": "51"
+      },
+      {
+        "code": "5114",
+        "area_name": "眉山市",
+        "parent": "51"
+      },
+      {
+        "code": "5115",
+        "area_name": "宜宾市",
+        "parent": "51"
+      },
+      {
+        "code": "5116",
+        "area_name": "广安市",
+        "parent": "51"
+      },
+      {
+        "code": "5117",
+        "area_name": "达州市",
+        "parent": "51"
+      },
+      {
+        "code": "5118",
+        "area_name": "雅安市",
+        "parent": "51"
+      },
+      {
+        "code": "5119",
+        "area_name": "巴中市",
+        "parent": "51"
+      },
+      {
+        "code": "5120",
+        "area_name": "资阳市",
+        "parent": "51"
+      },
+      {
+        "code": "5132",
+        "area_name": "阿坝藏族羌族自治州",
+        "parent": "51"
+      },
+      {
+        "code": "5133",
+        "area_name": "甘孜藏族自治州",
+        "parent": "51"
+      },
+      {
+        "code": "5134",
+        "area_name": "凉山彝族自治州",
+        "parent": "51"
+      }
+    ]
+  },
+  {
+    "area_name": "贵州省",
+    "childCity": [
+      {
+        "code": "5201",
+        "area_name": "贵阳市",
+        "parent": "52"
+      },
+      {
+        "code": "5202",
+        "area_name": "六盘水市",
+        "parent": "52"
+      },
+      {
+        "code": "5203",
+        "area_name": "遵义市",
+        "parent": "52"
+      },
+      {
+        "code": "5204",
+        "area_name": "安顺市",
+        "parent": "52"
+      },
+      {
+        "code": "5205",
+        "area_name": "毕节市",
+        "parent": "52"
+      },
+      {
+        "code": "5206",
+        "area_name": "铜仁市",
+        "parent": "52"
+      },
+      {
+        "code": "5223",
+        "area_name": "黔西南布依族苗族自治州",
+        "parent": "52"
+      },
+      {
+        "code": "5226",
+        "area_name": "黔东南苗族侗族自治州",
+        "parent": "52"
+      },
+      {
+        "code": "5227",
+        "area_name": "黔南布依族苗族自治州",
+        "parent": "52"
+      }
+    ]
+  },
+  {
+    "area_name": "云南省",
+    "childCity": [
+      {
+        "code": "5301",
+        "area_name": "昆明市",
+        "parent": "53"
+      },
+      {
+        "code": "5303",
+        "area_name": "曲靖市",
+        "parent": "53"
+      },
+      {
+        "code": "5304",
+        "area_name": "玉溪市",
+        "parent": "53"
+      },
+      {
+        "code": "5305",
+        "area_name": "保山市",
+        "parent": "53"
+      },
+      {
+        "code": "5306",
+        "area_name": "昭通市",
+        "parent": "53"
+      },
+      {
+        "code": "5307",
+        "area_name": "丽江市",
+        "parent": "53"
+      },
+      {
+        "code": "5308",
+        "area_name": "普洱市",
+        "parent": "53"
+      },
+      {
+        "code": "5309",
+        "area_name": "临沧市",
+        "parent": "53"
+      },
+      {
+        "code": "5323",
+        "area_name": "楚雄彝族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5325",
+        "area_name": "红河哈尼族彝族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5326",
+        "area_name": "文山壮族苗族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5328",
+        "area_name": "西双版纳傣族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5329",
+        "area_name": "大理白族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5331",
+        "area_name": "德宏傣族景颇族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5333",
+        "area_name": "怒江傈僳族自治州",
+        "parent": "53"
+      },
+      {
+        "code": "5334",
+        "area_name": "迪庆藏族自治州",
+        "parent": "53"
+      }
+    ]
+  },
+  {
+    "area_name": "西藏自治区",
+    "childCity": [
+      {
+        "code": "5401",
+        "area_name": "拉萨市",
+        "parent": "54"
+      },
+      {
+        "code": "5402",
+        "area_name": "日喀则市",
+        "parent": "54"
+      },
+      {
+        "code": "5403",
+        "area_name": "昌都市",
+        "parent": "54"
+      },
+      {
+        "code": "5404",
+        "area_name": "林芝市",
+        "parent": "54"
+      },
+      {
+        "code": "5422",
+        "area_name": "山南地区",
+        "parent": "54"
+      },
+      {
+        "code": "5424",
+        "area_name": "那曲地区",
+        "parent": "54"
+      },
+      {
+        "code": "5425",
+        "area_name": "阿里地区",
+        "parent": "54"
+      }
+    ]
+  },
+  {
+    "area_name": "陕西省",
+    "childCity": [
+      {
+        "code": "6101",
+        "area_name": "西安市",
+        "parent": "61"
+      },
+      {
+        "code": "6102",
+        "area_name": "铜川市",
+        "parent": "61"
+      },
+      {
+        "code": "6103",
+        "area_name": "宝鸡市",
+        "parent": "61"
+      },
+      {
+        "code": "6104",
+        "area_name": "咸阳市",
+        "parent": "61"
+      },
+      {
+        "code": "6105",
+        "area_name": "渭南市",
+        "parent": "61"
+      },
+      {
+        "code": "6106",
+        "area_name": "延安市",
+        "parent": "61"
+      },
+      {
+        "code": "6107",
+        "area_name": "汉中市",
+        "parent": "61"
+      },
+      {
+        "code": "6108",
+        "area_name": "榆林市",
+        "parent": "61"
+      },
+      {
+        "code": "6109",
+        "area_name": "安康市",
+        "parent": "61"
+      },
+      {
+        "code": "6110",
+        "area_name": "商洛市",
+        "parent": "61"
+      }
+    ]
+  },
+  {
+    "area_name": "甘肃省",
+    "childCity": [
+      {
+        "code": "6201",
+        "area_name": "兰州市",
+        "parent": "62"
+      },
+      {
+        "code": "6202",
+        "area_name": "嘉峪关市",
+        "parent": "62"
+      },
+      {
+        "code": "6203",
+        "area_name": "金昌市",
+        "parent": "62"
+      },
+      {
+        "code": "6204",
+        "area_name": "白银市",
+        "parent": "62"
+      },
+      {
+        "code": "6205",
+        "area_name": "天水市",
+        "parent": "62"
+      },
+      {
+        "code": "6206",
+        "area_name": "武威市",
+        "parent": "62"
+      },
+      {
+        "code": "6207",
+        "area_name": "张掖市",
+        "parent": "62"
+      },
+      {
+        "code": "6208",
+        "area_name": "平凉市",
+        "parent": "62"
+      },
+      {
+        "code": "6209",
+        "area_name": "酒泉市",
+        "parent": "62"
+      },
+      {
+        "code": "6210",
+        "area_name": "庆阳市",
+        "parent": "62"
+      },
+      {
+        "code": "6211",
+        "area_name": "定西市",
+        "parent": "62"
+      },
+      {
+        "code": "6212",
+        "area_name": "陇南市",
+        "parent": "62"
+      },
+      {
+        "code": "6229",
+        "area_name": "临夏回族自治州",
+        "parent": "62"
+      },
+      {
+        "code": "6230",
+        "area_name": "甘南藏族自治州",
+        "parent": "62"
+      }
+    ]
+  },
+  {
+    "area_name": "青海省",
+    "childCity": [
+      {
+        "code": "6301",
+        "area_name": "西宁市",
+        "parent": "63"
+      },
+      {
+        "code": "6302",
+        "area_name": "海东市",
+        "parent": "63"
+      },
+      {
+        "code": "6322",
+        "area_name": "海北藏族自治州",
+        "parent": "63"
+      },
+      {
+        "code": "6323",
+        "area_name": "黄南藏族自治州",
+        "parent": "63"
+      },
+      {
+        "code": "6325",
+        "area_name": "海南藏族自治州",
+        "parent": "63"
+      },
+      {
+        "code": "6326",
+        "area_name": "果洛藏族自治州",
+        "parent": "63"
+      },
+      {
+        "code": "6327",
+        "area_name": "玉树藏族自治州",
+        "parent": "63"
+      },
+      {
+        "code": "6328",
+        "area_name": "海西蒙古族藏族自治州",
+        "parent": "63"
+      }
+    ]
+  },
+  {
+    "area_name": "宁夏回族自治区",
+    "childCity": [
+      {
+        "code": "6401",
+        "area_name": "银川市",
+        "parent": "64"
+      },
+      {
+        "code": "6402",
+        "area_name": "石嘴山市",
+        "parent": "64"
+      },
+      {
+        "code": "6403",
+        "area_name": "吴忠市",
+        "parent": "64"
+      },
+      {
+        "code": "6404",
+        "area_name": "固原市",
+        "parent": "64"
+      },
+      {
+        "code": "6405",
+        "area_name": "中卫市",
+        "parent": "64"
+      }
+    ]
+  },
+  {
+    "area_name": "新疆维吾尔自治区",
+    "childCity": [
+      {
+        "code": "6501",
+        "area_name": "乌鲁木齐市",
+        "parent": "65"
+      },
+      {
+        "code": "6502",
+        "area_name": "克拉玛依市",
+        "parent": "65"
+      },
+      {
+        "code": "6504",
+        "area_name": "吐鲁番市",
+        "parent": "65"
+      },
+      {
+        "code": "6522",
+        "area_name": "哈密地区",
+        "parent": "65"
+      },
+      {
+        "code": "6523",
+        "area_name": "昌吉回族自治州",
+        "parent": "65"
+      },
+      {
+        "code": "6527",
+        "area_name": "博尔塔拉蒙古自治州",
+        "parent": "65"
+      },
+      {
+        "code": "6528",
+        "area_name": "巴音郭楞蒙古自治州",
+        "parent": "65"
+      },
+      {
+        "code": "6529",
+        "area_name": "阿克苏地区",
+        "parent": "65"
+      },
+      {
+        "code": "6530",
+        "area_name": "克孜勒苏柯尔克孜自治州",
+        "parent": "65"
+      },
+      {
+        "code": "6531",
+        "area_name": "喀什地区",
+        "parent": "65"
+      },
+      {
+        "code": "6532",
+        "area_name": "和田地区",
+        "parent": "65"
+      },
+      {
+        "code": "6540",
+        "area_name": "伊犁哈萨克自治州",
+        "parent": "65"
+      },
+      {
+        "code": "6542",
+        "area_name": "塔城地区",
+        "parent": "65"
+      },
+      {
+        "code": "6543",
+        "area_name": "阿勒泰地区",
+        "parent": "65"
+      },
+      {
+        "code": "6590",
+        "area_name": "自治区直辖县级行政区划",
+        "parent": "65"
+      }
+    ]
+  }
+]

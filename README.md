@@ -471,9 +471,9 @@
                  @return  {*}	
 			LAMJS.proxy();
 			LAMJS.putIndexGetObjectTheValue();
-			LAMJS.list();
-				 名称： list
-	             功能：递归对象
+			LAMJS.search();
+				 名称： search
+	             功能：递归对象搜索
 	             说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
 	             注意：
 	             @param 	(Object)D             			NO NULL : 对象

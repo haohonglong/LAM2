@@ -326,7 +326,7 @@ if(!GRN_LHH){
 	 *			arr_isEmpty
 	 *			queues
 	 *			putIndexGetObjectTheValue
-	 *			list
+	 *			search
 	 *			is
 	 *			isJson
 	 *			isPlainObject
@@ -723,8 +723,8 @@ if(!GRN_LHH){
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
 		 * 修改日期：2017-7-13
-		 * 名称： list
-		 * 功能：递归对象
+		 * 名称： search
+		 * 功能：递归对象搜索
 		 * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
 		 * 注意：
 		 * @param 	(Object)D             			NO NULL : 对象
@@ -733,7 +733,7 @@ if(!GRN_LHH){
 		 * Example：
 		 *
 		 */
-		'list':function(D,callback){
+		'search':function(D,callback){
 			var loop,totalLoop;
 			totalLoop=loop=0;
 			var list=function(D,callback){
@@ -750,7 +750,7 @@ if(!GRN_LHH){
 					totalLoop++;
 					if (false === callback.apply(D,[k,v,loop,totalLoop])) {
 						if(System.LAM_DEBUG){
-							console.log('共遍历----->'+loop+'<------次找到了');
+							console.log('共遍历'+loop+'次找到了');
 						}
 						return false;
 					}

@@ -93,9 +93,21 @@
     LAMJS.run(function(){
         'use strict';
         var System=this;
+        var COMMON = System.Config.Public.COMMON;
 
         $(function(){
             new System.EditTables( document.getElementById("tabProduct"));
+
+            $.getJSON( COMMON+"/data/cities_2.json", function( data ) {
+
+                System.search(data,function(k,v){
+                    if('code' == k && '3602' == v){
+                        console.log(this.area_name)
+                        return false;
+                    }
+                });
+
+            });
 
 
 
