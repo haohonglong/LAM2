@@ -728,7 +728,7 @@ if(!GRN_LHH){
 						return false;
 					}
 					//如果没找到，就继续递归搜索
-					if(v && recursion){return list(v,callback);}
+					if(v && recursion){list(v,callback);}
 				});
 			};
 			list(D,callback);
