@@ -24,11 +24,12 @@ window[GRN_LHH].run([window,window.document,jQuery],
 			constructor: function(table,D) {
 				var __this__=this;
 				var defaults={
-					"tags":{
-						"add":'[data-input="add"]',
-						"del":'[data-input="del"]',
-						"reset":'[data-input="reset"]',
-						"submit":'[data-input="submit"]'
+					"button":{
+						"table" :'[edit-table="table"]',
+						"add"   :'[edit-table-input="add"]',
+						"del"   :'[edit-table-input="del"]',
+						"reset" :'[edit-table-input="reset"]',
+						"submit":'[edit-table-input="submit"]'
 					},
 					"event":'click'
 				};
@@ -39,20 +40,20 @@ window[GRN_LHH].run([window,window.document,jQuery],
 				this.table  = table;
 				this.parent = parent;
 
-				$(parent).off(init['event'],init.tags.add);
-				$(parent).on(init['event'],init.tags.add,function(){
+				$(parent).off(init['event'],init.button.add);
+				$(parent).on(init['event'],init.button.add,function(){
 					__this__.addRow(table,1);
 				});
-				$(parent).off(init['event'],init.tags.del);
-				$(parent).on(init['event'],init.tags.del,function(){
+				$(parent).off(init['event'],init.button.del);
+				$(parent).on(init['event'],init.button.del,function(){
 					__this__.deleteRow(table,1);
 				});
-				$(parent).off(init['event'],init.tags.reset);
-				$(parent).on(init['event'],init.tags.reset,function(){
+				$(parent).off(init['event'],init.button.reset);
+				$(parent).on(init['event'],init.button.reset,function(){
 					window.location.reload();
 				});
-				$(parent).off(init['event'],init.tags.submit);
-				$(parent).on(init['event'],init.tags.submit,function(event){
+				$(parent).off(init['event'],init.button.submit);
+				$(parent).on(init['event'],init.button.submit,function(event){
 					event = fixEvent(event);
 					__this__.getTableData(table,1);
 					event.preventDefault();
