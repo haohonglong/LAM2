@@ -672,7 +672,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-2-29
-		 * 修改日期：2017-7-13
+		 * 修改日期：2017-7-14
 		 * 名称： each
 		 * 功能：遍历数组或对象
 		 * 说明：
@@ -682,40 +682,19 @@ if(!GRN_LHH){
 		 * @returns {*}
 		 */
 		'each':function( obj, callback ) {
-			if(!obj || !callback){
-				throw new Error('Warning : 两个参数是必传的');
-
-			}
-			if(System.isNumber(obj) || System.isBoolean(obj)){
-				throw new Error('Warning '+obj+': 数据类型非法！');
-				return obj;
-			}
-
-			if(!System.isFunction(callback)){
-				throw new Error('Warning :第二参数 必须是个callback！');
-				return obj;
-			}
-
 			var key;
-
-			if (System.isArray( obj ) ) {
-				return obj.each(callback);
-			} else {
-				if(System.isPlainObject(obj)){
-					for (key in obj ) {
-						if (false === callback.call( obj[ key ], key, obj[ key ])) {
-							break;
-						}
-					}
-				}else{
-					for(var i= 0,len=obj.length;i<len;i++) {
-						if (false === callback.call( obj[i], i, obj[i])) {
-							break;
-						}
-					}
+			if(!obj || !callback){throw new Error('Warning : 两个参数是必传的');}
+			if(System.isNumber(obj) || System.isBoolean(obj)){throw new Error('Warning '+obj+': 数据类型非法！');}
+			if(!System.isFunction(callback)){throw new Error('Warning :第二参数 必须是个callback！');}
+			if(System.isPlainObject(obj)){
+				for (key in obj ) {
+					if (false === callback.call( obj[ key ], key, obj[ key ])) {break;}
+				}
+			}else{
+				for(var i= 0,len=obj.length;i<len;i++) {
+					if (false === callback.call( obj[i], i, obj[i])) {break;}
 				}
 			}
-
 			return obj;
 		},
 		/**
@@ -734,37 +713,26 @@ if(!GRN_LHH){
 		 *
 		 */
 		'search':function(D,callback){
-			var loop,totalLoop;
+			var loop,totalLoop,recursion = true;
 			totalLoop=loop=0;
-			var recursion = true;
 			var list=function(D,callback){
-
-				if(!System.isArray(D) && !System.isPlainObject(D)){
-					return D;
-				}
-				if(!System.isFunction(callback)){
-					throw new Error('Warning 第二参数 必须是个callback');
-				}
+				if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
+				if(!System.isFunction(callback)){throw new Error('Warning 第二参数 必须是个callback');}
 				//算出找到指定内容，所需要遍历的次数
 				loop++;
 				System.each(D,function(k,v){
 					totalLoop++;
 					if (false === callback.apply(D,[k,v,loop,totalLoop])) {
-						if(System.LAM_DEBUG){
-							console.log('共遍历'+loop+'次找到了');
-						}
+						if(System.LAM_DEBUG){console.log('共遍历'+loop+'次找到了');}
 						recursion = false;
 						return false;
 					}
 					//如果没找到，就继续递归搜索
-					if(v && recursion){
-						return list(v,callback);
-					}
+					if(v && recursion){return list(v,callback);}
 				});
 			};
 			list(D,callback);
 			return {'totalLoop':totalLoop,'loop':loop};
-
 		},
 
 		/**
@@ -1567,17 +1535,10 @@ if(!GRN_LHH){
 			}else{
 				arr = arr || this;
 			}
-
-			if(!System.isFunction(callback)){
-				return arr;
-			}
-
+			if(!System.isFunction(callback)){return arr;}
 			for(var i= 0,len=arr.length;i < len;i++) {
-				if (false === callback.call( arr[i], i, arr[i])) {
-					break;
-				}
+				if (false === callback.call( arr[i], i, arr[i])) {break;}
 			}
-
 			return arr;
 		})
 
