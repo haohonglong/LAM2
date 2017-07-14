@@ -33,7 +33,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 					"event":'click'
 				};
 				var init = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
-				var parent= table[0] || document;
+				var parent= table.parentNode || document;
 
 				this.init   = init;
 				this.table  = table;
