@@ -736,6 +736,7 @@ if(!GRN_LHH){
 		'search':function(D,callback){
 			var loop,totalLoop;
 			totalLoop=loop=0;
+			var recursion = true;
 			var list=function(D,callback){
 
 				if(!System.isArray(D) && !System.isPlainObject(D)){
@@ -752,10 +753,11 @@ if(!GRN_LHH){
 						if(System.LAM_DEBUG){
 							console.log('共遍历'+loop+'次找到了');
 						}
+						recursion = false;
 						return false;
 					}
 					//如果没找到，就继续递归搜索
-					if(v){
+					if(v && recursion){
 						return list(v,callback);
 					}
 				});
