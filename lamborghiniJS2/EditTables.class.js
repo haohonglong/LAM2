@@ -14,20 +14,22 @@ window[GRN_LHH].run([window,window.document,jQuery],
 
 
 
-		/**
-		 *设置多个表格可编辑
-		 * @param table
-		 * @param D
-		 * @constructor
-		 */
-		var EditTables = System.Dom.extend({
+	/**
+	 *设置多个表格可编辑
+	 * @param table
+	 * @param D
+	 * @constructor
+	 */
+	var EditTables = System.Dom.extend({
 			constructor: function(table,D) {
 				var __this__=this;
 				var defaults={
-					"add":'[data-input="add"]',
-					"del":'[data-input="del"]',
-					"reset":'[data-input="reset"]',
-					"submit":'[data-input="submit"]',
+					"tags":{
+						"add":'[data-input="add"]',
+						"del":'[data-input="del"]',
+						"reset":'[data-input="reset"]',
+						"submit":'[data-input="submit"]'
+					},
 					"event":'click'
 				};
 				var init = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
@@ -37,20 +39,20 @@ window[GRN_LHH].run([window,window.document,jQuery],
 				this.table  = table;
 				this.parent = parent;
 
-				$(parent).off(init['event'],'[data-input="add"]');
-				$(parent).on(init['event'],'[data-input="add"]',function(){
+				$(parent).off(init['event'],init.tags.add);
+				$(parent).on(init['event'],init.tags.add,function(){
 					__this__.addRow(table,1);
 				});
-				$(parent).off(init['event'],'[data-input="del"]');
-				$(parent).on(init['event'],'[data-input="del"]',function(){
+				$(parent).off(init['event'],init.tags.del);
+				$(parent).on(init['event'],init.tags.del,function(){
 					__this__.deleteRow(table,1);
 				});
-				$(parent).off(init['event'],'[data-input="reset"]');
-				$(parent).on(init['event'],'[data-input="reset"]',function(){
+				$(parent).off(init['event'],init.tags.reset);
+				$(parent).on(init['event'],init.tags.reset,function(){
 					window.location.reload();
 				});
-				$(parent).off(init['event'],'[data-input="submit"]');
-				$(parent).on(init['event'],'[data-input="submit"]',function(event){
+				$(parent).off(init['event'],init.tags.submit);
+				$(parent).on(init['event'],init.tags.submit,function(event){
 					event = fixEvent(event);
 					__this__.getTableData(table,1);
 					event.preventDefault();
@@ -81,13 +83,13 @@ window[GRN_LHH].run([window,window.document,jQuery],
 			 */
 			'setRowCanEdit':function(row) {
 				var __this__ =this;
-				System.each(row.cells,function(j){
+				System.each(row.cells,function(i){
 					//如果当前单元格指定了编辑类型，则表示允许编辑
 					var editType = $(this).attr("edit-type");
 					if (!editType) {
 						//如果当前单元格没有指定，则查看当前列是否指定
 
-						editType = row.parentNode.rows[0].cells[j].getAttribute("edit-type");
+						editType = row.parentNode.rows[0].cells[i].getAttribute("edit-type");
 						//editType = $(this).closest('tr').attr("edit-type");
 					}
 					if (editType) {
@@ -313,8 +315,8 @@ window[GRN_LHH].run([window,window.document,jQuery],
 				var rowData = this.getRowData(row);
 				var name;
 				//循环代值计算
-				System.each(row.cells,function(j){
-					name = row.parentNode.rows[0].cells[j].getAttribute("Name");
+				System.each(row.cells,function(i){
+					name = row.parentNode.rows[0].cells[i].getAttribute("Name");
 					if (name) {
 						var reg = new RegExp(name, "i");
 						expn = expn.replace(reg, rowData[name].replace(/\,/g, ""));
@@ -468,7 +470,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 			 * Example：
 			 */
 			'destructor':function(){}
-		});
+	});
 
 	System['EditTables']=EditTables;
 

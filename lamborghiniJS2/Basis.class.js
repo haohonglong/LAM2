@@ -1560,22 +1560,20 @@ if(!GRN_LHH){
 			if(i!= -1)
 				this.splice(i,1);
 		})
-		.method('each',function(arr,fn){
+		.method('each',function(arr,callback){
 			if(1 === arguments.length){
 				arr = this;
-				fn = arguments[0]
+				callback = arguments[0]
 			}else{
 				arr = arr || this;
 			}
 
-			if(!System.isFunction(fn)){
+			if(!System.isFunction(callback)){
 				return arr;
 			}
 
-			var item;
-			for(var i=0,len=arr.length;i<len;++i) {
-				item=arr[i];
-				if(item && fn.call(item, i, item)){
+			for(var i= 0,len=arr.length;i < len;i++) {
+				if (false === callback.call( arr[i], i, arr[i])) {
 					break;
 				}
 			}

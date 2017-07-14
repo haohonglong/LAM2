@@ -1,10 +1,10 @@
 window[GRN_LHH].run([jQuery],function($,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Browser','Dropdown');
+    System.is(System,'Dom','Dropdown');
     var __this__=null;
 
-    var Dropdown = System.Browser.extend({
+    var Dropdown = System.Dom.extend({
         /**
          * @author: lhh
          * 产品介绍：
