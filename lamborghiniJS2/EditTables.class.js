@@ -24,8 +24,8 @@ window[GRN_LHH].run([window,window.document,jQuery],
 			constructor: function(table,D) {
 				var __this__=this;
 				var defaults={
+					"table" :'[edit-table="table"]',
 					"button":{
-						"table" :'[edit-table="table"]',
 						"add"   :'[edit-table-input="add"]',
 						"del"   :'[edit-table-input="del"]',
 						"reset" :'[edit-table-input="reset"]',
