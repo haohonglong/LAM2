@@ -898,7 +898,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-7-13
-	 * 修改日期：2016-10-26
+	 * 修改日期：2017-8-10
 	 * 名称：Dom.filterSpaceNode
 	 * 功能：过滤元素中包含的所有空白节点
 	 * 说明：
@@ -908,10 +908,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.filterSpaceNode=function(nodes){//
 		var ret=[];
-		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].nodeType===3 && /^\s+$/.test(nodes[i].nodeValue)) continue;//查找是否是文本节点且有空格
-			ret.push(nodes[i]);
-		}
+		System.each(nodes,function(){
+			if(3 === this.nodeType && /^\s+$/.test(this.nodeValue)) return true;//查找是否是文本节点且有空格
+			ret.push(this);
+		});
 		return ret;
 	};
 
