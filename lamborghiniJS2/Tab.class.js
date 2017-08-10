@@ -129,15 +129,13 @@ window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
 
 					break;
 				case 'hover':
-					var $list=$(D.list);
-					$list.unbind('mouseenter').unbind('mouseleave');
-					$list[eve](function(){
-						$(this).addClass(css);
-					},function(){
-						//if(D.temp && $(this)[0]!=D.temp[0]){//只有不是当前选中的才能做下面的事情
-						$(this).removeClass(css);
-						//}
-					});
+					$(D.list).unbind('mouseenter').unbind('mouseleave')
+						.mouseenter(function() {
+							$(this).addClass(css);
+						})
+						.mouseleave(function() {
+							$(this).removeClass(css);
+						});
 
 					break;
 
