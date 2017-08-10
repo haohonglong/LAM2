@@ -88,7 +88,7 @@ window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期：2014-5-29
-		 * 修改日期：2015-1-15
+		 * 修改日期：2017-8-10
 		 * 名称：private (void) select_event
 		 * 功能：选择相应的事件
 		 * 说明：
