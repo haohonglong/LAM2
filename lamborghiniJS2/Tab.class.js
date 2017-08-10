@@ -129,14 +129,13 @@ window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
 
 					break;
 				case 'hover':
-					$(D.list).unbind('mouseenter').unbind('mouseleave')
+					$list.unbind('mouseenter').unbind('mouseleave')
 						.mouseenter(function() {
 							$(this).addClass(css);
 						})
 						.mouseleave(function() {
 							$(this).removeClass(css);
 						});
-
 					break;
 
 				default:
