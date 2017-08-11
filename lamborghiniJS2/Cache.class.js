@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2017-1-5
+ * 修改日期:2017-8-11
  * 名称：Cache类
  * 功能：缓存
  * 说明 : 
@@ -18,9 +18,10 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var System=this;
 	System.is(System,'Browser','Cache');
 	var __this__=null;
-	var cache = [],Cache,cache_name='',
+	var cache = [],cache_name='',
+		myStorage = null,
 		isStorage=function(){
-			if(typeof(Storage) !== "undefined") {
+			if(typeof(myStorage) !== "undefined") {
 				return true;
 			} else {
 				return false;
@@ -34,19 +35,19 @@ window[GRN_LHH].run([window],function(window,undefined){
 		name = name || cache_name;
 		if(isStorage()){
 			clear();
-			sessionStorage.setItem(name,JSON.stringify(value));
+			myStorage.setItem(name,JSON.stringify(value));
 		}
 	}
 	function remove(name){
 		name = name || cache_name;
 		if(isStorage()){
-			sessionStorage.removeItem(name);
+			myStorage.removeItem(name);
 		}
 	}
 
 	function clear() {
 		if(isStorage()){
-			sessionStorage.clear();
+			myStorage.clear();
 		}else{
 			cache = [];
 		}
@@ -56,7 +57,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	function get(name) {
 		name = name || cache_name;
 		if(isStorage()){
-			return (JSON.parse(sessionStorage.getItem(name))) || cache;
+			return (JSON.parse(myStorage.getItem(name))) || cache;
 		}else{
 			return cache;
 		}
@@ -65,14 +66,20 @@ window[GRN_LHH].run([window],function(window,undefined){
 //========================================================
 
 	var Cache = System.Browser.extend({
-		constructor: function(name){
+		constructor: function(name,type){
 			__this__=this;
 			this.caches = [];
 			cache_name = name || 'cache';
 			this.cache_name = cache_name;
+			this.myStorage = type || localStorage;
 		},
 		'_className':'Cache',
+		'init':function(){
+			myStorage  = this.myStorage;
+			cache_name = this.cache_name;
+		},
 		'cache':function(key,value,callback){
+			this.init();
 			cache = get();
 			var index = this.exist(key,value);
 			if($.isFunction(callback)){
@@ -81,6 +88,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return index;
 		},
 		'set':function(Obj,key,value){
+			this.init();
 			// if(-1 == this.exist(key,value)){
 			Obj[key] = value;
 			cache.push(Obj);
@@ -88,13 +96,16 @@ window[GRN_LHH].run([window],function(window,undefined){
 			// }
 		},
 		'update':function(index,Obj){
+			this.init();
 			cache[index] = Obj;
 			set();
 		},
 		'get':function(index){
+			this.init();
 			return System.isset(index) ? cache[index] : cache;
 		},
 		'exist':function(key,value){
+			this.init();
 			for(var i=0,len=cache.length;i<len;i++){
 				if((key in cache[i]) && (value == cache[i][key])){
 					return i;
@@ -104,10 +115,12 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 
 		'clear':function(){
+			this.init();
 			this.remove();
 			clear();
 		},
 		'remove':function(index){
+			this.init();
 			if(index){
 				if (index > -1 && index < cache.length-1) {
 					cache.splice(index, 1);
