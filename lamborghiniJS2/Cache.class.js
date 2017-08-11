@@ -77,6 +77,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'init':function(){
 			myStorage  = this.myStorage;
 			cache_name = this.cache_name;
+			cache = get();
 		},
 		'cache':function(key,value,callback){
 			this.init();
