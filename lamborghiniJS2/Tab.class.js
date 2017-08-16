@@ -1,12 +1,12 @@
 
-window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
+window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
 	System.is(System,'Browser','Tab');
 
 	var __this__=null;
 	var fixEvt = System.Browser.fixEvt;
-	var $=jQuery;
+
 
 
 	/**
@@ -333,6 +333,42 @@ window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
 
 		}
 	});
+	/**
+	 *
+	 * @returns {Function}
+	 * example:
+	 * <ul tab="ul">
+	 * <li></li>
+	 * </ul>
+	 * <div tab="section"></div>
+	 */
+	Tab.tab=function(){
+		var old_dom=null;
+		return function(D){
+			if(old_dom === this){return;}
+			var defaults ={
+				"li":"li",
+				"section":'[tab="section"]',
+				"active":'active'
+			};
+			D = $.isPlainObject(D) ? $.extend(defaults,D) : defaults;
+			old_dom = this;
+			var $this = $(this);
+			$this.parent().find(D.li).removeClass(D.active);
+			$this.addClass(D.active);
+			var ids = $this.data('id').toString().split(',');
+			var $section = $(D.section);
+			$section.hide();
+			$section.each(function(){
+				var $this = $(this);
+				var id = $this.data('id');
+				if($.inArray(id.toString(),ids) !== -1){
+					$this.show();
+				}
+			});
+
+		};
+	};
 
 	System.Tab = Tab;
 
