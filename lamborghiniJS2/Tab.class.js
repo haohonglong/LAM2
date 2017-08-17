@@ -349,20 +349,24 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 			var defaults ={
 				"li":"li",
 				"section":'[tab="section"]',
-				"active":'active'
+				"active":'active',
+				"callback":function(){}
 			};
 			D = $.isPlainObject(D) ? $.extend(defaults,D) : defaults;
 			old_dom = this;
 			var $this = $(this);
 			$this.parent().find(D.li).removeClass(D.active);
 			$this.addClass(D.active);
-			var ids = $this.data('id').toString().split(',');
+			var id = $this.data('id');
+			if(!id){return;}
+			var ids = id.toString().split(',');
 			var $section = $(D.section);
 			$section.hide();
 			$section.each(function(){
 				var $this = $(this);
 				var id = $this.data('id');
 				if($.inArray(id.toString(),ids) !== -1){
+					D.callback.call(this);
 					$this.show();
 				}
 			});
