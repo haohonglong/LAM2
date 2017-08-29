@@ -43,11 +43,11 @@ window[GRN_LHH].run([window],function(window,undefined){
 
     var set_postion=function(dom){
         var position = getRealStyle(dom,'position');
-        if(!('absolute' === position || 'fixed' === position)){
+        if('static' === position){
             dom.style.position='absolute';
         }
-
     };
+
     var Drag = System.Browser.extend({
         constructor: function(dom,init) {
             __this__=this;
