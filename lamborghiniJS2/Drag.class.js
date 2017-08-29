@@ -147,7 +147,7 @@ window[GRN_LHH].run([window],function(window,undefined){
                     this.free();
             }
             //时时返回每次按住不松开移动时x,y数值(返回的是数组)
-            if(System.isString(this.f_move)){
+            if(System.isFunction(this.f_move)){
                 this.f_move.call(this,this.obj_mouserDragValue);
             }
             //存储记录鼠标拖动的距离集合(这个数组长度非常大,会消耗内存)
