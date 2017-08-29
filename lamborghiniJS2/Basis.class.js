@@ -937,7 +937,6 @@ if(!GRN_LHH){
 						throw new Error(["Warning Class name ","'",className,"'"," already exists"].join(''));
 						return false;
 					}
-
 				}else if(1 === arg_len){//只有一个参数时 功能：检测函数或方法是否之前已定义过了
 					className 	 = namespace;
 					useClassName = null;
@@ -946,12 +945,9 @@ if(!GRN_LHH){
 						throw new Error(["Warning Class name ","'",className,"'"," already exists"].join(''));
 						return false;
 					}
-
 				}
-
 			}else if(System.isPlainObject(namespace)){
 				if(!(useClassName in namespace)){
-
 					throw new Error(["Warning ",namespace," is not a legitimate object or ","'",useClassName,"'"," is not a legitimate"].join(''));
 					return false;
 				}
@@ -965,11 +961,7 @@ if(!GRN_LHH){
 					return false;
 				}
 			}
-
-
 			return true;
-
-
 		},
 
 		/**

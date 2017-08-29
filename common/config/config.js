@@ -80,6 +80,7 @@ if(!GRN_LHH){
                 ,classPath+'/Html.class.js'
                 ,classPath+'/Template.class.js'
                 ,classPath+'/Controller.class.js'
+                ,classPath+'/Css.class.js'
             ];
         },
         //标签的渲染方式

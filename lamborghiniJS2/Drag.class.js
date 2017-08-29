@@ -30,23 +30,13 @@ window[GRN_LHH].run([window],function(window,undefined){
     var System=this;
     System.is(System,'Browser','Drag');
     System.is(System,'Event');
+    System.is(System,'Css');
 
     var __this__=null;
 
     //事件兼容类方法
     var fixEvt=System.Event.fixEvt;
-    //初始化限制范围左边和上边的溢出检测变量
-    var getRealStyle=function(e,key){//（对象，属性名）获取当前的style元素里的css属性值
-        return e.currentStyle? e.currentStyle[key] : document.defaultView.getComputedStyle(e,false)[key];
-        //document.defaultView.getComputedStyle 这是w3c标准方法，取得元素的样式信息，因为有些样式是在外部css文件定义的，所以用element.style是取不到的 如果是IE,可以用 element.currentStyle["name"]
-    };
-
-    var set_postion=function(dom){
-        var position = getRealStyle(dom,'position');
-        if('static' === position){
-            dom.style.position='absolute';
-        }
-    };
+    var css = new System.Css();
 
     var Drag = System.Browser.extend({
         constructor: function(dom,init) {
@@ -56,7 +46,7 @@ window[GRN_LHH].run([window],function(window,undefined){
             this.L=this.T=this.disX=this.disY=0;
             this.dom=dom;
             this.drag_=false;
-            set_postion(this.dom);
+            this.init_postion();
             init = init || {};
 
             //记录鼠标拖动的距离集合
@@ -96,6 +86,17 @@ window[GRN_LHH].run([window],function(window,undefined){
                 }
 
             };
+        },
+        /**
+         * 初始化 position
+         * 可以被派生类覆写
+         */
+        'init_postion':function(){
+            var dom = this.dom;
+            var position = css.getRealStyle(dom,'position');
+            if('static' === position){
+                dom.style.position='absolute';
+            }
         },
 
         /**
