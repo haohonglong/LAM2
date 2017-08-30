@@ -247,9 +247,6 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 				default :
 					value=System.template($this.html());
 					$this.html(value);
-
-
-
 			}
 
 		});
