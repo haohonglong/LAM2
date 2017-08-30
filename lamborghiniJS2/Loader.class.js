@@ -278,7 +278,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }
                     });
                 }
-
             } catch (e) {
                 System.is(System,'Html');
                 if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//异步方式加载 script 脚本文件
@@ -288,7 +287,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         src = __this__.suffix_checkor(src,suffix);
                         src = baseUrl ? baseUrl+src : src;
                         arr.push(src);
-
                     });
                     xhr_params.dataType='script';
                     System.Html.getFiles(arr,null,System.merge(X && System.isPlainObject(X.params) ? X.params : {},[xhr_params]));
