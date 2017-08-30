@@ -962,7 +962,9 @@
 				 
 ## 十八、模版标签
 	 查找解析指定元素属性里的模板标签
-		 1. 只能在 link,a,img,iframe 这几种标签范围内解析模板标签
+		 1. 
+		    解析link,a,img,iframe 标签的属性值里的变量
+		    解析标签里内容里的全部变量（除 link,a,img,iframe 标签外）
 			<link data-var="tpl" rel="stylesheet" type="text/xxx" href="{{LAMJS.ROOT}}/"/>
 			<a data-var="tpl" rel="stylesheet" href="{{LAMJS.ROOT}}/"/>跳转</a>
 			<img data-var="tpl" src="{{LAMJS.ROOT}}/"/>
