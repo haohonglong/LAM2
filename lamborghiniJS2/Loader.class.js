@@ -2,8 +2,8 @@
  *
  * @author: lhh
  * 产品介绍： 文件加载器
- * 创建日期：2014.9.9
- * 修改日期：2016.10.27
+ * 创建日期：2014-9-9
+ * 修改日期：2017-8.30
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -130,10 +130,8 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 suffix  = D.suffix  || '.css';
                 rel     = D.rel     || 'stylesheet';
                 type    = D.type    || 'text/css';
-
                 for (i=0,len=D.css.length;i<len;i++){
                     var css=D.css[i];
-
                     if(System.isString(css)){
                         css = __this__.suffix_checkor(css,suffix);
                         href = baseUrl ? baseUrl+css : css;
@@ -149,12 +147,9 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             }else{
                                 node = System.Html.linkFile(href,attr);
                             }
-
                             files.push(node);
                             System.files.push(href);
                         }
-
-
                     }else if(System.isObject(css)){
                         css.href = __this__.suffix_checkor(css.href,suffix);
                         css.rel  = css.rel  || rel;
@@ -175,11 +170,8 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
 
                             files.push(node);
                             System.files.push(css.href);
-
                         }
-
                     }
-
                 }
             }
             //script
@@ -210,9 +202,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             files.push(node);
                             System.files.push(src);
                         }
-
-
-
                     }else if(System.isObject(js)){
                         js.src = __this__.suffix_checkor(js.src,suffix);
                         js.src = baseUrl ? baseUrl+js.src : js.src;
@@ -236,14 +225,13 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                     }
                 }
             }
-
             return this;
         },
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-8-27
-         * 修改日期：2016-11-3
+         * 修改日期：2017-8-30
          * 名称：import
          * 功能：导入指定的js文件
          * 说明：System 参数不用传
@@ -278,21 +266,21 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }
                     });
                 }
-
             } catch (e) {
-                System.is(System,'Html');
-                if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//异步方式加载 script 脚本文件
-                    var arr=[];
-                    url.each(function(){
-                        var src=this;
-                        src = __this__.suffix_checkor(src,suffix);
-                        src = baseUrl ? baseUrl+src : src;
-                        arr.push(src);
-
-                    });
-                    xhr_params.dataType='script';
-                    System.Html.getFiles(arr,null,System.merge(X && System.isPlainObject(X.params) ? X.params : {},[xhr_params]));
-                }else{
+                try{
+                    System.is(System,'Html');
+                    if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//异步方式加载 script 脚本文件
+                        var arr=[];
+                        url.each(function(){
+                            var src=this;
+                            src = __this__.suffix_checkor(src,suffix);
+                            src = baseUrl ? baseUrl+src : src;
+                            arr.push(src);
+                        });
+                        xhr_params.dataType='script';
+                        System.Html.getFiles(arr,null,System.merge(X && System.isPlainObject(X.params) ? X.params : {},[xhr_params]));
+                    }
+                } catch (e){
                     __this__.load({
                         'baseUrl':baseUrl,
                         'js':url,
@@ -354,12 +342,9 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             }
 
                         }
-
                     });
                 }
-
             }
-
             this.remove();
             return this;
 
