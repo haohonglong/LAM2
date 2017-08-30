@@ -211,7 +211,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-9-9
-	 * 修改日期：2016-10-4
+	 * 修改日期：2017-8-30
 	 * 名称： Html.analysisTpl
 	 * 功能：只能在 link,a,img 这几种标签范围内查找，并解析带自定义属性'[data-var=tpl]'元素的标签 或自定义的
 	 * 说明：
@@ -244,6 +244,9 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 					attr = attr || 'src';
 					value=System.template($this.attr(attr));
 					$this.attr(attr,value);
+				default :
+					value=System.template($this.html());
+					$this.html(value);
 
 
 
