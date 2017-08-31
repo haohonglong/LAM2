@@ -1000,10 +1000,10 @@
 ## 十九、MVC (详细demo看project目录里)
 				
 	访问url格式：
-		localhost/project/controllers/controllerName.html?action=view
+		localhost/project/controllers/controllerName.html?r=view
 			controllers:控制器文件夹
 			controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
-			action:接收控制器中的方法名的参数。action关键字可以在控制器中自定义
+			r:接收控制器中的方法名的参数。r关键字可以在控制器中自定义
 			view：调用对应控制器中的方法（对应着视图文件名）
 	//controllers/index.html
 
