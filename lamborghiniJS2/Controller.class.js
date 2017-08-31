@@ -1,8 +1,8 @@
 
 /**
  * 创建人：lhh
- * 创建日期:2015/7/22
- * 修改日期:2015/7/23
+ * 创建日期:2015-7-22
+ * 修改日期:2017-8-31
  * 名称：助手类
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -24,13 +24,13 @@ window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,u
             __this__=this;
             init = init || {};
 
-            var action = Controller.get_url_name(init.action || 'action');
-            if(!System.isFunction(this[action+'Action'])){
-                throw new Error('Warning: \''+action+'Action\' method not exist');
+            var route = System.get_url_param(init.route || 'r');
+            if(!System.isFunction(this[route+'Action'])){
+                throw new Error('Warning: \''+route+'Action\' method not exist');
                 return this;
             }
-            this[action+'Action']();
-            this.action = action;
+            this[route+'Action']();
+            this.route = route;
         },
         '_className':'Controller',
 
@@ -62,7 +62,7 @@ window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,u
      * 功能：根据url参数获取方法名称
      * @param name
      * @returns {String}渲染对应视图文件的方法名
-     * Example: eval(Controller.get_url_name('action'))()
+     * Example: eval(Controller.get_url_name('route'))()
      */
     Controller.get_url_name = System.get_url_param;
 
