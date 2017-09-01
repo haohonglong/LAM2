@@ -219,29 +219,35 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         }
     }
 
-    /**
-     * 自定义事件
-     * 创建日期：2017-9-1
-     * 修改日期：2017-9-1
-     * @param event
-     * @param params
-     * @returns {Event}
-     */
-    Event.createEvent=function(event, params){
-        var defaults={
-            bubbles: false,
-            cancelable: false,
-            detail: undefined
+    if (typeof window.CustomEvent === 'undefined') {
+        /**
+         * 自定义事件
+         * 创建日期：2017-9-1
+         * 修改日期：2017-9-1
+         * @param event
+         * @param params
+         * @returns {Event}
+         * @constructor
+         */
+        Event.CustomEvent=function(event, params){
+            var defaults={
+                bubbles: false,
+                cancelable: false,
+                detail: undefined
+            };
+            params = System.isPlainObject(params) ? System.merge({},[params,defaults]) : defaults;
+            var evt = document.createEvent('Events');
+            var bubbles = true;
+            for (var name in params) {
+                (name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
+            }
+            evt.initEvent(event, bubbles, true);
+            return evt;
         };
-        params = System.isPlainObject(params) ? System.merge({},[params,defaults]) : defaults;
-        var evt = document.createEvent('Events');
-        var bubbles = true;
-        for (var name in params) {
-            (name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
-        }
-        evt.initEvent(event, bubbles, true);
-        return evt;
-    };
+        Event.CustomEvent.prototype = window.Event.prototype;
+        window.CustomEvent = Event.CustomEvent;
+    }
+
 
     Event.bind=function(dom,evt,fn){//给某个对象添加多个事件监听函数
         return addEvent(dom,evt,fn);

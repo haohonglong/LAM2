@@ -243,7 +243,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-8-27
-         * 修改日期：2016-11-3
+         * 修改日期：2017-9-1
          * 名称：import
          * 功能：导入指定的js文件
          * 说明：System 参数不用传
@@ -259,6 +259,12 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          */
         'import':function(url,baseUrl,suffix,X){
             var self = this;
+            if(System.isString(url)){
+                var str = url;
+                url = [];
+                url.push(str);
+            }
+            if(!System.isArray(url) || url.length < 1){return this;}
             suffix = suffix || '.js';
             baseUrl = System.isset(baseUrl) ? baseUrl : System.ROOT;
             var xhr_params = self.Config.XHR;
