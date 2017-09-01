@@ -13,9 +13,9 @@
 					var System=this;
 
 					var pop=new System.PopupLayer({
-						'popLayout':$('.content'),
-						'mask':$('.mask'),
-						'padding':6
+						'$popLayout':$('.pop-layer'),
+						 '$mask':$('.pop-mask'),
+						 'padding':6
 					}).setCenter();
 
 
@@ -47,13 +47,18 @@
 	 var PopupLayer = System.Browser.extend({
 		 constructor: function (D){
 			 __this__=this;
+			 var defaults={
+				 '$popLayout':$('.pop-layer'),
+				 '$mask':$('.pop-mask'),
+				 'padding':6
+			 };
 
-			 if(!D) return this;
-			 if(!System.isPlainObject(D)) return this;
+			 D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
-			 this.popLayout  = D.popLayout;
+
+			 this.$popLayout  = D.$popLayout;
+			 this.$mask 		=  D.$mask    || null;
 			 this.padding	=  D.padding || 0;
-			 this.mask 		=  D.mask    || null;
 		 },
 		 '_className':'PopupLayer',
 		 '__constructor':function(){},
@@ -112,7 +117,7 @@
 		  */
 		 'setCenter':function(D){
 			 var callBack =(D && D.callBack) || null;
-			 this.autoScreenCenter(this.popLayout,this.padding,callBack);
+			 this.autoScreenCenter(this.$popLayout,this.padding,callBack);
 			 this.resize();
 			 return this;
 		 },
@@ -153,26 +158,26 @@
 			 switch(D['select']){
 				 case 0:
 					 container = tag('div',{'class':D["div_class_PopupLayer_wrap_name"]},
-						 [
-							 tag('div',{'class':D["div_class_colose_name"]})
-							 ,tag('div',{'class':'p10'},
-							 tag('div',{'class':'content'},
-								 [
-									 tag('div',{'class':D["div_title_name"]},
-										 [
-											 tag('h2',{},D["title"])
-											 ,D["more"] ? tag('div',{'class':'more'},D["more"]) : ''
-										 ]
+									 [
+										  tag('div',{'class':D["div_class_colose_name"]})
+										 ,tag('div',{'class':'p10'},
+										  tag('div',{'class':'content'},
+											 [
+												  tag('div',{'class':D["div_title_name"]},
+													 [
+														  tag('h2',{},D["title"])
+														 ,D["more"] ? tag('div',{'class':'more'},D["more"]) : ''
+													 ]
+												  )
+												 ,tag('div',{'class':D["div_content_name"]},
+												  tag('div',{'class':'P20'},D["content"])
+											 )
+											 ]
+										 )
 									 )
-									 ,tag('div',{'class':D["div_content_name"]},
-									 tag('div',{'class':'P20'},D["content"])
-								 )
-								 ]
-							 )
-						 )
 
-						 ]
-					 );
+									 ]
+								 );
 					 /*
 					  container ='<div class="'+D["div_class_PopupLayer_wrap_name"]+'"> \
 					  <div class="'+D["div_class_colose_name"]+'"></div> \
@@ -201,30 +206,30 @@
 		 },
 		 'hide':function(sport){
 			 if(sport && 'sport' === sport){
-				 this.popLayout.animate({
+				 this.$popLayout.animate({
 					 opacity: 'hide'
 				 }, "slow", "easein");
-				 this.mask.animate({
+				 this.$mask.animate({
 					 opacity: 'hide'
 				 }, "slow", "easein");
 			 }else{
-				 this.popLayout.hide();
-				 this.mask.hide();
+				 this.$popLayout.hide();
+				 this.$mask.hide();
 			 }
 
 			 return this;
 		 },
 		 'show':function(sport){
 			 if(sport && 'sport' === sport){
-				 this.popLayout.animate({
+				 this.$popLayout.animate({
 					 opacity: 'show'
 				 }, "slow", "easein");
-				 this.mask.animate({
+				 this.$mask.animate({
 					 opacity: 'show'
 				 }, "slow", "easein");
 			 }else{
-				 this.popLayout.show();
-				 this.mask.show();
+				 this.$popLayout.show();
+				 this.$mask.show();
 			 }
 
 			 return this;
@@ -232,8 +237,8 @@
 
 
 		 'append':function($div){},
-		 'empty':function(){this.popLayout.empty();},
-		 'remove':function(){this.popLayout.remove();},
+		 'empty':function(){this.$popLayout.empty();},
+		 'remove':function(){this.$popLayout.remove();},
 
 		 /**
 		  *
