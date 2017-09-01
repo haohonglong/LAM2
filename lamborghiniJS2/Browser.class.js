@@ -1,8 +1,8 @@
 
 /**
  * 创建人：lhh
- * 创建日期:2015/7/22	
- * 修改日期:2015/7/23	
+ * 创建日期:2015-7-22
+ * 修改日期:2017-9-1
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -70,13 +70,10 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 		},
 		'_className':'Browser',
 		'__constructor':function(){},
-		'resize_super':function(){},
-		'scroll_super':function(){},
-		'where':function(){},
 
 		/**
-		 * 创建日期：2014/11/28
-		 * 修改日期：2016-9-8
+		 * 创建日期：2014-11-28
+		 * 修改日期：2017-9-1
 		 * 名称：autoScreenCenter
 		 * 功能：自动居中屏幕，回调函数可以不传，传过回调函数后就能在一个指定范围中垂直居中对齐
 		 * @param	$div(jQuery obj) NO NULL : //被居中的容器
@@ -93,7 +90,7 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 
 			}
 
-			this.resize_super = Browser.resize($div,function($window){
+			this.resize = Browser.resize($div,function($window){
 				if(System.isFunction(fn)){
 					fn.call($div,$window);
 				}else{
@@ -105,8 +102,8 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 
 		},
 		/**
-		 * 创建日期：2014/12/1
-		 * 修改日期：2015/11/10
+		 * 创建日期：2014-12-1
+		 * 修改日期：2017-9-1
 		 * 名称：(vido) setFixed
 		 * 功能：给元素设置固定样式
 		 * @param	$div(jQuery obj) NO NULL : //被设置的元素
@@ -117,8 +114,8 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 		'setFixed':function($div){
 			if('fixed' != $div.css('position')){
 				$div.css('position','absolute');
-				this.scroll_super = function(){
-					this.resize_super();
+				this.scroll = function(){
+					this.resize();
 					Browser.fixed_element($div);
 				};
 			}

@@ -62,42 +62,7 @@
 		 },
 		 '_className':'PopupLayer',
 		 '__constructor':function(){},
-		 /**
-		  *
-		  * @author: lhh
-		  * 产品介绍：
-		  * 创建日期：2014-12-1
-		  * 修改日期：2015-8-19
-		  * 名称：resize
-		  * 功能：
-		  * 说明：
-		  * 注意：
-		  * @override
-		  * @return  (PopupLayer)
-		  * Example:
-		  */
-		 'resize':function(){
-			 this.resize_super();
-			 return this;
-		 },
-		 /**
-		  *
-		  * @author: lhh
-		  * 产品介绍：
-		  * 创建日期：2014-12-1
-		  * 修改日期：2015-8-19
-		  * 名称：scroll
-		  * 功能：
-		  * 说明：
-		  * 注意：
-		  * @override
-		  * @return  (PopupLayer)
-		  * Example:
-		  */
-		 'scroll':function(){
-			 this.scroll_super();
-			 return this;
-		 },
+
 		 /**
 		  *
 		  * @author: lhh
@@ -111,14 +76,10 @@
 		  * @param   (Function)callBack 	  NULL :callBack 传回调方法 可自定义居中方式
 		  * @return  (PopupLayer)
 		  * Example:
-
-
-
 		  */
 		 'setCenter':function(D){
 			 var callBack =(D && D.callBack) || null;
-			 this.autoScreenCenter(this.$popLayout,this.padding,callBack);
-			 this.resize();
+			 this.autoScreenCenter(this.$popLayout,this.padding,callBack).resize();
 			 return this;
 		 },
 
@@ -135,10 +96,7 @@
 		  * @param   (Object)D 	 NO NULL : 创建的信息
 		  * @return  (String)
 		  * Example:
-
-
 		  */
-
 		 'create':function(init){
 			 var defaults={
 				 'div_class_PopupLayer_wrap_name':'section sectionPopupLayer-A1',
