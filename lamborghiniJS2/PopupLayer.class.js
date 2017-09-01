@@ -4,7 +4,7 @@
  * 名称：弹出层 
  * 功能：可自动居中且兼容IE6
  * 创建日期：2014-12-1
- * 修改日期：2014-12-1
+ * 修改日期：2017-9-1
  * @param	        popLayout(jQuery)   NO NULL : //弹出层jQuery对象
  * @param	        mask 	 (jQuery)      NULL : //弹出层下的蒙版jQuery对象
  * @param 			padding  (Number)    NULL : callBack 有padding值时
@@ -38,13 +38,12 @@
 		});
  */
 
- window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
+ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 'use strict';
 	 var System=this;
 	 System.is(System,'Browser','PopupLayer');
 
 	 var __this__=null;
-	 var $=jQuery;
 	 var PopupLayer = System.Browser.extend({
 		 constructor: function (D){
 			 __this__=this;
