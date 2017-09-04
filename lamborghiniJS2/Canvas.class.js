@@ -30,7 +30,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			var defaults ={
 				"type":"2d"
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			this.team = [];
 			this.theCanvas = theCanvas;
 			this.type = D.type;
@@ -618,7 +618,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 					{'stop':1,'color':'#000'}
 				]
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			var x0 = D.params.x0;
 			var y0 = D.params.y0;

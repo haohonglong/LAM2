@@ -211,7 +211,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 				'option': 'li',
 				'event': 'click'
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			$(D.select).closest(D.group).off(D.event,D.option);
 			$(D.select).closest(D.group).on(
 				D.event,

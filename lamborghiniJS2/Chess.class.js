@@ -115,7 +115,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				}
 			};
 
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			D.r = 13;
 			var G ={
 				'params':{

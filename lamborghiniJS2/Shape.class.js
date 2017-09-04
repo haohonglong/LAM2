@@ -57,7 +57,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'strokeStyle':'#f60',
 				'lineCap':'square'
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			var width = D.width || 0;
 			var strokeStyle = D.strokeStyle;
 
@@ -93,7 +93,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 					that.closePath().stroke().fill(this.strokeStyle);
 				}
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			this.line(D).lineTo(D.position[4],D.position[5]);
 			if(System.isFunction(D.callback)){
@@ -133,7 +133,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 					that.closePath().stroke().fill(this.strokeStyle);
 				}
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			var x 	= D.position.x;
 			var y 	= D.position.y;
 			var r 	= D.r;
@@ -199,7 +199,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'size':{'w':540,'h':258},
 				'clip':{'sx':90,'sy':130,'sw':90,'sh':80}
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			var self=this;
 			var src = D.src;
@@ -266,7 +266,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'strokeStyle':'#f60',
 				'fill':false
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			var x = D.position.x;
 			var y = D.position.y;
@@ -313,7 +313,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'eAngle':2*Math.PI,
 				'counterclockwise':true
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			var x = D.position.x;
 			var y = D.position.y;
@@ -358,7 +358,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'eAngle':90,
 				'counterclockwise':false
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 
 			var x = D.position.x;
@@ -415,7 +415,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'style':'#f00'
 
 			};
-			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
 			var x= D.position.x;
 			var y= D.position.y;
