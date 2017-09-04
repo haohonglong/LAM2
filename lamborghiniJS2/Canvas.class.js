@@ -7,34 +7,13 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var __this__=null;
 
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2015-9-18
-	 * 修改日期：2015-9-18
-	 * 名称： create
-	 * 功能：创建画布
-	 * 说明：
-	 * 注意：
-	 * @param 	(String)Init.type     NULL :
-	 * @return (Canvas)
-	 * Example：
-
-	 */
-	function create(Init){
-		var type = Init.type || '2d';
-		this.ctx = this.theCanvas.getContext(type);
-		return this;
-	}
-
 
 	/**
 	 *
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014.6.4
-	 * 修改日期：2015.9.22
+	 * 修改日期：2017.9.4
 	 * 名称： Canvas
 	 * 功能：
 	 * 说明：
@@ -46,16 +25,16 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	 */
 	var Canvas = System.Browser.extend({
-		constructor: function(theCanvas,Init){
+		constructor: function(theCanvas,D){
 			__this__=this;
-			/*--------------------------------------------------------------------------------------------------*/
-			Init = Init || {};
+			var defaults ={
+				"type":"2d"
+			};
+			D = System.isObject(D) ? System.merge({},[D,defaults]) : defaults;
 			this.team = [];
-			this.ctx;
 			this.theCanvas = theCanvas;
-			create.call(this,{
-				'type':Init.type
-			});
+			this.type = D.type;
+			this.ctx = this.theCanvas.getContext(this.type);
 
 		},
 		'_className':'Canvas',
