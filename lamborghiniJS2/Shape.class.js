@@ -296,8 +296,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 注意：
 		 * @param 	(Object)D.position        NO NULL : 矩形的位置
 		 * @param 	(Object)D.size       		NO NULL : 矩形的尺寸
-		 * @param 	(String|Number)D.radius   NO NULL :  圆角弧度
-		 * @param 	(Boolean)D.stroke         NO NULL :  矩形是否填充
+		 * @param 	(Number)D.radius   NO NULL :  圆角弧度
+		 * @param 	(Boolean)D.stroke         NO NULL :  是否描绘轮廓线
 		 * @param 	(Boolean)D.fill          	NO NULL :  矩形是否填充
 		 * @returns {Shape}
 		 */
@@ -305,18 +305,41 @@ window[GRN_LHH].run([window],function(window,undefined){
 			var defaults={
 				'position':{'x':50,'y':50},
 				'size':{'w':150,'h':150},
-				'radius':'5',
+				'radius':5,
 				'stroke':true,
 				'fill':true
 			};
 			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-			var x = D.position.x,
-				y = D.position.y,
-				width  = D.size.w,
-				height = D.size.h,
-				radius = D.radius,
+			var x = (D.position.x),
+				y = (D.position.y),
+				width  = (D.size.w),
+				height = (D.size.h),
+				radius = (D.radius),
 				stroke = D.stroke,
 				fill = D.fill;
+			if(
+				!System.isNumber(radius) ||
+				!System.isNumber(x) ||
+				!System.isNumber(y) ||
+				!System.isNumber(width) ||
+				!System.isNumber(height)
+
+			){
+				var arr =['\n{'];
+				var len = System.length(D);
+				System.each(D,function(k,v){
+					if(1 === len){
+						arr.push('\t'+k+':'+typeof v);
+					}else{
+						arr.push('\t'+k+':'+typeof v+',');
+					}
+					len--;
+				});
+				arr.push('}\n');
+				var info = arr.join('\n');
+				throw new Error(["Warning :参数",info,"里面属性数据类型错误！！！"].join(''));
+				return this;
+			}
 			this.beginPath()
 				.moveTo(x + radius, y)
 				.lineTo(x + width - radius, y)
@@ -328,15 +351,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 				.lineTo(x, y + radius)
 				.quadraticCurveTo(x, y, x + radius, y)
 				.closePath();
-			if (stroke) {
-				this.stroke();
-			}
-			if (fill) {
-				this.fill();
-			}
+			if (stroke) {this.stroke();}
+			if (fill) {this.fill();}
 			return this;
-
-
 		},
 
 		/**
