@@ -310,11 +310,11 @@ window[GRN_LHH].run([window],function(window,undefined){
 				'fill':true
 			};
 			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-			var x = (D.position.x),
-				y = (D.position.y),
-				width  = (D.size.w),
-				height = (D.size.h),
-				radius = (D.radius),
+			var x = parseFloat(D.position.x),
+				y = parseFloat(D.position.y),
+				width  = parseFloat(D.size.w),
+				height = parseFloat(D.size.h),
+				radius = parseFloat(D.radius),
 				stroke = D.stroke,
 				fill = D.fill;
 			if(
