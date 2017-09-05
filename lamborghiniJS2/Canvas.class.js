@@ -355,6 +355,23 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this.ctx.transform(a,b,c,d,e,f);
 			return this;
 		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-9-5
+		 * 修改日期：2017-9-5
+		 * 名称： scale
+		 * 功能：方法缩放当前绘图，更大或更小
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)scalewidth        			NO NULL :缩放当前绘图的宽度 (1=100%, 0.5=50%, 2=200%, 依次类推)
+		 * @param 	(Number)scaleheight        			NO NULL :缩放当前绘图的高度 (1=100%, 0.5=50%, 2=200%, etc.)
+		 * @returns {Canvas}
+		 */
+		'scale':function(scalewidth,scaleheight){
+			this.ctx.scale(scalewidth,scaleheight);
+			return this;
+		},
 
 		/**
 		 *
