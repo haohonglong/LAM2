@@ -19,7 +19,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	 * 说明：
 	 * 注意：
 	 * @param 	(DocumentElement)theCanvas             NO NULL : canvas dom节点
-	 * @param 	(Object)Init             			   	  NULL : 初始化参数
+	 * @param 	(Object)D             			   	  NULL : 初始化参数
 	 * @return (void)
 	 * Example：
 
@@ -50,7 +50,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：开始一个路径
 		 * 说明：
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -69,7 +69,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：关闭路径
 		 * 说明：
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -91,7 +91,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 注意：
 		 * @param 	(Number)x         NO NULL :路径的目标位置的 x 坐标
 		 * @param 	(Number)y         NO NULL :路径的目标位置的 y 坐标
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -112,7 +112,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 注意：
 		 * @param 	(Number)x         NO NULL :路径的目标位置的 x 坐标
 		 * @param 	(Number)y         NO NULL :路径的目标位置的 y 坐标
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -133,7 +133,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 注意：
 		 * @param 	(Number)x         NO NULL :添加到水平坐标（x）上的值
 		 * @param 	(Number)y         NO NULL :添加到垂直坐标（y）上的值
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -155,7 +155,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(Number)width         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -174,7 +174,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)lineCap         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -194,7 +194,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)lineJoin         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -217,9 +217,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)cpy          NO NULL :贝塞尔控制点的 y 坐标
 		 * @param 	(Number)x	         NO NULL :结束点的 x 坐标
 		 * @param 	(Number)y   	     NO NULL :结束点的 y 坐标
-		 * @return (Object)
-		 * Example：
-
+		 * @returns {Canvas}
 		 */
 		'quadraticCurveTo':function(cpx,cpy,x,y){
 			this.ctx.quadraticCurveTo(cpx,cpy,x,y);
@@ -242,7 +240,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)cp2y          NO NULL :第二个贝塞尔控制点的 y 坐标
 		 * @param 	(Number)x	          NO NULL :结束点的 x 坐标
 		 * @param 	(Number)y   	      NO NULL :结束点的 y 坐标
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -261,7 +259,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：从原始画布中剪切任意形状和尺寸。
 		 * 说明：一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。您也可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -284,7 +282,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)y        		NO NULL : 要清除的矩形左上角的 y 坐标
 		 * @param 	(Number)w	            NO NULL : 要清除的矩形的宽度，以像素计
 		 * @param 	(Number)h   	        NO NULL : 要清除的矩形的高度，以像素计
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -304,7 +302,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(Number)n        			NO NULL : 透明值。必须介于 0.0（完全透明） 与 1.0（不透明） 之间。
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -324,7 +322,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)s        			NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -349,7 +347,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)d        			NO NULL :垂直缩放绘图
 		 * @param 	(Number)e        			NO NULL :水平移动绘图
 		 * @param 	(Number)f        			NO NULL :垂直移动绘图
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -374,7 +372,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)d        			NO NULL :垂直缩放绘图
 		 * @param 	(Number)e        			NO NULL :水平移动绘图
 		 * @param 	(Number)f        			NO NULL :垂直移动绘图
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -398,7 +396,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)font         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -418,7 +416,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)textAlign         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -437,7 +435,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)textBaseline         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -457,7 +455,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)fillStyle         NO NULL :
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -480,7 +478,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)x         	 NO NULL :开始绘制文本的 x 坐标位置（相对于画布）
 		 * @param 	(Number)y         	 NO NULL :开始绘制文本的 y 坐标位置（相对于画布）。
 		 * @param 	(Number)maxWidth   	 NO NULL :可选。允许的最大文本宽度，以像素计。
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -505,7 +503,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：旋转
 		 * 说明：
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -524,7 +522,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：将最终完成、画出构建的路径
 		 * 说明：方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -543,7 +541,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：设置或返回用于笔触的颜色、渐变或模式。
 		 * 说明：stroke()方法一定要在这个方法后面调用否则没有作用
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -566,7 +564,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 说明：
 		 * 注意：
 		 * @param 	(String)color    			NO NULL : 填充的颜色
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -597,9 +595,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.params.r1	    NO NULL : 结束圆的半径
 		 * @param 	(Number)D.colors[i].stop  NO NULL : gradient 对象中的位置
 		 * @param 	(Number)D.colors[i].color NO NULL : gradient 对象中的颜色
-		 * @return (Object)gradient 对象
-		 * Example：
-
+		 * @returns {CanvasGradient}
 		 */
 		'createRadialGradient':function(D){
 			var defaults={
@@ -649,7 +645,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：保送（推送）当前状态到堆栈
 		 * 说明：在绘图状态堆上保存当前绘图状态
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */
@@ -668,7 +664,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 功能：调用最后存储的堆栈恢复画布
 		 * 说明：返回原始状态
 		 * 注意：
-		 * @return (Object)
+		 * @returns {Canvas}
 		 * Example：
 
 		 */

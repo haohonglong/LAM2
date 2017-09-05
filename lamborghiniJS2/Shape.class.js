@@ -46,7 +46,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.width           NO NULL : 线的粗细
 		 * @param 	(String)D.strokeStyle     NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
 		 * @param 	(String)D.lineCap         NO NULL : 定义上下文中线的端点
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -80,7 +80,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.width           NO NULL : 线的粗细
 		 * @param 	(String)D.strokeStyle     NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
 		 * @param 	(Function)D.callback      	 NULL :
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -118,7 +118,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.r	              NO NULL : 半径
 		 * @param 	(String)D.strokeStyle     NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
 		 * @param 	(Function)D.callback      	 NULL : 再返回原始状态前关闭并填充
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -188,7 +188,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.clip.sw          NULL : 可选。被剪切图像的宽度
 		 * @param 	(Number)D.clip.sh          NULL : 可选。被剪切图像的高度
 		 * @param 	(Function)callback         NULL : drawImage 原型
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -255,7 +255,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Object)size       		NO NULL : 矩形的尺寸
 		 * @param 	(String)D.strokeStyle   NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
 		 * @param 	(Boolean)fill          	NO NULL :  矩形是否填充
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -284,6 +284,60 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return this;
 
 		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-9-5
+		 * 修改日期：2017-9-5
+		 * 名称： rect
+		 * 功能：创建圆角矩形
+		 * 说明：
+		 * 注意：
+		 * @param 	(Object)D.position        NO NULL : 矩形的位置
+		 * @param 	(Object)D.size       		NO NULL : 矩形的尺寸
+		 * @param 	(String|Number)D.radius   NO NULL :  圆角弧度
+		 * @param 	(Boolean)D.stroke         NO NULL :  矩形是否填充
+		 * @param 	(Boolean)D.fill          	NO NULL :  矩形是否填充
+		 * @returns {Shape}
+		 */
+		'roundRect':function(D){
+			var defaults={
+				'position':{'x':50,'y':50},
+				'size':{'w':150,'h':150},
+				'radius':'5',
+				'stroke':true,
+				'fill':true
+			};
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			var x = D.position.x,
+				y = D.position.y,
+				width  = D.size.w,
+				height = D.size.h,
+				radius = D.radius,
+				stroke = D.stroke,
+				fill = D.fill;
+			this.beginPath()
+				.moveTo(x + radius, y)
+				.lineTo(x + width - radius, y)
+				.quadraticCurveTo(x + width, y, x + width, y + radius)
+				.lineTo(x + width, y + height - radius)
+				.quadraticCurveTo(x + width, y + height, x + width - radius, y+ height)
+				.lineTo(x + radius, y + height)
+				.quadraticCurveTo(x, y + height, x, y + height - radius)
+				.lineTo(x, y + radius)
+				.quadraticCurveTo(x, y, x + radius, y)
+				.closePath();
+			if (stroke) {
+				this.stroke();
+			}
+			if (fill) {
+				this.fill();
+			}
+			return this;
+
+
+		},
 
 		/**
 		 *
@@ -301,7 +355,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.sAngle	    			NO NULL : 起始角，以弧度计。（弧的圆形的三点钟位置是 0 度）。
 		 * @param 	(Number)D.eAngle	    			NO NULL : 结束角，以弧度计。
 		 * @param 	(Boolean)D.counterclockwise	           NULL : 可选。规定应该逆时针还是顺时针绘图。False = 顺时针，true = 逆时针。
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -345,7 +399,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(Number)D.sAngle	    		NO NULL : 起始角，以弧度计。（弧的圆形的三点钟位置是 0 度）。
 		 * @param 	(Number)D.eAngle	    		NO NULL : 结束角，以弧度计。
 		 * @param 	(Boolean)D.counterclockwise	       NULL : 可选。规定应该逆时针还是顺时针绘图。False = 顺时针，true = 逆时针。
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
@@ -399,7 +453,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param 	(String)D.font   				NO NULL : 文字的大小及字体
 		 * @param 	(String)D.style   				NO NULL : 文字的颜色
 		 * @param 	(Boolean)D.isRender   			   NULL : 是否渲染文字
-		 * @return (Object)
+		 * @returns {Shape}
 		 * Example：
 
 		 */
