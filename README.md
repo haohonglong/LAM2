@@ -5,7 +5,7 @@
 	version ：2.0.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-8-27
+	修改日期 ：2017-9-5
 
 
 # 产品介绍：
@@ -83,7 +83,11 @@
 				LAMJS.run(function() {
 					'use strict';
 					var System=this;
-					var ROOT = System.Config.Public.ROOT;//这里的ROOT代表上名配置的项目根目录 或用 System.ROOT
+					System.Public 	 等同  System.Config.Public;
+					System.ROOT 	 等同  System.Public.ROOT;等同 
+					System.COMMON 	 等同  System.Public.COMMON;
+					System.PLUGINS 	 等同  System.Public.PLUGINS;
+					
 					// doing here coded ....
 				});
 			</script>
@@ -303,10 +307,25 @@
 							'/lib'
 						]
 					}).print();
-				上面依次输出的是js、css、less文件
-				用对象的方式可以传自定义参数
+					
+			上面依次输出的是js、css、less文件。用对象的方式可以传自定义参数
+
+			2.调用加载器时打印出指定标签(或自定义标签)
+						LAMJS.Loader
+            					.load({//打印指定的标签（tag 属性是打印出指定的标签）
+            						'tag':[
+            							System.Html.tag(true,'meta',{"name":"csrf-param","content":"_csrf"}),
+            							System.Html.tag(true,'meta',{"name":"csrf-param","content":"YWdSbEhVZnElMDUmGRQnMwsQGg4ROFUCDg8qDSlkNggVHmYpAXgtRg=="}),
+            							System.Html.tag('title',{},'PaperPass论文检测_论文查重_免费论文检测系统_毕业论文抄袭检测'),
+            							System.Html.tag(true,'meta',{"name":"description","content":"★PaperPass★论文检测-全球首个中文论文相似度检测网站;提供论文查重,免费论文检测系统,毕业论文抄袭检测。最权威,动态指纹技术保障,已服务超300万人论文检测。"}),
+            							System.Html.tag(true,'meta',{"name":"keywords","content":"论文,论文检测,论文查重,免费论文检测,检测系统,论文抄袭,毕业论文"}),
+            						]
+            					})
+            					.print();
 				
-			2.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
+			注意：tag 、js 、css 属性名称在load方法里只能选择一个。选择了tag属性时其余的属性都可不用,打印指定标签时必须要调用Html对象里的静态方法tag
+				
+			3.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
 				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js']);
 
 				System

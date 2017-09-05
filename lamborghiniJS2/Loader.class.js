@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014.9.9
- * 修改日期：2016.10.27
+ * 修改日期：2017.9.5
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -111,7 +111,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * 名称： load
          * 功能：动态创建js,css 标签引入公共文件
          * 创建日期：2014-9-9
-         * 修改日期：2017-3-16
+         * 修改日期：2017-9-5
          * 说明：js 和 css 任选其一
          * @params   (Object)D 			NO NULL :初始化参数
          * @param(Array)D.js		  	     NO NULL:js文件集合
@@ -126,7 +126,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
             var suffix,rel,type,len,src="",href="",i= 0,node = null;
             var baseUrl=System.isset(D.baseUrl) ? D.baseUrl : System.ROOT;
             //link
-            if(D.css){
+            if(System.isArray(D.css)){
                 suffix  = D.suffix  || '.css';
                 rel     = D.rel     || 'stylesheet';
                 type    = D.type    || 'text/css';
@@ -155,7 +155,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }
 
 
-                    }else if(System.isObject(css)){
+                    }else if(System.isPlainObject(css)){
                         css.href = __this__.suffix_checkor(css.href,suffix);
                         css.rel  = css.rel  || rel;
                         css.type = css.type || type;
@@ -172,18 +172,12 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             }else{
                                 node = System.Html.linkFile(css.href,css);
                             }
-
                             files.push(node);
                             System.files.push(css.href);
-
                         }
-
                     }
-
                 }
-            }
-            //script
-            if(D.js){
+            }else if(System.isArray(D.js)){//script
                 suffix = D.suffix || '.js';
                 for (i=0,len=D.js.length;i<len;i++){
                     var js=D.js[i];
@@ -194,7 +188,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         if(System.fileExisted(src)){
                             continue;
                         }else{
-
                             var attr = System.clone(sAttribute);
                             attr['src'] = src;
                             if(create){
@@ -210,10 +203,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             files.push(node);
                             System.files.push(src);
                         }
-
-
-
-                    }else if(System.isObject(js)){
+                    }else if(System.isPlainObject(js)){
                         js.src = __this__.suffix_checkor(js.src,suffix);
                         js.src = baseUrl ? baseUrl+js.src : js.src;
                         //是否已加载过了
@@ -235,6 +225,18 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }
                     }
                 }
+            }else if(System.isArray(D.tag)){
+                if(D.url){
+                    if(System.fileExisted(D.url)){
+                        return;
+                    }else{
+                        System.files.push(D.url);
+                    }
+                }
+                D.tag.each(function(i){
+                    files.push(this);
+                });
+
             }
 
             return this;

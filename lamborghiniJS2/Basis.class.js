@@ -2,7 +2,7 @@
  * LamborghiniJS 0.3 pre
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-6-9
+ * 修改日期:2017-9-5
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -1013,13 +1013,10 @@ if(!GRN_LHH){
 		 */
 		'isPlainObject': function( obj ) {
 			var key;
-
 			if ( !obj || !System.isObject(obj) || System.isArray(obj) || obj.nodeType) {
 				return false;
 			}
-
 			try {
-
 				// Not own constructor property must be Object
 				if ( obj.constructor &&
 					!hasOwn.call( obj, "constructor" ) &&
@@ -1027,17 +1024,12 @@ if(!GRN_LHH){
 					return false;
 				}
 			} catch ( e ) {
-
 				// IE8,9 Will throw exceptions on certain host objects #9897
 				return false;
 			}
-
-
-
 			// Own properties are enumerated firstly, so to speed up,
 			// if last one is own, then all properties are own.
 			for ( key in obj ) {}
-
 			return key === undefined || hasOwn.call( obj, key );
 		},
 
@@ -1063,8 +1055,6 @@ if(!GRN_LHH){
 				'line':'行号',
 				'message':'message'
 			};
-
-
 			if(arguments.length !== 3) {
 				throw new Error("Warning 缺少参数。");
 				return false;
@@ -1074,15 +1064,11 @@ if(!GRN_LHH){
 				return false;
 			}
 			M = isObject(M) ? this.merge({},[M,defaults]) : defaults;
-
 			if(!empty(name) && System[name]) {
 				throw new Error(["Warning the name ","'",name,"'"," is already defined, at ","'",M.line,"'"," line tip: ","-> ",M.message].join(''));
 				return true;
 			}
-
 			return false;
-
-
 		},
 		/**
 		 *
@@ -2103,7 +2089,10 @@ window[GRN_LHH].run([window],function(W,Config){
 
 	System.merge(System.Config.XHR || {},[Config.XHR]);
 	System.merge(System.Config || {},[Config]);
-	System.ROOT = System.Config.Public.ROOT;
+	System.Public 	 = System.Config.Public;
+	System.ROOT 	 = System.Public.ROOT;
+	System.COMMON 	 = System.Public.COMMON;
+	System.PLUGINS 	 = System.Public.PLUGINS;
 	System.classPath = System.Config.getClassPath();
 
 	System.LAM_DEBUG = System.Config.LAM_DEBUG;
@@ -2117,14 +2106,6 @@ window[GRN_LHH].run([window],function(W,Config){
 	//不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
 	//Object.freeze(System.Config);
 	//Object.freeze(System.Config.Public);
-
-	var CMyDom=function(){//创建Dom 对象
-		System.is(System,'Dom');
-		return new System.Dom();
-	};
-
-
-
 	var __this__=null;
 	/**
 	 *
@@ -2191,91 +2172,10 @@ window[GRN_LHH].run([window],function(W,Config){
 	function Basis(D){
 		__this__=this;
 		System.app=this;
-		this.Browser=null;
-		this.setBrowser=function(Browser){
-			if(Browser && !this.Browser){
-				this.Browser=Browser;
-			}
-		};
 	}
 	/*---------------------------------
 	 static mothed
 	 -------*/
-
-
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2016-1-9
-	 * 修改日期：2016-1-9
-	 * 名称： createTag
-	 * 功能：动态创建指定的标签
-	 * 说明：
-	 * 注意：
-	 * @param 	(String)tag             NO NULL : 标签名称
-	 * @param 	(Object)D             	NO NULL : 标签的属性
-	 * @return ({System.Dom})
-	 * Example：
-	 *
-	 */
-	Basis.createTag=function(tag,D){
-		tag = tag || null;
-
-		if(!System.isString(arguments[0])){
-			throw new Error('Warning 缺少标签名称');
-			return false;
-		}
-
-		return CMyDom().create(tag,D);
-
-	};
-
-
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2015-3-18
-	 * 修改日期：2016-9-8
-	 * 名称：Basis.extends
-	 * 功能：继承Basis类
-	 * 说明：Basis类静态方法。 调用call方法改变this指针
-	 * 注意：调用必须用call方法
-	 * @param   (Object)this 			NO NULL :子类对象
-	 * @param   (Function)superClass   	NO NULL :父类名称
-	 * @param   (String)type 			NO NULL :1:原型链继承;默认2:对象冒充方式继承
-	 * @param   ([])arg 			   	   NULL :继承父类时传的构造参数
-	 * @return  {*}
-	 * Example：
-	 *		Basis.extends.call(this,superClass,type,[a,b,c,...]);
-	 */
-	Basis.extends=function(superClass,type,arg) {
-		superClass = superClass  || Basis;
-		type 	  = type || 2;
-		arg = arg || null;
-		/*------------------------------*/
-		//要继承Basis这个类都要加这么一段
-		//如果有Basis这个类并且它下面的子类已经继承了这个类就不继承了
-		if(System && superClass ) {
-			if(!this.setBrowser){
-				System.extends.call(this,null,superClass,type,arg);
-			}
-			//保存父类数据,在子类中要调用父类方法可用： （this.Super.父类成员）
-			//this.Super = System.merge({},[superClass.prototype]);
-			this.Super 	= superClass.prototype;
-			this.Super.constructor 	= superClass.prototype.constructor;
-			//如果它下面的子类已经设置了浏览器就不再设置浏览器
-			// if(Browser && (typeof Browser  !='undefined') && !this.Browser) this.setBrowser(Browser);
-
-		}else{
-			throw new Error(["Warning nothing the",superClass].join(' '));
-			return this;
-		}
-		/*------------------------------*/
-
-	};
-
 	Basis.prototype={
 		'constructor': Basis,
 		'_className':'Basis',
@@ -2294,10 +2194,7 @@ window[GRN_LHH].run([window],function(W,Config){
 		 */
 		'destructor':function(){}
 	};
-
 	System['Basis']=Basis;
-
-
 });
 
 
