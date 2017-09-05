@@ -326,14 +326,10 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 			){
 				var arr =['\n{'];
-				var len = System.length(D);
-				System.each(D,function(k,v){
-					if(1 === len){
-						arr.push('\t'+k+':'+typeof v);
-					}else{
+				System.search(D,function(k,v){
+					if(!System.isObject(v)){
 						arr.push('\t'+k+':'+typeof v+',');
 					}
-					len--;
 				});
 				arr.push('}\n');
 				var info = arr.join('\n');
