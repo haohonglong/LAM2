@@ -325,15 +325,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				!System.isNumber(height)
 
 			){
-				var arr =['\n{'];
-				System.search(D,function(k,v){
-					if(!System.isObject(v)){
-						arr.push('\t'+k+':'+typeof v+',');
-					}
-				});
-				arr.push('}\n');
-				var info = arr.join('\n');
-				throw new Error(["Warning :参数",info,"里面属性数据类型错误！！！"].join(''));
+				throw new Error(["Warning :参数",System.printErrorInfoOfObject(D),"里面属性数据类型错误！！！"].join(''));
 				return this;
 			}
 			this.beginPath()

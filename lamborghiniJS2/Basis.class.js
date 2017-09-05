@@ -534,6 +534,27 @@ if(!GRN_LHH){
 			System.close(document);
 		},
 		/**
+		 * 产品介绍：
+		 * 创建日期：2017-9-5
+		 * 修改日期：2017-9-5
+		 * 名称：System.printErrorInfoOfObject
+		 * 功能：打印错误信息对象里的所有属性
+		 * 说明：
+		 * 注意：
+		 * @param D
+		 * @returns {string}
+		 */
+		'printErrorInfoOfObject':function(D){
+			var arr =['\n{'];
+			System.search(D,function(k,v){
+				if(!System.isObject(v)){
+					arr.push('\t'+k+':'+typeof v+',');
+				}
+			});
+			arr.push('}\n');
+			return arr.join('\n');
+		},
+		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-9-30
