@@ -47,6 +47,8 @@
 <canvas id="box4" class="abs left" width="300" height="300">box4</canvas>
 <canvas id="box6" class="abs left" width="400" height="200">box6</canvas>
 <canvas id="box7" class="abs left" width="150" height="150">box7</canvas>
+<canvas id="box8" class="abs left" width="150" height="150">box7</canvas>
+<canvas id="fivestar" class="abs left" width="150" height="150">fivestar</canvas>
 <div id="box" >
 	<svg class="abs" xmlns="http://www.w3.org/2000/svg" version="1.1" height="190" style="width: 195px;">
 		<polygon points="100,10 40,180 190,60 10,60 160,180"
@@ -60,46 +62,142 @@
 	],function(ROOT) {
 		'use strict';
 		var System=this;
-		var dbox1,dbox2,dbox;
-		$(function(){
+		var dbox1,dbox2,dbox, p1, D,arc1,arc2,arc3,arc4,arc5,sector_1,sector_2,sector_3,sector_4;
 
+		function triangle(){
+			var canvas=new System.Html5.Shape(document.getElementById("box6"));
+			canvas.triangle().closePath().stroke().fill('red');
+			new System.Drag(canvas.theCanvas,{'noText':true});
 
-			new System.Drag(document.getElementById("box5"),{'noText':true});
-			new System.Drag(document.getElementById("box3"),{'noText':true});
-			new System.Drag(document.getElementById("box4"),{'noText':true});
-			new System.Drag(document.getElementById("box6"),{'noText':true});
-			new System.Drag(document.getElementById("box7"),{'noText':true});
+		}
 
-			dbox1=new System.Drag(document.getElementById("box1"),{'noText':true, 'coord':'x'});
-			dbox2=new System.Drag(document.getElementById("box2"),{'noText':true,'coord':'y'});
-			dbox=new System.Drag(document.getElementById("box"),{'noText':true});
+		function polygon(){
+			var canvas=new System.Html5.Shape(document.getElementById("box7"));
+			canvas.polygon({'position':{'x':60,'y':70},'n':6,'r':60,'width':0,'callback':null}).closePath().fill('green');
+			new System.Drag(canvas.theCanvas,{'noText':true});
+		}
 
+		function case1(){
+			var canvas=new System.Html5.Shape(document.getElementById("box3"));
+			canvas.arc(arc1).fill('green')
+					.arc(arc2).fill('#f60')
+					.arc(arc3).fill('#fff')
+					.arc(arc4).fill('#06f')
+					.rect()
+					.line().stroke()
+					.sector(sector_4).closePath().fill('#eee')
+					.sector(sector_3).closePath().fill('#ddd')
+					.sector(sector_2).closePath().fill('green')
+					.sector(sector_1).closePath().fill('#f60')
 
+					.text({
+						'text':'haha',
+						'position':{'x':200,'y':75},
+						'align':'center',
+						'valign':'middle',
+						'font':'40px Arial',
+						'isRender':true,
+						'style':'#000'
 
+					})
 
-			var D={
+//				.image()
+				//			.line({
+				//				'position':[0,0,300,150],
+				//				'width':1.5,
+				//				'color':'#000',
+				//				'close':false
+				//			})
+				//			.arc({
+				//		'size':[100,75,50,0],
+				//		'color':'#f00'
+				//	})
+//			.fill()
+
+			;
+			new System.Drag(canvas.theCanvas,{'noText':true});
+		}
+
+		function case2(){
+			var canvas=new System.Html5.Shape(document.getElementById("box4"));
+			canvas.fillStyle('black').rect({
+				'position':{'x':10,'y':10},
+				'size':{'w':200,'h':200},
+				'fill':true
+			}).fill()
+					.save()
+					.beginPath()
+
+					.rect({
+						'position':{'x':0,'y':0},
+						'size':{'w':50,'h':50},
+						'fill':true
+					})
+					.clip()
+					.beginPath().strokeStyle('red').lineWidth(5)
+					.arc({
+						'position':{'x':100,'y':100},
+						'r':100,
+						'counterclockwise':false
+					}).stroke().closePath()
+					.restore()
+					.beginPath()
+					.rect({
+						'position':{'x':0,'y':0},
+						'size':{'w':500,'h':500},
+						'fill':true
+					}).clip().beginPath().strokeStyle('#f60').lineWidth(5)
+					.arc({
+						'position':{'x':100,'y':100},
+						'r':50,
+						'counterclockwise':false
+					}).stroke().closePath();
+			new System.Drag(canvas.theCanvas,{'noText':true});
+		}
+
+		function bezier(){
+			var canvas=new System.Html5.Shape(document.getElementById("box8"));
+			canvas.beginPath().moveTo(150,0).bezierCurveTo(0,125,300,175,150,300).strokeStyle('#000').stroke();
+			new System.Drag(canvas.theCanvas,{'noText':true});
+		}
+
+		function fivestar(){
+			var canvas = new System.Html5.Shape(document.getElementById('fivestar'));
+			canvas.theCanvas.width = 200;
+			canvas.theCanvas.height = 200;
+			canvas.fillStyle('red').strokeStyle('red').fivestar({
+				'position':{'x':100,'y':100},
+				'R':80,
+				'r':30,
+				'rot':0
+			}).lineWidth(1).stroke().fill();
+			new System.Drag(canvas.theCanvas,{'noText':true});
+		}
+
+		function run(){
+			D={
 				'src':ROOT+'/project/images/22.jpg',
 				'position':{'x':0,'y':0},
 //			'size':{'w':540,'h':258},
 //			'clip':{'sx':0,'sy':0,'sw':0,'sh':0},
 				'callback':function(){}
 			};
-			var arc1={
+			arc1={
 				'position':{'x':50,'y':85},
 				'r':50,
 				'sAngle':0,
 				'eAngle':2*Math.PI
 			};
-			var sector_1={
+			sector_1={
 				'position':{'x':100,'y':75},
 				'r':50,
 				'sAngle':0,
 				'eAngle':20
 			};
-			var arc2=System.clone(arc1);
-			var arc3=System.clone(arc1);
-			var arc4=System.clone(arc1);
-			var arc5=System.clone(arc1);
+			arc2=System.clone(arc1);
+			arc3=System.clone(arc1);
+			arc4=System.clone(arc1);
+			arc5=System.clone(arc1);
 
 			arc2.r=40;
 			arc3.r=30;
@@ -107,9 +205,9 @@
 			arc5.r=5;
 
 
-			var sector_2=System.clone(sector_1);
-			var sector_3=System.clone(sector_1);
-			var sector_4=System.clone(sector_1);
+			sector_2=System.clone(sector_1);
+			sector_3=System.clone(sector_1);
+			sector_4=System.clone(sector_1);
 			sector_2.eAngle=20;
 			sector_2.eAngle=60;
 
@@ -119,103 +217,20 @@
 			sector_4.eAngle=190;
 			sector_4.eAngle=240;
 
-			function triangle(){
-				p6.triangle().closePath().stroke().fill('red');
+			new System.Drag(document.getElementById("box5"),{'noText':true});
+			dbox1=new System.Drag(document.getElementById("box1"),{'noText':true, 'coord':'x'});
+			dbox2=new System.Drag(document.getElementById("box2"),{'noText':true,'coord':'y'});
+			dbox=new System.Drag(document.getElementById("box"),{'noText':true});
+		}
+		$(function(){
 
-			}
-
-			function polygon(){
-				p7.polygon({'position':{'x':60,'y':70},'n':6,'r':60,'width':0,'callback':null}).closePath().fill('green');
-			}
-
-			function case1(){
-				p.arc(arc1).fill('green')
-						.arc(arc2).fill('#f60')
-						.arc(arc3).fill('#fff')
-						.arc(arc4).fill('#06f')
-						.rect()
-						.line().stroke()
-						.sector(sector_4).closePath().fill('#eee')
-						.sector(sector_3).closePath().fill('#ddd')
-						.sector(sector_2).closePath().fill('green')
-						.sector(sector_1).closePath().fill('#f60')
-
-						.text({
-							'text':'haha',
-							'position':{'x':200,'y':75},
-							'align':'center',
-							'valign':'middle',
-							'font':'40px Arial',
-							'isRender':true,
-							'style':'#000'
-
-						})
-
-//				.image()
-					//			.line({
-					//				'position':[0,0,300,150],
-					//				'width':1.5,
-					//				'color':'#000',
-					//				'close':false
-					//			})
-					//			.arc({
-					//		'size':[100,75,50,0],
-					//		'color':'#f00'
-					//	})
-//			.fill()
-
-				;
-			}
-
-			function case2(){
-				p1.fillStyle('black').rect({
-					'position':{'x':10,'y':10},
-					'size':{'w':200,'h':200},
-					'fill':true
-				}).fill()
-						.save()
-						.beginPath()
-
-						.rect({
-							'position':{'x':0,'y':0},
-							'size':{'w':50,'h':50},
-							'fill':true
-						})
-						.clip()
-						.beginPath().strokeStyle('red').lineWidth(5)
-						.arc({
-							'position':{'x':100,'y':100},
-							'r':100,
-							'counterclockwise':false
-						}).stroke().closePath()
-						.restore()
-						.beginPath()
-						.rect({
-							'position':{'x':0,'y':0},
-							'size':{'w':500,'h':500},
-							'fill':true
-						}).clip().beginPath().strokeStyle('#f60').lineWidth(5)
-						.arc({
-							'position':{'x':100,'y':100},
-							'r':50,
-							'counterclockwise':false
-						}).stroke().closePath();
-			}
-
-			function bezier(){
-				p1.beginPath().moveTo(150,0).bezierCurveTo(0,125,300,175,150,300).strokeStyle('#000').stroke();
-			}
-
-			var p=new System.Html5.Shape(document.getElementById("box3"));
-			var p1=new System.Html5.Shape(document.getElementById("box4"));
-			var p6=new System.Html5.Shape(document.getElementById("box6"));
-			var p7=new System.Html5.Shape(document.getElementById("box7"));
-
+			run();
 			triangle();
-			bezier();
 			case1();
 			polygon();
-//		case2();
+			case2();
+			fivestar();
+			bezier();
 		});
 
 	});
