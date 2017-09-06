@@ -387,6 +387,51 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return this;
 
 		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-9-6
+		 * 修改日期：2017-9-6
+		 * 名称： fivestar
+		 * 功能：五角星
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)D.position.x    			NO NULL : 五角星的 x 坐标。
+		 * @param 	(Number)D.position.y    			NO NULL : 五角星的 y 坐标。
+		 * @param 	(Number)D.R	    	    			NO NULL : 大圆的半径。
+		 * @param 	(Number)D.r	    	    			NO NULL : 小圆的半径。
+		 * @param 	(Number)D.rot	    	    		NO NULL : 旋转角度。
+		 * @returns {Shape}
+		 */
+		'fivestar':function(D){
+			var defaults={
+				'position':{'x':200,'y':200},
+				'R':200,
+				'r':80,
+				'rot':0
+			};
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			var x = D.position.x,
+				y = D.position.y,
+				R = D.R,
+				r = D.r,
+				rot = D.rot;
+			this.beginPath();
+			//设置是个顶点的坐标，根据顶点制定路径
+			for (var i = 0; i < 5; i++) {
+				this
+					.lineTo(Math.cos((18+i*72-rot)/180*Math.PI)*R+x,-Math.sin((18+i*72-rot)/180*Math.PI)*R+y)
+					.lineTo(Math.cos((54+i*72-rot)/180*Math.PI)*r+x,-Math.sin((54+i*72-rot)/180*Math.PI)*r+y);
+			}
+			this.closePath();
+			//设置边框样式以及填充颜色
+			//	.lineWidth(3)
+			//	.fillStyle("#F6F152")
+			//	.strokeStyle("#F5270B")
+			//	.fill()
+			//	.stroke();
+			return this;
+		},
 
 		/**
 		 *
