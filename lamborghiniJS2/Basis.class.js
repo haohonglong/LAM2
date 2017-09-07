@@ -264,6 +264,7 @@ if(!GRN_LHH){
 		'AutoLayout': {},
 		'Xhr': {},
 		'Fsc': {},
+		'BinaryTree': {},
 		'Linklist': {},
 		'PopupLayer': {},
 		'Roll': {},
