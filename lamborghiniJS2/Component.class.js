@@ -18,7 +18,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var System=this;
 	System.is(System,'BiObject','Component');
 	System.merge(null,[{
-		'import':System.Loader.import,
 		/**
 		 * @author: lhh
 		 * 产品介绍：

@@ -16,6 +16,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
     'use strict';
     var System=this;
     System.is(System,'Basis','Loader');
+    System.is(System,'Html');
 
     var html,head,body,meta,script,link;
     var create;
@@ -287,7 +288,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                     });
                 }
             } catch (e) {
-                System.is(System,'Html');
                 if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//异步方式加载 script 脚本文件
                     var arr=[];
                     url.each(function(){
@@ -408,10 +408,11 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
         'destructor':function(){}
     });
 
-
-
     System['Cloader'] =Loader;
     System['Loadcommon'] = System['Loader'] =new Loader();
+    System.merge(null,[{
+        'import': System.Loader.import
+    }]);
 
 
 });
