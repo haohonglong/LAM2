@@ -84,10 +84,24 @@ sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baselin
 sup{top: -0.5em;}
 sub{bottom: -0.25em;}
 
+/*被选择的文字*/
 ::selection {
   background: #0e90d2;
   color: #ffffff;
   text-shadow: none;
+}
+/*placeholder 默认样式*/
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #333;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #333;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #333;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #333;
 }
 
 .label,
