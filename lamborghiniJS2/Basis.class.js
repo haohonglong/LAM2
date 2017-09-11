@@ -1296,7 +1296,7 @@ if(!GRN_LHH){
 
 	String
 		.method('trim',function(){
-			return this.replace(/(^\s*)|(\s*$)/g, "");
+			return System.isFunction(this.trim) ? this.trim() : this.replace(/(^\s*)|(\s*$)/g, "");
 		})
 
 		/**
