@@ -37,11 +37,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：创建节点元素
 		 * 说明：
 		 * 注意：下面俩个参数是必须的
-		 * @param 	(String)tag             NO NULL : 标签名称
-		 * @param 	(Object)D             	NO NULL : 标签的属性
-		 * @return (Dom)
-		 * Example：
-		 *
+		 * @param 	{String}tag             NO NULL : 标签名称
+		 * @param 	{Object}D             	NO NULL : 标签的属性
+		 * @returns {Dom}
 		 */
 		'create':function(tag,D){
 			tag = tag || "div";
@@ -78,9 +76,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取元素的节点类型
 		 * 说明：
 		 * 注意：
-		 * @return (Number)
-		 * Example：
-		 *
+		 * @param node
+		 * @returns {Number}
 		 */
 		'getType':function(node){
 			node = node || this.node;
@@ -96,9 +93,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：创建文档碎片节点
 		 * 说明：
 		 * 注意：
-		 * @return (Dom)
-		 * Example：
-		 *
+		 * @returns {Dom}
 		 */
 		'createFragment':function(){
 			if(!this.fragment) {
@@ -120,9 +115,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取文档碎片
 		 * 说明：
 		 * 注意：
-		 * @return (Dom)
-		 * Example：
-		 *
+		 * @returns {Dom}
 		 */
 		'getFragment':function(){
 			if(this.fragment){
@@ -144,7 +137,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：
 		 * 说明：
 		 * 注意：
-		 * @param 	(String)html             NO NULL : html 内容
+		 * @param 	{String}html             NO NULL : html 内容
 		 * @returns {string}
 		 * Example：
 		 */
@@ -648,9 +641,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：查找指定的阶段中的是否有匹配的class 名称
 		 * 说明：
 		 * 注意：
-		 * @param   (String)className 		NO NULL :要查找的类名称
-		 * @param   (Dom)node 				NO NULL :dom节点
-		 * @return  (Boolean)
+		 * @param   {String}className 		NO NULL :要查找的类名称
+		 * @param   {Element}node 				NO NULL :dom节点
+		 * @return  {Boolean}
 		 * Example：
 		 */
 		'hasClass':function(className,node){
@@ -666,9 +659,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取类名集合
 		 * 说明：
 		 * 注意：
-		 * @param   (String)s 		NO NULL :要查找的类名称
+		 * @param   {String}s 		NO NULL :要查找的类名称
 		 * @param   (Dom)p 					   NULL :父级dom节点
-		 * @param   (String)t 				   NULL :标签名称
+		 * @param   {String}t 				   NULL :标签名称
 		 * @return  (Array)					返回匹配的节点集合
 		 * Example：
 		 */
@@ -695,26 +688,6 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	});
 
 	/**
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2016-7-13
-	 * 修改日期：2016-10-26
-	 * 名称：Dom.getStyle
-	 * 功能：
-	 * 说明：
-	 * 注意：
-	 *
-	 * @param $string
-	 * @returns {*}
-	 */
-	Dom.getStyle=function(obj,attr){
-		if(obj.currentStyle){
-			return obj.currentStyle[attr];
-		}else{
-			return getComputedStyle(obj,false)[attr];
-		}
-	};
-	/**
 	 *
 	 * @author lhh
 	 * 产品介绍：
@@ -725,8 +698,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 说明：
 	 * 注意：
 	 * @param   (Array)nodes 			NO NULL :dom节点集合
-	 * @param   (String)attr 			NO NULL :要设置样式属性
-	 * @param   (String)value 			NO NULL :要设置样式属性的值
+	 * @param   {String}attr 			NO NULL :要设置样式属性
+	 * @param   {String}value 			NO NULL :要设置样式属性的值
 	 * @return  {*}
 	 * Example：
 	 */
@@ -767,22 +740,19 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 功能：查找指定的阶段中的是否有匹配的class 名称
 	 * 说明：
 	 * 注意：
-	 * @param   (Dom)node 			NO NULL :dom节点
-	 * @param   (String)className 	NO NULL :要查找的类名称
-	 * @return  (Boolean)
-	 * Example：
+	 * @param   {Element}node 			NO NULL :dom节点
+	 * @param   {String}className 	NO NULL :要查找的类名称
+	 * @returns {boolean}
 	 */
 	Dom.hasClass=function(node,className){
-		var names = node.className || node.getAttribute('class');
-		if ((new RegExp("\\b"+className+"\\b")).test(names)){
-			return true;
+		if(node.classList){
+			return node.classList.contains(className);
+		}else{
+			var names = node.className || node.getAttribute('class');
+			if ((new RegExp("\\b"+className+"\\b")).test(names)){
+				return true;
+			}
 		}
-		//names = names.split(/\s+/);
-		//for(var i=0,len=names.length;i<len;i++){
-		//	if(names[i] === className) {
-		//		return true;
-		//	}
-		//}
 		return false;
 	};
 
@@ -791,26 +761,29 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2014-11-28
-	 * 修改日期：2017-3-8
+	 * 修改日期：2017-9-11
 	 * 名称：[] removeClass
 	 * 功能：删除指定的class 名称
 	 * 说明：
 	 * 注意：
-	 * @param   (Dom)node 			NO NULL :dom节点
-	 * @param   (String)className 	NO NULL :要查找的类名称
-	 * @return  (Boolean)
+	 * @param   {Element}node 			NO NULL :dom节点
+	 * @param   {String}className 	NO NULL :要查找的类名称
+	 * @return  {Boolean}
 	 * Example：
 	 */
 	Dom.removeClass=function(node,className){
 		if (!Dom.hasClass(node,className)){return node;}
-		var names = node.className || node.getAttribute('class');
-		names = names.replace(new RegExp("\\b"+className+"\\b"),"").trim();
-		if(node.className){
-			node.className = names;
+		if(node.classList){
+			node.classList.remove(className);
 		}else{
-			node.setAttribute('class',names);
+			var names = node.className || node.getAttribute('class');
+			names = names.replace(new RegExp("\\b"+className+"\\b"),"").trim();
+			if(node.className){
+				node.className = names;
+			}else{
+				node.setAttribute('class',names);
+			}
 		}
-
 		return node;
 	};
 	/**
@@ -818,22 +791,26 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2014-11-28
-	 * 修改日期：2017-3-8
+	 * 修改日期：2017-9-11
 	 * 名称：[] addClass
 	 * 功能：添加指定的class 名称
 	 * 说明：
 	 * 注意：
-	 * @param   (Dom)node 			NO NULL :dom节点
-	 * @param   (String)className 	NO NULL :要查找的类名称
-	 * @return  (Boolean)
+	 * @param   {Element}node 			NO NULL :dom节点
+	 * @param   {String}className 	NO NULL :要查找的类名称
+	 * @return  {Boolean}
 	 * Example：
 	 */
 	Dom.addClass=function(node,className){
 		if (Dom.hasClass(node,className)){return node;}
-		var names = node.className || node.getAttribute('class');
-		names = names.split(/\s+/);
-		names.push(className);
-		node.setAttribute('class',names.join(" ").trim());
+		if(node.classList){
+			node.classList.add(className);
+		}else{
+			var names = node.className || node.getAttribute('class');
+			names = names.split(/\s+/);
+			names.push(className);
+			node.setAttribute('class',names.join(" ").trim());
+		}
 		return node;
 	};
 
@@ -847,9 +824,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 功能：获取所有对应的类名称的集合
 	 * 说明：
 	 * 注意：
-	 * @param   (String)s			 NO NULL :class 名称
-	 * @param   (String)p 				NULL :parent node
-	 * @param   (String)t 				NULL :tagName
+	 * @param   {String}s			 NO NULL :class 名称
+	 * @param   {String}p 				NULL :parent node
+	 * @param   {String}t 				NULL :tagName
 	 * @return  (Array)				返回匹配的节点集合
 	 * Example：
 	 */
