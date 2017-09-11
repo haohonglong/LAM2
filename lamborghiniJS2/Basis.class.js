@@ -58,8 +58,8 @@ if(!GRN_LHH){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014.9.28
-	 * 修改日期：2017.3.3
-	 * 名称：private gettype
+	 * 修改日期：2017.9.11
+	 * 名称：private type
 	 * 功能：判断数据是什么类型的
 	 * 说明：
 	 * 注意：
@@ -67,30 +67,30 @@ if(!GRN_LHH){
 	 * @return  {Function}
 	 * Example：
 	 */
-	function gettype(type) {
+	function type(type) {
 		return function(obj) {
 			return (toString.call(obj) === "[object " + type + "]");
 		};
 	}
 
-	var isObject = gettype("Object");
-	var isString = gettype("String");
-	var isArray = Array.isArray || gettype("Array");
-	var isFunction = gettype("Function");
-	var isBoolean = gettype("Boolean");
-	var isNumber = gettype("Number");
-	var isDate = gettype("Date");
-	var isRegExp = gettype("RegExp");
-	var isBlob = gettype("Blob");
-	var isNull = gettype("Null");
-	var isUndefined = gettype("Undefined");
+	var isObject = type("Object");
+	var isString = type("String");
+	var isArray = Array.isArray || type("Array");
+	var isFunction = type("Function");
+	var isBoolean = type("Boolean");
+	var isNumber = type("Number");
+	var isDate = type("Date");
+	var isRegExp = type("RegExp");
+	var isBlob = type("Blob");
+	var isNull = type("Null");
+	var isUndefined = type("Undefined");
 
-	var isHTMLDocument = gettype("HTMLDocument");
-	var isHTMLBodyElement = gettype("HTMLBodyElement");
-	var isHTMLHeadElement = gettype("HTMLHeadElement");
-	var isHTMLCollection = gettype("HTMLCollection");
-	var isXMLHttpRequest = gettype("XMLHttpRequest");
-	var isXMLSerializer = gettype("XMLSerializer");
+	var isHTMLDocument = type("HTMLDocument");
+	var isHTMLBodyElement = type("HTMLBodyElement");
+	var isHTMLHeadElement = type("HTMLHeadElement");
+	var isHTMLCollection = type("HTMLCollection");
+	var isXMLHttpRequest = type("XMLHttpRequest");
+	var isXMLSerializer = type("XMLSerializer");
 
 
 
@@ -305,7 +305,7 @@ if(!GRN_LHH){
 	 *			empty
 	 *			isNumeric
 	 *			error
-	 *			gettype
+	 *			type
 	 *			isObject
 	 *			isString
 	 *			isArray
@@ -1175,7 +1175,7 @@ if(!GRN_LHH){
 	System.error 	 		= error;
 	System.isEmptyObject 	= isEmptyObject;
 	System.arr_isEmpty 		= arr_isEmpty;
-	System.gettype 			= gettype;
+	System.type 			= type;
 	System.isObject 		= isObject;
 	System.isString 		= isString;
 	System.isArray 			= isArray;

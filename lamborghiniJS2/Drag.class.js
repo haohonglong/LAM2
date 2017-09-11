@@ -93,7 +93,7 @@ window[GRN_LHH].run([window],function(window,undefined){
          */
         'init_postion':function(){
             var dom = this.dom;
-            var position = css.getRealStyle(dom,'position');
+            var position = System.Css.getComputedStyle(dom,'position');
             if('static' === position){
                 dom.style.position='absolute';
             }
