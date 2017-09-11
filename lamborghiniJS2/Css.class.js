@@ -70,14 +70,42 @@ window[GRN_LHH].run([window],function(window,undefined){
 		//document.defaultView.getComputedStyle 这是w3c标准方法，取得元素的样式信息，因为有些样式是在外部css文件定义的，所以用element.style是取不到的 如果是IE,可以用 element.currentStyle["style"]
 	};
 	Css.getPropertyValue=function(){};
-	Css.addRule=function(sheet,selector,cssText,i){//向指定样式表中添加一个CSS规则
+	/**
+	 * @author lhh
+	 * 产品介绍：给当前样式表插入新的样式规则.
+	 * 创建日期：2015-4-2
+	 * 修改日期：2017-9-11
+	 * 名称：insertRule
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param sheet 哪个样式表
+	 * @param selector	{String} css 选择器
+	 * @param cssText 	{String}
+	 * @param index 	{Number}	是一个数字,表示了要插入的位置.
+	 */
+	Css.insertRule=function(sheet,selector,cssText,index){//向指定样式表中添加一个CSS规则
 		if(sheet.insertRule){//W3c
-			sheet.insertRule(selector+"{"+cssText+"}",i);
+			var rule = selector+"{"+cssText+"}";//是一个字符串,包含了要插入的样式规则(选择器和样式声明).
+			sheet.insertRule(rule,index);
 		}else if(sheet.addRule){//IE
-			sheet.addRule(selector,cssText,i);
+			sheet.addRule(selector,cssText,index);
 		}
 	};
-	Css.delRule=function(sheet,index){
+	/**
+	 *
+	 * @author lhh
+	 * 产品介绍：从当前样式表对象中删除指定的样式规则.
+	 * 创建日期：2015-4-2
+	 * 修改日期：2017-9-11
+	 * 名称：deleteRule
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param sheet 哪个样式表
+	 * @param index{Number} 用来指定样式规则的位置
+	 */
+	Css.deleteRule=function(sheet,index){
 		if(sheet.deleteRule){
 			sheet.deleteRule(index);
 		}else if(sheet.removeRule){
