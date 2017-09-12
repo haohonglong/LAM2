@@ -1814,22 +1814,12 @@ if(!GRN_LHH){
 		}
 	}
 	function isEmptyObject( obj ) {
-		for ( var name in obj ) {
-			return false;
-		}
+		for ( var name in obj ) {return false;}
 		return true;
-
 	}
 	function arr_isEmpty(arr){
-		if(!isArray(arr)){
-			throw new Error('Warning arr 不是一个数组');
-		}else{
-			if(!arr.length){
-				return true
-			}else{
-				return false;
-			}
-		}
+		if(!isArray(arr)){throw new Error('Warning arr 不是一个数组');}
+		return (!arr.length);
 	}
 	function error( msg ) {
 		//try {
