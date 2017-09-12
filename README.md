@@ -5,7 +5,7 @@
 	version ：2.0.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-9-5
+	修改日期 ：2017-9-11
 
 
 # 产品介绍：
@@ -209,6 +209,9 @@
 					'Shape': function(){},//基本形
 					'Chess': function(){}//棋盘类
 				},
+				'View': function(){},
+				'Validation':function(){},
+				'Widget': function(){}
         	}
 
 			类结构:(继承参考 六、继承) 继承用basejs方式 
