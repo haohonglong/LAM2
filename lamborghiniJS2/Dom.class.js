@@ -487,17 +487,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：查找下面的元素是不是节点元素
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {*}
 		 */
-		'firstChild':function(node){//
-			node = node || this.node;
-			if(node.firstChild){//有子节点的话
-				var n=node.firstChild;
-				if(n.nodeType==1) return n;
-				return this.nextSibling(n);
-			}
-			return null;
+		'firstChild':function(){//
+			return Dom.firstChild(this.node);
 		},
 
 
@@ -510,17 +503,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：查找元素最后节点是不是节点元素
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {*}
 		 */
-		'lastChild':function(node){//
-			node = node || this.node;
-			if(node.lastChild){//有子节点的话
-				var n=node.lastChild;
-				if(n.nodeType==1) return n;
-				return this.previousSibling(n);
-			}
-			return null;
+		'lastChild':function(){//
+			return Dom.lastChild(this.node);
 		},
 		/**
 		 * @author: lhh
@@ -531,19 +517,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：查找前一个节点是否是元素节点排除所有非元素节点
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {*}
 		 */
-		'previousSibling':function(node){//
-			node = node || this.node;
-			if(node.previousSibling){
-				var n=node.previousSibling;
-				if(n.nodeType==1) return n;
-				while(n=n.previousSibling){//查找上一个节点----->上一个节点------->上一个节点.........直到没有节点为止
-					if(n.nodeType==1) return n;
-				}
-			}
-			return null;
+		'previousSibling':function(){//
+			return Dom.previousSibling(this.node);
 		},
 		/**
 		 * @author: lhh
@@ -557,16 +534,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @param node
 		 * @returns {*}
 		 */
-		'nextSibling':function(node){
-			node = node || this.node;
-			if(node.nextSibling){
-				var n=node.nextSibling;
-				if(1 === n.nodeType) return n;
-				while(n = n.nextSibling){//查找下一个节点----->下一个节点------->下一个节点.........直到没有节点为止
-					if(1 === n.nodeType) return n;
-				}
-			}
-			return node;
+		'nextSibling':function(){
+			return Dom.nextSibling(this.node);
 		},
 		'empty':function(){},
 
@@ -582,19 +551,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @param id {String}
 		 * @returns {*}
 		 */
-		'$':function(id){
-			if(document.querySelector){
-				return document.querySelector(id);
-			}
-			if(document.getElementById(id)){
-				return document.getElementById(id);
-			}else if(document.getElementsByTagName(id)){
-				return document.getElementsByTagName(id);
-			}else{
-				return this.getElementsByClassName(id,document,'*');
-			}
-
-		},
+		'$':function(id){return Dom.$(id);},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -607,13 +564,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @param id {String}
 		 * @returns {*}
 		 */
-		'$$':function(id){
-			if(document.querySelectorAll){
-				return document.querySelectorAll(id);
-			}
-			return this.$(id);
-		},
-
+		'$$':function(id){return Dom.$$(id);},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -707,6 +658,49 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 
 		}
 	});
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.$
+	 * 功能：选择器功能
+	 * 说明：
+	 * 注意：
+	 * @param id {String}
+	 * @returns {*}
+	 */
+	Dom.$=function(id){
+		if(document.querySelector){
+			return document.querySelector(id);
+		}
+		if(document.getElementById(id)){
+			return document.getElementById(id);
+		}else if(document.getElementsByTagName(id)){
+			return document.getElementsByTagName(id);
+		}else{
+			return Dom.getElementsByClassName(id,document,'*');
+		}
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.$$
+	 * 功能：选择器功能
+	 * 说明：
+	 * 注意：
+	 * @param id {String}
+	 * @returns {*}
+	 */
+	Dom.$$=function(id){
+		if(document.querySelectorAll){
+			return document.querySelectorAll(id);
+		}
+		return Dom.$(id);
+	};
+
 
 	/**
 	 *
@@ -953,6 +947,102 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 
 		return 0;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.nextSibling
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param node
+	 * @returns {*}
+	 */
+	Dom.nextSibling=function(node){
+		if(!System.isHTMLDocument(node)){
+			throw new Error('Warning: node 必须是一个dom 节点元素 ');
+		}
+		if(node.nextSibling){
+			var n=node.nextSibling;
+			if(1 === n.nodeType) return n;
+			while(n = n.nextSibling){//查找下一个节点----->下一个节点------->下一个节点.........直到没有节点为止
+				if(1 === n.nodeType) return n;
+			}
+		}
+		return node;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.previousSibling
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param node
+	 * @returns {*}
+	 */
+	Dom.previousSibling=function(node){
+		if(!System.isHTMLDocument(node)){
+			throw new Error('Warning: node 必须是一个dom 节点元素 ');
+		}
+		if(node.previousSibling){
+			var n=node.previousSibling;
+			if(n.nodeType==1) return n;
+			while(n=n.previousSibling){//查找上一个节点----->上一个节点------->上一个节点.........直到没有节点为止
+				if(n.nodeType==1) return n;
+			}
+		}
+		return null;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.lastChild
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param node
+	 * @returns {*}
+	 */
+	Dom.lastChild=function(node){
+		if(!System.isHTMLDocument(node)){
+			throw new Error('Warning: node 必须是一个dom 节点元素 ');
+		}
+		if(node.lastChild){//有子节点的话
+			var n=node.lastChild;
+			if(n.nodeType==1) return n;
+			return Dom.previousSibling(n);
+		}
+		return null;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-11
+	 * 修改日期：2017-9-11
+	 * 名称：Dom.firstChild
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param node
+	 * @returns {*}
+	 */
+	Dom.firstChild=function(node){
+		if(!System.isHTMLDocument(node)){
+			throw new Error('Warning: node 必须是一个dom 节点元素 ');
+		}
+		if(node.firstChild){//有子节点的话
+			var n=node.firstChild;
+			if(n.nodeType==1) return n;
+			return Dom.nextSibling(n);
+		}
+		return null;
 	};
 
 
