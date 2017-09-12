@@ -574,23 +574,44 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-7-13
-		 * 修改日期：2017-3-8
+		 * 修改日期：2017-9-11
 		 * 名称：$
 		 * 功能：选择器功能
 		 * 说明：
 		 * 注意：
-		 * @param str
+		 * @param id {String}
 		 * @returns {*}
 		 */
-		'$':function(str){
-			if(document.getElementById(str)){
-				return document.getElementById(str);
-			}else if(document.getElementsByTagName(str)){
-				return document.getElementsByTagName(str);
+		'$':function(id){
+			if(document.querySelector){
+				return document.querySelector(id);
+			}
+			if(document.getElementById(id)){
+				return document.getElementById(id);
+			}else if(document.getElementsByTagName(id)){
+				return document.getElementsByTagName(id);
 			}else{
-				return this.getElementsByClassName(str,document,'*');
+				return this.getElementsByClassName(id,document,'*');
 			}
 
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-9-11
+		 * 修改日期：2017-9-11
+		 * 名称：$$
+		 * 功能：选择器功能
+		 * 说明：
+		 * 注意：
+		 * @param id {String}
+		 * @returns {*}
+		 */
+		'$$':function(id){
+			if(document.querySelectorAll){
+				return document.querySelectorAll(id);
+			}
+			return this.$(id);
 		},
 
 		/**
