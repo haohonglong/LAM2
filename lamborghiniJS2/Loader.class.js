@@ -229,7 +229,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
             }else if(System.isArray(D.tag)){
                 if(D.url){
                     if(System.fileExisted(D.url)){
-                        return;
+                        return this;
                     }else{
                         System.files.push(D.url);
                     }
