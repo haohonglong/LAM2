@@ -668,18 +668,20 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 说明：
 	 * 注意：
 	 * @param id {String}
+	 * @param context{Element} 上下文元素
 	 * @returns {*}
 	 */
-	Dom.$=function(id){
+	Dom.$=function(id,context){
+		context = context || document;
 		if(document.querySelector){
-			return document.querySelector(id);
+			return context.querySelector(id);
 		}
-		if(document.getElementById(id)){
-			return document.getElementById(id);
-		}else if(document.getElementsByTagName(id)){
-			return document.getElementsByTagName(id);
+		if(context.getElementById(id)){
+			return context.getElementById(id);
+		}else if(context.getElementsByTagName(id)){
+			return context.getElementsByTagName(id);
 		}else{
-			return Dom.getElementsByClassName(id,document,'*');
+			return Dom.getElementsByClassName(id,context,'*');
 		}
 	};
 	/**
@@ -692,13 +694,15 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 说明：
 	 * 注意：
 	 * @param id {String}
+	 * @param context{Element} 上下文元素
 	 * @returns {*}
 	 */
-	Dom.$$=function(id){
+	Dom.$$=function(id,context){
+		context = context || document;
 		if(document.querySelectorAll){
-			return document.querySelectorAll(id);
+			return context.querySelectorAll(id);
 		}
-		return Dom.$(id);
+		return Dom.$(id,context);
 	};
 
 
@@ -840,16 +844,16 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 说明：
 	 * 注意：
 	 * @param   {String}s			 NO NULL :class 名称
-	 * @param   {String}p 				NULL :parent node
+	 * @param 	{Element}context 	上下文元素
 	 * @param   {String}t 				NULL :tagName
 	 * @returns {*|Array}			返回匹配的节点集合
 	 */
-	Dom.getElementsByClassName=function(s,p,t){//使用class获取元素
-		var node = p || document;
-		if(node.getElementsByClassName){return node.getElementsByClassName(s);}
+	Dom.getElementsByClassName=function(s,context,t){//使用class获取元素
+		context = context || document;
+		if(document.getElementsByClassName){return context.getElementsByClassName(s);}
 		var reg=new RegExp('\\b'+s+'\\b');
 		var arr=[];
-		var element=node.getElementsByTagName(t || '*');
+		var element=context.getElementsByTagName(t || '*');
 		System.each(element,function(){
 			if(reg.test(this.className || this.getAttribute('class')) || Dom.hasClass(this,s)){
 				arr.push(this);
