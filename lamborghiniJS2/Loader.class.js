@@ -267,7 +267,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 url = [];
                 url.push(str);
             }
-            if(!System.isArray(url) || url.length < 1){return this;}
+            if(!System.isArray(url) || System.arr_isEmpty(url)){return this;}
             suffix = suffix || '.js';
             baseUrl = System.isset(baseUrl) ? baseUrl : System.ROOT;
             var xhr_params = self.Config.XHR;
