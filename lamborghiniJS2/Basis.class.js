@@ -1824,13 +1824,12 @@ if(!GRN_LHH){
 		if(!isArray(arr)){
 			throw new Error('Warning arr 不是一个数组');
 		}else{
-			if(arr.length < 1){
+			if(!arr.length){
 				return true
 			}else{
 				return false;
 			}
 		}
-
 	}
 	function error( msg ) {
 		//try {
