@@ -840,7 +840,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2014-11-28
-	 * 修改日期：2017-03-02
+	 * 修改日期：2017-9-11
 	 * 名称：Dom.getElementsByClassName
 	 * 功能：获取所有对应的类名称的集合
 	 * 说明：
@@ -848,22 +848,19 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @param   {String}s			 NO NULL :class 名称
 	 * @param   {String}p 				NULL :parent node
 	 * @param   {String}t 				NULL :tagName
-	 * @return  (Array)				返回匹配的节点集合
-	 * Example：
+	 * @returns {*|Array}			返回匹配的节点集合
 	 */
 	Dom.getElementsByClassName=function(s,p,t){//使用class获取元素
 		var node = p || document;
 		if(node.getElementsByClassName){return node.getElementsByClassName(s);}
-
 		var reg=new RegExp('\\b'+s+'\\b');
 		var arr=[];
 		var element=node.getElementsByTagName(t || '*');
-
-		for(var i= 0,len = element.length;i < len;i++){
-			if(reg.test(element[i].className || element[i].getAttribute('class')) || Dom.hasClass(element[i],s)){
-				arr.push(element[i]);
+		System.each(element,function(){
+			if(reg.test(this.className || this.getAttribute('class')) || Dom.hasClass(this,s)){
+				arr.push(this);
 			}
-		}
+		});
 		return arr;
 	};
 	/**
