@@ -718,14 +718,16 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 功能：对多个节点元素批量设置同一个样式
 	 * 说明：
 	 * 注意：
-	 * @param   (Array)nodes 			NO NULL :dom节点集合
+	 * @param   {Array}nodes 			NO NULL :dom节点集合
 	 * @param   {String}attr 			NO NULL :要设置样式属性
 	 * @param   {String}value 			NO NULL :要设置样式属性的值
 	 * @return  {*}
 	 * Example：
 	 */
 	Dom.setStyle=function(nodes,attr,value){
-		if(System.empty(nodes) || System.isString(nodes)) return 0;
+		if(System.empty(nodes) || System.isString(nodes)){
+			throw new Error('Warning: nodes 不能为空，或不能是字符串类型');
+		}
 		for(var i=0,len=nodes.length;i<len;i++){
 			nodes[i].style[attr]=value;
 		}
@@ -789,8 +791,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 注意：
 	 * @param   {Element}node 			NO NULL :dom节点
 	 * @param   {String}className 	NO NULL :要查找的类名称
-	 * @return  {Boolean}
-	 * Example：
+	 * @returns {*}
 	 */
 	Dom.removeClass=function(node,className){
 		if (!Dom.hasClass(node,className)){return node;}
@@ -819,8 +820,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * 注意：
 	 * @param   {Element}node 			NO NULL :dom节点
 	 * @param   {String}className 	NO NULL :要查找的类名称
-	 * @return  {Boolean}
-	 * Example：
+	 * @returns {*}
 	 */
 	Dom.addClass=function(node,className){
 		if (Dom.hasClass(node,className)){return node;}
