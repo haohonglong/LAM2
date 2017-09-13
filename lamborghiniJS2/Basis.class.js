@@ -2,7 +2,7 @@
  * LamborghiniJS 0.3 pre
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-9-5
+ * 修改日期:2017-9-13
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -1999,19 +1999,20 @@ window[GRN_LHH].run([window],function(W,Config){
 			var ROOT = this.Public.ROOT;
 			var classPath=this.getClassPath();
 			return [
-				classPath+'/jQuery/jquery.js',
-				classPath+'/Basis.class.js',
-				//classPath+'/Base.class.js',
-				classPath+'/BiObject.class.js',
-				classPath+'/Loader.class.js',
-				classPath+'/Component.class.js',
-				classPath+'/Helper.class.js',
-				classPath+'/Event.class.js',
-				classPath+'/Browser.class.js',
-				classPath+'/Dom.class.js',
-				classPath+'/Html.class.js',
-				classPath+'/Template.class.js',
-				classPath+'/Controller.class.js'
+				 classPath+'/Basis.class.js'
+				,classPath+'/Base.class.js'
+				,classPath+'/BiObject.class.js'
+				,classPath+'/Component.class.js'
+				,classPath+'/Helper.class.js'
+				,classPath+'/Event.class.js'
+				,classPath+'/jQuery/jquery.js'
+				,classPath+'/Browser.class.js'
+				,classPath+'/Dom.class.js'
+				,classPath+'/Html.class.js'
+				,classPath+'/Loader.class.js'
+				,classPath+'/Template.class.js'
+				,classPath+'/Controller.class.js'
+				,classPath+'/Css.class.js'
 			];
 		},
 

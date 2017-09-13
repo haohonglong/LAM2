@@ -67,13 +67,13 @@ if(!GRN_LHH){
             var ROOT = this.Public.ROOT;
             var classPath=this.getClassPath();
             return [
-                 classPath+'/jQuery/jquery.js'
-                ,classPath+'/Basis.class.js'
+                 classPath+'/Basis.class.js'
                 ,classPath+'/Base.class.js'
                 ,classPath+'/BiObject.class.js'
                 ,classPath+'/Component.class.js'
                 ,classPath+'/Helper.class.js'
                 ,classPath+'/Event.class.js'
+                ,classPath+'/jQuery/jquery.js'
                 ,classPath+'/Browser.class.js'
                 ,classPath+'/Dom.class.js'
                 ,classPath+'/Html.class.js'
