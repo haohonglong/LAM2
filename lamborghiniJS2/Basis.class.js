@@ -2102,7 +2102,10 @@ window[GRN_LHH].run([window],function(W,Config){
 	System.merge(System.Config || {},[Config]);
 	System.classPath = System.Config.getClassPath();
 	System.Public 	 = System.Config.Public;
-	System.each(System.Public,function(name){System[name] = this;});
+	System.each(System.Public,function(name){
+		if(name in System){return true;}
+		System[name] = this;
+	});
 
 	System.LAM_DEBUG = System.Config.LAM_DEBUG;
 	System.LAM_ENV = System.Config.LAM_ENV;
