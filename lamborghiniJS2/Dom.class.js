@@ -76,12 +76,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取元素的节点类型
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {Number}
 		 */
-		'getType':function(node){
-			node = node || this.node;
-			return node.nodeType;
+		'getType':function(){
+			return Dom.getType(this.node);
 		},
 
 		/**
@@ -270,28 +268,24 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取节点的标签名称
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {string}
 		 */
-		'getTagName':function(node){
-			node = node || this.node;
-			return node.nodeName;
+		'getTagName':function(){
+			return Dom.getName(this.node);
 		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-7-13
-		 * 修改日期：2016-10-26
+		 * 修改日期：2017-9-13
 		 * 名称：delNode
 		 * 功能：删除指定的节点，参数不填默认删除当前的节点
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {Dom}
 		 */
-		'delNode':function(node){//在它的父节点调用removeChild 然后把它自身移除
-			node = node || this.node;
-			this.getParent(node).removeChild(node);
+		'delNode':function(){//在它的父节点调用removeChild 然后把它自身移除
+			this.node = Dom.removeNode(this.node);
 			return this;
 		},
 		/**
@@ -303,12 +297,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：获取指定节点的父节点
 		 * 说明：
 		 * 注意：
-		 * @param node
 		 * @returns {Node}
 		 */
-		'getParent':function(node){//获取当前节点的父节点
-			node = node || this.node;
-			return node.parentNode;
+		'getParent':function(){//获取当前节点的父节点
+			return Dom.getParent(this.node);
 		},
 		/**
 		 * @author: lhh
@@ -995,9 +987,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		if(node.previousSibling){
 			var n=node.previousSibling;
-			if(n.nodeType==1) return n;
+			if(1 === n.nodeType) return n;
 			while(n=n.previousSibling){//查找上一个节点----->上一个节点------->上一个节点.........直到没有节点为止
-				if(n.nodeType==1) return n;
+				if(1 === n.nodeType) return n;
 			}
 		}
 		return null;
@@ -1020,7 +1012,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		if(node.lastChild){//有子节点的话
 			var n=node.lastChild;
-			if(n.nodeType==1) return n;
+			if(1 === n.nodeType) return n;
 			return Dom.previousSibling(n);
 		}
 		return null;
@@ -1043,12 +1035,71 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		if(node.firstChild){//有子节点的话
 			var n=node.firstChild;
-			if(n.nodeType==1) return n;
+			if(1 === n.nodeType) return n;
 			return Dom.nextSibling(n);
 		}
 		return null;
 	};
-
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-13
+	 * 修改日期：2017-9-13
+	 * 名称：Dom.removeNode
+	 * 功能：删除指定节点元素
+	 * 说明：
+	 * 注意：
+	 * @param node{Element}
+	 * @returns {Node}
+	 */
+	Dom.removeNode=function(node){
+		return node.parentNode.removeChild(node);
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-13
+	 * 修改日期：2017-9-13
+	 * 名称：Dom.getParent
+	 * 功能：获取指定节点的父节点元素
+	 * 说明：
+	 * 注意：
+	 * @param node{Element}
+	 * @returns {Node}
+	 */
+	Dom.getParent=function(node){
+		return node.parentNode;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-13
+	 * 修改日期：2017-9-13
+	 * 名称：Dom.getName
+	 * 功能：获取指定节点的标签名称
+	 * 说明：
+	 * 注意：
+	 * @param node{Element}
+	 * @returns {string}
+	 */
+	Dom.getName=function(node){
+		return node.nodeName;
+	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-13
+	 * 修改日期：2017-9-13
+	 * 名称：Dom.getType
+	 * 功能：获取指定节点的类型
+	 * 说明：
+	 * 注意：
+	 * @param node{Element}
+	 * @returns {Number}
+	 */
+	Dom.getType=function(node){
+		return node.nodeType;
+	};
 
 	System['Dom']=Dom;
 
