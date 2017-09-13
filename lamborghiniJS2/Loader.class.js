@@ -23,14 +23,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
     var create;
     var sAttribute   = System.Config.render.default.script.Attribute;
     var cAttribute   = System.Config.render.default.css.Attribute;
-    /**
-     *
-     * @returns {*|Dom}
-     * @constructor
-     */
-    function CMyDom(){//创建Dom 对象
-        return new System.Dom();
-    }
+
     function initDom(){
         var self = this;
         //var load = window.onload;
@@ -145,7 +138,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             var attr = System.merge({'rel':rel,'type':type},[cAttribute]);
                             attr['href'] = href;
                             if(create){
-                                node = CMyDom().create('link',attr);
+                                node = new System.Dom('link',attr);
                                 node.style=true;
                             }else{
                                 node = System.Html.linkFile(href,attr);
@@ -168,7 +161,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             System.merge(css,[cAttribute]);
 
                             if(create){
-                                node = CMyDom().create('link',css);
+                                node = new System.Dom('link',css);
                                 node.style=true;
                             }else{
                                 node = System.Html.linkFile(css.href,css);
@@ -192,7 +185,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             var attr = System.clone(sAttribute);
                             attr['src'] = src;
                             if(create){
-                                node = CMyDom().create('script',attr);
+                                node = new System.Dom('script',attr);
                                 node.script=true;
                             }else{
                                 node = System.Html.scriptFile(src,attr);
@@ -213,7 +206,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }else{
                             System.merge(js,[sAttribute]);
                             if(create){
-                                node = CMyDom().create('script',js);
+                                node = new System.Dom('script',js);
                                 node.script=true;
                             }else{
                                 node = System.Html.scriptFile(js.src,js);
