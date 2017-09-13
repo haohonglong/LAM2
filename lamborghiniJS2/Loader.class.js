@@ -16,6 +16,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
     'use strict';
     var System=this;
     System.is(System,'Basis','Loader');
+    System.is(System,'Dom');
     System.is(System,'Html');
 
     var html,head,body,meta,script,link;
@@ -28,7 +29,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
      * @constructor
      */
     function CMyDom(){//创建Dom 对象
-        System.is(System,'Dom');
         return new System.Dom();
     }
     function initDom(){
