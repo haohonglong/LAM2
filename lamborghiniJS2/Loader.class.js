@@ -146,6 +146,16 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                                     return;
                                 }else{
                                     var attr = rule.attr;
+                                    switch(rule.tag){
+                                        case "script":
+                                            attr.src = this;
+                                            break;
+                                        case "link":
+                                            attr.href = this;
+                                            break;
+                                        default :
+
+                                    }
                                     if(create){
                                         node = new System.Dom(rule.tag,attr);
                                         if(System.isset(after_fn) && System.isFunction(after_fn)){after_fn.call(node);}
