@@ -113,32 +113,32 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * @param(String|Boolean)D.baseUrl		  	    NULL:文件路径
          * @param(String)D.suffix		  	    NULL:文件后缀名
          * 注意：
-         * rules:[
-         *          {
+          rules:[
+                   {
                       tag: 'css',
                       single:true,
-                      baseUrl:false,
                       use: [
                         'style-loader',
                         'css-loader'
                       ],
                       attr:{},
-                      after:function(){}
+                      after_fn:function(){}
                     }
                 ]
          * @return  (Object) 返回当前对象
          */
         'load':function(D){
+            var self = this;
             create = System.Config.render.create;
-            var suffix,rel,type,len,src="",href="",i= 0,node = null;
+            var suffix,rel,type,src="",href="",i= 0,node = null;
             var baseUrl=System.isset(D.baseUrl) ? D.baseUrl : System.ROOT;
             //link
             if(System.isArray(D.rules)){
                 System.each(D.rules,function(){
                     var rule=this;
-                    var after_fn=rule.rule;
+                    var after_fn=rule.after_fn;
                     var single=rule.single || false;
-                    if(System.isPlainObject(rule)){
+                    if(System.isPlainObject(this)){
                         //是否已加载过了
                         if(System.isArray(rule.use)){
                             System.each(rule.use,function(){
@@ -153,6 +153,9 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                                     }else{
                                         node = System.Html.tag(single,rule.tag,attr);
                                     }
+                                    if(System.isClassFile(this)){
+                                        System.classes.push(this);
+                                    }
                                     files.push(node);
                                     System.files.push(this);
                                 }
@@ -165,6 +168,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 suffix  = D.suffix  || '.css';
                 rel     = D.rel     || 'stylesheet';
                 type    = D.type    || 'text/css';
+                var tagName = "link";
                 System.each(D.css,function(){
                     var css=this;
                     if(System.isString(css)){
@@ -174,17 +178,8 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         if(System.fileExisted(href)){
                             return;
                         }else{
-                            var attr = System.merge({'rel':rel,'type':type},[cAttribute]);
-                            attr['href'] = href;
-                            if(create){
-                                node = new System.Dom('link',attr);
-                                node.style=true;
-                            }else{
-                                node = System.Html.linkFile(href,attr);
-                            }
-
-                            files.push(node);
-                            System.files.push(href);
+                            var attr = System.merge({'rel':rel,'type':type,'href':href},[cAttribute]);
+                            self.load({'rules':[{tag: tagName,single:true,use: [href],attr:attr,after_fn:function(){this.style=true;}}]});
                         }
                     }else if(System.isPlainObject(css)){
                         css.href = __this__.suffix_checkor(css.href,suffix);
@@ -196,23 +191,15 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             return;
                         }else{
                             System.merge(css,[cAttribute]);
-
-                            if(create){
-                                node = new System.Dom('link',css);
-                                node.style=true;
-                            }else{
-                                node = System.Html.linkFile(css.href,css);
-                            }
-                            files.push(node);
-                            System.files.push(css.href);
+                            self.load({'rules':[{tag: tagName,single:true,use: [css.href],attr:css,after_fn:function(){this.style=true;}}]});
                         }
                     }
                 });
-
             }else if(System.isArray(D.js) || System.isArray(D.script)){//script
                 suffix = D.suffix || '.js';
+                var tagName = "script";
                 System.each(D.js || D.script,function(){
-                    var js=D.js[i];
+                    var js=this;
                     if(System.isString(js)){
                         js = __this__.suffix_checkor(js,suffix);
                         src = baseUrl ? baseUrl+js : js;
@@ -222,18 +209,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         }else{
                             var attr = System.clone(sAttribute);
                             attr['src'] = src;
-                            if(create){
-                                node = new System.Dom('script',attr);
-                                node.script=true;
-                            }else{
-                                node = System.Html.scriptFile(src,attr);
-                            }
-
-                            if(System.isClassFile(src)){
-                                System.classes.push(src);
-                            }
-                            files.push(node);
-                            System.files.push(src);
+                            self.load({'rules':[{tag: tagName,use: [src],attr:attr,after_fn:function(){this.script=true;}}]});
                         }
                     }else if(System.isPlainObject(js)){
                         js.src = __this__.suffix_checkor(js.src,suffix);
@@ -243,17 +219,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             return;
                         }else{
                             System.merge(js,[sAttribute]);
-                            if(create){
-                                node = new System.Dom('script',js);
-                                node.script=true;
-                            }else{
-                                node = System.Html.scriptFile(js.src,js);
-                            }
-                            if(System.isClassFile(js.src)){
-                                System.classes.push(js.src);
-                            }
-                            files.push(node);
-                            System.files.push(js.src);
+                            self.load({'rules':[{tag: tagName,use: [js.src],attr:js,after_fn:function(){this.script=true;}}]});
                         }
                     }
                 });
@@ -268,9 +234,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 D.tag.each(function(i){
                     files.push(this);
                 });
-
             }
-
             return this;
         },
         /**
