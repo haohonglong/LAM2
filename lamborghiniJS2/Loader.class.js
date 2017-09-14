@@ -105,7 +105,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * 名称： load
          * 功能：动态创建js,css 标签引入公共文件
          * 创建日期：2014-9-9
-         * 修改日期：2017-9-5
+         * 修改日期：2017-9-14
          * 说明：js 和 css 任选其一
          * @params   (Object)D 			NO NULL :初始化参数
          * @param(Array)D.js		  	     NO NULL:js文件集合
@@ -113,6 +113,19 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * @param(String|Boolean)D.baseUrl		  	    NULL:文件路径
          * @param(String)D.suffix		  	    NULL:文件后缀名
          * 注意：
+         * rules:[
+         *          {
+                      tag: 'css',
+                      single:true,
+                      baseUrl:false,
+                      use: [
+                        'style-loader',
+                        'css-loader'
+                      ],
+                      attr:{},
+                      after:function(){}
+                    }
+                ]
          * @return  (Object) 返回当前对象
          */
         'load':function(D){
@@ -120,20 +133,46 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
             var suffix,rel,type,len,src="",href="",i= 0,node = null;
             var baseUrl=System.isset(D.baseUrl) ? D.baseUrl : System.ROOT;
             //link
-            if(System.isArray(D.css)){
+            if(System.isArray(D.rules)){
+                System.each(D.rules,function(){
+                    var rule=this;
+                    var after_fn=rule.rule;
+                    var single=rule.single || false;
+                    if(System.isPlainObject(rule)){
+                        //是否已加载过了
+                        if(System.isArray(rule.use)){
+                            System.each(rule.use,function(){
+                                if(System.fileExisted(this)){
+                                    return;
+                                }else{
+                                    var attr = rule.attr;
+                                    if(create){
+                                        node = new System.Dom(rule.tag,attr);
+                                        if(System.isset(after_fn) && System.isFunction(after_fn)){after_fn.call(node);}
+                                        //node.style=true;
+                                    }else{
+                                        node = System.Html.tag(single,rule.tag,attr);
+                                    }
+                                    files.push(node);
+                                    System.files.push(this);
+                                }
+                            });
+                        }
+
+                    }
+                });
+            }else if(System.isArray(D.css)){
                 suffix  = D.suffix  || '.css';
                 rel     = D.rel     || 'stylesheet';
                 type    = D.type    || 'text/css';
-
-                for (i=0,len=D.css.length;i<len;i++){
-                    var css=D.css[i];
-
+                System.each(D.css,function(){
+                    var css=this;
                     if(System.isString(css)){
                         css = __this__.suffix_checkor(css,suffix);
                         href = baseUrl ? baseUrl+css : css;
                         //是否已加载过了
                         if(System.fileExisted(href)){
-                            continue;
+                            return;
                         }else{
                             var attr = System.merge({'rel':rel,'type':type},[cAttribute]);
                             attr['href'] = href;
@@ -147,8 +186,6 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             files.push(node);
                             System.files.push(href);
                         }
-
-
                     }else if(System.isPlainObject(css)){
                         css.href = __this__.suffix_checkor(css.href,suffix);
                         css.rel  = css.rel  || rel;
@@ -156,7 +193,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         css.href = baseUrl ? baseUrl+css.href : css.href;
                         //是否已加载过了
                         if(System.fileExisted(css.href)){
-                            continue;
+                            return;
                         }else{
                             System.merge(css,[cAttribute]);
 
@@ -170,17 +207,18 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             System.files.push(css.href);
                         }
                     }
-                }
-            }else if(System.isArray(D.js)){//script
+                });
+
+            }else if(System.isArray(D.js) || System.isArray(D.script)){//script
                 suffix = D.suffix || '.js';
-                for (i=0,len=D.js.length;i<len;i++){
+                System.each(D.js || D.script,function(){
                     var js=D.js[i];
                     if(System.isString(js)){
                         js = __this__.suffix_checkor(js,suffix);
                         src = baseUrl ? baseUrl+js : js;
                         //是否已加载过了
                         if(System.fileExisted(src)){
-                            continue;
+                            return;
                         }else{
                             var attr = System.clone(sAttribute);
                             attr['src'] = src;
@@ -202,7 +240,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         js.src = baseUrl ? baseUrl+js.src : js.src;
                         //是否已加载过了
                         if(System.fileExisted(js.src)){
-                            continue;
+                            return;
                         }else{
                             System.merge(js,[sAttribute]);
                             if(create){
@@ -218,7 +256,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                             System.files.push(js.src);
                         }
                     }
-                }
+                });
             }else if(System.isArray(D.tag)){
                 if(D.url){
                     if(System.fileExisted(D.url)){
