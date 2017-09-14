@@ -295,6 +295,18 @@
 							'/lib'
 						]
 					})
+					.load({rules:[
+								  {
+									 tag: 'css',
+									 single:false,
+									 use: [
+									   '/global.css',
+                                       '/lib.css'
+									 ],
+									 attr:{},
+									 after_fn:function(){}
+								   }
+							   ]})
 					.load({
 						'baseUrl':lessPath,
 						'suffix':'.less',
