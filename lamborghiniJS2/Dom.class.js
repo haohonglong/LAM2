@@ -466,10 +466,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * 功能：
 		 * 说明：
 		 * 注意：
-		 * @param (String)s		NO NUll:
-		 * @returns {*}
 		 */
-		'find':function(s){},
+		'find':function(){},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -696,7 +694,22 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		return Dom.$(id,context);
 	};
-
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-14
+	 * 修改日期：2017-9-14
+	 * 名称：Dom.find
+	 * 功能：根据父元素获取指定节点的类型
+	 * 说明：
+	 * 注意：
+	 * @param id{String}
+	 * @param context{Element}
+	 * @returns {*}
+	 */
+	Dom.find=function(id,context){
+		return Dom.$$(id,context)
+	};
 
 	/**
 	 *
@@ -1100,6 +1113,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	Dom.getType=function(node){
 		return node.nodeType;
 	};
+
+
 
 	System['Dom']=Dom;
 
