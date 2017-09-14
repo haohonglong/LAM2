@@ -38,7 +38,7 @@ if(!GRN_LHH){
 
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(W,namespace,undefined){
 	'use strict';
-	var version="2.0.1";
+	var version="2.0.2";
 	var Interface,System;
 	// Used for trimming whitespace
 	var trimLeft = /^\s+/,

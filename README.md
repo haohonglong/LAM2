@@ -2,10 +2,10 @@
 继承用basejs 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.0.1
+	version ：2.0.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-9-11
+	修改日期 ：2017-9-14
 
 
 # 产品介绍：
@@ -83,11 +83,6 @@
 				LAMJS.run(function() {
 					'use strict';
 					var System=this;
-					System.Public 	 等同  System.Config.Public;
-					System.ROOT 	 等同  System.Public.ROOT;等同 
-					System.COMMON 	 等同  System.Public.COMMON;
-					System.PLUGINS 	 等同  System.Public.PLUGINS;
-					
 					// doing here coded ....
 				});
 			</script>
