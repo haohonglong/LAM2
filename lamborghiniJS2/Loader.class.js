@@ -2,8 +2,8 @@
  *
  * @author: lhh
  * 产品介绍： 文件加载器
- * 创建日期：2014.9.9
- * 修改日期：2017.9.5
+ * 创建日期：2014-9-9
+ * 修改日期：2017-9-15
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -105,7 +105,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * 名称： load
          * 功能：动态创建js,css 标签引入公共文件
          * 创建日期：2014-9-9
-         * 修改日期：2017-9-14
+         * 修改日期：2017-9-15
          * 说明：js 和 css 任选其一
          * @params   (Object)D 			NO NULL :初始化参数
          * @param(Array)D.js		  	     NO NULL:js文件集合
@@ -174,12 +174,12 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
 
                     }
                 });
-            }else if(System.isArray(D.css)){
+            }else if(System.isArray(D.css) || System.isArray(D.link)){
                 suffix  = D.suffix  || '.css';
                 rel     = D.rel     || 'stylesheet';
                 type    = D.type    || 'text/css';
                 var tagName = "link";
-                System.each(D.css,function(){
+                System.each(D.css || D.link,function(){
                     var css=this;
                     if(System.isString(css)){
                         css = __this__.suffix_checkor(css,suffix);
