@@ -1129,18 +1129,19 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.closest=function(element,search){
 		var arr = [],name="",value="";
-		if(!System.isHTMLDocument(element)){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
+		if(element.nodeType !== 1){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
 		element = element.parentNode;
 		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
-			search = search.replace(/^\[/g,'').replace(/\$]/g,'').replace(/"/g,'');
+			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
 			arr = search.split("=");
 			arr[0] = arr[0].toString().trim();
 			arr[1] = arr[1].toString().trim();
 			name = arr[0];
+
 		}
-		while(System.isHTMLDocument(element) && (1 === element.nodeType)){
-			value = element.getAttribute(name).trim();
+		while(1 === element.nodeType){
+			value = element.getAttribute(name);
 			if(System.isHTMLBodyElement(element)){return element;}
 			if(value && value === arr[1]){
 				return element;
