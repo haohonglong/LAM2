@@ -1113,6 +1113,42 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	Dom.getType=function(node){
 		return node.nodeType;
 	};
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-18
+	 * 修改日期：2017-9-18
+	 * 名称：Dom.closest
+	 * 功能：查找最近匹配的父元素
+	 * 说明：
+	 * 注意：
+	 *
+	 * @param element{Element} 当前元素
+	 * @param search{String}
+	 * @returns {*}
+	 */
+	Dom.closest=function(element,search){
+		var arr = [],name="",value="";
+		if(!System.isHTMLDocument(element)){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
+		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
+		element = element.parentNode;
+		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
+			search = search.replace(/^\[/g,'').replace(/\$]/g,'').replace(/"/g,'');
+			arr = search.split("=");
+			arr[0] = arr[0].toString().trim();
+			arr[1] = arr[1].toString().trim();
+			name = arr[0];
+		}
+		while(System.isHTMLDocument(element) && (1 === element.nodeType)){
+			value = element.getAttribute(name).trim();
+			if(System.isHTMLBodyElement(element)){return element;}
+			if(value && value === arr[1]){
+				return element;
+			}else{
+				element = element.parentNode;
+			}
+		}
+	};
 
 
 
