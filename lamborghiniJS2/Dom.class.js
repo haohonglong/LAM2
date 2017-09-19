@@ -1133,7 +1133,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @returns {*}
 	 */
 	Dom.closest=function(element,search){
-		if(element.nodeType !== 1){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
 		if(System.isHTMLHtmlEment(element)){return element;}
 		var arr = [],name="",value="";
