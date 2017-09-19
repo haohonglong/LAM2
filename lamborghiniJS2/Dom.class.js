@@ -870,27 +870,32 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-7-13
-	 * 修改日期：2016-10-26
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.shtmlspecialchars
-	 * 功能：取消HTML代码
+	 * 功能：替换字符串里指定的字符
 	 * 说明：
 	 * 注意：
-	 *
-	 * @param $string
+	 * @param str{String}
+	 * @param D{Object}
 	 * @returns {*}
 	 */
-	Dom.shtmlspecialchars=function($string) {
-		var $p;
-		var $unallowed = {
-			'&': '&',
-			'"': '"',
-			'<': '<',
-			'>': '>'
+	Dom.shtmlspecialchars=function(str,D) {
+		var defaults = {
+			'chars':{
+				'&': '&',
+				'"': '"',
+				'<': '<',
+				'>': '>'
+			}
 		};
-		for($p in $unallowed){
-			$string = $string.replace(eval('/'+$p+'/g'), $unallowed[$p]);
+		D = System.isPlainObject(D) ? System.extend(D,[defaults]) : defaults;
+		if(System.empty(str)){return false}
+		var chars = D.chars;
+		var k;
+		for(k in chars){
+			str = str.replace(eval('/'+k+'/g'), chars[k]);
 		}
-		return $string;
+		return str;
 	};
 	/**
 	 * @author: lhh
@@ -961,45 +966,43 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-11
-	 * 修改日期：2017-9-11
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.nextSibling
 	 * 功能：
 	 * 说明：
 	 * 注意：
-	 * @param node
+	 * @param element{Element}
 	 * @returns {*}
 	 */
-	Dom.nextSibling=function(node){
-		if(!System.isHTMLDocument(node)){
-			throw new Error('Warning: node 必须是一个dom 节点元素 ');
-		}
-		if(node.nextSibling){
-			var n=node.nextSibling;
+	Dom.nextSibling=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		if(System.isHTMLHtmlEment(element)){return element;}
+		if(element.nextSibling){
+			var n=element.nextSibling;
 			if(1 === n.nodeType) return n;
 			while(n = n.nextSibling){//查找下一个节点----->下一个节点------->下一个节点.........直到没有节点为止
 				if(1 === n.nodeType) return n;
 			}
 		}
-		return node;
+		return element;
 	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-11
-	 * 修改日期：2017-9-11
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.previousSibling
 	 * 功能：
 	 * 说明：
 	 * 注意：
-	 * @param node
+	 * @param element{Element}
 	 * @returns {*}
 	 */
-	Dom.previousSibling=function(node){
-		if(!System.isHTMLDocument(node)){
-			throw new Error('Warning: node 必须是一个dom 节点元素 ');
-		}
-		if(node.previousSibling){
-			var n=node.previousSibling;
+	Dom.previousSibling=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		if(System.isHTMLHtmlEment(element)){return element;}
+		if(element.previousSibling){
+			var n=element.previousSibling;
 			if(1 === n.nodeType) return n;
 			while(n=n.previousSibling){//查找上一个节点----->上一个节点------->上一个节点.........直到没有节点为止
 				if(1 === n.nodeType) return n;
@@ -1011,20 +1014,19 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-11
-	 * 修改日期：2017-9-11
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.lastChild
 	 * 功能：
 	 * 说明：
 	 * 注意：
-	 * @param node
+	 * @param element{Element}
 	 * @returns {*}
 	 */
-	Dom.lastChild=function(node){
-		if(!System.isHTMLDocument(node)){
-			throw new Error('Warning: node 必须是一个dom 节点元素 ');
-		}
-		if(node.lastChild){//有子节点的话
-			var n=node.lastChild;
+	Dom.lastChild=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		if(System.isHTMLHtmlEment(element)){return element;}
+		if(element.lastChild){//有子节点的话
+			var n=element.lastChild;
 			if(1 === n.nodeType) return n;
 			return Dom.previousSibling(n);
 		}
@@ -1034,20 +1036,19 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-11
-	 * 修改日期：2017-9-11
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.firstChild
 	 * 功能：
 	 * 说明：
 	 * 注意：
-	 * @param node
+	 * @param element{Element}
 	 * @returns {*}
 	 */
-	Dom.firstChild=function(node){
-		if(!System.isHTMLDocument(node)){
-			throw new Error('Warning: node 必须是一个dom 节点元素 ');
-		}
-		if(node.firstChild){//有子节点的话
-			var n=node.firstChild;
+	Dom.firstChild=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		if(System.isHTMLHtmlEment(element)){return element;}
+		if(element.firstChild){//有子节点的话
+			var n=element.firstChild;
 			if(1 === n.nodeType) return n;
 			return Dom.nextSibling(n);
 		}
@@ -1057,61 +1058,65 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-13
-	 * 修改日期：2017-9-13
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.removeNode
 	 * 功能：删除指定节点元素
 	 * 说明：
 	 * 注意：
-	 * @param node{Element}
+	 * @param element{Element}
 	 * @returns {Node}
 	 */
-	Dom.removeNode=function(node){
-		return node.parentNode.removeChild(node);
+	Dom.removeNode=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		return element.parentNode.removeChild(element);
 	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-13
-	 * 修改日期：2017-9-13
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.getParent
 	 * 功能：获取指定节点的父节点元素
 	 * 说明：
 	 * 注意：
-	 * @param node{Element}
+	 * @param element{Element}
 	 * @returns {Node}
 	 */
-	Dom.getParent=function(node){
-		return node.parentNode;
+	Dom.getParent=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		return element.parentNode;
 	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-13
-	 * 修改日期：2017-9-13
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.getName
 	 * 功能：获取指定节点的标签名称
 	 * 说明：
 	 * 注意：
-	 * @param node{Element}
+	 * @param element{Element}
 	 * @returns {string}
 	 */
-	Dom.getName=function(node){
-		return node.nodeName;
+	Dom.getName=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		return element.nodeName;
 	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-13
-	 * 修改日期：2017-9-13
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.getType
 	 * 功能：获取指定节点的类型
 	 * 说明：
 	 * 注意：
-	 * @param node{Element}
+	 * @param element{Element}
 	 * @returns {Number}
 	 */
-	Dom.getType=function(node){
-		return node.nodeType;
+	Dom.getType=function(element){
+		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
+		return element.nodeType;
 	};
 	/**
 	 * @author: lhh
@@ -1128,11 +1133,11 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @returns {*}
 	 */
 	Dom.closest=function(element,search){
-		var arr = [],name="",value="";
-		var selector = null;
 		if(element.nodeType !== 1){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
 		if(System.isHTMLHtmlEment(element)){return element;}
+		var arr = [],name="",value="";
+		var selector = null;
 		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
 			selector = "arrt";
 			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
