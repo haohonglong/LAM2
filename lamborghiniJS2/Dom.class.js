@@ -1117,9 +1117,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-18
-	 * 修改日期：2017-9-18
+	 * 修改日期：2017-9-19
 	 * 名称：Dom.closest
-	 * 功能：查找最近匹配的父元素
+	 * 功能：查找最近匹配的祖先元素
 	 * 说明：
 	 * 注意：
 	 *
@@ -1129,24 +1129,52 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.closest=function(element,search){
 		var arr = [],name="",value="";
+		var selector = null;
 		if(element.nodeType !== 1){throw new Error('Warning: node 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
-		element = element.parentNode;
+		if(System.isHTMLHtmlEment(element)){return element;}
 		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
+			selector = "arrt";
 			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
 			arr = search.split("=");
 			arr[0] = arr[0].toString().trim();
 			arr[1] = arr[1].toString().trim();
 			name = arr[0];
-
+		}else if(search.indexOf('.') !== -1){//如果是类选择符
+			selector = "class";
+			search = search.replace(/^\./g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else if(search.indexOf('#') !== -1){//如果是id选择符
+			selector = "id";
+			search = search.replace(/^#/g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else{//标签选择器
+			selector = "tag";
+			search = search.replace(/"/g,'').trim();
+			name = search.toLocaleUpperCase();
 		}
-		while(1 === element.nodeType){
-			value = element.getAttribute(name);
-			if(System.isHTMLBodyElement(element)){return element;}
-			if(value && value === arr[1]){
-				return element;
-			}else{
-				element = element.parentNode;
+
+		while(element = element.parentNode){
+			if(System.isHTMLHtmlEment(element)){return element;}
+			if(1 === element.nodeType){
+				if("tag" === selector){
+					if(element.nodeName === name){
+						return element;
+					}
+				}else{
+					value = element.getAttribute(name);
+					if("class" === selector){
+						if(value.split(" ").in_array(arr[1])){
+							return element;
+						}
+					}else if(value && value === arr[1]){
+						return element;
+					}
+				}
 			}
 		}
 	};
