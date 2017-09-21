@@ -1122,7 +1122,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-18
-	 * 修改日期：2017-9-19
+	 * 修改日期：2017-9-21
 	 * 名称：Dom.closest
 	 * 功能：查找最近匹配的祖先元素
 	 * 说明：
@@ -1160,14 +1160,14 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}else{//标签选择器
 			selector = "tag";
 			search = search.replace(/"/g,'').trim();
-			name = search.toLocaleUpperCase();
+			name = search;
 		}
 
 		while(element = element.parentNode){
 			if(System.isHTMLHtmlEment(element)){return element;}
 			if(1 === element.nodeType){
 				if("tag" === selector){
-					if(element.nodeName === name){
+					if(element.nodeName.toLocaleLowerCase() === name.toLocaleLowerCase()){
 						return element;
 					}
 				}else{
