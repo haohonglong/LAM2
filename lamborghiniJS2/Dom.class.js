@@ -698,17 +698,76 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-14
-	 * 修改日期：2017-9-14
+	 * 修改日期：2017-9-23
 	 * 名称：Dom.find
-	 * 功能：根据父元素获取指定节点的类型
+	 * 功能：查找匹配的节点
 	 * 说明：
 	 * 注意：
-	 * @param id{String}
+	 * @param search{String}
 	 * @param context{Element}
 	 * @returns {*}
 	 */
-	Dom.find=function(id,context){
-		return Dom.$$(id,context)
+	Dom.find=function(search,context){
+		context = context || document;
+		if(context.nodeType !== 1){throw new Error('Warning: context 必须是一个dom 节点元素 ');}
+		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
+
+		var arr = [],name="",value="";
+		var selector = null;
+		var elements = [];
+		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
+			selector = "arrt";
+			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
+			arr = search.split("=");
+			arr[0] = arr[0].toString().trim();
+			arr[1] = arr[1].toString().trim();
+			name = arr[0];
+		}else if(search.indexOf('.') !== -1){//如果是类选择符
+			selector = "class";
+			search = search.replace(/^\./g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else if(search.indexOf('#') !== -1){//如果是id选择符
+			selector = "id";
+			search = search.replace(/^#/g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else{//标签选择器
+			selector = "tag";
+			search = search.replace(/"/g,'').trim();
+			name = search;
+		}
+		switch (selector){
+			case 'id':
+				return Dom.$(search);
+			case 'tag':
+			case 'class':
+				return Dom.$$(search);
+
+		}
+		System.each(context.getElementsByTagName('*'),function(){
+			if(1 === this.nodeType){
+				if("tag" === selector){
+					if(this.nodeName.toLocaleLowerCase() === name.toLocaleLowerCase()){
+						elements.push(this);
+					}
+				}else{
+					value = this.getAttribute(name);
+					if("class" === selector){
+						if(value.split(" ").in_array(arr[1])){
+							elements.push(this);
+						}
+					}else if(value && value === arr[1]){
+						elements.push(this);
+					}
+				}
+			}
+		});
+
+		return elements;
+
 	};
 
 	/**
