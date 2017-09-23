@@ -656,7 +656,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-11
-	 * 修改日期：2017-9-11
+	 * 修改日期：2017-9-23
 	 * 名称：Dom.$
 	 * 功能：选择器功能
 	 * 说明：
@@ -667,16 +667,12 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.$=function(id,context){
 		context = context || document;
-		if(document.querySelector && context.querySelector(id)){
-			return context.querySelector(id);
-		}
-		if(context.getElementById(id)){
-			return context.getElementById(id);
-		}else if(context.getElementsByTagName(id)){
-			return context.getElementsByTagName(id);
-		}else{
-			return Dom.getElementsByClassName(id,context,'*');
-		}
+		id = id.toString().trim();
+		if(document.querySelector){return context.querySelector(id);}
+		if(id.indexOf('#') !== 0){return context.getElementById(id.replace(/^#/g,'').trim());}
+		if(id.indexOf('.') !== -1){return Dom.getElementsByClassName(id.replace(/^\./g,'').trim(),context,'*');}
+		if(id.indexOf('[') !== -1){return Dom.find(id,context);}
+		return context.getElementsByTagName(id);
 	};
 	/**
 	 * @author: lhh
@@ -693,9 +689,8 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.$$=function(id,context){
 		context = context || document;
-		if(document.querySelectorAll && context.querySelectorAll(id)){
-			return context.querySelectorAll(id);
-		}
+		id = id.toString().trim();
+		if(document.querySelectorAll){return context.querySelectorAll(id);}
 		return Dom.$(id,context);
 	};
 	/**
@@ -745,7 +740,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		switch (selector){
 			case 'id':
-				return Dom.$(search);
+				return Dom.$('#'+search);
+			case 'class':
+				return Dom.$$('.'+search);
 		}
 		System.each(context.getElementsByTagName('*'),function(){
 			if(1 === this.nodeType){
