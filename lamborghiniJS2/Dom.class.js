@@ -663,7 +663,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.$=function(id,context){
 		context = context || document;
-		if(document.querySelector){
+		if(document.querySelector && context.querySelector(id)){
 			return context.querySelector(id);
 		}
 		if(context.getElementById(id)){
@@ -689,7 +689,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.$$=function(id,context){
 		context = context || document;
-		if(document.querySelectorAll){
+		if(document.querySelectorAll && context.querySelectorAll(id)){
 			return context.querySelectorAll(id);
 		}
 		return Dom.$(id,context);
@@ -709,7 +709,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 */
 	Dom.find=function(search,context){
 		context = context || document;
-		if(context.nodeType !== 1){throw new Error('Warning: context 必须是一个dom 节点元素 ');}
+		if(context.nodeType !== 1 && context.nodeType !== 9){throw new Error('Warning: context 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
 
 		var arr = [],name="",value="";
@@ -742,10 +742,6 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		switch (selector){
 			case 'id':
 				return Dom.$(search);
-			case 'tag':
-			case 'class':
-				return Dom.$$(search);
-
 		}
 		System.each(context.getElementsByTagName('*'),function(){
 			if(1 === this.nodeType){
@@ -756,7 +752,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 				}else{
 					value = this.getAttribute(name);
 					if("class" === selector){
-						if(value.split(" ").in_array(arr[1])){
+						if(value && value.split(" ").in_array(arr[1])){
 							elements.push(this);
 						}
 					}else if(value && value === arr[1]){
@@ -1181,7 +1177,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-18
-	 * 修改日期：2017-9-21
+	 * 修改日期：2017-9-23
 	 * 名称：Dom.closest
 	 * 功能：查找最近匹配的祖先元素
 	 * 说明：
@@ -1232,7 +1228,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 				}else{
 					value = element.getAttribute(name);
 					if("class" === selector){
-						if(value.split(" ").in_array(arr[1])){
+						if(value && value.split(" ").in_array(arr[1])){
 							return element;
 						}
 					}else if(value && value === arr[1]){
