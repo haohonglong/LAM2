@@ -16,6 +16,53 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	System.is(System,'Browser','Dom');
 
 	var __this__=null;
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-9-23
+	 * 修改日期：2017-9-23
+	 * 名称： Selector
+	 * 功能：选择器
+	 * 说明：
+	 * 注意：
+	 * @param search{String}
+	 * @returns {{arr: Array, name: string, search: *, selector: selector}}
+	 */
+	function Selector(search){
+		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
+		var arr = [],name="",selector = null;
+		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
+			selector = "arrt";
+			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
+			arr = search.split("=");
+			arr[0] = arr[0].toString().trim();
+			arr[1] = arr[1].toString().trim();
+			name = arr[0];
+		}else if(search.indexOf('.') !== -1){//如果是类选择符
+			selector = "class";
+			search = search.replace(/^\./g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else if(search.indexOf('#') !== -1){//如果是id选择符
+			selector = "id";
+			search = search.replace(/^#/g,'').replace(/"/g,'').trim();
+			arr = [];
+			arr[1] = search;
+			name = selector;
+		}else{//标签选择器
+			selector = "tag";
+			search = search.replace(/"/g,'').trim();
+			name = search;
+		}
+
+		return {
+			"arr":arr,
+			"name":name,
+			"search":search,
+			"selector":selector
+		};
+	}
 	var Dom = System.Browser.extend({
 		constructor: function(tag,D) {
 			__this__=this;
@@ -710,55 +757,30 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		context = context || document;
 		if(context.nodeType !== 1 && context.nodeType !== 9){throw new Error('Warning: context 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
-
-		var arr = [],name="",value="";
-		var selector = null;
 		var elements = [];
-		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
-			selector = "arrt";
-			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
-			arr = search.split("=");
-			arr[0] = arr[0].toString().trim();
-			arr[1] = arr[1].toString().trim();
-			name = arr[0];
-		}else if(search.indexOf('.') !== -1){//如果是类选择符
-			selector = "class";
-			search = search.replace(/^\./g,'').replace(/"/g,'').trim();
-			arr = [];
-			arr[1] = search;
-			name = selector;
-		}else if(search.indexOf('#') !== -1){//如果是id选择符
-			selector = "id";
-			search = search.replace(/^#/g,'').replace(/"/g,'').trim();
-			arr = [];
-			arr[1] = search;
-			name = selector;
-		}else{//标签选择器
-			selector = "tag";
-			search = search.replace(/"/g,'').trim();
-			name = search;
-		}
+		var D = Selector(search);
+		var arr = D.arr,
+			name = D.name,
+			selector = D.selector,
+			value = "";
+		search = D.search;
 		switch (selector){
 			case 'id':
 				return Dom.$('#'+search);
 			case 'class':
 				return Dom.$$('.'+search);
+			case 'tag':
+				return Dom.$$(search);
 		}
 		System.each(context.getElementsByTagName('*'),function(){
 			if(1 === this.nodeType){
-				if("tag" === selector){
-					if(this.nodeName.toLocaleLowerCase() === name.toLocaleLowerCase()){
+				value = this.getAttribute(name);
+				if("class" === selector){
+					if(value && value.split(" ").in_array(arr[1])){
 						elements.push(this);
 					}
-				}else{
-					value = this.getAttribute(name);
-					if("class" === selector){
-						if(value && value.split(" ").in_array(arr[1])){
-							elements.push(this);
-						}
-					}else if(value && value === arr[1]){
-						elements.push(this);
-					}
+				}else if(value && value === arr[1]){
+					elements.push(this);
 				}
 			}
 		});
@@ -784,33 +806,11 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		if(!System.isString(search)){throw new Error('Warning: search 必须是字符串类型 ');}
 		if(System.isHTMLHtmlEment(element)){return element;}
-		var arr = [],name="",value="";
-		var selector = null;
-		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
-			selector = "arrt";
-			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
-			arr = search.split("=");
-			arr[0] = arr[0].toString().trim();
-			arr[1] = arr[1].toString().trim();
-			name = arr[0];
-		}else if(search.indexOf('.') !== -1){//如果是类选择符
-			selector = "class";
-			search = search.replace(/^\./g,'').replace(/"/g,'').trim();
-			arr = [];
-			arr[1] = search;
-			name = selector;
-		}else if(search.indexOf('#') !== -1){//如果是id选择符
-			selector = "id";
-			search = search.replace(/^#/g,'').replace(/"/g,'').trim();
-			arr = [];
-			arr[1] = search;
-			name = selector;
-		}else{//标签选择器
-			selector = "tag";
-			search = search.replace(/"/g,'').trim();
-			name = search;
-		}
-
+		var D = Selector(search);
+		var arr = D.arr,
+			name = D.name,
+			selector = D.selector,
+			value = "";
 		while(element = element.parentNode){
 			if(System.isHTMLHtmlEment(element)){return element;}
 			if(1 === element.nodeType){
@@ -831,6 +831,9 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 			}
 		}
 	};
+
+
+
 
 	/**
 	 *
