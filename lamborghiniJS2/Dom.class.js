@@ -20,7 +20,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-23
-	 * 修改日期：2017-9-23
+	 * 修改日期：2017-9-25
 	 * 名称： Selector
 	 * 功能：选择器
 	 * 说明：
@@ -34,9 +34,14 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		if(search.indexOf('[') !== -1){//如果是属性选择符 ［xxx="xx"］
 			selector = "arrt";
 			search = search.replace(/^\[/g,'').replace(/\]$/g,'').replace(/"/g,'');
-			arr = search.split("=");
-			arr[0] = arr[0].toString().trim();
-			arr[1] = arr[1].toString().trim();
+			if(-1 === search.indexOf('=')){//没有属性值
+				arr[0] = search;
+				arr[1] = null;
+			}else{
+				arr = search.split("=");
+				arr[0] = arr[0].toString().trim();
+				arr[1] = arr[1].toString().trim();
+			}
 			name = arr[0];
 		}else if(search.indexOf('.') !== -1){//如果是类选择符
 			selector = "class";
@@ -744,7 +749,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-14
-	 * 修改日期：2017-9-23
+	 * 修改日期：2017-9-25
 	 * 名称：Dom.find
 	 * 功能：查找匹配的节点
 	 * 说明：
@@ -774,12 +779,16 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		}
 		System.each(context.getElementsByTagName('*'),function(){
 			if(1 === this.nodeType){
-				value = this.getAttribute(name);
+				if(arr[1]){
+					value = this.getAttribute(name);
+				}else{
+					value = this.getAttributeNode(name);
+				}
 				if("class" === selector){
 					if(value && value.split(" ").in_array(arr[1])){
 						elements.push(this);
 					}
-				}else if(value && value === arr[1]){
+				}else if(value && (value === arr[1] || value.nodeType)){
 					elements.push(this);
 				}
 			}
@@ -792,7 +801,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-9-18
-	 * 修改日期：2017-9-23
+	 * 修改日期：2017-9-25
 	 * 名称：Dom.closest
 	 * 功能：查找最近匹配的祖先元素
 	 * 说明：
@@ -819,12 +828,16 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 						return element;
 					}
 				}else{
-					value = element.getAttribute(name);
+					if(arr[1]){
+						value = element.getAttribute(name);
+					}else{
+						value = element.getAttributeNode(name);
+					}
 					if("class" === selector){
 						if(value && value.split(" ").in_array(arr[1])){
 							return element;
 						}
-					}else if(value && value === arr[1]){
+					}else if(value && (value === arr[1] || value.nodeType)){
 						return element;
 					}
 				}
