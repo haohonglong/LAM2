@@ -69,7 +69,26 @@ window[GRN_LHH].run([window],function(window,undefined){
 		return element.currentStyle? element.currentStyle[style] : document.defaultView.getComputedStyle(element,pseudoElt || null).getPropertyValue(style);
 		//document.defaultView.getComputedStyle 这是w3c标准方法，取得元素的样式信息，因为有些样式是在外部css文件定义的，所以用element.style是取不到的 如果是IE,可以用 element.currentStyle["style"]
 	};
-	Css.getPropertyValue=function(){};
+	/**
+	 * @author lhh
+	 * 产品介绍：给当前样式表插入新的样式规则.
+	 * 创建日期：2017-9-25
+	 * 修改日期：2017-9-25
+	 * 名称：getStyles
+	 * 功能：
+	 * 说明：
+	 * 注意：
+	 * @param element
+	 * @param property
+	 * @returns {*}
+	 */
+	Css.getStyles = function(element, property) {
+		var styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
+		if (property) {
+			return styles.getPropertyValue(property) || styles[property];
+		}
+		return styles;
+	};
 	/**
 	 * @author lhh
 	 * 产品介绍：给当前样式表插入新的样式规则.
