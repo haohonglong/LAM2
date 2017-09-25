@@ -788,7 +788,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 					if(value && value.split(" ").in_array(arr[1])){
 						elements.push(this);
 					}
-				}else if(value && (value === arr[1] || value.nodeType)){
+				}else if(value && (value === arr[1] || value.specified)){
 					elements.push(this);
 				}
 			}
@@ -837,7 +837,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 						if(value && value.split(" ").in_array(arr[1])){
 							return element;
 						}
-					}else if(value && (value === arr[1] || value.nodeType)){
+					}else if(value && (value === arr[1] || value.specified)){
 						return element;
 					}
 				}
