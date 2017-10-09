@@ -188,6 +188,28 @@ if(!GRN_LHH){
 	}
 	/**
 	 *
+	 * @param subclass
+	 * @param superclass
+	 * @param definition
+	 */
+	function extend(subclass, superclass, definition){
+		if (Object.__proto__){
+			definition.__proto__ = superclass.prototype;
+			subclass.prototype = definition;
+		}else{
+			var tmpclass = function(){}, ret;
+			tmpclass.prototype = superclass.prototype;
+			subclass.prototype = new tmpclass();
+			subclass.prototype.constructor = superclass;
+			for (var i in definition){
+				if (definition.hasOwnProperty(i)){
+					subclass.prototype[i] = definition[i];
+				}
+			}
+		}
+	}
+	/**
+	 *
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-7-23
@@ -1233,7 +1255,8 @@ if(!GRN_LHH){
 	System.Array=Array.prototype;
 
 	//extend
-	System.extend=inherit;
+	System.extend=extend;
+	System.inherit=inherit;
 
 	System.printf=prints;
 
