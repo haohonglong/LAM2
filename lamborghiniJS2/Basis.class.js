@@ -1031,7 +1031,7 @@ if(!GRN_LHH){
 		 * 功能：是否是纯对象
 		 * 说明：摘抄jQuery isPlainObject()
 		 * 注意：
-		 * @param ({})obj
+		 * @param {Object}obj
 		 * @returns {boolean}
 		 */
 		'isPlainObject': function( obj ) {
@@ -1054,6 +1054,25 @@ if(!GRN_LHH){
 			// if last one is own, then all properties are own.
 			for ( key in obj ) {}
 			return key === undefined || hasOwn.call( obj, key );
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-9
+		 * 修改日期：2017-10-9
+		 * 名称： System.hasOwnProperty
+		 * 功能：对象里是否包含指定的属性(key),有就返回值
+		 * 说明：
+		 * 注意：
+		 * @param {Object}obj
+		 * @param {String}key
+		 * @returns {*}
+		 */
+		'hasOwnProperty':function(obj, key){
+			if (obj.hasOwnProperty(key)){
+				return obj[key];
+			}
+			return null;
 		},
 
 		/**
@@ -1870,47 +1889,42 @@ if(!GRN_LHH){
 		}
 		return true;
 	}
-	function empty(mixed_var) {
-		//  discuss at: http://phpjs.org/functions/empty/
+	function empty(mixedVar) {
+		//  discuss at: http://locutus.io/php/empty/
 		// original by: Philippe Baumann
-		//    input by: Onno Marsman
+		//    input by: Onno Marsman (https://twitter.com/onnomarsman)
 		//    input by: LH
 		//    input by: Stoyan Kyosev (http://www.svest.org/)
-		// bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-		// improved by: Onno Marsman
+		// bugfixed by: Kevin van Zonneveld (http://kvz.io)
+		// improved by: Onno Marsman (https://twitter.com/onnomarsman)
 		// improved by: Francesco
 		// improved by: Marc Jansen
-		// improved by: Rafal Kukawski
-		//   example 1: empty(null);
+		// improved by: Rafał Kukawski (http://blog.kukawski.pl)
+		//   example 1: empty(null)
 		//   returns 1: true
-		//   example 2: empty(undefined);
+		//   example 2: empty(undefined)
 		//   returns 2: true
-		//   example 3: empty([]);
+		//   example 3: empty([])
 		//   returns 3: true
-		//   example 4: empty({});
+		//   example 4: empty({})
 		//   returns 4: true
-		//   example 5: empty({'aFunc' : function () { alert('humpty'); } });
+		//   example 5: empty({'aFunc' : function () { alert('humpty'); } })
 		//   returns 5: false
-
-		var key, i, len;
-		var emptyValues = [undefined, null, false, 0, '', '0'];
-
+		var undef,key, i,len,emptyValues = [undef, null, false, 0, '', '0'];
 		for (i = 0, len = emptyValues.length; i < len; i++) {
-			if (mixed_var === emptyValues[i]) {
-				return true;
+			if (mixedVar === emptyValues[i]) {
+				return true
 			}
 		}
-
-		if (System.isObject(mixed_var)) {
-			for (key in mixed_var) {
-				//if (mixed_var.hasOwnProperty(key)) {
-				return false;
-				//}
+		if (typeof mixedVar === 'object') {
+			for (key in mixedVar) {
+				if (mixedVar.hasOwnProperty(key)) {
+					return false
+				}
 			}
-			return true;
+			return true
 		}
-
-		return false;
+		return false
 	}
 
 	/**
