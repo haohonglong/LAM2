@@ -220,7 +220,7 @@ if(!GRN_LHH){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-7-23
-	 * 修改日期：2017-3-3
+	 * 修改日期：2017-10-10
 	 * 名称：System.extend
 	 * 功能：Extends a child object from a parent object using classical inheritance
 	 * pattern.
