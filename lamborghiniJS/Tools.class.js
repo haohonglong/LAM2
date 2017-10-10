@@ -90,6 +90,33 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 				.change();
 		},
 		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-10
+		 * 修改日期：2017-10-10
+		 * 名称： setTextSelected
+		 * 功能：输入框区域内全选
+		 * 说明：
+		 * 注意：
+		 *
+		 * @param inputDom 被全选的dom
+		 * @param startIndex 选择文字开始位置
+		 * @param endIndex   选择文字结束位置
+		 */
+		'setTextSelected':function(inputDom, startIndex, endIndex){
+			if (inputDom.setSelectionRange){
+				inputDom.setSelectionRange(startIndex, endIndex);
+			}else if (inputDom.createTextRange){//IE
+				var range = inputDom.createTextRange();
+				range.collapse(true);
+				range.moveStart('character', startIndex);
+				range.moveEnd('character', endIndex - startIndex-1);
+				range.select();
+			}
+			inputDom.focus();
+		},
+
+		/**
 		 * 创建日期：
 		 * 修改日期：2014-3-24
 		 * 名称：(vido) hide_or_show_area
