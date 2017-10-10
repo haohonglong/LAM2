@@ -12,12 +12,12 @@
             System.use();
             System.Loader
                     .load({
-                        'baseUrl':PLUGINS,
+                        'baseUrl':System.ROOT,
                         'suffix':'.css',
                         'rel':'stylesheet',
                         'css':[
-                            '/bootstrap/bootstrap',
-                            '/jstree/dist/themes/default/style.min.css'
+                            '/common/css/bootstrap',
+                            '/common/plugins/jstree/dist/themes/default/style.min.css'
                         ]
                     })
                     .print();

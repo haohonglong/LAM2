@@ -13,22 +13,14 @@
             System.use();
             System.Loader
                     .load({
-                        'baseUrl':_ROOT_+'/demo/css',
+                        'baseUrl':System.ROOT,
                         'suffix':'.css',
                         'rel':'stylesheet',
                         'css':[
-                            '/bootstrap'
+                             '/common/css/bootstrap'
+                            ,'/common/css/lib/global'
                         ]
                     })
-                    .load({
-                        'baseUrl':_ROOT_+'/lib/css',
-                        'suffix':'.css',
-                        'rel':'stylesheet',
-                        'css':[
-                            '/global'
-                        ]
-                    })
-
                     .print();
 
             System.import([
