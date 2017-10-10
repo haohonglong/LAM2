@@ -193,8 +193,7 @@ if(!GRN_LHH){
 	 * 修改日期：2017-10-9
 	 * 名称：extend
 	 * 功能：子类继承父类
-	 *
-	 * 说明：
+	 * 说明：仅原型上继承
 	 * 注意：
 	 * @param {Function}subclass
 	 * @param {Function}superclass
