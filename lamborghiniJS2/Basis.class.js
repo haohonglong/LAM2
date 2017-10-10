@@ -186,23 +186,7 @@ if(!GRN_LHH){
 		String   = {};
 		Array    = {};
 	}
-	/**
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2017-10-10
-	 * 修改日期：2017-10-10
-	 * 名称：createDict
-	 * 功能：创建字典
-	 * 说明：
-	 * 注意：
-	 * @returns {Object}
-	 */
-	function createDict()
-	{
-		var result = {};
-		result.__proto__ = null;
-		return result;
-	}
+
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -383,6 +367,7 @@ if(!GRN_LHH){
 	 *			merge
 	 *			free
 	 *			clone
+	 *			createDict
 	 *			extends
 	 *			extend
 	 *			extends_f
@@ -802,6 +787,22 @@ if(!GRN_LHH){
 			};
 			list(D,callback);
 			return {'totalLoop':totalLoop,'loop':loop};
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-10
+		 * 修改日期：2017-10-10
+		 * 名称：createDict
+		 * 功能：创建字典
+		 * 说明：
+		 * 注意：
+		 * @returns {Object}
+		 */
+		'createDict':function(){
+			var result = {};
+			result.__proto__ = null;
+			return result;
 		},
 
 		/**
@@ -1283,8 +1284,6 @@ if(!GRN_LHH){
 	//extend
 	System.extend=extend;
 	System.inherit=inherit;
-	//创建字典
-	System.createDict=createDict;
 
 	System.printf=prints;
 
