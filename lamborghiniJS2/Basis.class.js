@@ -792,7 +792,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-3-18
-		 * 修改日期：2015-3-20
+		 * 修改日期：2017-10-10
 		 * 名称：System.extends
 		 * 功能：子类继承父类对象
 		 * 说明：System类范围内
@@ -812,6 +812,7 @@ if(!GRN_LHH){
 			args = args || [];
 			switch(type){
 				case 1:
+				case 'prototype':
 					for(var key in superClass.prototype){
 						if(!subClass.prototype[key]){
 							subClass.prototype[key]=superClass.prototype[key];
@@ -819,6 +820,7 @@ if(!GRN_LHH){
 					}
 					break;
 				case 2:
+				case 'this':
 					if(args && isArray(args) && args.length > 0){//传构造参数
 						superClass.apply(this,args);
 					}else{//无构造参数
