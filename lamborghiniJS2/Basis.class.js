@@ -187,10 +187,18 @@ if(!GRN_LHH){
 		Array    = {};
 	}
 	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-10-9
+	 * 修改日期：2017-10-9
+	 * 名称：extend
+	 * 功能：子类继承父类
 	 *
-	 * @param subclass
-	 * @param superclass
-	 * @param definition
+	 * 说明：
+	 * 注意：
+	 * @param {Function}subclass
+	 * @param {Function}superclass
+	 * @param {Object}definition
 	 */
 	function extend(subclass, superclass, definition){
 		if (Object.__proto__){
@@ -219,17 +227,17 @@ if(!GRN_LHH){
 	 * pattern.
 	 * 说明：
 	 * 注意：
-	 * @param   (Object)subClass 			NO NULL :子类
-	 * @param   (Object)superClass 			NO NULL :父类
+	 * @param   (Function)subClass 			NO NULL :子类
+	 * @param   (Function)superClass 			NO NULL :父类
 	 * @return  (Function) 函数原型
 	 * Example：
 
 	 *
 	 */
 	var inherit =(function() {
+		// extend subClass from superClass
 		// proxy used to establish prototype chain
 		var F = function() {};
-		// extend subClass from superClass
 		return function(subClass, superClass) {
 			if (Object.create) {//用 ecma5 Object.create() 实现 prototype 原型继承
 				// subclass extends superclass
@@ -238,7 +246,7 @@ if(!GRN_LHH){
 			}else{
 				F.prototype = superClass.prototype;
 				subClass.prototype = new F();
-				subClass.prototype.constructor = subClass;
+				subClass.prototype.constructor = superClass;
 				subClass.superClass = superClass.prototype;
 
 				if(superClass.prototype.constructor === Object.prototype.constructor){
