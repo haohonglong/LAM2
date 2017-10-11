@@ -188,35 +188,6 @@ if(!GRN_LHH){
 	}
 
 	/**
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2017-10-9
-	 * 修改日期：2017-10-9
-	 * 名称：extend
-	 * 功能：子类继承父类
-	 * 说明：仅原型上继承
-	 * 注意：
-	 * @param {Function}subclass
-	 * @param {Function}superclass
-	 * @param {Object}definition
-	 */
-	function extend(subclass, superclass, definition){
-		if (Object.__proto__){
-			definition.__proto__ = superclass.prototype;
-			subclass.prototype = definition;
-		}else{
-			var tmpclass = function(){}, ret;
-			tmpclass.prototype = superclass.prototype;
-			subclass.prototype = new tmpclass();
-			subclass.prototype.constructor = superclass;
-			for (var i in definition){
-				if (definition.hasOwnProperty(i)){
-					subclass.prototype[i] = definition[i];
-				}
-			}
-		}
-	}
-	/**
 	 *
 	 * @author: lhh
 	 * 产品介绍：
@@ -804,6 +775,35 @@ if(!GRN_LHH){
 			result.__proto__ = null;
 			return result;
 		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-9
+		 * 修改日期：2017-10-9
+		 * 名称：extend
+		 * 功能：子类继承父类
+		 * 说明：仅原型上继承
+		 * 注意：
+		 * @param {Function}subclass
+		 * @param {Function}superclass
+		 * @param {Object}definition
+		 */
+		'extend':function(subclass, superclass, definition){
+			if (Object.__proto__){
+				definition.__proto__ = superclass.prototype;
+				subclass.prototype = definition;
+			}else{
+				var tmpclass = function(){}, ret;
+				tmpclass.prototype = superclass.prototype;
+				subclass.prototype = new tmpclass();
+				subclass.prototype.constructor = superclass;
+				for (var i in definition){
+					if (definition.hasOwnProperty(i)){
+						subclass.prototype[i] = definition[i];
+					}
+				}
+			}
+		},
 
 		/**
 		 *
@@ -1282,7 +1282,6 @@ if(!GRN_LHH){
 	System.Array=Array.prototype;
 
 	//extend
-	System.extend=extend;
 	System.inherit=inherit;
 
 	System.printf=prints;
