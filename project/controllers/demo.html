@@ -6,9 +6,7 @@
         var System = this;
         var __this__=null;
         System.is(System,'Controller','DemoController');
-        var ROOT  = System.ROOT;
-        var views = System.Config.Public.ROOT+'/project/views/demo';
-
+        var views = System.ROOT+'/project/views/demo';
         var DemoController = System.Controller.extend({
             constructor: function (init){
                 this.base(init || {});
@@ -17,7 +15,7 @@
             },
             'layoutAction':function(){
                 new System.Template().render(views+'/layout.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'布局demo',
                     'D':{
                         'title':'你好，世界！',
@@ -35,7 +33,7 @@
             },
             'thumbnailAction':function(){
                 new System.Template().render(views+'/thumbnail.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'缩略图 适应不同的分辨率显示',
                     'D':{
                         'title':'你好，世界！',
@@ -50,7 +48,7 @@
 
             'popLayerAction':function(){
                 new System.Template().render(views+'/popLayer.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'弹出层',
                     'D':{}
 
@@ -61,7 +59,7 @@
             },
             'sliderAction':function(){
                 new System.Template().render(views+'/slider.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'背景半透明覆盖整个可视区域',
                     'LAMJS':System.classPath,
                     'D':{}
@@ -74,7 +72,7 @@
             },
             'dragAction':function(){
                 new System.Template().render(views+'/drag.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'拖拽实例',
                     'LAMJS':System.classPath,
                     'D':{}
@@ -87,7 +85,7 @@
             },
             'chessAction':function(){
                 new System.Template().render(views+'/chess.html',{
-                    'ROOT':ROOT,
+                    'ROOT':System.ROOT,
                     'title':'五子棋',
                     'LAMJS':System.classPath,
                     'D':{}

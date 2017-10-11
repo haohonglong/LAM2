@@ -49,9 +49,7 @@
 
 <script type="text/javascript">
 
-	LAMJS.run([
-		LAMJS.Config.Public.ROOT
-	],function(ROOT) {
+	LAMJS.run(function() {
 		'use strict';
 		var System=this;
 		var dbox1,dbox2,dbox;
@@ -72,7 +70,7 @@
 
 
 			var D={
-				'src':ROOT+'/project/images/22.jpg',
+				'src':System.ROOT+'/project/images/22.jpg',
 				'position':{'x':0,'y':0},
 //			'size':{'w':540,'h':258},
 //			'clip':{'sx':0,'sy':0,'sw':0,'sh':0},
