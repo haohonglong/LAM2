@@ -11,11 +11,10 @@
         LAMJS.run(function() {
             'use strict';
             var System = this;
-            var COMMON = System.Config.Public.COMMON;
             VIEWS = System.ROOT+'/views';
 
             System
-                    .import(['/common'],COMMON)
+                    .import(['/common/common'],System.ROOT)
                     .import(['/Tab.class'],System.classPath);
 
         });

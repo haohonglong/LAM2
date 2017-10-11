@@ -5,21 +5,13 @@ LAMJS.run(function() {
     var System=this;
     System.Loader
         .load({
-            'baseUrl':System.Config.Public.Lib.css,
+            'baseUrl':false,
             'suffix':'.css',
             'rel':'stylesheet',
             'css':[
-                '/bootstrap',
+                System.COMMON+'/css/bootstrap',
                 //'/global',
-                '/lib'
-            ]
-        })
-        .load({
-            'baseUrl':System.ROOT,
-            'suffix':'.css',
-            'rel':'stylesheet',
-            'css':[
-                '/css/lib'
+                System.ROOT+'/css/lib'
             ]
         })
         .print();
