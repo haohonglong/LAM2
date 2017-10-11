@@ -5,7 +5,7 @@
 	version ：2.0.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-9-15
+	修改日期 ：2017-10-11
 
 
 # 产品介绍：
@@ -38,19 +38,19 @@
 				|-views	 #html文件
 					|-index	 #html文件
 						|-config.js	 #当前配置文件
-			|-lib  		 #
-				|-class  #类文件
-				|-css  	 #样式文件
+			|-composer  #脚手架工具
 			|-common  #公共文件
+				|-css  
+				|-js  
+				|-data #json数据  
+				|-plugins #插件  
 				|-config  #配置文件存放位置
 					|-config.js  #主配置文件
 					|-init.js  #每个页面公用的.js文件
 			|-lamborghiniJS  #lamborghiniJS 核心类库文件
 			|-project  	 #项目demo文件
-				|-common #公共文件
 				|-controllers #控制器渲染对应的页面
 				|-views   #项目中所有页面
-				|-plugins #插件存放地
 				|-doc #文档说明
 				|-css #只关联当前项目
 				|-js  #只关联当前项目
