@@ -1,5 +1,5 @@
 if(!_ROOT_){
-    var _ROOT_ = '../../..';
+    var _ROOT_ = '../..';
 }
 (function(){
     var tag = "script",attrs=[],src;
