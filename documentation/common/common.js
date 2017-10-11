@@ -9,14 +9,9 @@ LAMJS.run(function() {
             'suffix':'.css',
             'rel':'stylesheet',
             'css':[
-                System.COMMON+'/css/bootstrap',
-                //'/global',
                 System.ROOT+'/css/lib'
             ]
         })
         .print();
 
-    //System
-    //    .import([
-    //    ],System.classPath);
 });
