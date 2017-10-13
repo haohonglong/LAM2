@@ -150,11 +150,10 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @returns {Dom}
 		 */
 		'createFragment':function(){
-			this.fragment = Dom.createFragment(this.fragment);
 			if(this.node){
+				if(!(this.fragment instanceof DocumentFragment)) {this.fragment = Dom.createFragment();}
 				this.appendTo(this.fragment);
 			}
-
 			return this;
 		},
 
