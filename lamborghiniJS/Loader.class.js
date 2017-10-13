@@ -329,7 +329,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 System.print(files.join(''));
             }else{
                 if(System.isFunction(self.Config.render.create_callback)){
-                    self.Config.render.create_callback(files);
+                    self.Config.render.create_callback(files,self);
                 }else{
                     var append = self.Config.render.append;
                     initDom.call(self);
