@@ -105,7 +105,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * 名称： load
          * 功能：动态创建js,css 标签引入公共文件
          * 创建日期：2014-9-9
-         * 修改日期：2017-9-15
+         * 修改日期：2017-10-13
          * 说明：js 和 css 任选其一
          * @params   (Object)D 			NO NULL :初始化参数
          * @param(Array)D.js		  	     NO NULL:js文件集合
@@ -241,9 +241,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         System.files.push(D.url);
                     }
                 }
-                D.tag.each(function(i){
-                    files.push(this);
-                });
+                files.push(D.tag.join(''));
             }
             return this;
         },
