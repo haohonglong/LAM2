@@ -77,7 +77,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 			this.Dtree = {};
 			//构造有参数时
 			if(arguments.length){this.create(tag,D);}
-			this.fragment = document.createDocumentFragment();
+			this.fragment = Dom.createFragment();
 		},
 		'_className':'Dom',
 		'__constructor':function(){},
@@ -142,7 +142,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-12-08
-		 * 修改日期：2015-12-08
+		 * 修改日期：2017-10-13
 		 * 名称： createFragment
 		 * 功能：创建文档碎片节点
 		 * 说明：
@@ -150,9 +150,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @returns {Dom}
 		 */
 		'createFragment':function(){
-			if(!this.fragment) {
-				this.fragment = document.createDocumentFragment();
-			}
+			this.fragment = Dom.createFragment(this.fragment);
 			if(this.node){
 				this.appendTo(this.fragment);
 			}
@@ -704,6 +702,27 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 
 		}
 	});
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-10-13
+	 * 修改日期：2017-10-13
+	 * 名称：createFragment
+	 * 功能：创建文档碎片节点
+	 * 说明：
+	 * 注意：
+	 *
+	 * @param {DocumentFragment}fragment
+	 * @returns {DocumentFragment}
+	 */
+	Dom.createFragment=function(fragment){
+		fragment = fragment || null;
+		if(fragment instanceof DocumentFragment) {
+			return fragment;
+		}else{
+			return document.createDocumentFragment();
+		}
+	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
