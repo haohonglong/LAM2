@@ -2,7 +2,7 @@
  * @author: lhh
  * 产品介绍：
  * 创建日期：2015-8-26
- * 修改日期：2017-9-23
+ * 修改日期：2017-10-13
  * 名称：
  * 功能：操作dom
  * 说明：
@@ -698,9 +698,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		 * @return  ()						:
 		 * Example：
 		 */
-		'destructor':function(){
-
-		}
+		'destructor':function(){}
 	});
 	/**
 	 * @author: lhh
