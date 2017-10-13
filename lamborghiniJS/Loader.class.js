@@ -317,7 +317,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * 名称：print
          * 功能：显示load() 里的文件
          * 创建日期：2015-9-2
-         * 修改日期：2016-10-27
+         * 修改日期：2017-10-13
          * 说明：
          * 调用方式：
          * @returns {Loader}返回当前对象可以链式调用
@@ -333,14 +333,18 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 }else{
                     var append = self.Config.render.append;
                     initDom.call(self);
+                    var fragment_style = System.Dom.createFragment();
+                    var fragment_script = System.Dom.createFragment();
                     System.each(files,function(i){
                         if(System.isObject(this)){
                             this.timer = i*1000;
                             if(this.script){
                                 if('befor' === append){
-                                    this.appendTo(head);
+                                    fragment_script.appendChild(this.node);
+                                    //this.appendTo(head);
                                 }else if('after' === append){
-                                    this.appendTo(body);
+                                    fragment_script.appendChild(this.node);
+                                    //this.appendTo(body);
                                 }else{
                                     if(0 === i){
                                         this.insertBefore(null,head.firstChild);
@@ -359,12 +363,20 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                                     },this.timer);
                                 }
                             }else if(this.style){
-                                this.appendTo(head);
+                                fragment_style.appendChild(this.node);
+                                //this.appendTo(head);
                             }
 
                         }
 
                     });
+                    head.appendChild(fragment_style);
+                    if('befor' === append){
+                        head.appendChild(fragment_script);
+                    }else if('after' === append){
+                        body.appendChild(fragment_script);
+                    }
+
                 }
 
             }
