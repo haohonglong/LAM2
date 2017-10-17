@@ -2,7 +2,7 @@
  * LamborghiniJS 0.3 pre
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-9-19
+ * 修改日期:2017-10-17
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -31,7 +31,7 @@ if(!GRN_LHH){
 }
 (function(global,namespace,factory,undefined){
 	'use strict';
-	if('LAMJS' in global){
+	if('LamborghiniJS_20150910123700_' in global){
 		return;
 	}
 	global['LAMJS'] = global['LamborghiniJS_20150910123700_'] = global[namespace] = factory(global,namespace);
