@@ -193,7 +193,7 @@ if(!GRN_LHH){
 	 * 产品介绍：
 	 * 创建日期：2015-7-23
 	 * 修改日期：2017-10-10
-	 * 名称：System.extend
+	 * 名称：System.inherit
 	 * 功能：Extends a child object from a parent object using classical inheritance
 	 * pattern.
 	 * 说明：
