@@ -338,7 +338,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2015-4-2
-	 * 修改日期：2017-9-19
+	 * 修改日期：2017-10-20
 	 * 名称：Tab.tab
 	 * 功能：tab 选项卡功能
 	 * 说明：
@@ -350,37 +350,31 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * </ul>
 	 * <div data-tab="section"></div>
 	 */
-	Tab.tab=function(){
-		var old_dom=null;
-		return function(D){
-			if(old_dom === this){return;}
-			var defaults ={
-				"li":"li",
-				"ul":'[data-tab="ul"]',
-				"section":'[data-tab="section"]',
-				"active":'active',
-				"callback":function(){}
-			};
-			D = System.isPlainObject(D) ? System.extend(D,[defaults]) : defaults;
-			old_dom = this;
-			var $this = $(this);
-			$this.closest(D.ul).find(D.li).removeClass(D.active);
-			$this.addClass(D.active);
-			var id = $this.data('id');
-			if(!id){return;}
-			var ids = id.toString().split(',');
-			var $section = $(D.section);
-			$section.hide();
-			$section.each(function(){
-				var $this = $(this);
-				var id = $this.data('id');
-				if(ids.in_array(id.toString()) !== -1){
-					D.callback.call(this);
-					$this.show();
-				}
-			});
-
+	Tab.tab=function(D){
+		var defaults ={
+			"li":"li",
+			"ul":'[data-tab="ul"]',
+			"section":'[data-tab="section"]',
+			"active":'active',
+			"callback":function(){}
 		};
+		D = System.isPlainObject(D) ? System.merge(D,[defaults]) : defaults;
+		var $this = $(this);
+		$this.closest(D.ul).find(D.li).removeClass(D.active);
+		$this.addClass(D.active);
+		var id = $this.data('id');
+		if(!id){return;}
+		var ids = id.toString().split(',');
+		var $section = $(D.section);
+		$section.hide();
+		$section.each(function(){
+			var $this = $(this);
+			var id = $this.data('id');
+			if(ids.in_array(id.toString()) !== -1){
+				D.callback.call(this);
+				$this.show();
+			}
+		});
 	};
 
 	System.Tab = Tab;
