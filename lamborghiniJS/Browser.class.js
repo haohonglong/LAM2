@@ -66,6 +66,7 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 	};
 	var Browser = System.Helper.extend({
 		constructor: function() {
+			this.base();
 			__this__=this;
 		},
 		'_className':'Browser',

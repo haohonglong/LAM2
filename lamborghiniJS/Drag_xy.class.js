@@ -106,12 +106,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 
     var Drag_xy = System.Drag.extend({
         constructor: function(dom,init){//实现鼠标拖动元素
-
-            if(!dom  && !init.coord) return this;
-
             this.base(dom,init);
             __this__=this;
-
+            if(!dom  && !init.coord) return this;
             if(init.that) this.X=init.that;
             if(init.window_w) this.window_w=init.window_w;
             if(init.window_h) this.window_h=init.window_h;

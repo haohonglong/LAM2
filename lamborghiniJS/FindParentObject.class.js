@@ -2,12 +2,12 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Helper','FindParentObject');
-	System.is(System,'Dom');
+	System.is(System,'Dom','FindParentObject');
 
 	var __this__=null;
 	var Node = System.Dom.extend({
 		constructor: function (name,node){
+			this.base();
 			this.name=name;
 			this.node=node;
 			this.next=null;

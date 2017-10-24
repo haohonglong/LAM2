@@ -37,6 +37,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 */
 	var Layout = System.Browser.extend({
 		constructor: function(D) {
+			this.base();
 			__this__ = this;
 			var defaults={
 				'$ul':null,

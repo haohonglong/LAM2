@@ -7,6 +7,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var __this__=null;
 	var Error = System.Component.extend({
 		constructor: function(sMessage, sUrl, sLine){
+			this.base();
 			__this__=this;
 			this.sMessage=sMessage;
 			this.sUrl=sUrl;

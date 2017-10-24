@@ -56,6 +56,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
          *
          */
         "constructor": function(D) {
+            this.base();
             var defaults={
                 "delimiter":{
                     "text":' , ',

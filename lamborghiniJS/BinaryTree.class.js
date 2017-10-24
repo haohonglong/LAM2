@@ -6,6 +6,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var None = System.Helper.extend({
 		constructor: function (root) {
+			this.base();
 			this.root = root;
 			this.left = null;
 			this.right = null;
@@ -20,6 +21,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var __this__=null;
 	var BinaryTree = System.Helper.extend({
 		constructor: function () {
+			this.base();
 			__this__ = this;
 			
 		},

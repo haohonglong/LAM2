@@ -20,7 +20,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	var __this__=null;
 	var Validation = System.Browser.extend({
 		constructor: function (D){
-			System.Basis.extends.call(this,System.Browser);
+			this.base();
 			__this__=this;
 			var defaults={
 				'$message':$('.help-block')

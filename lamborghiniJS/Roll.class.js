@@ -17,6 +17,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	 */
 	var Roll = System.Browser.extend({
 		constructor: function (init){
+			this.base();
 			__this__=this;
 			this.time 	=init.time;
 			this.arr 	=init.arr;

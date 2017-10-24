@@ -232,6 +232,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 */
 	var Tab = System.Browser.extend({
 		constructor: function(D) {
+			this.base();
 			var defaults ={
 				'parent':'body',
 				'list':'.list li',

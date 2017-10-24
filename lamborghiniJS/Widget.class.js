@@ -23,6 +23,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 
 	var Widget = System.Helper.extend({
 		constructor: function () {
+			this.base();
 			__this__ = this;
 		},
 		'_className':'Widget',

@@ -23,6 +23,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	var isIE6 = System.Browser.isIE6;
 	var Tools = System.Browser.extend({
 		constructor: function () {
+			this.base();
 			__this__ = this;
 		},
 		'_className':'Tools',

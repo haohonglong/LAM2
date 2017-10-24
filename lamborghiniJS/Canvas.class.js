@@ -26,6 +26,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	 */
 	var Canvas = System.Browser.extend({
 		constructor: function(theCanvas,D){
+			this.base();
 			__this__=this;
 			var defaults ={
 				"type":"2d"

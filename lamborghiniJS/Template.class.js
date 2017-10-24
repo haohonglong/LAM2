@@ -23,6 +23,7 @@ window[GRN_LHH].run(function(undefined){
 	var guid=0;
 	var Template = System.Browser.extend({
 		constructor: function(Config) {
+			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;

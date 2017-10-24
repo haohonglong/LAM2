@@ -40,6 +40,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
     var Drag = System.Browser.extend({
         constructor: function(dom,init) {
+            this.base();
             __this__=this;
             if(!dom) return this;
             //初始化

@@ -8,6 +8,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var document=window.document;
 	var Cookie = System.Browser.extend({
 		constructor: function() {
+			this.base();
 			__this__=this;
 		},
 		'_className':'Cookie',

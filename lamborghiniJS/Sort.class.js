@@ -49,6 +49,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var Sort = System.Helper.extend({
 		constructor: function(D) {
+			this.base();
 			__this__=this;
 			var defaults={
 				'data':null,

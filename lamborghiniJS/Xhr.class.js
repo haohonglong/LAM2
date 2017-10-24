@@ -33,6 +33,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var Xhr = System.Browser.extend({
 		constructor: function () {
+			this.base();
 			__this__ = this;
 			this.xhr =null;
 		},

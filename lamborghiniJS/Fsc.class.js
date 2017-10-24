@@ -20,6 +20,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var __this__=null;
 	var Fsc = System.Xhr.extend({
 		constructor: function (D){
+			this.base();
 			__this__=this;
 			this.fso =null;
 			this.file=null;

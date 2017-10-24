@@ -7,8 +7,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
     var __this__=null;
     var Event = System.Helper.extend({
         constructor: function(e){
-
-            System.Basis.extends.call(this,System.Helper);
+            this.base();
             __this__=this;
             /*--------------------------------------------------------------------------------------------------*/
 

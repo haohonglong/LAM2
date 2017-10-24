@@ -15,9 +15,7 @@
 window[GRN_LHH].run([window,document],function(window,document,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Basis','Loader');
-    System.is(System,'Dom');
-    System.is(System,'Html');
+    System.is(System,'Html','Loader');
 
     var html,head,body,meta,script,link;
     var create;
@@ -43,8 +41,9 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
     }
     var __this__=null;
     var files = [];
-    var Loader = System.Base.extend({
+    var Loader = System.Html.extend({
         constructor: function(Config){
+            this.base();
             __this__=this;
             this.Config = Config || System.Config;
             this.D = null;

@@ -16,7 +16,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Css');
+	System.is(System,'Dom','Css');
 
 
 	var __this__=null;
@@ -24,8 +24,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 
 
-	var Css = System.Browser.extend({
+	var Css = System.Dom.extend({
 		constructor: function(D) {
+			this.base();
 			__this__=this;
 			var defaults ={
 				"element":document.getElementById('div') || null

@@ -67,6 +67,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var Cache = System.Browser.extend({
 		constructor: function(name,type){
+			this.base();
 			__this__=this;
 			this.caches = [];
 			cache_name = name || 'cache';

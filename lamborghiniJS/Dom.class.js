@@ -70,6 +70,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 	}
 	var Dom = System.Browser.extend({
 		constructor: function(tag,D) {
+			this.base();
 			__this__=this;
 			this.root=document;
 			this.node=null;
@@ -78,6 +79,7 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 			//构造有参数时
 			if(arguments.length){this.create(tag,D);}
 			this.fragment = Dom.createFragment();
+
 		},
 		'_className':'Dom',
 		'__constructor':function(){},

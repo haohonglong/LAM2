@@ -300,6 +300,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var Component = System.BiObject.extend({
 		constructor: function() {
+			this.base();
 			__this__=this;
 		},
 		'_className':'Component',

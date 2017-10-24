@@ -21,6 +21,7 @@ window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,u
     var __this__=null;
     var Controller = System.Component.extend({
         constructor: function(init) {
+            this.base();
             __this__=this;
             init = init || {};
 

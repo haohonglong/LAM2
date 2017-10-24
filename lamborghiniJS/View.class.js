@@ -7,6 +7,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var __this__=null;
 	var View = System.Dom.extend({
 		constructor: function () {
+			this.base();
 			__this__ = this;
 		},
 		'_className':'View',

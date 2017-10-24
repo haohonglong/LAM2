@@ -46,6 +46,7 @@
 	 var __this__=null;
 	 var PopupLayer = System.Browser.extend({
 		 constructor: function (D){
+			 this.base();
 			 __this__=this;
 			 var defaults={
 				 '$popLayout':$('.pop-layer'),

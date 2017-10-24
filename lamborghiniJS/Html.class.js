@@ -9,6 +9,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	var __this__=null;
 	var Html = System.Dom.extend({
 		constructor: function(dom,init) {
+			this.base();
 			__this__=this;
 			this.symbol=[];
 		},

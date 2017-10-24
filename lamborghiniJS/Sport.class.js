@@ -1,14 +1,12 @@
 
 //运动框架
 
-window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
+window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
 	System.is(System,'Browser','Sport');
 
 	var __this__=null;
-	var $=jQuery;
-
 	var MOVE_TYPE={
 		'BUFFER':1,
 		'FLEX'	:2
@@ -97,8 +95,8 @@ window[GRN_LHH].run([window,jQuery],function(window,jQuery,undefined){
 
 	var Sport = System.Browser.extend({
 		constructor: function() {
+			this.base();
 			__this__=this;
-			this.base(dom,init);
 		},
 		'_className':'Sport',
 		'__constructor':function(){},

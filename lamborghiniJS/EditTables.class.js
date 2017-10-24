@@ -22,6 +22,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	 */
 	var EditTables = System.Dom.extend({
 			constructor: function(table,D) {
+				this.base();
 				var __this__=this;
 				var defaults={
 					"table" :'[edit-table="table"]',

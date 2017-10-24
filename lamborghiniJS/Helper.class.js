@@ -21,6 +21,7 @@ window[GRN_LHH].run([window,window.document],function(window,document,undefined)
 
 	var Helper = System.Component.extend({
 		constructor: function() {
+			this.base();
 			__this__=this;
 		},
 		'_className':'Helper',
