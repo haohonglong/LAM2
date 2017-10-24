@@ -84,9 +84,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 
 	BiObject._hashCodeCounter=1;
-	BiObject._hashCodePrefix="hc";
+	BiObject._hashCodePrefix='hc'+System.timestamp();
 	BiObject.generate=function(){
-		return BiObject._hashCodePrefix+Math.round(Math.random()*System.random)+BiObject._hashCodePrefix+BiObject._hashCodeCounter++;
+		return BiObject._hashCodePrefix+Math.round(Math.random()*System.random)+BiObject._hashCodeCounter++;
 	};
 	BiObject.toHashCode=function(o){
 		if(o._hashCode!=null)

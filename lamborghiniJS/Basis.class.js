@@ -1162,6 +1162,20 @@ if(!GRN_LHH){
 			return false;
 		},
 		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-24
+		 * 修改日期：2017-10-24
+		 * 名称： System.timestamp
+		 * 功能：生成时间戳
+		 * 说明：
+		 * 注意：
+		 * @returns {Number}
+		 */
+		'timestamp':function(){
+			return new Date().getTime()
+		},
+		/**
 		 *
 		 * @author: lhh
 		 * 产品介绍：
