@@ -351,6 +351,7 @@ if(!GRN_LHH){
 	 *			replaceTpl
 	 *			analysisVar
 	 *			getRootPath
+	 *			timestamp
 	 *			exit
 	 * 对象列表:
 	 *			Function
