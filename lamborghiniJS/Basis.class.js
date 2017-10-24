@@ -1173,7 +1173,7 @@ if(!GRN_LHH){
 		 * @returns {Number}
 		 */
 		'timestamp':function(){
-			return new Date().getTime()
+			return new Date().getTime();
 		},
 		/**
 		 *
