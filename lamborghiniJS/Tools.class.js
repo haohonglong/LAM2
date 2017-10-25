@@ -116,6 +116,38 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 			}
 			inputDom.focus();
 		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-25
+		 * 修改日期：2017-10-25
+		 * 名称： clipboard
+		 * 功能：copy 内容到粘贴版
+		 * 说明：
+		 * 注意：
+		 *
+		 * @param e{event}
+		 * usage:
+		 * 	<span id="copy">7777</span>
+		 	<button data-copytarget="#copy">复制</button>
+		 	document.body.addEventListener('click', System.Tools.clipboard, true);
+		 */
+		'clipboard':function(e){
+			// 找到要复制的区域
+			var t = e.target, c = t.dataset.copytarget, inp = (c ? document.querySelector(c) : null),range = document.createRange();
+			range.selectNode(inp);
+			window.getSelection().addRange(range);
+			// 要复制的区域是否可以选中
+			try {
+				// 执行复制
+				document.execCommand('copy');
+				inp.blur();
+			}catch (err) {
+				if(System.LAM_DEBUG) {
+					throw new Error('please press Ctrl/Cmd+C to copy');
+				}
+			}
+		},
 
 		/**
 		 * 创建日期：
