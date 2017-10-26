@@ -1173,6 +1173,11 @@ if(!GRN_LHH){
 		 * @returns {Number}
 		 */
 		'timestamp':function(){
+			if (!Date.now) {
+				Date.now = function now() {
+					return new Date().getTime();
+				};
+			}
 			return Date.now();
 		},
 		/**
