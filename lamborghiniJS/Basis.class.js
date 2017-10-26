@@ -33,7 +33,7 @@ if(!GRN_LHH){
 	if('LamborghiniJS_20150910123700_' in global){
 		return;
 	}
-	global['LAMJS'] = global['LamborghiniJS_20150910123700_'] = global[namespace] = factory(global,namespace);
+	global['LAM'] = global['LAMJS'] = global['LamborghiniJS_20150910123700_'] = global[namespace] = factory(global,namespace);
 
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(W,namespace,undefined){
 	'use strict';

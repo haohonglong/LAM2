@@ -22,7 +22,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var Object = System.Base.extend({
 		constructor: function() {
 			__this__=this;
-			System.app=this;
+			if(!(System.app instanceof System.Object)){System.app=this;}
 			this._hashCode=Object.generate();
 		},
 		'_className':'Object',
