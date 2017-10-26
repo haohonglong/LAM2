@@ -782,12 +782,12 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * @author lhh
 		 * 产品介绍：对textarea 的placeholder改变样式或换行时可以用这种
 		 * 创建日期：2014-12-12
-		 * 修改日期：2014-12-12
+		 * 修改日期：2017-10-26
 		 * 名称：input_text
 		 * 功能：输入框是否为空如为空就显示默认字符，触发事件时若是默认文字就清空
 		 * 说明： 仿表单里的placeholder
 		 * 注意：
-		 * @param   (json)obj 		NO NULL :
+		 * @param   (json)D 		NO NULL :
 		 * {
 		 *	'input': textarea
 		 *	'$box': //盖在表单上的层
@@ -795,24 +795,25 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * Example：
 		 *
 		 */
-		'placeholder':function(obj){
-			var input=obj.input;
-			var $box=obj.$box,
-				$input=$(input);
+		'placeholder':function(D){
+			var defaults={
+				'$input': $('textarea'),
+				'$box': $('.placeholder')
+			};
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			var $box=D.$box,
+				$input= D.$input;
 			//var text=$(input).attr('placeholder');
 			$box.on('click',function(){
 				$(this).hide();
-				input.focus();
+				$input[0].focus();
 
 			});
-
 			$input.on('blur',function(){
 				if('' === $input.val().replace(/\s/g,"")){
 					$box.show();
 				}
 			});
-
-
 		},
 
 		/**
