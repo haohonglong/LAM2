@@ -2058,6 +2058,7 @@ window[GRN_LHH].run([window],function(W,Config){
 			'ROOT':_ROOT_
 			,'COMMON':_ROOT_+'/common'
 			,'PLUGINS':_ROOT_+'/plugins'
+			,'Moudle':function(){return LAMJS.createDict();}
 		},
 		//hashcode 随机种子
 		'random':10000,

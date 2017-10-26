@@ -50,6 +50,7 @@ if(!GRN_LHH){
              'ROOT':_ROOT_+'/documentation'
             ,'COMMON':_ROOT_+'/common'
             ,'PLUGINS':_ROOT_+'/plugins'
+            ,'Moudle':function(){return LAMJS.createDict();}
         },
         //hashcode 随机种子
         'random':10000,

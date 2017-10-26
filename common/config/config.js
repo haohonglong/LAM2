@@ -47,6 +47,7 @@ if(!GRN_LHH){
              'ROOT':_ROOT_
             ,'COMMON':_ROOT_+'/common'
             ,'PLUGINS':_ROOT_+'/common/plugins'
+            ,'Moudle':function(){return LAMJS.createDict();}
         },
         //hashcode 随机种子
         'random':999,
