@@ -49,7 +49,7 @@ if(!GRN_LHH){
             ,'PLUGINS':_ROOT_+'/common/plugins'
         },
         //hashcode 随机种子
-        'random':10000,
+        'random':999,
         //定义模版标签
         'templat':{
             'custom_attr':'[data-var=tpl]',
@@ -69,7 +69,7 @@ if(!GRN_LHH){
             return [
                  classPath+'/Basis.class.js'
                 ,classPath+'/Base.class.js'
-                ,classPath+'/BiObject.class.js'
+                ,classPath+'/Object.class.js'
                 ,classPath+'/Component.class.js'
                 ,classPath+'/Helper.class.js'
                 ,classPath+'/Event.class.js'

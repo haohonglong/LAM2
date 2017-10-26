@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2016-9-10
+ * 修改日期:2017-10-26
  * 名称：组件类
  * 功能：服务于应用层类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -16,7 +16,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'BiObject','Component');
+	System.is(System,'Object','Component');
 	System.merge(null,[{
 		/**
 		 * @author: lhh
@@ -165,7 +165,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			var obj;
 			obj = System.merge(deep,{},[className]);
 			if(obj['_hashCode']){
-				obj['_hashCode'] += '_'+System.BiObject.generate();
+				obj['_hashCode'] += '_'+System.Object.generate();
 			}
 			return obj;
 
@@ -298,7 +298,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 	var __this__=null;
 
-	var Component = System.BiObject.extend({
+	var Component = System.Object.extend({
 		constructor: function() {
 			this.base();
 			__this__=this;

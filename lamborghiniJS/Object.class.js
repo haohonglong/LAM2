@@ -1,16 +1,31 @@
+/**
+ * @author：lhh
+ * 创建日期:2015-3-20
+ * 修改日期:2017-10-26
+ * 名称：Object类
+ * 功能：服务于派生类生成hashCode
+ * 标准 :
+ * 说明 :
+ *
+ * note :
+ *
+ *
+ *
+ */
 
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Basis','BiObject');
+	System.is(System,'Base','Object');
 
 	var __this__=null;
-	var BiObject = System.Base.extend({
+	var Object = System.Base.extend({
 		constructor: function() {
 			__this__=this;
-			this._hashCode=BiObject.generate();
+			System.app=this;
+			this._hashCode=Object.generate();
 		},
-		'_className':'BiObject',
+		'_className':'Object',
 		'_disposed':false,
 		'_id':null,
 		'getDisposed':function(){
@@ -29,7 +44,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return this._id;
 		},
 		'equals':function(o){
-			if(!o._hashCode) {BiObject.toHashCode(o);}
+			if(!o._hashCode) {Object.toHashCode(o);}
 			return (this._hashCode === o._hashCode);
 		},
 
@@ -43,7 +58,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this._userData=v;
 		},
 		'toHashCode':function(){
-			return BiObject.toHashCode(this);
+			return Object.toHashCode(this);
 		},
 		'dispose':function(){
 			this._disposed=true;
@@ -73,7 +88,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 创建日期：2015-4-2
 		 * 修改日期：2015-4-2
 		 * 名称：destructor
-		 * 功能：在注销BiObject对象时调用此方法
+		 * 功能：在注销Object对象时调用此方法
 		 * 说明：
 		 * 注意：
 		 * @return  ()
@@ -83,19 +98,19 @@ window[GRN_LHH].run([window],function(window,undefined){
 	});
 
 
-	BiObject._hashCodeCounter=1;
-	BiObject._hashCodePrefix='hc'+System.timestamp();
-	BiObject.generate=function(){
-		return BiObject._hashCodePrefix+Math.round(Math.random()*System.random)+BiObject._hashCodeCounter++;
+	Object._hashCodeCounter=1;
+	Object._hashCodePrefix='hc'+System.timestamp();
+	Object.generate=function(){
+		return Object._hashCodePrefix+Math.round(Math.random()*System.random)+Object._hashCodeCounter++;
 	};
-	BiObject.toHashCode=function(o){
+	Object.toHashCode=function(o){
 		if(o._hashCode!=null)
 			return o._hashCode;
-		return o._hashCode=BiObject.generate();
+		return o._hashCode=Object.generate();
 	};
 
 
-	System['BiObject']=BiObject;
+	System['Object']=Object;
 
 });
 
