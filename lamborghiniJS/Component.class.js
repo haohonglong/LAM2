@@ -304,6 +304,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 			__this__=this;
 		},
 		'_className':'Component',
+		'__set':function(){},
+		'__get':function(){},
+		'bootstrap':function(){},
 		/**
 		 *
 		 * @author: lhh
