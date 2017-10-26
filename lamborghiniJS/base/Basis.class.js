@@ -2084,19 +2084,19 @@ window[GRN_LHH].run([window],function(W,Config){
 			var ROOT = this.Public.ROOT;
 			var classPath=this.getClassPath();
 			return [
-				 classPath+'/Basis.class.js'
-				,classPath+'/Base.class.js'
-				,classPath+'/Object.class.js'
-				,classPath+'/Component.class.js'
-				,classPath+'/Helper.class.js'
-				,classPath+'/Event.class.js'
+				 classPath+'/base/Basis.class.js'
+				,classPath+'/base/Base.class.js'
+				,classPath+'/base/Object.class.js'
+				,classPath+'/base/Component.class.js'
+				,classPath+'/base/Helper.class.js'
+				,classPath+'/base/Event.class.js'
 				,classPath+'/jQuery/jquery.js'
-				,classPath+'/Browser.class.js'
-				,classPath+'/Dom.class.js'
-				,classPath+'/Html.class.js'
-				,classPath+'/Loader.class.js'
-				,classPath+'/Template.class.js'
-				,classPath+'/Controller.class.js'
+				,classPath+'/base/Browser.class.js'
+				,classPath+'/base/Dom.class.js'
+				,classPath+'/base/Html.class.js'
+				,classPath+'/base/Loader.class.js'
+				,classPath+'/base/Template.class.js'
+				,classPath+'/base/Controller.class.js'
 				,classPath+'/Css.class.js'
 			];
 		},
