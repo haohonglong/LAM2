@@ -807,9 +807,8 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 			$box.on('click',function(){
 				$(this).hide();
 				$input[0].focus();
-
 			});
-			$input.on('blur',function(){
+			$input.on('blur keydown',function(){
 				if('' === $input.val().replace(/\s/g,"")){
 					$box.show();
 				}
