@@ -61,48 +61,54 @@ window[GRN_LHH].run([window,window.document],function(window,document,undefined)
 		'destructor':function(){}
 	});
 
+	/**
+	 *
+	 * @param $a
+	 * @param $b
+	 * @returns {*}
+	 */
+	function gcd($a,$b){
+		if($a%$b){
+			return gcd($b, $a%$b);
+		}else{
+			return $b;
+		}
+	}
 
 	/**
 	 * 创建日期：2014-9-3
-	 * 修改日期：2014-9-3
+	 * 修改日期：2017-10-27
 	 * 名称：(String) inputSizeGetProportion
 	 * 功能：输入宽和高返回尺寸的比例
-	 * 参数：Number $a
-	 * 		 Number $b
+	 * @param {Number}w
+	 * @param {Number}h
 	 * Example:
 	 *		Basis.inputSizeGetProportion(1280,720);
 	 *		w = 1280;
 	 *		h = 720;
 	 *		n = gcd(w, h);
 	 *		echo w/n, ':', h/n;
-	 *
+	 * @returns {{a: number, b: number}}
 	 */
 	Helper.inputSizeGetProportion=function(w, h) {
-		var gcd=function($a,$b){
-			if($a%$b){
-				return gcd($b, $a%$b);
-			}else{
-				return $b;
-			}
-		};
-
 		var n=gcd(w,h);
-		return w/n+' : '+h/n;
+		if(System.LAM_DEBUG) {console.log(w/n,' : ',h/n);}
+		return {'a':w/n,'b':h/n};
 	};
 
 	/**
 	 * 创建日期：2014-9-3
-	 * 修改日期：2014-9-3
+	 * 修改日期：2017-10-27
 	 * 名称：(String) forSize
 	 * 功能：输入1280px 参考尺寸返回一个什么样的宽度符合被平均分成3份并且符合 4:6 的一个尺寸
-	 * 参数：Number a
-	 * 		 Number b
-	 * 		 Number size
-	 * 		 Number n
 	 * Example:
 	 *		Basis.forSize(4,6,1280,3);
 	 *		return :1280被平分3份后能被4整除，width,height
-	 *
+	 * @param {Number}a
+	 * @param {Number}b
+	 * @param {Number}size
+	 * @param {Number}n
+	 * @returns {{width: (number|*), height: (number|*)}}
 	 */
 	Helper.forSize=function(a, b,size,n) {
 		var w,h;
@@ -114,11 +120,11 @@ window[GRN_LHH].run([window,window.document],function(window,document,undefined)
 				if(0 === w%a){
 					//求出符合几比几的高度
 					h=(w/a)*b;
-					return size+'被平分'+n+'份后能被'+a+'整除,得出最适合尺寸是：\
- 						 W: ('+size+'/'+n+')='+w+'  \
-						 H: ('+size+'/'+n+'/'+a+'*'+b+')='+h;
+					if(System.LAM_DEBUG) {
+						console.log(size, '被平分', n, '份后能被', a, '整除,得出最适合尺寸是: width: (', size, '/', n, ')=' + w, '; height: (', size, '/', n, '/', a, '*', b, ')=', h);
+					}
+					return {'width':w,'height':h};
 				}
-
 			}
 			size++;
 		}
@@ -127,29 +133,27 @@ window[GRN_LHH].run([window,window.document],function(window,document,undefined)
 
 	/**
 	 * 创建日期：2014-9-3
-	 * 修改日期：2014-9-3
+	 * 修改日期：2017-10-27
 	 * 名称：(Array) getToSize
 	 * 功能：输入开始尺寸到结束尺寸范围内获取几比几的一个比例下有多少组尺寸符合
-	 * 参数：Number a
-	 * 		 Number b
-	 * 		 Number s 开始值
-	 * 		 Number e 结束值
+	 * @param {Number}a
+	 * @param {Number}b
+	 * @param {Number}s 开始值
+	 * @param {Number}e 结束值
 	 *
 	 * Example:
 	 *		Basis.getToSize(4,6,1280,15000);
-	 *
+	 * @returns {Array}
 	 */
 	Helper.getToSize=function(a, b,s,e) {
 		if(!s) return;
 		var arry=[];
 		while(true){
 			if(0 === s%a && s !=0){
-				//arry.push({'w':s,'h':s/a*b});
-				arry.push('{w:'+s+', h:'+(s/a*b)+'}');
+				if(System.LAM_DEBUG) {console.log('{w:',s,', h:',(s/a*b),'}');}
+				arry.push({'w':s,'h':s/a*b});
 			}
-			if(s>e){
-				return arry;
-			}
+			if(s>e){return arry;}
 			s++;
 		}
 
