@@ -1,8 +1,8 @@
 
 /**
  * 创建人：lhh
- * 创建日期:2016/6/17
- * 修改日期:2016/6/17
+ * 创建日期:2016－6－17
+ * 修改日期:2017－10－27
  * 名称：Widget
  * 功能：
  * 说明 : 小部件，
@@ -17,11 +17,11 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	function(window,document,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Helper','Widget');
+	System.is(System,'Html','Widget');
 
 	var __this__=null;
 
-	var Widget = System.Helper.extend({
+	var Widget = System.Html.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;
