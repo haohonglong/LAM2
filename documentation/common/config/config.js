@@ -289,7 +289,7 @@ if(!GRN_LHH){
         //=================================================================================================================================
         System.wait(function(){
             if(!LAMJS){
-                alert('cannot find Basis class! the lamborghiniJS\' path is :{'+classPath+'}');
+                throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{'+classPath+'}");
             }else{
                 LAMJS.run(function() {
                     'use strict';
