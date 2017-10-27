@@ -102,7 +102,7 @@ window[GRN_LHH].run([window,window.document],function(window,document,undefined)
 	 * 名称：(String) forSize
 	 * 功能：输入1280px 参考尺寸返回一个什么样的宽度符合被平均分成3份并且符合 4:6 的一个尺寸
 	 * Example:
-	 *		Basis.forSize(4,6,1280,3);
+	 *		forSize(4,6,1280,3);
 	 *		return :1280被平分3份后能被4整除，width,height
 	 * @param {Number}a
 	 * @param {Number}b
