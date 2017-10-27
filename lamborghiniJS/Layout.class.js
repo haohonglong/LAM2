@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Layout');
+	System.is(System,'Html','Layout');
 
 	var __this__=null;
 	/**
@@ -35,7 +35,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 
 
 	 */
-	var Layout = System.Browser.extend({
+	var Layout = System.Html.extend({
 		constructor: function(D) {
 			this.base();
 			__this__ = this;
