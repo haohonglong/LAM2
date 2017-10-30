@@ -17,11 +17,11 @@
 window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Tools');
+	System.is(System,'Html','Tools');
 	var __this__=null;
 	var fixEvt = System.Browser.fixEvt;
 	var isIE6 = System.Browser.isIE6;
-	var Tools = System.Browser.extend({
+	var Tools = System.Html.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;
@@ -35,37 +35,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 				return false;
 			}
 		},
-		/**
-		 * @author lhh
-		 * 产品介绍：
-		 * 创建日期：2015-6-25
-		 * 修改日期：2015-6-25
-		 * 名称：get_url_Param
-		 * 功能：获取url指定的参数
-		 * 说明：
-		 * 注意：
-		 * @param   (String)name            NO NULL :参数名称
-		 * @return  String
-		 *
-		 */
-		'get_url_Param':function(name){
-			var search = document.location.search;
-			var pattern = new RegExp("[?&]"+name+"\=([^&]+)", "g");
-			var matcher = pattern.exec(search);
-			var items = null;
-			if(null != matcher){
-				try{
-					items = decodeURIComponent(decodeURIComponent(matcher[1]));
-				}catch(e){
-					try{
-						items = decodeURIComponent(matcher[1]);
-					}catch(e){
-						items = matcher[1];
-					}
-				}
-			}
-			return items;
-		},
+
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -77,8 +47,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * 注意：
 		 * @param   (Object)D             NULL :
 		 * @param   (Function)callBack            NULL :
-		 * @return (void)
-		 *
+		 * @returns {Tools}
 		 */
 		'select_change':function(D,callBack){
 			$( "select" )
@@ -89,6 +58,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 					});
 				})
 				.change();
+			return this;
 		},
 		/**
 		 * @author: lhh
@@ -103,6 +73,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * @param inputDom 被全选的dom
 		 * @param startIndex 选择文字开始位置
 		 * @param endIndex   选择文字结束位置
+		 * @returns {Tools}
 		 */
 		'setTextSelected':function(inputDom, startIndex, endIndex){
 			if (inputDom.setSelectionRange){
@@ -115,6 +86,56 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 				range.select();
 			}
 			inputDom.focus();
+			return this;
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-10-30
+		 * 修改日期：2017-10-30
+		 * 名称： selectText
+		 * 功能：选中文字
+		 * 说明：
+		 * 注意：
+		 *
+		 * @param D
+		 * @returns {Tools}
+		 */
+		'selectText':function(D){
+			var defaults={
+				'element': '[data-clipboard-id="block"]'
+			};
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			var doc = document;
+			var text = this.$$(D.element)[0];
+			if (doc.body.createTextRange) { // ms
+				var range = doc.body.createTextRange();
+				range.moveToElementText(text);
+				range.select();
+			} else if (window.getSelection) {
+				var selection = window.getSelection();
+				var range = doc.createRange();
+				range.selectNodeContents(text);
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+			return this;
+		},
+		/**
+		 * 选中的内容copy 到粘贴板
+		 * @param callback
+		 */
+		'copyToClipboard':function(callback){
+			try {
+				// 执行复制
+				document.execCommand('copy');
+				if(System.isFunction(callback)){callback();}
+			}catch (err) {
+				if(System.LAM_DEBUG) {
+					throw new Error('please press Ctrl/Cmd+C to copy');
+				}
+			}
+			return this;
 		},
 		/**
 		 * @author: lhh
@@ -127,6 +148,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * 注意：
 		 *
 		 * @param e{event}
+		 * @returns {Tools}
 		 * usage:
 		 * 	<span id="copy">7777</span>
 		 	<button data-copytarget="#copy">复制</button>
@@ -138,15 +160,10 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 			range.selectNode(inp);
 			window.getSelection().addRange(range);
 			// 要复制的区域是否可以选中
-			try {
-				// 执行复制
-				document.execCommand('copy');
+			this.copyToClipboard(function(){
 				inp.blur();
-			}catch (err) {
-				if(System.LAM_DEBUG) {
-					throw new Error('please press Ctrl/Cmd+C to copy');
-				}
-			}
+			});
+			return this;
 		},
 
 		/**
@@ -847,7 +864,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * 创建日期：2014-9-2
 		 * 修改日期：2014-9-12
 		 * 名称：
-		 * 功能：把指定的元素设为全屏或全屏减去指定的只存
+		 * 功能：把指定的元素设为全屏或全屏减去指定的尺寸
 		 * 参数：Object obj
 		 * 	{
 		 *		'$div':$(),
@@ -1280,6 +1297,6 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	});
 
 
-	System['Tools']=new Tools();
+	System['Tools']= Tools;
 
 });
