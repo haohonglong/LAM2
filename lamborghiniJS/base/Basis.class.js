@@ -2140,24 +2140,14 @@ window[GRN_LHH].run([window],function(W,Config){
 				};
 			},
 			'bulid':function(tag,D){
-				tag = tag || "div";
+				tag = tag || "script";
 				var node;
 				var k;
-				var fragment;
 				node=document.createElement(tag);
-
-				for(k in D){
-					node[k] = D[k];
-				}
-
-				if(!Config.render.fragment){
-					Config.render.fragment = document.createDocumentFragment();
-				}
-				fragment = Config.render.fragment;
-
+				for(k in D){node[k] = D[k];}
+				if(!Config.render.fragment){Config.render.fragment = document.createDocumentFragment();}
 				Config.render.fragment.appendChild(node);
-
-				return fragment;
+				return node.outerHTML;
 			},
 			/**
 			 * 用createElement 创建标签并且设为异步

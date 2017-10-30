@@ -81,7 +81,7 @@ if(!GRN_LHH){
                 ,classPath+'/base/Loader.class.js'
                 ,classPath+'/base/Template.class.js'
                 ,classPath+'/base/Controller.class.js'
-                ,classPath+'/Css.class.js'
+                ,classPath+'/base/Css.class.js'
             ];
         },
         //标签的渲染方式
@@ -125,21 +125,11 @@ if(!GRN_LHH){
                 tag = tag || "script";
                 var node;
                 var k;
-                var fragment;
                 node=document.createElement(tag);
-
-                for(k in D){
-                    node[k] = D[k];
-                }
-
-                if(!Config.render.fragment){
-                    Config.render.fragment = document.createDocumentFragment();
-                }
-                fragment = Config.render.fragment;
-
+                for(k in D){node[k] = D[k];}
+                if(!Config.render.fragment){Config.render.fragment = document.createDocumentFragment();}
                 Config.render.fragment.appendChild(node);
-
-                return fragment;
+                return node.outerHTML;
             },
             /**
              * 用createElement 创建标签并且设为异步
@@ -251,20 +241,14 @@ if(!GRN_LHH){
     }else{
         //=================================================================================================================================
         if(Config.render.create){
-            System.wait(function(){
-                var H=Config.render.H();
-                for(i=0,len = srcs.length;i < len; i++){
-                    //确保每个文件只加载一次
-                    if(Config.files.indexOf(srcs[i]) != -1){
-                        continue;
-                    }
-                    Config.files.push(srcs[i]);
-                    data.src = srcs[i];
-                    Config.render.bulid(tag,data);
-                }
-                console.log(Config.render.fragment);
-                H.head.appendChild(Config.render.fragment);
-            },1);
+            for(i=0,len = srcs.length;i < len; i++){
+                //确保每个文件只加载一次
+                if(Config.files.indexOf(srcs[i]) != -1){continue;}
+                Config.files.push(srcs[i]);
+                data.src = srcs[i];
+                files.push(Config.render.bulid(tag,data));
+                Config.files.push(srcs[i]);
+            }
         }else{
             var attrs=[];
             for(var k in scriptAttribute){
@@ -272,15 +256,12 @@ if(!GRN_LHH){
             }
             for(i=0,len = srcs.length;i < len; i++){
                 //确保每个文件只加载一次
-                if(Config.files.indexOf(srcs[i]) != -1){
-                    continue;
-                }
+                if(Config.files.indexOf(srcs[i]) != -1){continue;}
                 files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
                 Config.files.push(srcs[i]);
-
             }
-            System.print(files.join(''));
         }
+        System.print(files.join(''));
 
         //=================================================================================================================================
         //3分钟之后检测lamborghiniJS基础类文件是否加载成功
