@@ -107,7 +107,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 			};
 			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 			var doc = document;
-			var text = this.$$(D.element)[0];
+			var text = this.$(D.element);
 			if (doc.body.createTextRange) { // ms
 				var range = doc.body.createTextRange();
 				range.moveToElementText(text);
@@ -1152,8 +1152,8 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * 功能：flash 是否加载完成
 		 * 说明：
 		 * 注意：
-		 * @param   (void)param           NULL :
-		 * Example：
+		 * @param id
+		 * @returns {boolean}
 		 */
 		'isFlashComplete':function(id){
 			var movie = document.getElementById(id);
