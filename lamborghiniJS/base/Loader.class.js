@@ -124,7 +124,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                       after_fn:function(){}
                     }
                 ]
-         * @return  (Object) 返回当前对象
+         * @returns {Loader}
          */
         'load':function(D){
             var self = this;
@@ -142,7 +142,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                         if(System.isArray(rule.use)){
                             System.each(rule.use,function(){
                                 if(System.fileExisted(this)){
-                                    return;
+                                    return this;
                                 }else{
                                     var attr = rule.attr;
                                     switch(rule.tag){
@@ -242,6 +242,41 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                 }
                 files.push(D.tag.join(''));
             }
+            return this;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2017-10-31
+         * 修改日期：2017-10-31
+         * 名称：loadScript
+         * 功能：
+         * 说明：
+         * 注意：
+         * @param url
+         * @param callback
+         * @returns {Loader}
+         */
+        'loadScript':function(url, callback){
+            initDom.call(this);
+            var script = document.createElement ("script") ;
+            　  script.type = "text/javascript";
+            if(System.fileExisted(url)){return this;}
+            if (script.readyState){ //IE
+                script.onreadystatechange = function(){
+                    if (script.readyState == "loaded" || script.readyState == "complete"){
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            }else { //Others
+                script.onload = function(){ callback();};
+            }
+            script.src = url;
+            head.appendChild(script);
+            if(self.Config.render.remove){head.removeChild(script);}
+            if(System.isClassFile(url)){System.classes.push(url);}
+            System.files.push(url);
             return this;
         },
         /**
