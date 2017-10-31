@@ -82,7 +82,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			xhr:XHR,
 			type:options.type || 'GET',
 			data:options.data || {},
-			dataType:options.dataType || 'application/x-www-form-urlencoded',
+			dataType:options.dataType || 'application/x-www-form-urlencoded; charset=UTF-8',
 			async:options.async || true,
 			success:options.success || function(){},
 			error:options.error || function(){},
@@ -122,6 +122,13 @@ window[GRN_LHH].run([window],function(window,undefined){
 							if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
 							if (200 == xhr.status) {
 								self.success(xhr.responseText);
+								if('script' === self.dataType){
+									var script = document.createElement("script");
+										script.type = "text/javascript";
+										script.text = xhr.responseText;
+										document.body.appendChild(script);
+										document.body.removeChild(script);
+								}
 							}else{
 								self.error(xhr.responseText);
 							}

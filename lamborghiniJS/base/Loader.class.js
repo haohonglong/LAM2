@@ -258,23 +258,29 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * @returns {Loader}
          */
         'loadScript':function(url, callback){
-            initDom.call(this);
-            var script = document.createElement ("script") ;
+            var self = this;
+            var script = document.createElement("script") ;
             　  script.type = "text/javascript";
-            if(System.fileExisted(url)){return this;}
+            if(System.fileExisted(url)){
+                if(System.isFunction(callback)){callback();}
+                return this;
+            }
+            initDom.call(this);
             if (script.readyState){ //IE
                 script.onreadystatechange = function(){
-                    if (script.readyState == "loaded" || script.readyState == "complete"){
+                    if ("loaded" === script.readyState || "complete" === script.readyState){
                         script.onreadystatechange = null;
-                        callback();
+                        if(System.isFunction(callback)){callback();}
                     }
                 };
             }else { //Others
-                script.onload = function(){ callback();};
+                script.onload = function(){
+                    if(System.isFunction(callback)){callback();}
+                };
             }
             script.src = url;
             head.appendChild(script);
-            if(self.Config.render.remove){head.removeChild(script);}
+            if(this.Config.render.remove){head.removeChild(script);}
             if(System.isClassFile(url)){System.classes.push(url);}
             System.files.push(url);
             return this;
