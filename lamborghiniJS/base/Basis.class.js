@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-10-26
+ * 修改日期:2017-11-1
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -83,6 +83,8 @@ if(!GRN_LHH){
 	var isBlob = type("Blob");
 	var isNull = type("Null");
 	var isUndefined = type("Undefined");
+	//browser
+	var isOpera = type("Opera");
 
 	var isHTMLDocument = type("HTMLDocument");
 	var isHTMLHtmlEment = type("HTMLHtmlElement");
@@ -1272,6 +1274,8 @@ if(!GRN_LHH){
 	System.isRegExp 		= isRegExp;
 	System.isDate 			= isDate;
 	System.isBlob 			= isBlob;
+	//browser
+	System.isOpera 			= isOpera;
 
 	System.isHTMLDocument = isHTMLDocument;
 	System.isHTMLHtmlEment = isHTMLHtmlEment;

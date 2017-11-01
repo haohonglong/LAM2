@@ -40,10 +40,8 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
 
             switch(_e && _e.keyCode){
                 case Event.keyCode.ESCAPE:// 按 Esc
-
                     break;
                 case 113:// 按 F2
-
                     break;
                 case Event.keyCode.ENTER:// enter 键
                     _e.keyCode=9;
@@ -103,7 +101,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * @author lhh
      * 产品介绍：
      * 创建日期：2015-1-15
-     * 修改日期：2015-1-15
+     * 修改日期：2017-11-1
      * 名称：Event.fixEvt
      * 功能：解决事件兼容问题
      * 说明：
@@ -114,6 +112,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      */
     Event.fixEvt=function(event){//解决事件兼容问题
         //var e = event || window.event || arguments.callee.caller.arguments[0];
+        var doc = document.documentElement, body = document.body;
         var e = event || window.event;
         //解决mouseover与mouserout事件不停切换的问题（问题不是由冒泡产生的）
         if("mouseover" === e.type){
@@ -121,29 +120,41 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         }else if("mouseout" === e.type){
             e.relatedTarget = e.toElement;
         }
-        if(!e.target){//IE下没有下面的属性和方法，需要自定义下
-            e.target = e.srcElement;
-            e.layerX = e.offsetX;
-            e.layerY = e.offsetY;
-            e.pageX  = e.clientX+document.documentElement.scrollLeft;
-            e.pageY  = e.clientY+document.documentElement.scrollTop;
-            e.stopPropagation=function(){//停止事件冒泡方法
-                e.cancelBubble=true;
-            };
-            e.preventDefault=function(){//阻止事件的默认行为，例如click <a>后的跳转
-                e.returnValue=false;
-            };
-        }
+        //IE下没有下面的属性和方法，需要自定义下
+        e.target = e.target || e.srcElement;
+        e.layerX = e.layerX || e.offsetX;
+        e.layerY = e.layerY || e.offsetY;
+        e.pageX  = e.pageX  || e.clientX + (doc && doc.scrollLeft ||  body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+        e.pageY  = e.pageY  || e.clientY + (doc && doc.scrollTop  ||  body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0);
+
+        //停止事件冒泡方法
+        e.stopPropagation = e.stopPropagation || function(){e.cancelBubble=true;};
+        //阻止事件的默认行为，例如click <a>后的跳转
+        e.preventDefault  = e.preventDefault  || function(){e.returnValue=false;};
         return e;
     };
 
-
+    /**
+     *
+     * 创建日期：2014-12-22
+     * 修改日期：2017-11-1
+     * 功能:绑定事件的句柄
+     * @param evt
+     */
+    function addEventHandler(e){//哪个事件发生了？
+        e=Event.fixEvt(e);
+        var type=e.type;
+        var functions=this.functions[type];
+        for (var i= 0,len = functions.length;i < len;i++) {
+            if (System.isFunction(functions[i])){functions[i].call(this,e);}
+        }
+    }
     /**
      *
      * @author lhh
      * 产品介绍：
      * 创建日期：2014-12-22
-     * 修改日期：2017-3-17
+     * 修改日期：2017-11-1
      * 名称：Event.addEvent
      * 功能：给dom节点绑定指定事件
      * 说明：
@@ -154,29 +165,28 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * Example：
      */
     function addEvent(dom,evt,fn){
-        if("[object Opera]"===String(window.opera)){
-            dom.addEventListener(evt,function(evt){
-                evt.layerX=evt.offsetX;
-                evt.layerY=evt.offsetY;
-                fn.call(this,evt);
-            },false);
-        }else if(dom.addEventListener){
-            dom.addEventListener(evt,fn,false);
+        if(!System.isFunction(dom.addEventListener)){
+            if('DOMMouseScroll' === evt){evt = 'mousewheel';}
+        }
+        if(dom.addEventListener){
+            if(System.isset(window.opera) && System.isOpera(window.opera)){
+                dom.addEventListener(evt,function(e){fn.call(this,Event.fixEvt(e));},false);
+            }else{
+                dom.addEventListener(evt,fn,false);
+            }
         }else if(dom.attachEvent){
-            dom.attachEvent("on"+evt,function(){
-                fn.call(this);
-            });
+            dom.attachEvent("on"+evt,fn);
         }else{
             if(!dom.functions) dom.functions={};
             //检测有没有存储事件名的数组
-            if(!dom.functions[evt]) dom.functions[evt] = [];
+            if(!System.isArray(dom.functions[evt])) {dom.functions[evt] = [];}
             var functions=dom.functions[evt];
             for(var i=0,len=functions.length;i < len; i++){
                 if(functions[i] === fn) return dom;//判断之前是否有添加过要添加的事件监听函数
             }
             //没添加就把函数保存到数组中
             functions.push(fn);
-            //fn.index=functions.length-1;
+            fn.index=functions.length-1;
             if(System.isFunction(dom["on"+evt])){//检测是否已经注册过事件监听函数
                 if(dom["on"+evt] !== addEventHandler){
                     functions.push(dom["on"+evt]);
@@ -185,22 +195,6 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             dom["on"+evt]=addEventHandler;
         }
         return dom;
-    }
-
-    /**
-     *
-     * 创建日期：2014-12-22
-     * 修改日期：2017-3-17
-     * 功能:绑定事件的句柄
-     * @param evt
-     */
-    function addEventHandler(evt){//哪个事件发生了？
-        evt=Event.fixEvt(evt);
-        var evtype=evt.type;
-        var functions=this.functions[evtype];
-        for (var i=0;i<functions.length;i++) {
-            if (functions[i]) functions[i].call(this,evt);
-        }
     }
 
     function unbind(obj,evtype,fn){//删除事件监听
@@ -259,19 +253,18 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * @author lhh
      * 产品介绍：
      * 创建日期：2014-12-22
-     * 修改日期：2014-12-23
+     * 修改日期：2017-11-1
      * 名称：Event.mousewheel
      * 功能：鼠标滚轮事件注册
      * 说明：dom 是滚动的范围区域
      * 注意：这个功能只能在鼠标滚动时返回滚动的方向,和滚轮滚动判断方向的值
-     * @param   (Dom)dom 			NO NULL :dom节点对象
      * @param   (Function)fn 		NO NULL :返回滚动方向和滚轮滚动的值
+     * @returns {Function}
      * Example：
+     *          Event.bind(dom,"DOMMouseScroll",Event.mousewheel(function(){}));
      */
-    Event.mousewheel=function(dom,fn){
+    Event.mousewheel=function(fn){
         //鼠标滚轮事件处理函数
-        //direction
-        if(!dom) alert("dom 参数必填");
         var fnMouseWheel=function(e) {
             e = Event.fixEvt(e);
             var wheelDelta = e.wheelDelta || e.detail; //鼠标滚动值，可由此判断鼠标滚动方向
@@ -281,14 +274,9 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
                 fn.call(e,{'direction':'up','wheelDelta':wheelDelta});
             }
         };
-
-        //if (dom.addEventListener) {  //for firefox
-        //dom.addEventListener("DOMMouseScroll", fnMouseWheel);
-        Event.bind(dom,"DOMMouseScroll",fnMouseWheel);
-        //}
-
-        dom.onmousewheel = fnMouseWheel; // for other browser
+        return fnMouseWheel;
     };
+
     Event.keyCode= {
         BACKSPACE: 8,
         COMMA: 188,
