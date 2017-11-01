@@ -462,6 +462,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
     System['Loadcommon'] = System['Loader'] =new Loader();
     System.merge(null,[{
         'import': System.Loader.import
+        ,'loadScript': System.Loader.loadScript
     }]);
 
 
