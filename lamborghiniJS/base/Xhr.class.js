@@ -76,6 +76,13 @@ window[GRN_LHH].run([window],function(window,undefined){
 		}
 	};
 	var XHR = Xhr.getXMLHttpRequest();
+	var Accept ={
+		 "text":"text/plain"
+		,"html":"text/html"
+		,"xml":"application/xml, text/xml"
+		,"json":"application/json, text/javascript"
+		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
+	};
 	function ajax(url,options){
 		var myAjax = {
 			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
@@ -83,6 +90,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			type:options.type || 'GET',
 			data:options.data || {},
 			dataType:options.dataType || 'application/x-www-form-urlencoded; charset=UTF-8',
+			Accept:options.Accept || 'text',
 			async:options.async || true,
 			success:options.success || function(){},
 			error:options.error || function(){},
@@ -98,6 +106,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				this.xhr.send(this.data);
 			},
 			onreadystatechange: function () {
+				this.xhr.setRequestHeader('Accept', Accept[this.Accept]);
 				var xhr = this.xhr;
 				var self = this;
 				xhr.onreadystatechange = function () {
@@ -146,6 +155,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			arr.pop();
 			return arr.join('');
 		})(myAjax.data);
+
 		if('post' === myAjax.type.toLowerCase()){
 			myAjax.post();
 		}else{
