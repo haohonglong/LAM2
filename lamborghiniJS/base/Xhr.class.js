@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-3-17
+ * 修改日期：2017-11-1
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -75,25 +75,35 @@ window[GRN_LHH].run([window],function(window,undefined){
 			throw new Error("browser doesn't support AJAX."+e.name);
 		}
 	};
-	var XHR = Xhr.getXMLHttpRequest();
-	var Accept ={
+	Xhr.Accept ={
 		 "text":"text/plain"
 		,"html":"text/html"
 		,"xml":"application/xml, text/xml"
 		,"json":"application/json, text/javascript"
 		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
 	};
-	function ajax(url,options){
+	var XHR = Xhr.getXMLHttpRequest();
+	function ajax(url,D){
+		var defaults={
+			type:'GET',
+			data:{},
+			contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+			dataType:'text',
+			async:true,
+			success:function(){},
+			error:function(){}
+		};
+		D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 		var myAjax = {
 			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
 			xhr:XHR,
-			type:options.type || 'GET',
-			data:options.data || {},
-			dataType:options.dataType || 'application/x-www-form-urlencoded; charset=UTF-8',
-			Accept:options.Accept || 'text',
-			async:options.async || true,
-			success:options.success || function(){},
-			error:options.error || function(){},
+			type:D.type,
+			data:D.data,
+			contentType:D.contentType,
+			dataType:D.dataType,
+			async:D.async,
+			success:D.success,
+			error:D.error,
 			get: function () {
 				this.xhr.open('get', url,this.async);
 				this.onreadystatechange();
@@ -106,7 +116,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				this.xhr.send(this.data);
 			},
 			onreadystatechange: function () {
-				this.xhr.setRequestHeader('Accept', Accept[this.Accept]);
+				this.xhr.setRequestHeader('Accept', Xhr.Accept[this.dataType]);
 				var xhr = this.xhr;
 				var self = this;
 				xhr.onreadystatechange = function () {
