@@ -2069,6 +2069,7 @@ window[GRN_LHH].run([window],function(W,Config){
 			,'PLUGINS':_ROOT_+'/plugins'
 			,'Moudle':function(){return LAMJS.createDict();}
 		},
+		'components':{},
 		//hashcode 随机种子
 		'random':10000,
 		//定义模版标签

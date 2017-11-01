@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-3-20
- * 修改日期:2016-10-27
+ * 修改日期:2017-11-1
  * 功能：配置文件
  * 说明 : 这个文件要copy到项目里面可以修改 System.Config里的属性 和 GRN_LHH; 的值；
  *
@@ -49,6 +49,7 @@ if(!GRN_LHH){
             ,'PLUGINS':_ROOT_+'/common/plugins'
             ,'Moudle':function(){return LAMJS.createDict();}
         },
+        'components':{},
         //hashcode 随机种子
         'random':999,
         //定义模版标签
