@@ -84,26 +84,16 @@ window[GRN_LHH].run([window],function(window,undefined){
 	};
 	var XHR = Xhr.getXMLHttpRequest();
 	function ajax(url,D){
-		var defaults={
+		var myAjax = {
+			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
+			xhr:XHR,
 			type:'GET',
 			data:{},
 			contentType:"application/x-www-form-urlencoded; charset=UTF-8",
 			dataType:'text',
 			async:true,
 			success:function(){},
-			error:function(){}
-		};
-		D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-		var myAjax = {
-			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
-			xhr:XHR,
-			type:D.type,
-			data:D.data,
-			contentType:D.contentType,
-			dataType:D.dataType,
-			async:D.async,
-			success:D.success,
-			error:D.error,
+			error:function(){},
 			get: function () {
 				this.xhr.open('get', url,this.async);
 				this.onreadystatechange();
@@ -157,6 +147,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				}
 			}
 		};
+		myAjax = System.isPlainObject(D) ? System.merge({},[D,myAjax]) : myAjax;
 		myAjax.data = (function(json){ // 转成post需要的字符串.
 			var arr = [];
 			for(var k in json){
