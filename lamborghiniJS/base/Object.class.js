@@ -24,11 +24,13 @@ window[GRN_LHH].run([window],function(window,undefined){
 			__this__=this;
 			if(!(System.app instanceof System.Object)){
 				System.app=this;
-				System.each(System.components,function(name,value){
-					if(name in System.app){return true;}
-					if(System.isFunction(value)){
-						System['app'][name] = value();
-					}
+				System.wait(function(){
+					System.each(System.components,function(name,value){
+						if(name in System.app){return true;}
+						if(System.isFunction(value)){
+							System['app'][name] = value.call(System.app,System);
+						}
+					});
 				});
 			}
 			this._hashCode=Object.generate();
