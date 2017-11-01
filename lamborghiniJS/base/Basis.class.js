@@ -2180,8 +2180,9 @@ window[GRN_LHH].run([window],function(W,Config){
 	System.merge(System.Config.XHR || {},[Config.XHR]);
 	System.merge(System.Config || {},[Config]);
 	System.classPath = System.Config.getClassPath();
-	System.Public 	 = System.Config.Public;
-	System.each(System.Public,function(name){
+	System.Public 	 = System.Config.Public || System.createDict();
+	System.components 	 = System.Config.components || System.createDict();
+	System.each(System.merge({},[System.components,System.Public]),function(name){
 		if(name in System){return true;}
 		System[name] = this;
 	});
