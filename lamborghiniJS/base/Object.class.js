@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-10-26
+ * 修改日期:2017-11-1
  * 名称：Object类
  * 功能：服务于派生类生成hashCode
  * 标准 :
@@ -22,7 +22,15 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var Object = System.Base.extend({
 		constructor: function() {
 			__this__=this;
-			if(!(System.app instanceof System.Object)){System.app=this;}
+			if(!(System.app instanceof System.Object)){
+				System.app=this;
+				System.each(System.components,function(name,value){
+					if(name in System.app){return true;}
+					if(System.isFunction(value)){
+						System['app'][name] = value();
+					}
+				});
+			}
 			this._hashCode=Object.generate();
 		},
 		'_className':'Object',
