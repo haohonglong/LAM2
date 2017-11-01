@@ -111,7 +111,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			},
 			post: function () {
 				this.xhr.open('post', url,this.async);
-				this.xhr.setRequestHeader('Content-Type', this.dataType);
+				this.xhr.setRequestHeader('Content-Type', this.contentType);
 				this.onreadystatechange();
 				this.xhr.send(this.data);
 			},
