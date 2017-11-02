@@ -2,10 +2,10 @@
 window[GRN_LHH].run([window,window['document']],function(window,document,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Helper','Event');
+    System.is(System,'Browser','Event');
 
     var __this__=null;
-    var Event = System.Helper.extend({
+    var Event = System.Browser.extend({
         constructor: function(e){
             this.base();
             __this__=this;
@@ -101,7 +101,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * @author lhh
      * 产品介绍：
      * 创建日期：2015-1-15
-     * 修改日期：2017-11-1
+     * 修改日期：2017-11-2
      * 名称：Event.fixEvt
      * 功能：解决事件兼容问题
      * 说明：
@@ -111,27 +111,39 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * Example：
      */
     Event.fixEvt=function(event){//解决事件兼容问题
-        //var e = event || window.event || arguments.callee.caller.arguments[0];
+        //event = event || window.event || arguments.callee.caller.arguments[0];
+        event = event || window.event;
         var doc = document.documentElement, body = document.body;
-        var e = event || window.event;
         //解决mouseover与mouserout事件不停切换的问题（问题不是由冒泡产生的）
-        if("mouseover" === e.type){
-            e.relatedTarget = e.fromElement;
-        }else if("mouseout" === e.type){
-            e.relatedTarget = e.toElement;
+        if("mouseover" === event.type){
+            event.relatedTarget = event.fromElement;
+        }else if("mouseout" === event.type){
+            event.relatedTarget = event.toElement;
         }
         //IE下没有下面的属性和方法，需要自定义下
-        e.target = e.target || e.srcElement;
-        e.layerX = e.layerX || e.offsetX;
-        e.layerY = e.layerY || e.offsetY;
-        e.pageX  = e.pageX  || e.clientX + (doc && doc.scrollLeft ||  body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
-        e.pageY  = e.pageY  || e.clientY + (doc && doc.scrollTop  ||  body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0);
+        // Support: IE<9
+        // Fix target property (#1925)
+        if ( !event.target ) {
+            event.target = event.srcElement || document;
+            event.layerX = event.offsetX;
+            event.layerY = event.offsetY;
+            event.pageX  = event.clientX + (doc && doc.scrollLeft ||  body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+            event.pageY  = event.clientY + (doc && doc.scrollTop  ||  body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0);
+            // Support: IE<9
+            // For mouse/key events, metaKey==false if it's undefined (#3368, #11328)
+            event.metaKey = event.metaKey || false;
+        }
+        // Support: Safari 6-8+
+        // Target should not be a text node (#504, #13143)
+        if ( event.target.nodeType === 3 ) {
+            event.target = event.target.parentNode;
+        }
 
         //停止事件冒泡方法
-        e.stopPropagation = e.stopPropagation || function(){e.cancelBubble=true;};
+        event.stopPropagation = event.stopPropagation || function(){event.cancelBubble=true;};
         //阻止事件的默认行为，例如click <a>后的跳转
-        e.preventDefault  = e.preventDefault  || function(){e.returnValue=false;};
-        return e;
+        event.preventDefault  = event.preventDefault  || function(){event.returnValue=false;};
+        return event;
     };
 
     /**
@@ -260,8 +272,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * 注意：这个功能只能在鼠标滚动时返回滚动的方向,和滚轮滚动判断方向的值
      * @param   (Function)fn 		NO NULL :返回滚动方向和滚轮滚动的值
      * @returns {Function}
-     * Example：
-     *          Event.bind(dom,"DOMMouseScroll",Event.mousewheel(function(){}));
+     * usage：Event.bind(dom,"DOMMouseScroll",Event.mousewheel(function(){}));
      */
     Event.mousewheel=function(fn){
         //鼠标滚轮事件处理函数

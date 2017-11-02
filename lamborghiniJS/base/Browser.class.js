@@ -17,8 +17,6 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 	'use strict';
 	var System=this;
 	System.is(System,'Helper','Browser');
-	System.is(System,'Event');
-
 	var __this__=null;
 	/**
 	 *
@@ -206,10 +204,6 @@ window[GRN_LHH].run([window,window['document'],jQuery],function(window,document,
 		return (5===getExplorer());
 	};
 
-
-	Browser.fixEvt = System.Event.fixEvt;
-	Browser.bind = System.Event.bind;
-	Browser.mousewheel = System.Event.mousewheel;
 
 
 	/**
