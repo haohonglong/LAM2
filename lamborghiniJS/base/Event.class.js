@@ -194,7 +194,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             if(!System.isArray(dom.fns[evt])) {dom.fns[evt] = [];}
             var fns=dom.fns[evt];
             for(var i=0,len=fns.length;i < len; i++){
-                if(fns[i].toString() === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
+                if(fns[i].toString().trim() === fn.toString().trim()) return dom;//判断之前是否有添加过要添加的事件监听函数
             }
             //没添加就把函数保存到数组中
             fns.push(fn);
@@ -234,7 +234,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             var fns=dom.fns || {};
             fns=fns[evtype] || [];
             for (var i=0;i<fns.length;i++) {
-                if (fns[i].toString() === fn.toString()) {
+                if (fns[i].toString().trim() === fn.toString().trim()) {
                     fns.removeAt(i);
                     break;
                 }
