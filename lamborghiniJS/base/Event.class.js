@@ -165,7 +165,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
      * @author lhh
      * 产品介绍：
      * 创建日期：2014-12-22
-     * 修改日期：2017-11-1
+     * 修改日期：2017-11-2
      * 名称：Event.addEvent
      * 功能：给dom节点绑定指定事件
      * 说明：
@@ -193,7 +193,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             if(!System.isArray(dom.functions[evt])) {dom.functions[evt] = [];}
             var functions=dom.functions[evt];
             for(var i=0,len=functions.length;i < len; i++){
-                if(functions[i] === fn) return dom;//判断之前是否有添加过要添加的事件监听函数
+                if(functions[i] === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
             }
             //没添加就把函数保存到数组中
             functions.push(fn);
@@ -209,30 +209,37 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
     }
 
     /**
-     *
-     * @param obj
-     * @param evtype
-     * @param fn
+     * @author lhh
+     * 产品介绍：
+     * 创建日期：2014-12-22
+     * 修改日期：2017-11-2
+     * 名称：Event.unbind
+     * 功能：解除绑定指定事件
+     * 说明：
+     * 注意：
+     * @param dom
+     * @param {String}evtype
+     * @param {Function}fn
      * @returns {Dom}
      */
-    function unbind(obj,evtype,fn){//删除事件监听
-        if (obj.removeEventListener) {
+    function unbind(dom,evtype,fn){//删除事件监听
+        if (dom.removeEventListener) {
             if(System.isset(window.opera) && System.isOpera(window.opera)){
-                obj.removeEventListener(evtype,function(e){fn.call(this,Event.fixEvt(e));},false);
+                dom.removeEventListener(evtype,function(e){fn.call(this,Event.fixEvt(e));},false);
             }else{
-                obj.removeEventListener(evtype,fn,false);
+                dom.removeEventListener(evtype,fn,false);
             }
         }else{
-            var fns=obj.functions || {};
+            var fns=dom.functions || {};
             fns=fns[evtype] || [];
             for (var i=0;i<fns.length;i++) {
-                if (fns[i]==fn) {
+                if (fns[i] === fn.toString) {
                     fns.removeAt(i);
                     break;
                 }
             }
         }
-        return obj;
+        return dom;
     }
 
     if (typeof window.CustomEvent === 'undefined') {
@@ -268,8 +275,8 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
     Event.bind=function(dom,evt,fn){//给某个对象添加多个事件监听函数
         return addEvent(dom,evt,fn);
     };
-    Event.unbind =function(obj,evt,fn){//删除事件监听
-        return unbind(obj,evt,fn);
+    Event.unbind =function(dom,evt,fn){//删除事件监听
+        return unbind(dom,evt,fn);
     };
     /**
      *
