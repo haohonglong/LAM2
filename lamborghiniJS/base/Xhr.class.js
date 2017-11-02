@@ -82,11 +82,15 @@ window[GRN_LHH].run([window],function(window,undefined){
 		,"json":"application/json, text/javascript"
 		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
 	};
-	function ajax(url,D){
+	/**
+	 *
+	 * @param url
+	 * @returns {{xhr, type: string, data: {}, contentType: string, dataType: string, async: boolean, user: string, password: string, success: Function, error: Function, get: Function, post: Function, ready: Function, loadScript: Function, onreadystatechange: Function}}
+	 */
+	function ajax(url){
 		// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
-		var XHR = Xhr.getXMLHttpRequest();
-		var myAjax = {
-			xhr:XHR,
+		return {
+			xhr:Xhr.getXMLHttpRequest(),
 			type:"GET",
 			data:{},
 			contentType:"application/x-www-form-urlencoded; charset=UTF-8",
@@ -150,10 +154,12 @@ window[GRN_LHH].run([window],function(window,undefined){
 							break;
 					}
 				};
-
 			}
-
 		};
+	}
+
+	Xhr.ajax = function(url,D){
+		var myAjax = ajax(url);
 		myAjax = System.isPlainObject(D) ? System.merge({},[D,myAjax]) : myAjax;
 		myAjax.data = (function(json){ // 转成post需要的字符串.
 			var arr = [];
@@ -170,9 +176,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			myAjax.get();
 		}
 		return myAjax;
-	}
-
-	Xhr.ajax = ajax;
+	};
 
 	System['Xhr']=Xhr;
 
