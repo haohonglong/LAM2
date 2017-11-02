@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-11-1
+ * 修改日期：2017-11-2
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -87,20 +87,22 @@ window[GRN_LHH].run([window],function(window,undefined){
 		var myAjax = {
 			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
 			xhr:XHR,
-			type:'GET',
+			type:"GET",
 			data:{},
 			contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-			dataType:'text',
+			dataType:"text",
 			async:true,
+			user:"",
+			password:"",
 			success:function(){},
 			error:function(){},
 			get: function () {
-				this.xhr.open('get', url,this.async);
+				this.xhr.open('get', url,this.async,this.user,this.password);
 				this.onreadystatechange();
 				this.xhr.send(null);
 			},
 			post: function () {
-				this.xhr.open('post', url,this.async);
+				this.xhr.open('post', url,this.async,this.user,this.password);
 				this.onreadystatechange();
 				this.xhr.send(this.data);
 			},
