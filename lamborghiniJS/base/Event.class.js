@@ -194,7 +194,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             if(!System.isArray(dom.fns[evt])) {dom.fns[evt] = [];}
             var fns=dom.fns[evt];
             for(var i=0,len=fns.length;i < len; i++){
-                if(fns[i] === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
+                if(fns[i].toString() === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
             }
             //没添加就把函数保存到数组中
             fns.push(fn);
