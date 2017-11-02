@@ -148,16 +148,17 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
     /**
      *
      * 创建日期：2014-12-22
-     * 修改日期：2017-11-1
+     * 修改日期：2017-11-2
      * 功能:绑定事件的句柄
-     * @param evt
+     * @param event
      */
-    function addEventHandler(e){//哪个事件发生了？
-        e=Event.fixEvt(e);
-        var type=e.type;
-        var functions=this.functions[type];
-        for (var i= 0,len = functions.length;i < len;i++) {
-            if (System.isFunction(functions[i])){functions[i].call(this,e);}
+    function addEventHandler(event){//哪个事件发生了？
+        event=Event.fixEvt(event);
+        var fns=this.fns[event.type],
+            fn=function(){};
+        for (var i= 0,len = fns.length;i < len;i++) {
+            fn = fns[i];
+            if (System.isset(fn) && System.isFunction(fn)){fn.call(this,event);}
         }
     }
     /**
@@ -188,19 +189,19 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         }else if(dom.attachEvent){
             dom.attachEvent("on"+evt,fn);
         }else{
-            if(!dom.functions) dom.functions={};
+            if(!System.isPlainObject(dom.fns)) dom.fns={};
             //检测有没有存储事件名的数组
-            if(!System.isArray(dom.functions[evt])) {dom.functions[evt] = [];}
-            var functions=dom.functions[evt];
-            for(var i=0,len=functions.length;i < len; i++){
-                if(functions[i] === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
+            if(!System.isArray(dom.fns[evt])) {dom.fns[evt] = [];}
+            var fns=dom.fns[evt];
+            for(var i=0,len=fns.length;i < len; i++){
+                if(fns[i] === fn.toString()) return dom;//判断之前是否有添加过要添加的事件监听函数
             }
             //没添加就把函数保存到数组中
-            functions.push(fn);
-            fn.index=functions.length-1;
+            fns.push(fn);
+            fn.index=fns.length-1;
             if(System.isFunction(dom["on"+evt])){//检测是否已经注册过事件监听函数
                 if(dom["on"+evt] !== addEventHandler){
-                    functions.push(dom["on"+evt]);
+                    fns.push(dom["on"+evt]);
                 }
             }
             dom["on"+evt]=addEventHandler;
@@ -230,7 +231,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
                 dom.removeEventListener(evtype,fn,false);
             }
         }else{
-            var fns=dom.functions || {};
+            var fns=dom.fns || {};
             fns=fns[evtype] || [];
             for (var i=0;i<fns.length;i++) {
                 if (fns[i] === fn.toString()) {

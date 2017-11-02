@@ -1067,7 +1067,7 @@ if(!GRN_LHH){
 		 * @returns {boolean}
 		 */
 		'isJson':function(s){
-			if(s && (System.isString(s)) && s.match("^\{(.+:.+,*){1,}\}$")){
+			if(System.isset(s) && System.isString(s) && s.match("^\{(.+:.+,*){1,}\}$")){
 				return true;
 			}
 			return false;
@@ -1077,7 +1077,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-8-23
-		 * 修改日期：2016-8-23
+		 * 修改日期：201711-2
 		 * 名称： System.isPlainObject
 		 * 功能：是否是纯对象
 		 * 说明：摘抄jQuery isPlainObject()
@@ -1087,7 +1087,7 @@ if(!GRN_LHH){
 		 */
 		'isPlainObject': function( obj ) {
 			var key;
-			if ( !obj || !System.isObject(obj) || System.isArray(obj) || obj.nodeType) {
+			if (!System.isset(obj) || !System.isObject(obj) || System.isArray(obj) || obj.nodeType) {
 				return false;
 			}
 			try {
