@@ -98,20 +98,30 @@ window[GRN_LHH].run([window],function(window,undefined){
 			error:function(){},
 			get: function () {
 				this.xhr.open('get', url,this.async,this.user,this.password);
-				this.onreadystatechange();
+				this.ready();
 				this.xhr.send(null);
 			},
 			post: function () {
 				this.xhr.open('post', url,this.async,this.user,this.password);
-				this.onreadystatechange();
+				this.ready();
 				this.xhr.send(this.data);
 			},
-			onreadystatechange: function () {
+			'ready':function(){
 				this.xhr.setRequestHeader('Content-Type', this.contentType);
 				this.xhr.setRequestHeader('Accept', Xhr.Accept[this.dataType]);
-				var xhr = this.xhr;
+				this.xhr.onreadystatechange = this.onreadystatechange();
+			},
+			'loadScript':function(){
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.text = this.xhr.responseText;
+				document.body.appendChild(script);
+				document.body.removeChild(script);
+			},
+			'onreadystatechange': function () {
 				var self = this;
-				xhr.onreadystatechange = function () {
+				var xhr = this.xhr;
+				return function(){
 					switch(xhr.readyState){
 						case 0 :
 							if(System.LAM_DEBUG){console.log(0,'未初始化....');}
@@ -133,21 +143,16 @@ window[GRN_LHH].run([window],function(window,undefined){
 							if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
 							if (200 == xhr.status) {
 								self.success(xhr.responseText);
-								if('script' === self.dataType){
-									var script = document.createElement("script");
-										script.type = "text/javascript";
-										script.text = xhr.responseText;
-										document.body.appendChild(script);
-										document.body.removeChild(script);
-								}
+								if('script' === self.dataType){self.loadScript();}
 							}else{
 								self.error(xhr.responseText);
 							}
 							break;
 					}
+				};
 
-				}
 			}
+
 		};
 		myAjax = System.isPlainObject(D) ? System.merge({},[D,myAjax]) : myAjax;
 		myAjax.data = (function(json){ // 转成post需要的字符串.
@@ -164,7 +169,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 		}else{
 			myAjax.get();
 		}
-
 		return myAjax;
 	}
 
