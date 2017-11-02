@@ -208,19 +208,31 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         return dom;
     }
 
+    /**
+     *
+     * @param obj
+     * @param evtype
+     * @param fn
+     * @returns {Dom}
+     */
     function unbind(obj,evtype,fn){//删除事件监听
-        if (obj.removeEventListener && !System.Browser.isOpera) {
-            obj.removeEventListener(evtype,fn,false);
-            return obj;
-        }
-        var fns=obj.functions || {};
-        fns=fns[evtype] || [];
-        for (var i=0;i<fns.length;i++) {
-            if (fns[i]==fn) {
-                fns.splice(i,1);
-                return obj;
+        if (obj.removeEventListener) {
+            if(System.isset(window.opera) && System.isOpera(window.opera)){
+                obj.removeEventListener(evtype,function(e){fn.call(this,Event.fixEvt(e));},false);
+            }else{
+                obj.removeEventListener(evtype,fn,false);
+            }
+        }else{
+            var fns=obj.functions || {};
+            fns=fns[evtype] || [];
+            for (var i=0;i<fns.length;i++) {
+                if (fns[i]==fn) {
+                    fns.removeAt(i);
+                    break;
+                }
             }
         }
+        return obj;
     }
 
     if (typeof window.CustomEvent === 'undefined') {
