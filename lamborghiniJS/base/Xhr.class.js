@@ -83,9 +83,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
 	};
 	function ajax(url,D){
+		// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
 		var XHR = Xhr.getXMLHttpRequest();
 		var myAjax = {
-			// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
 			xhr:XHR,
 			type:"GET",
 			data:{},
