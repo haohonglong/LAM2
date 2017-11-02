@@ -233,7 +233,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             var fns=dom.functions || {};
             fns=fns[evtype] || [];
             for (var i=0;i<fns.length;i++) {
-                if (fns[i] === fn.toString) {
+                if (fns[i] === fn.toString()) {
                     fns.removeAt(i);
                     break;
                 }
