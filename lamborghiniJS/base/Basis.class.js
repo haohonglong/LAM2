@@ -1645,7 +1645,7 @@ if(!GRN_LHH){
 		})
 		.method('insertBefore',function(d,d2){
 			var i=this.indexOf(d2);
-			if(i== -1) {
+			if(-1 === i) {
 				this.push(d);
 			}else {
 				this.splice(i, 0, d);
@@ -1656,8 +1656,8 @@ if(!GRN_LHH){
 		})
 		.method('remove',function(d){
 			var i=this.indexOf(d);
-			if(i!= -1)
-				this.splice(i,1);
+			if(-1 === i){return;}
+			this.splice(i,1);
 		})
 		.method('each',function(arr,callback){
 			if(1 === arguments.length){
