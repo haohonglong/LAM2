@@ -28,28 +28,113 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return new window.ActiveXObject( "Microsoft.XMLHTTP" );
 		} catch( e ) {}
 	}
-
-
-
 	var Xhr = System.Browser.extend({
-		constructor: function () {
+		constructor: function (url,D) {
 			this.base();
 			__this__ = this;
-			this.xhr =null;
+			var defaults = {
+				xhr:Xhr.getXMLHttpRequest(),
+				type:"GET",
+				data:{},
+				contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+				dataType:"text",
+				async:true,
+				user:"",
+				password:"",
+				success:function(){},
+				error:function(){}
+			};
+			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			this.D = D;
+			this.url         = url;
+			this.xhr         = D.xhr;
+			this.type        = D.type;
+			this.data        = D.data;
+			this.contentType = D.contentType;
+			this.dataType    = D.dataType;
+			this.async       = D.async;
+			this.user        = D.user;
+			this.password    = D.password;
+			this.success     = D.success;
+			this.error       = D.error;
+			this.parseJson();
+			if('post' === this.type.toLowerCase()){
+				this.post();
+			}else{
+				this.get();
+			}
 		},
 		'_className':'Xhr',
 		'__constructor':function(){},
+		'parseJson':function(json){
+			json = json || this.data;
+			var arr = [];
+			for(var k in json){
+				arr.push(k,'=',json[k],'&');
+			}
+			arr.pop();
+			this.data = arr.join('');
+		},
 		/**
 		 *
 		 * @returns {null|*}
 		 */
-		'getXHR':function(){
-			if(!this.xhr){
-				this.xhr = Xhr.getXMLHttpRequest();
-			}
-			return this.xhr;
+		'getXHR':function(){return this.xhr;},
+		'get': function () {
+			this.xhr.open('get', this.url,this.async,this.user,this.password);
+			this.ready();
+			this.xhr.send(null);
 		},
-
+		'post': function () {
+			this.xhr.open('post', this.url,this.async,this.user,this.password);
+			this.ready();
+			this.xhr.send(this.data);
+		},
+		'ready':function(){
+			this.xhr.setRequestHeader('Content-Type', this.contentType);
+			this.xhr.setRequestHeader('Accept', Xhr.Accept[this.dataType]);
+			this.xhr.onreadystatechange = this.onreadystatechange();
+		},
+		'loadScript':function(){
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			script.text = this.xhr.responseText;
+			document.body.appendChild(script);
+			document.body.removeChild(script);
+		},
+		'onreadystatechange': function () {
+			var self = this;
+			var xhr = this.xhr;
+			return function(){
+				switch(xhr.readyState){
+					case 0 :
+						if(System.LAM_DEBUG){console.log(0,'未初始化....');}
+						self.error(xhr.responseText);
+						break;
+					case 1 :
+						if(System.LAM_DEBUG){console.log(1,'请求参数已准备，尚未发送请求...');}
+						self.error(xhr.responseText);
+						break;
+					case 2 :
+						if(System.LAM_DEBUG){console.log(2,'已经发送请求,尚未接收响应');}
+						self.error(xhr.responseText);
+						break;
+					case 3 :
+						if(System.LAM_DEBUG){console.log(3,'正在接受部分响应.....');}
+						self.error(xhr.responseText);
+						break;
+					case 4 :
+						if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
+						if (200 == xhr.status) {
+							self.success(xhr.responseText);
+							if('script' === self.dataType){self.loadScript();}
+						}else{
+							self.error(xhr.responseText);
+						}
+						break;
+				}
+			};
+		},
 		/**
 		 *
 		 * @author lhh
@@ -82,100 +167,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 		,"json":"application/json, text/javascript"
 		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
 	};
-	/**
-	 *
-	 * @param url
-	 * @returns {{xhr, type: string, data: {}, contentType: string, dataType: string, async: boolean, user: string, password: string, success: Function, error: Function, get: Function, post: Function, ready: Function, loadScript: Function, onreadystatechange: Function}}
-	 */
-	function ajax(url){
-		// XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5
-		return {
-			xhr:Xhr.getXMLHttpRequest(),
-			type:"GET",
-			data:{},
-			contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-			dataType:"text",
-			async:true,
-			user:"",
-			password:"",
-			success:function(){},
-			error:function(){},
-			get: function () {
-				this.xhr.open('get', url,this.async,this.user,this.password);
-				this.ready();
-				this.xhr.send(null);
-			},
-			post: function () {
-				this.xhr.open('post', url,this.async,this.user,this.password);
-				this.ready();
-				this.xhr.send(this.data);
-			},
-			'ready':function(){
-				this.xhr.setRequestHeader('Content-Type', this.contentType);
-				this.xhr.setRequestHeader('Accept', Xhr.Accept[this.dataType]);
-				this.xhr.onreadystatechange = this.onreadystatechange();
-			},
-			'loadScript':function(){
-				var script = document.createElement("script");
-				script.type = "text/javascript";
-				script.text = this.xhr.responseText;
-				document.body.appendChild(script);
-				document.body.removeChild(script);
-			},
-			'onreadystatechange': function () {
-				var self = this;
-				var xhr = this.xhr;
-				return function(){
-					switch(xhr.readyState){
-						case 0 :
-							if(System.LAM_DEBUG){console.log(0,'未初始化....');}
-							self.error(xhr.responseText);
-							break;
-						case 1 :
-							if(System.LAM_DEBUG){console.log(1,'请求参数已准备，尚未发送请求...');}
-							self.error(xhr.responseText);
-							break;
-						case 2 :
-							if(System.LAM_DEBUG){console.log(2,'已经发送请求,尚未接收响应');}
-							self.error(xhr.responseText);
-							break;
-						case 3 :
-							if(System.LAM_DEBUG){console.log(3,'正在接受部分响应.....');}
-							self.error(xhr.responseText);
-							break;
-						case 4 :
-							if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
-							if (200 == xhr.status) {
-								self.success(xhr.responseText);
-								if('script' === self.dataType){self.loadScript();}
-							}else{
-								self.error(xhr.responseText);
-							}
-							break;
-					}
-				};
-			}
-		};
-	}
-
 	Xhr.ajax = function(url,D){
-		var myAjax = ajax(url);
-		myAjax = System.isPlainObject(D) ? System.merge({},[D,myAjax]) : myAjax;
-		myAjax.data = (function(json){ // 转成post需要的字符串.
-			var arr = [];
-			for(var k in json){
-				arr.push(k,'=',json[k],'&');
-			}
-			arr.pop();
-			return arr.join('');
-		})(myAjax.data);
-
-		if('post' === myAjax.type.toLowerCase()){
-			myAjax.post();
-		}else{
-			myAjax.get();
-		}
-		return myAjax;
+		return new Xhr(url,D);
 	};
 
 	System['Xhr']=Xhr;
