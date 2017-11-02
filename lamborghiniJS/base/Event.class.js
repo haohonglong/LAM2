@@ -243,7 +243,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         return dom;
     }
 
-    if (typeof window.CustomEvent === 'undefined') {
+    if (!System.isset(window.CustomEvent)) {
         /**
          * 自定义事件
          * 创建日期：2017-9-1
