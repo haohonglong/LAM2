@@ -132,17 +132,16 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
             // Support: IE<9
             // For mouse/key events, metaKey==false if it's undefined (#3368, #11328)
             event.metaKey = event.metaKey || false;
+            //停止事件冒泡方法
+            event.stopPropagation = function(){event.cancelBubble=true;};
+            //阻止事件的默认行为，例如click <a>后的跳转
+            event.preventDefault  = function(){event.returnValue=false;};
         }
         // Support: Safari 6-8+
         // Target should not be a text node (#504, #13143)
         if ( event.target.nodeType === 3 ) {
             event.target = event.target.parentNode;
         }
-
-        //停止事件冒泡方法
-        event.stopPropagation = event.stopPropagation || function(){event.cancelBubble=true;};
-        //阻止事件的默认行为，例如click <a>后的跳转
-        event.preventDefault  = event.preventDefault  || function(){event.returnValue=false;};
         return event;
     };
 
