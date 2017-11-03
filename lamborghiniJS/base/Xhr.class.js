@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-11-2
+ * 修改日期：2017-11-3
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -16,6 +16,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	var System=this;
 	System.is(System,'Browser','Xhr');
 	var __this__=null;
+	var allTypes = "*/".concat( "*" );
 	// Functions to create xhrs
 	function createStandardXHR() {
 		try {
@@ -92,13 +93,13 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'ready':function(){
 			this.xhr.setRequestHeader('Content-Type', this.contentType);
-			this.xhr.setRequestHeader('Accept', Xhr.Accept[this.dataType]);
+			this.xhr.setRequestHeader('Accept', Xhr.ajaxSettings.accepts[this.dataType]);
 			this.xhr.onreadystatechange = this.onreadystatechange();
 		},
-		'loadScript':function(){
+		'loadScript':function(text){
 			var script = document.createElement("script");
 			script.type = "text/javascript";
-			script.text = this.xhr.responseText;
+			script.text = text;
 			document.body.appendChild(script);
 			document.body.removeChild(script);
 		},
@@ -125,9 +126,25 @@ window[GRN_LHH].run([window],function(window,undefined){
 						break;
 					case 4 :
 						if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
-						if (200 == xhr.status) {
-							self.success(xhr.responseText);
-							if('script' === self.dataType){self.loadScript();}
+						if (200 === xhr.status || 0 === xhr.status) {
+							switch (self.dataType){
+								case 'text':
+									self.success(xhr.responseText);
+									break;
+								case 'html':
+									self.success(xhr.responseText);
+									break;
+								case 'xml':
+									self.success(xhr.responseXML);
+									break;
+								case 'json':
+									self.success(System.eval(xhr.responseText));
+									break;
+								case 'script':
+									self.loadScript(xhr.responseText);
+									self.success(xhr.responseText);
+
+							}
 						}else{
 							self.error(xhr.responseText);
 						}
@@ -157,21 +174,52 @@ window[GRN_LHH].run([window],function(window,undefined){
 		try {
 			return createActiveXHR();
 		} catch (e) {
-			throw new Error("browser doesn't support AJAX."+e.name);
+			System.error("browser doesn't support AJAX."+e.name);
 		}
 	};
-	Xhr.Accept ={
-		 "text":"text/plain"
-		,"html":"text/html"
-		,"xml":"application/xml, text/xml"
-		,"json":"application/json, text/javascript"
-		,"script":"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
+	Xhr.ajaxSettings ={
+		contents: {
+			xml: /\bxml\b/,
+			html: /\bhtml/,
+			json: /\bjson\b/
+		},
+		responseFields: {
+			xml: "responseXML",
+			text: "responseText",
+			json: "responseJSON"
+		},
+		'accepts':{
+			"*": allTypes,
+			text: "text/plain",
+			html: "text/html",
+			xml: "application/xml, text/xml",
+			json: "application/json, text/javascript",
+			script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
+		}
 	};
 	Xhr.ajax = function(url,D){
 		return new Xhr(url,D);
 	};
+	Xhr.getScript= function( url, callback ) {
+		return Xhr.get( url, undefined, callback, "script" );
+	};
+	System.each( [ "get", "post" ], function( i, method ){
+		Xhr[ method ] = function( url, data, callback, type ) {
+			// shift arguments if data argument was omitted
+			if (System.isset(data) && System.isFunction( data ) ) {
+				type = type || callback;
+				callback = data;
+				data = undefined;
+			}
+			return Xhr.ajax(url,{
+				type: method,
+				dataType: type,
+				data: data,
+				success: callback
+			});
+		};
+	});
 
 	System['Xhr']=Xhr;
-
 });
 
