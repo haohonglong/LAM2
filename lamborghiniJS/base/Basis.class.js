@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-11-1
+ * 修改日期:2017-11-3
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -37,7 +37,7 @@ if(!GRN_LHH){
 
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(W,namespace,undefined){
 	'use strict';
-	var version="2.0.2";
+	var version="2.0.3";
 	var Interface,System;
 	// Used for trimming whitespace
 	var trimLeft = /^\s+/,
