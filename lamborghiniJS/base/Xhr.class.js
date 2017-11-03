@@ -58,6 +58,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this.password    = D.password;
 			this.success     = D.success;
 			this.error       = D.error;
+
+			this.check();
 			this.parseJson();
 			if('post' === this.type.toLowerCase()){
 				this.post();
@@ -67,6 +69,10 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'_className':'Xhr',
 		'__constructor':function(){},
+		'check':function(){
+			if(!System.isFunction(this.success)){this.success = function(){};}
+			if(!System.isFunction(this.error)){this.error = function(){};}
+		},
 		'parseJson':function(json){
 			json = json || this.data;
 			var arr = [];
@@ -213,7 +219,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 				callback = data;
 				data = undefined;
 			}
-			if(!System.isFunction(callback)){callback = function(){};}
 			return Xhr.ajax(url,{
 				type: method,
 				dataType: type,
