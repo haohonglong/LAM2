@@ -143,7 +143,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 								case 'script':
 									self.loadScript(xhr.responseText);
 									self.success(xhr.responseText);
-
+									break;
+								default :
+									self.success(xhr.responseText);
 							}
 						}else{
 							self.error(xhr.responseText);
