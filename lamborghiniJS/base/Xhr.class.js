@@ -70,8 +70,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'_className':'Xhr',
 		'__constructor':function(){},
 		'check':function(){
-			if(!System.isFunction(this.success)){this.success = function(){};}
-			if(!System.isFunction(this.error)){this.error = function(){};}
+			if(!System.isset(this.success) || !System.isFunction(this.success)){this.success = function(){};}
+			if(!System.isset(this.error)   || !System.isFunction(this.error)){this.error = function(){};}
 		},
 		'parseJson':function(json){
 			json = json || this.data;
