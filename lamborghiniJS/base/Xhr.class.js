@@ -208,8 +208,11 @@ window[GRN_LHH].run([window],function(window,undefined){
 	Xhr.ajax = function(url,D){
 		return new Xhr(url,D);
 	};
-	Xhr.getScript= function( url, callback ) {
+	Xhr.getScript = function( url, callback ) {
 		return Xhr.get( url, undefined, callback, "script" );
+	};
+	Xhr.getJSON = function( url, data, callback ) {
+		return Xhr.get( url, data, callback, "json" );
 	};
 	System.each( [ "get", "post" ], function( i, method ){
 		Xhr[ method ] = function( url, data, callback, type ) {
