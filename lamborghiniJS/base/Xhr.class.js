@@ -75,6 +75,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'parseJson':function(json){
 			json = json || this.data;
+			if(!System.isPlainObject(json)){return json;}
 			var arr = [];
 			for(var k in json){
 				arr.push(k,'=',json[k],'&');
