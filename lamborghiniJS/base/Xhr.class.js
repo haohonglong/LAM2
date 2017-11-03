@@ -213,6 +213,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				callback = data;
 				data = undefined;
 			}
+			if(!System.isFunction(callback)){callback = function(){};}
 			return Xhr.ajax(url,{
 				type: method,
 				dataType: type,
