@@ -119,7 +119,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			index = index || null;
 			if(System.isset(index) && System.isNumeric(index)){
 				var caches = this.caches;
-				if (index > -1 && index < caches.length-1) {
+				if (index > -1 && index <= caches.length-1) {
 					caches.removeAt(index);
 					this.setItem();
 					// delete cache[index];
