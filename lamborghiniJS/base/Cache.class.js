@@ -1,8 +1,7 @@
-
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2017-8-11
+ * 修改日期:2017-11-7
  * 名称：Cache类
  * 功能：缓存
  * 说明 : 
@@ -12,126 +11,116 @@
  *		
  * 
  */
-
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
 	System.is(System,'Browser','Cache');
 	var __this__=null;
-	var cache = [],cache_name='',
-		myStorage = null,
-		isStorage=function(){
-			if(typeof(myStorage) !== "undefined") {
-				return true;
-			} else {
-				return false;
-			}
-		};
 
-//========================================================
-
-	function set(value,name){
-		value = value || cache;
-		name = name || cache_name;
-		if(isStorage()){
-			clear();
-			myStorage.setItem(name,JSON.stringify(value));
-		}
-	}
-	function remove(name){
-		name = name || cache_name;
-		if(isStorage()){
-			myStorage.removeItem(name);
-		}
-	}
-
-	function clear() {
-		if(isStorage()){
-			myStorage.clear();
-		}else{
-			cache = [];
-		}
-
-	}
-
-	function get(name) {
-		name = name || cache_name;
-		if(isStorage()){
-			return (JSON.parse(myStorage.getItem(name))) || cache;
-		}else{
-			return cache;
-		}
-
-	}
-//========================================================
 
 	var Cache = System.Browser.extend({
 		constructor: function(name,type){
 			this.base();
 			__this__=this;
 			this.caches = [];
-			cache_name = name || 'cache';
-			this.cache_name = cache_name;
-			this.myStorage = type || localStorage;
+			this.name = name || 'cache';
+			this.Storage = type || localStorage;
 		},
 		'_className':'Cache',
-		'init':function(){
-			myStorage  = this.myStorage;
-			cache_name = this.cache_name;
-			cache = get();
-		},
-		'cache':function(key,value,callback){
-			this.init();
-			cache = get();
-			var index = this.exist(key,value);
-			if($.isFunction(callback)){
-				callback.call(this,index);
+		/**
+		 *
+		 * @returns {*}
+		 */
+		'isStorage':function(){return System.isset(this.Storage)},
+		'getItem':function(){
+			if(this.isStorage()){
+				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
 			}
-			return index;
+			return this;
 		},
-		'set':function(Obj,key,value){
-			this.init();
-			// if(-1 == this.exist(key,value)){
-			Obj[key] = value;
-			cache.push(Obj);
-			set();
-			// }
-		},
-		'update':function(index,Obj){
-			this.init();
-			cache[index] = Obj;
-			set();
-		},
+		/**
+		 *
+		 * @param index
+		 * @returns {*}
+		 */
 		'get':function(index){
-			this.init();
-			return System.isset(index) ? cache[index] : cache;
+			index = System.isset(index) ? index : null;
+			if(System.isset(index) && System.isNumeric(index)){
+				return this.getItem().caches[index];
+			}
+			return this;
+		},
+		/**
+		 *
+		 * @param key
+		 * @param value
+		 * @param callback
+		 * @returns {Cache}
+		 */
+		'cache':function(key,value,callback){
+			if(System.isFunction(callback)){
+				var index = this.getItem().exist(key,value);
+				callback.call(this,index,value);
+			}
+			return this;
+		},
+		'setItem':function(){
+			if(this.isStorage()){
+				this.Storage.setItem(this.name,JSON.stringify(this.caches));
+			}
+			return this;
+		},
+		/**
+		 *
+		 * @param Obj
+		 * @returns {Cache}
+		 */
+		'set':function(Obj){
+			this.caches.push(Obj);
+			this.setItem();
+			return this;
+		},
+		/**
+		 *
+		 * @param index
+		 * @param Obj
+		 * @returns {Cache}
+		 */
+		'update':function(index,Obj){
+			this.caches[index] = Obj;
+			this.setItem();
+			return this;
 		},
 		'exist':function(key,value){
-			this.init();
-			for(var i=0,len=cache.length;i<len;i++){
-				if((key in cache[i]) && (value == cache[i][key])){
+			var caches = this.caches;
+			for(var i=0,len=caches.length;i<len;i++){
+				if((key in caches[i]) && (value === caches[i][key])){
 					return i;
 				}
 			}
 			return -1;
 		},
-
 		'clear':function(){
-			this.init();
-			this.remove();
-			clear();
+			if(this.isStorage()){
+				this.Storage.clear();
+			}
+			this.caches = [];
+			return this;
 		},
 		'remove':function(index){
-			this.init();
-			if(index){
-				if (index > -1 && index < cache.length-1) {
-					cache.splice(index, 1);
+			index = index || null;
+			if(System.isset(index) && System.isNumeric(index)){
+				var caches = this.caches;
+				if (index > -1 && index < caches.length-1) {
+					caches.removeAt(index);
+					this.setItem();
 					// delete cache[index];
 				}
 			}else{
-				cache = [];
+				this.Storage.removeItem(this.name);
+				this.caches = [];
 			}
-			set();
+			return this;
 		},
 
 		/**
