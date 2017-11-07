@@ -6,7 +6,28 @@
  * 功能：缓存
  * 说明 : 存数据时先存储到数组里，后由数组存储到Storage，取数据先从Storage里取然后在把数据赋给数组，最后从数组里取出数据
  *        
- * note : 
+ * note :
+ * example:
+ *
+ * new LAM.Cache('mt11',localStorage).cache('jobId',1,function (index,id) {
+		var data={
+			"id":id,
+			"jobId":id,
+			"job":"程序员",
+			"name":"李明",
+			"addres":"雨花台区软件大道",
+			"city":"南京",
+			"sex":"男"
+		};
+		if(-1 === index){
+			this.set(data);
+		}else{
+			this.update(index,data);
+			text = this.get(index).name;
+			console.log(text);
+
+		}
+	});
  * 		  
  *		
  * 
