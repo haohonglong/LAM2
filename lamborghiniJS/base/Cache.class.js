@@ -4,7 +4,7 @@
  * 修改日期:2017-11-7
  * 名称：Cache类
  * 功能：缓存
- * 说明 : 
+ * 说明 : 存数据时先存储到数组里，后由数组存储到Storage，取数据先从Storage里取然后在把数据赋给数组，最后从数组里取出数据
  *        
  * note : 
  * 		  
@@ -28,10 +28,37 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'_className':'Cache',
 		/**
+		 * @author lhh
+		 * 产品介绍：析构方法
+		 * 创建日期:2017-1-5
+		 * 修改日期:2017-11-7
+		 * 名称：cache
+		 * 功能：
+		 * 说明：入口出,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是当前对象
+		 * 注意：
+		 * @param key  		存储数据的标示符key
+		 * @param value		存储数据的标示符value
+		 * @param callback
+		 * @returns {Cache}
+		 */
+		'cache':function(key,value,callback){
+			if(System.isFunction(callback)){
+				var index = this.getItem().exist(key,value);
+				callback.call(this,index,value);
+			}
+			return this;
+		},
+		/**
 		 *
 		 * @returns {*}
 		 */
 		'isStorage':function(){return System.isset(this.Storage)},
+		'setItem':function(){
+			if(this.isStorage()){
+				this.Storage.setItem(this.name,JSON.stringify(this.caches));
+			}
+			return this;
+		},
 		'getItem':function(){
 			if(this.isStorage()){
 				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
@@ -50,26 +77,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			}
 			return this;
 		},
-		/**
-		 *
-		 * @param key
-		 * @param value
-		 * @param callback
-		 * @returns {Cache}
-		 */
-		'cache':function(key,value,callback){
-			if(System.isFunction(callback)){
-				var index = this.getItem().exist(key,value);
-				callback.call(this,index,value);
-			}
-			return this;
-		},
-		'setItem':function(){
-			if(this.isStorage()){
-				this.Storage.setItem(this.name,JSON.stringify(this.caches));
-			}
-			return this;
-		},
+
 		/**
 		 *
 		 * @param Obj
@@ -122,7 +130,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 			}
 			return this;
 		},
-
 		/**
 		 *
 		 * @author lhh
