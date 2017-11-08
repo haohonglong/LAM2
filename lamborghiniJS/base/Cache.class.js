@@ -96,7 +96,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @returns {*}
 		 */
 		'get':function(index){
-			index = System.isset(index) ? index : null;
 			if(System.isset(index) && System.isNumeric(index)){
 				return this.getItem().caches[index];
 			}
@@ -157,7 +156,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 			return this;
 		},
 		'remove':function(index){
-			index = index || null;
 			if(System.isset(index) && System.isNumeric(index)){
 				var caches = this.caches;
 				if (index > -1 && index <= caches.length-1) {
