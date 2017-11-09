@@ -1520,17 +1520,6 @@ if(!GRN_LHH){
 			}
 			return -1;
 		})
-		/**
-		 * 根据内容删除一个元素，返回数组
-		 * @param val
-		 */
-		.method('remove',function(d){
-			var index = this.indexOf(d);
-			if (index > -1) {
-				this.splice(index, 1);
-			}
-		})
-
 
 		/**
 		 * 数组根据下标删除一个元素，返回一个删除后的数组
@@ -1651,9 +1640,35 @@ if(!GRN_LHH){
 				this.splice(i, 0, d);
 			}
 		})
-		.method('removeAt',function(i){
-			this.splice(i,1);
-		})
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2015.2.28
+		 * 修改日期：2015.2.28
+		 * 名称：removeAt
+		 * 功能：根据数组下标删除对应元素
+		 * 说明：
+		 * 注意：
+		 * @param   {Number}i
+		 * 调用方式：
+		 * @return  {void}
+		 */
+		.method('removeAt',function(i){this.splice(i,1);})
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2015.2.28
+		 * 修改日期：2015.2.28
+		 * 名称：remove
+		 * 功能：移除数组里指定元素
+		 * 说明：
+		 * 注意：
+		 * @param   {*}d
+		 * 调用方式：
+		 * @return  {void}
+		 */
 		.method('remove',function(d){
 			var i=this.indexOf(d);
 			if(-1 === i){return;}
