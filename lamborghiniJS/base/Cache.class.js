@@ -55,7 +55,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 *
 		 * @returns {*}
 		 */
-		'isStorage':function(){return System.isset(this.Storage)},
+		'isStorage':function(){return (System.isset(this.Storage) && System.isset(this.Storage.setItem))},
 		'setItem':function(){
 			if(this.isStorage()){
 				this.Storage.setItem(this.name,JSON.stringify(this.caches));
