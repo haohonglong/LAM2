@@ -75,7 +75,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * 修改日期:2017-11-9
 		 * 名称：cache
 		 * 功能：
-		 * 说明：入口出,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是当前对象
+		 * 说明：入口处,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是Cache 实例化当前对象
 		 * 注意：
 		 * @param {String}key  		存储数据的标示符key
 		 * @param {String}value		存储数据的标示符value
