@@ -26,11 +26,17 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'_className':'Cookie',
 		'__constructor':function(){},
-		'setItem':function(json){
-			return JSON.stringify(json);
+		'setItem':function(s){
+			if(!System.isString(s)) {
+				return JSON.stringify(s);
+			}
+			return escape(s);
 		},
-		'getItem':function(json){
-			return JSON.parse(json);
+		'getItem':function(s){
+			if(System.isJson(s) || s.toString().trim().match(/^\[\{/)) {
+				return JSON.parse(s);
+			}
+			return unescape(s);
 		},
 		/**
 		 * @author lhh
@@ -55,21 +61,11 @@ window[GRN_LHH].run([window],function(window,undefined){
 			if(1 === arguments.length){
 				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 				if(System.isset(arr)) {
-					value = arr[2];
-					if(System.isJson(value)){
-						return this.getItem(value);
-					}else{
-						return unescape(value);
-					}
+					return this.getItem(arr[2]);
 				}
 				return null;
 			}else{
-				if(!System.isString(value)){
-					value = this.setItem(value);
-				}else{
-					value = escape(value)
-				}
-				document.cookie = name + "=" + (value) +
+				document.cookie = name + "=" + (this.setItem(value)) +
 					((D.expires) ? "; expires=" + D.expires : "") +
 					((D.path) ? "; path=" + D.path : "") +
 					((D.domain) ? "; domain=" + D.domain : "") +
@@ -81,12 +77,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			for(var i=0,c,len=cookies.length;i<len;i++){
 				c=cookies[i].split('=');
 				if(c[0] === name) {
-					var value = c[1];
-					if(System.isJson(value)){
-						return this.getItem(value);
-					}else{
-						return decodeURIComponent(value);
-					}
+					return this.getItem(c[1]);
 				}
 			}
 			return '';
@@ -109,12 +100,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'getVal':function(offset){
 			var endstr = document.cookie.indexOf(";", offset);
 			if(endstr == -1){endstr = document.cookie.length;}
-			var value = document.cookie.substring(offset, endstr);
-			if(System.isJson(value)){
-				return this.getItem(value);
-			}else{
-				return unescape(value);
-			}
+			return this.getItem(document.cookie.substring(offset, endstr));
 		},
 		'getExpDate':function(day, hour, minute){
 			var expDate = new Date();
