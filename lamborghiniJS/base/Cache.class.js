@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2017-11-8
+ * 修改日期:2017-11-9
  * 名称：Cache类
  * 功能：缓存
  * 说明 : 存数据时先存储到数组里，后由数组存储到Storage，取数据先从Storage里取然后在把数据赋给数组，最后从数组里取出数据
@@ -24,6 +24,7 @@
 		}else{
 			this.update(index,data);
 			text = this.get(index).name;
+			this.remove(index);
 			console.log(text);
 
 		}
@@ -51,29 +52,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'_className':'Cache',
 		/**
-		 * @author lhh
-		 * 产品介绍：
-		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-8
-		 * 名称：cache
-		 * 功能：
-		 * 说明：入口出,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是当前对象
-		 * 注意：
-		 * @param {String}key  		存储数据的标示符key
-		 * @param {String}value		存储数据的标示符value
-		 * @param {Function}callback
-		 * @returns {Cache}
-		 */
-		'cache':function(key,value,callback){
-			this.key   = key.toString().trim();
-			this.value = value.toString().trim();
-			if(System.isFunction(callback)){
-				var index = this.getItem().exist(this.key,this.value);
-				callback.call(this,index,this.value);
-			}
-			return this;
-		},
-		/**
 		 *
 		 * @returns {*}
 		 */
@@ -87,6 +65,29 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'getItem':function(){
 			if(this.isStorage()){
 				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
+			}
+			return this;
+		},
+		/**
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2017-1-5
+		 * 修改日期:2017-11-9
+		 * 名称：cache
+		 * 功能：
+		 * 说明：入口出,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是当前对象
+		 * 注意：
+		 * @param {String}key  		存储数据的标示符key
+		 * @param {String}value		存储数据的标示符value
+		 * @param {Function}callback
+		 * @returns {Cache}
+		 */
+		'cache':function(key,value,callback){
+			this.key   = key.toString().trim();
+			this.value = value.toString().trim();
+			if(System.isFunction(callback)){
+				var index = this.getItem().exists(this.key,this.value);
+				callback.call(this,index,this.value);
 			}
 			return this;
 		},
@@ -128,8 +129,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-8
-		 * 名称：exist
+		 * 修改日期:2017-11-9
+		 * 名称：exists
 		 * 功能：检查数据是否存在，如果存在返回数据被存储在哪个数组的下标，不存在返回-1
 		 * 说明：
 		 * 注意：
@@ -137,7 +138,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @param {String}value
 		 * @returns {number}
 		 */
-		'exist':function(key,value){
+		'exists':function(key,value){
 			key   = key   || this.key;
 			value = value || this.value;
 			var caches = this.caches;
