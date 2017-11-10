@@ -105,7 +105,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		},
 		'getVal':function(offset){
 			var endstr = document.cookie.indexOf(";", offset);
-			if(endstr == -1){endstr = document.cookie.length;}
+			if(-1 === endstr){endstr = document.cookie.length;}
 			return this.getItem(document.cookie.substring(offset, endstr));
 		},
 		'getExpDate':function(day, hour, minute){
