@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期：2016-12-8
- * 修改日期：2017-11-9
+ * 修改日期：2017-11-10
  * 名称：Cookie
  * 功能：cookie
  * 说明 :
@@ -42,7 +42,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期：2016-12-8
-		 * 修改日期：2017-11-9
+		 * 修改日期：2017-11-10
 		 * 名称：cookie
 		 * 功能：cookie添加或读取
 		 * 说明：一个参数是读，一个以上的是添加
@@ -57,30 +57,36 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @returns {*}
 		 */
 		'cookie':function(name, value, D){
-			D = D || {};
 			if(1 === arguments.length){
-				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-				if(System.isset(arr)) {
-					return this.getItem(arr[2]);
-				}
-				return null;
+				return this.get(name);
 			}else{
-				document.cookie = name + "=" + (this.setItem(value)) +
-					((D.expires) ? "; expires=" + D.expires : "") +
-					((D.path) ? "; path=" + D.path : "") +
-					((D.domain) ? "; domain=" + D.domain : "") +
-					((D.secure) ? "; secure" : "");
+				this.set(name, value, D);
 			}
 		},
+		'set':function(name, value, D){
+			D = D || {};
+			document.cookie = name + "=" + (this.setItem(value)) +
+				((D.expires) ? "; expires=" + D.expires : "") +
+				((D.path) ? "; path=" + D.path : "") +
+				((D.domain) ? "; domain=" + D.domain : "") +
+				((D.secure) ? "; secure" : "");
+		},
 		'get':function(name){//获取Cookie
-			var cookies=document.cookie.split("; ");
-			for(var i=0,c,len=cookies.length;i<len;i++){
-				c=cookies[i].split('=');
-				if(c[0] === name) {
-					return this.getItem(c[1]);
+			var value='';
+			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+			if(System.isset(arr) && System.isArray(arr)) {
+				value = this.getItem(arr[2]);
+			}else{
+				var cookies=document.cookie.split("; ");
+				for(var i=0,len=cookies.length;i<len;i++){
+					arr=cookies[i].split('=');
+					if(arr[0] === name) {
+						value = this.getItem(arr[1]);
+						break;
+					}
 				}
 			}
-			return '';
+			return value || null;
 		},
 		'get_2':function(name){
 			var arg = name + "=";
