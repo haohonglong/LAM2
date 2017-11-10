@@ -1,5 +1,5 @@
 # LAM2
-继承用basejs 
+继承用[Base.js](http://dean.edwards.name/weblog/2006/03/base/) 
 
 	name    ：LamborghiniJS(OO JS)
 	version ：2.0.3
