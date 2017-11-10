@@ -88,26 +88,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 			}
 			return value || null;
 		},
-		'get_2':function(name){
-			var arg = name + "=";
-			var alen = arg.length;
-			var clen = document.cookie.length;
-			var i = 0;
-			if(i<clen){
-				while(i < clen){
-					var j = i + alen;
-					if (document.cookie.substring(i, j) === arg){return this.getVal(j);}
-					i = document.cookie.indexOf(" ", i) + 1;
-					if(i == 0) return false;
-				}
-			}
-			return false;
-		},
-		'getVal':function(offset){
-			var endstr = document.cookie.indexOf(";", offset);
-			if(-1 === endstr){endstr = document.cookie.length;}
-			return this.getItem(document.cookie.substring(offset, endstr));
-		},
 		'getExpDate':function(day, hour, minute){
 			var expDate = new Date();
 			if(System.isNumber(day) && System.isNumber(hour) && System.isNumber(minute)){
