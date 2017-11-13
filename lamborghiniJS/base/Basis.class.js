@@ -353,6 +353,7 @@ if(!GRN_LHH){
 	 *			analysisVar
 	 *			getRootPath
 	 *			timestamp
+	 *			http_build_query
 	 *			exit
 	 * 对象列表:
 	 *			Function
@@ -1181,6 +1182,27 @@ if(!GRN_LHH){
 				};
 			}
 			return Date.now();
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-11-13
+		 * 修改日期：2017-11-13
+		 * 名称： System.http_build_query
+		 * 功能：生成 URL-encode 之后的请求字符串
+		 * 说明：此方法想法来源于php同名函数
+		 * 注意：
+		 * @param {JSON}json
+		 * @returns {*}
+		 */
+		'http_build_query':function(json){
+			if(!System.isPlainObject(json)){return '';}
+			var arr = [];
+			for(var k in json){
+				arr.push(k,'=',json[k],'&');
+			}
+			arr.pop();
+			return arr.join('');
 		},
 		/**
 		 *

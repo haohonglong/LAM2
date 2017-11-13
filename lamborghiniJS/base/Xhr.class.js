@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-11-7
+ * 修改日期：2017-11-13
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -73,15 +73,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 			if(!System.isset(this.success) || !System.isFunction(this.success)){this.success = function(){};}
 			if(!System.isset(this.error)   || !System.isFunction(this.error)){this.error = function(){};}
 		},
-		'parseJson':function(json){
-			json = json || this.data;
-			if(!System.isPlainObject(json)){return json;}
-			var arr = [];
-			for(var k in json){
-				arr.push(k,'=',json[k],'&');
-			}
-			arr.pop();
-			this.data = arr.join('');
+		'parseJson':function(){
+			if(System.isString(this.data)){return;}
+			this.data = System.http_build_query(this.data);
 		},
 		/**
 		 *
