@@ -140,7 +140,8 @@ a{
 .__i__fixed-bottom{bottom: 0;left: 0;}
 
 /*伪 placeholder*/
-.__i__placeholder{padding:11px;position: absolute;left: 0;top: 0;}
+[placeholder-warp]{position: relative;}
+.__i__placeholder{width: 90%;height: 100%; padding:10px;padding-left: 30px; position: absolute;left: 0;top: 0;color:#999;}
 .__i__placeholder-p{white-space:pre-line; line-height:18px; }
 
 
