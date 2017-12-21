@@ -984,7 +984,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍： class文件检验器
 		 * 创建日期：2015-8-18
-		 * 修改日期：2017-3-6
+		 * 修改日期：2017-12-21
 		 * 名称： System.is
 		 * 功能：检测System是否合法，检测要使用的类是否已加载过；检测要定义的类名称之前是否已注册过。
 		 * 说明：子类继承父类之前调用此方法检测父类之前是否有加载过，如果填写第三参数可检测当前的类是否跟之前的类重名了
@@ -1021,7 +1021,7 @@ if(!GRN_LHH){
 						return false;
 					}
 				}
-			}else if(System.isPlainObject(namespace)){
+			}else{
 				if(!(useClassName in namespace)){
 					throw new Error(["Warning ",namespace," is not a legitimate object or ","'",useClassName,"'"," is not a legitimate"].join(''));
 					return false;
