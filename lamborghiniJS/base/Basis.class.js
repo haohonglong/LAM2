@@ -114,7 +114,7 @@ if(!GRN_LHH){
 	 */
 	function runtime(args,callback){
 		if (!arguments.length) {
-			throw new Error('Warning 至少要有一个参数');
+			throw new Error('Warning: 至少要有一个参数');
 			return this;
 		}
 		if(System.isFunction(args)) {
@@ -124,7 +124,7 @@ if(!GRN_LHH){
 
 
 		if (!System.isFunction(callback) ) {
-			throw new Error('Warning 参数必须要有一个 Function 类型');
+			throw new Error('Warning: 参数必须要有一个 Function 类型');
 			return this;
 		}
 
@@ -614,7 +614,7 @@ if(!GRN_LHH){
 		 */
 		'length':function(D){
 			if(!isObject(D) && !isArray(D) && !isString(D)){
-				throw new Error('Warning 参数必须是Object 或 Array 或 String');
+				throw new Error('Warning: 参数必须是Object 或 Array 或 String');
 				return -1;
 			}
 
@@ -711,9 +711,9 @@ if(!GRN_LHH){
 		 */
 		'each':function( obj, callback ) {
 			var key;
-			if(!obj || !callback){throw new Error('Warning : 两个参数是必传的');}
-			if(System.isNumber(obj) || System.isBoolean(obj)){throw new Error('Warning '+obj+': 数据类型非法！');}
-			if(!System.isFunction(callback)){throw new Error('Warning :第二参数 必须是个callback！');}
+			if(!obj || !callback){throw new Error('Warning: : 两个参数是必传的');}
+			if(System.isNumber(obj) || System.isBoolean(obj)){throw new Error('Warning: '+obj+': 数据类型非法！');}
+			if(!System.isFunction(callback)){throw new Error('Warning: :第二参数 必须是个callback！');}
 			if(System.isPlainObject(obj)){
 				for (key in obj ) {
 					if (false === callback.call( obj[ key ], key, obj[ key ])) {break;}
@@ -745,7 +745,7 @@ if(!GRN_LHH){
 			totalLoop=loop=0;
 			var list=function(D,callback){
 				if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
-				if(!System.isFunction(callback)){throw new Error('Warning 第二参数 必须是个callback');}
+				if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
 				//算出找到指定内容，所需要遍历的次数
 				loop++;
 				System.each(D,function(k,v){
@@ -849,7 +849,7 @@ if(!GRN_LHH){
 					}
 					break;
 				default:
-					throw new Error('Warning type 非法类型');
+					throw new Error('Warning: type 非法类型');
 			}
 		},
 
@@ -881,12 +881,12 @@ if(!GRN_LHH){
 				override   = arguments[3];
 			}
 			if(!System.isArray(args)){
-				throw new Error('Warning args 不是一个数组');
+				throw new Error('Warning: args 不是一个数组');
 				return false;
 			}
 			var len  = args.length;
 			if(arguments.length < 2){
-				throw new Error('Warning 最少要传2个参数');
+				throw new Error('Warning: 最少要传2个参数');
 				return false;
 			}
 
@@ -895,7 +895,7 @@ if(!GRN_LHH){
 			var key;
 			var i=0;
 			if(!len){
-				throw new Error('Warning args不能为空');
+				throw new Error('Warning: args不能为空');
 				return false;
 			}
 
@@ -984,20 +984,22 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍： class文件检验器
 		 * 创建日期：2015-8-18
-		 * 修改日期：2017-12-21
+		 * 修改日期：2017-12-25
 		 * 名称： System.is
-		 * 功能：检测System是否合法，检测要使用的类是否已加载过；检测要定义的类名称之前是否已注册过。
+		 * 功能：检测System是否合法，检测要使用的类是否已加载过,如没加载就自动加载(namespace 是对象)；检测要定义的类名称之前是否已注册过。
 		 * 说明：子类继承父类之前调用此方法检测父类之前是否有加载过，如果填写第三参数可检测当前的类是否跟之前的类重名了
 		 * 注意：当Obj 类型是对象时 useClassName 参数必须要传！ 没传命名空间时 useClassName 参数可以省略不传
 		 * @param  (Object)namespace 	       		 NULL : 命名空间
-		 * @param 	(String)useClassName     	  	 NULL : 要使用的类名称
-		 * @param 	(String)className         	　　 NULL : 当前类的名称
+		 * @param  (String)useClassName     	  	 NULL : 要使用的类名称
+		 * @param  (String)className         	　　 NULL : 当前类的名称
+		 * @param  (String)path         	　　     NULL : 要使用的类的路径
 		 * @return (Boolean)
 		 * Example：
 		 *
 		 */
-		'is':function(namespace,useClassName,className){
+		'is':function(namespace,useClassName,className,path){
 			var arg_len=arguments.length;
+			path = path || System.classPath;
 			if(System.isString(namespace)){
 				//两个参数时 参数类型全部是字符串
 				if(2 === arg_len){
@@ -1005,11 +1007,11 @@ if(!GRN_LHH){
 					useClassName = namespace;
 					namespace = null;
 					if(!System.isFunction (System.eval(useClassName))){
-						throw new Error(["Warning cannot find the class file ","'/",useClassName,".class'"].join(''));
+						throw new Error(["Warning: cannot find the class file ","'/",useClassName,".class'"].join(''));
 						return false;
 					}
 					if(!System.empty(System.eval(className)) && System.isFunction (System.eval(className))) {
-						throw new Error(["Warning Class name ","'",className,"'"," already exists"].join(''));
+						throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
 						return false;
 					}
 				}else if(1 === arg_len){//只有一个参数时 功能：检测函数或方法是否之前已定义过了
@@ -1017,22 +1019,27 @@ if(!GRN_LHH){
 					useClassName = null;
 					namespace = null;
 					if(!System.empty(System.eval(className)) && System.isFunction (System.eval(className))) {
-						throw new Error(["Warning Class name ","'",className,"'"," already exists"].join(''));
+						throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
 						return false;
 					}
 				}
 			}else{
 				if(!(useClassName in namespace)){
-					throw new Error(["Warning ",namespace," is not a legitimate object or ","'",useClassName,"'"," is not a legitimate"].join(''));
+					throw new Error(["Warning: ",namespace," is not a legitimate object or ","'",useClassName,"'"," is not a legitimate"].join(''));
 					return false;
 				}
 				className = className || null;
 				if(!System.isFunction (namespace[useClassName])){
-					throw new Error(["Warning cannot find the class file ","'/",useClassName,".class'"].join(''));
-					return false;
+					try{
+						System.import(['/'+useClassName+'.class'],path);
+					}catch(e){
+						throw new Error(e+[" --- Warning: cannot find the class file ","'/",useClassName,".class'"].join(''));
+						return false;
+					}
+
 				}
 				if(!System.empty(className) && System.isFunction (namespace[className])) {
-					throw new Error(["Warning Class name ","'",className,"'"," already exists"].join(''));
+					throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
 					return false;
 				}
 			}
@@ -1150,16 +1157,16 @@ if(!GRN_LHH){
 				'message':'message'
 			};
 			if(arguments.length !== 3) {
-				throw new Error("Warning 缺少参数。");
+				throw new Error("Warning: 缺少参数。");
 				return false;
 			}
 			if(!isObject(M)) {
-				throw new Error("Warning 缺少错误提示信息");
+				throw new Error("Warning: 缺少错误提示信息");
 				return false;
 			}
 			M = isObject(M) ? this.merge({},[M,defaults]) : defaults;
 			if(!empty(name) && System[name]) {
-				throw new Error(["Warning the name ","'",name,"'"," is already defined, at ","'",M.line,"'"," line tip: ","-> ",M.message].join(''));
+				throw new Error(["Warning: the name ","'",name,"'"," is already defined, at ","'",M.line,"'"," line tip: ","-> ",M.message].join(''));
 				return true;
 			}
 			return false;
@@ -1225,7 +1232,7 @@ if(!GRN_LHH){
 				'message':'message'
 			};
 			M = isObject(M) ? this.merge({},[M,defaults]) : defaults;
-			throw new Error(["Warning: at ","'",M.line,"'"," line tip: -> ",M.message].join(''));
+			throw new Error(["Warning:: at ","'",M.line,"'"," line tip: -> ",M.message].join(''));
 		}
 
 
@@ -1731,7 +1738,7 @@ if(!GRN_LHH){
 		.method('merge',function(arr,override){
 
 			if(!isArray(arr)){
-				throw new Error(['Warning',arr,'不是数组'].join(' '));
+				throw new Error(['Warning:',arr,'不是数组'].join(' '));
 				return;
 			}
 			if(!override && this.concat){
@@ -1948,7 +1955,7 @@ if(!GRN_LHH){
 		return true;
 	}
 	function arr_isEmpty(arr){
-		if(!isArray(arr)){throw new Error('Warning arr 不是一个数组');}
+		if(!isArray(arr)){throw new Error('Warning: arr 不是一个数组');}
 		return (!arr.length);
 	}
 	function error( msg ) {
@@ -1987,7 +1994,7 @@ if(!GRN_LHH){
 			i = 0;
 
 		if (!l) {
-			throw new Error('Warning Empty isset');
+			throw new Error('Warning: Empty isset');
 		}
 
 		while (i !== l) {
