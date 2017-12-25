@@ -6,7 +6,7 @@
 	version ：2.0.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-12-8
+	修改日期 ：2017-12-25
 
 
 # 产品介绍：
@@ -428,15 +428,16 @@
 			
 			LAMJS.app//这个属性代表当前实例化后的对象  
 		方法：	
-			LAMJS.is(Obj,useClassName,className);
+			LAMJS.is(Obj,useClassName,className,path);
 				 产品介绍： class文件检验器
 				 名称： System.is
-				 功能：检测System是否合法，检测要使用的类是否已加载过；检测要定义的类名称之前是否已注册过。
+				 功能：检测namespace是否合法，检测要使用的类是否已加载过,如没加载就调用System.import()方法加载要使用的类，(namespace 必须是对象，useClassName是类名称)；检测要定义的类名称之前是否已注册过。
 				 说明：子类继承父类之前调用此方法检测父类之前是否有加载过，如果填写第三参数可检测当前的类是否跟之前的类重名了
 				 注意：当Obj 类型是对象时 useClassName 参数必须要传！ 没传命名空间时 useClassName 参数可以省略不传
-				 @param  (Object)Obj 	       				 NULL : 命名空间
-				 @param 	(String)useClassName     	     NULL : 要使用的类名称
-				 @param 	(String)className         	　　 NULL : 当前类的名称
+				 @param  (Object)namespace 	       		 NULL : 命名空间
+				 @param  (String)useClassName     	  	 NULL : 要使用的类名称
+				 @param  (String)className         	　　 NULL : 当前类的名称
+				 @param  (String)path         	　　     NULL : 要使用的类的路径
 				 @return (Boolean)
 			LAMJS.run(args,callback);//此方法提供俩个参数，
 				 名称：run
