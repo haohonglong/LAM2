@@ -85,7 +85,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'get': function () {
 			this.xhr.open('get', this.url,this.async,this.user,this.password);
 			this.ready();
-			this.xhr.send(null);
+			this.xhr.send();
 		},
 		'post': function () {
 			this.xhr.open('post', this.url,this.async,this.user,this.password);
@@ -109,50 +109,20 @@ window[GRN_LHH].run([window],function(window,undefined){
 			var self = this;
 			var xhr = this.xhr;
 			return function(){
-				switch(xhr.readyState){
-					case 0 :
-						if(System.LAM_DEBUG){console.log(0,'未初始化....');}
-						self.error(xhr.responseText);
-						break;
-					case 1 :
-						if(System.LAM_DEBUG){console.log(1,'请求参数已准备，尚未发送请求...');}
-						self.error(xhr.responseText);
-						break;
-					case 2 :
-						if(System.LAM_DEBUG){console.log(2,'已经发送请求,尚未接收响应');}
-						self.error(xhr.responseText);
-						break;
-					case 3 :
-						if(System.LAM_DEBUG){console.log(3,'正在接受部分响应.....');}
-						self.error(xhr.responseText);
-						break;
-					case 4 :
-						if(System.LAM_DEBUG){console.log(4,'响应全部接受完毕');}
-						if (200 === xhr.status || 0 === xhr.status) {
-							switch (self.dataType){
-								case 'text':
-									self.success(xhr.responseText);
-									break;
-								case 'html':
-									self.success(xhr.responseText);
-									break;
-								case 'xml':
-									self.success(xhr.responseXML);
-									break;
-								case 'json':
-									self.success(System.eval(xhr.responseText));
-									break;
-								case 'script':
-									self.loadScript(xhr.responseText);
-									self.success(xhr.responseText);
-									break;
-								default :
-									self.success(xhr.responseText);
-							}
-						}else{
-							self.error(xhr.responseText);
-						}
-						break;
+				if ((200 === xhr.status) && (4 === xhr.readyState)) {
+					switch (self.dataType){
+						case 'json':
+							self.success(System.eval(xhr.responseText));
+							break;
+						case 'script':
+							self.loadScript(xhr.responseText);
+							self.success(xhr.responseText);
+							break;
+						default :
+							self.success(xhr.responseText);
+					}
+				}else{
+					self.error(xhr.responseText);
 				}
 			};
 		},
@@ -185,6 +155,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		contents: {
 			xml: /\bxml\b/,
 			html: /\bhtml/,
+			script: /\b(?:java|ecma)script\b/,
 			json: /\bjson\b/
 		},
 		responseFields: {
@@ -212,12 +183,23 @@ window[GRN_LHH].run([window],function(window,undefined){
 			success: callback
 		});
 	};
+
 	Xhr.getJSON = function( url, data, callback ) {
 		return Xhr.get( url, {
 			dataType: "json",
 			data: data,
 			success: callback
 		});
+	};
+	Xhr.include = function(url){
+		var xhr = Xhr.getXMLHttpRequest();
+		xhr.open("GET", url,false);
+		xhr.onreadystatechange = function(){
+			if ((200 === xhr.status) && (4 === xhr.readyState)) {
+				eval(xhr.responseText);
+			}
+		};
+		xhr.send();
 	};
 	System.each( [ "get", "post" ], function( i, method ){
 		Xhr[ method ] = function( url, D) {
