@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-11-13
+ * 修改日期：2017-12-28
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -53,7 +53,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this.data        = D.data;
 			this.contentType = D.contentType;
 			this.dataType    = D.dataType;
-			this.async       = D.async;
+			this.async       = System.isBoolean(D.async) ? D.async : true;
 			this.user        = D.user;
 			this.password    = D.password;
 			this.success     = D.success;
@@ -98,15 +98,12 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this.xhr.onreadystatechange = this.onreadystatechange();
 		},
 		'loadScript':function(text){
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-			script.text = text;
-			var src = script.src;
-			if(System.fileExisted(src)) {return;}
-			document.body.appendChild(script);
-			document.body.removeChild(script);
-			if(System.isClassFile(src)){System.classes.push(src);}
-			System.files.push(src);
+			var src = this.url;
+			if(!System.fileExisted(src)) {
+				eval(text);
+				if(System.isClassFile(src)){System.classes.push(src);}
+				System.files.push(src);
+			}
 		},
 		'onreadystatechange': function () {
 			var self = this;
@@ -208,24 +205,28 @@ window[GRN_LHH].run([window],function(window,undefined){
 		return new Xhr(url,D);
 	};
 	Xhr.getScript = function( url, callback ) {
-		return Xhr.get( url, undefined, callback, "script" );
+		return Xhr.get( url, {
+			dataType: "script",
+			data: undefined,
+			async: false,
+			success: callback
+		});
 	};
 	Xhr.getJSON = function( url, data, callback ) {
-		return Xhr.get( url, data, callback, "json" );
+		return Xhr.get( url, {
+			dataType: "json",
+			data: data,
+			success: callback
+		});
 	};
 	System.each( [ "get", "post" ], function( i, method ){
-		Xhr[ method ] = function( url, data, callback, type ) {
-			// shift arguments if data argument was omitted
-			if (System.isset(data) && System.isFunction( data ) ) {
-				type = type || callback;
-				callback = data;
-				data = undefined;
-			}
+		Xhr[ method ] = function( url, D) {
 			return Xhr.ajax(url,{
 				type: method,
-				dataType: type,
-				data: data,
-				success: callback
+				dataType: D.dataType,
+				data: D.data,
+				async: D.async,
+				success: D.success
 			});
 		};
 	});
