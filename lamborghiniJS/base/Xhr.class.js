@@ -191,15 +191,44 @@ window[GRN_LHH].run([window],function(window,undefined){
 			success: callback
 		});
 	};
-	Xhr.include = function(url){
-		var xhr = Xhr.getXMLHttpRequest();
-		xhr.open("GET", url,false);
-		xhr.onreadystatechange = function(){
-			if ((200 === xhr.status) && (4 === xhr.readyState)) {
-				eval(xhr.responseText);
-			}
-		};
-		xhr.send();
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2017-12-28
+	 * 修改日期：2017-12-28
+	 * 名称：include
+	 * 功能：include指定的js文件
+	 * 说明：System 参数不用传
+	 * 注意：
+	 * @param   (Array)url 			    NO NULL :要加载js文件
+	 * @param   (String|Boolean)baseUrl 		   NULL :文件路径
+	 * @param   (String)suffix 		       NULL :文件后缀名
+	 * @returns {Xhr}返回当前对象可以链式调用include方法
+	 * Example：
+	 */
+	Xhr.include = function(url,baseUrl,suffix){
+		if(System.isString(url)){
+			var str = url;
+			url = [];
+			url.push(str);
+		}
+		if(!System.isArray(url) || System.arr_isEmpty(url)){
+			return Xhr;
+		}else{
+			suffix = suffix || '.js';
+			baseUrl = System.isset(baseUrl) ? baseUrl : System.ROOT;
+			url.each(function(){
+				var src=this;
+				src = System.Loader.suffix_checkor(src,suffix);
+				src = baseUrl ? baseUrl+src : src;
+				if(!System.fileExisted(src)) {
+					Xhr.getScript(src);
+					if(System.isClassFile(src)){System.classes.push(src);}
+					System.files.push(src);
+				}
+			});
+		}
+		return Xhr;
 	};
 	System.each( [ "get", "post" ], function( i, method ){
 		Xhr[ method ] = function( url, D) {
@@ -214,5 +243,6 @@ window[GRN_LHH].run([window],function(window,undefined){
 	});
 
 	System['Xhr']=Xhr;
+
 });
 
