@@ -501,7 +501,31 @@ if(!GRN_LHH){
 		 * Example：
 		 */
 		'eval':function(expression){
-			return eval('('+expression+')');
+			return eval('(' +expression+ ')');
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-12-29
+		 * 修改日期：2017-12-29
+		 * 名称：System.globalEval
+		 * 功能：
+		 * 说明：
+		 * 注意：
+		 * @param   {String}data 		NO NULL :
+		 * @return  {void}
+		 * Example：
+		 */
+		'globalEval': function(data) {
+			if (System.isset(data) && System.isString(data) && data.trim()) {
+				// We use execScript on Internet Explorer
+				// We use an anonymous function so that context is window
+				// rather than jQuery in Firefox
+				(W.execScript || function(data) {
+					W["eval"].call(W, data);
+					// jscs:ignore requireDotNotation
+				})(data);
+			}
 		},
 		/**
 		 * @author: lhh

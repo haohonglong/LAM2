@@ -97,10 +97,10 @@ window[GRN_LHH].run([window],function(window,undefined){
 			this.xhr.setRequestHeader('Accept', Xhr.ajaxSettings.accepts[this.dataType]);
 			this.xhr.onreadystatechange = this.onreadystatechange();
 		},
-		'loadScript':function(text){
+		'loadScript':function(data){
 			var src = this.url;
 			if(!System.fileExisted(src)) {
-				eval(text);
+				System.globalEval(data);
 				if(System.isClassFile(src)){System.classes.push(src);}
 				System.files.push(src);
 			}
