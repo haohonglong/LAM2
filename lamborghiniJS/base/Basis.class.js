@@ -1284,6 +1284,24 @@ if(!GRN_LHH){
 		'limit':function (n,limit){
 			limit =limit || 9;
 			return n.toString().trim().substr(0,limit);
+		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-7-6
+		 * 修改日期：2016-7-6
+		 * 名称：System.Number.by
+		 * 功能：修复俩浮点数相乘得数怪异问题 如： 0.8*0.8
+		 * 说明：
+		 * 注意：
+		 *
+		 * @param (float)a
+		 * @param (float)b
+		 * @returns {number}
+		 */
+		'by':function(a,b){
+			return ((10000*a*b)/10000);
 		}
 	};
 	System.Array	 		= {
