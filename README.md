@@ -15,7 +15,7 @@
 	LamborghiniJS 的诞生初衷是自2013年起,为解决自己工作方便写的小工具,发展到现在的一个类库思想实现.
 	LamborghiniJS 的目的:继承、覆写、重用！ 少写重复性的代码,封装已通过测试功能的成熟代码,便于以后开发中复用.
 	LamborghiniJS 里有命名空间的概念,每一个类都要通过命名空间去调用.(参考 二、开发约定 类结构)
-	LamborghiniJS 里有文件加载器机制,可以在.js文件里直接加载其它.js文件(参考 五、应用)
+	LamborghiniJS 里有文件加载器机制,可以在.js文件里直接加载其它.js文件(参考 五、文件加载器)
 	LamborghiniJS 里有沙箱机制(参考 十四、沙箱)
 	LamborghiniJS 里有hashcode概念（参考 十五、hashcode）
 	LamborghiniJS 里有模版标签概念（参考 十八、模版标签）
@@ -272,7 +272,10 @@
 
 ## 五、文件加载器
 		文件加载器检测机制(参考 十、检测机制 文件加载器)
-		文件加载器有load()和import()两种调用方法。import() 不但封装了load() 方法 还封装了 importScript()方法,当importScript()可用时，就不去调用load()方法了。
+		文件加载器有load()和import()两种调用方法。
+		1.执行import()方法时，先调用importScript()方法 加载 .js
+		2.如果1 不能执行，就用xhr方式加载 .js ，这种方式可以在.js文件里直接加载其它.js文件
+		3.如果不支持xhr方式，就调用 load() 方法
 			1.下面这种不仅适合脚本文件和样式文件的引入还适合less文件的引入。load方法是加载指定的文件到加载器中，load方法可以链式调用多个不同类型文件，当调用到print方法的时候才会一次性从加载器里输出到页面中
 				LAMJS.Loader
 					.load({
@@ -341,34 +344,34 @@
 			注意：tag 、js 、css 属性名称在load方法里只能选择一个。选择了tag属性时其余的属性都可不用,打印指定标签时必须要调用Html对象里的静态方法tag
 				
 			3.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
-				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js']);
+				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false);
 
 				System
 					.import([
 						'/Browser.class'
-					],classPath);
+					],System.classPath);
 					
-					classPath 不填的话 默认是 项目的根目录（System.ROOT）
+					System.classPath 不填的话 默认是 项目的根目录（System.ROOT）
 
-				或者像下面这样可以添加自定义参数
+				或者像下面这样可以添加自定义参数(注意:xhr 方式不能自定义参数)
 				System
 					.import([
 						{'src':'/Browser.class','data-main':'scripts/main.js'},
 						{'src':'/Drag.class','attr':2},
 						{'src':'/Drag_xy.class','attr':3},
 						{'src':'/Dom.class','attr':4}
-					],classPath);
+					],System.classPath,null,{xhr:false});
 				
 				也可以链式调用
 				System
-					.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],' ')
+					.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false)
 					.import([
 	                    '/Browser.class',
 	                    '/Drag.class',
 	                    '/Dom.class',
 	                    '/Tools.class',
 	                    '/PaintBase.class'
-	                ],classPath);
+	                ],System.classPath);
 
 
 
