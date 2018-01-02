@@ -331,7 +331,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
                     });
                 }
             } catch (e) {
-                if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//异步方式加载 script 脚本文件
+                if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//xhr方式加载 script 脚本文件
                     var arr=[];
                     url.each(function(){
                         var src=this;
