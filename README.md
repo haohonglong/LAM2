@@ -6,7 +6,7 @@
 	version ：2.0.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2017-12-25
+	修改日期 ：2018-1-2
 
 
 # 产品介绍：
@@ -15,7 +15,7 @@
 	LamborghiniJS 的诞生初衷是自2013年起,为解决自己工作方便写的小工具,发展到现在的一个类库思想实现.
 	LamborghiniJS 的目的:继承、覆写、重用！ 少写重复性的代码,封装已通过测试功能的成熟代码,便于以后开发中复用.
 	LamborghiniJS 里有命名空间的概念,每一个类都要通过命名空间去调用.(参考 二、开发约定 类结构)
-	LamborghiniJS 里有文件加载器机制(参考 五、应用)
+	LamborghiniJS 里有文件加载器机制,可以在.js文件里直接加载其它.js文件(参考 五、应用)
 	LamborghiniJS 里有沙箱机制(参考 十四、沙箱)
 	LamborghiniJS 里有hashcode概念（参考 十五、hashcode）
 	LamborghiniJS 里有模版标签概念（参考 十八、模版标签）
