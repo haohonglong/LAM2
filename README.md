@@ -344,6 +344,7 @@
 			注意：tag 、js 、css 属性名称在load方法里只能选择一个。选择了tag属性时其余的属性都可不用,打印指定标签时必须要调用Html对象里的静态方法tag
 				
 			3.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
+			用xhr方式加载 System.Xhr.include() 和 System.import() 这俩方法几乎类似,不同的时 System.import() 调用的是jQuery ajax 方式 ，System.Xhr.include() 用的是原生的XMLHttpRequest
 				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false);
 
 				System
@@ -353,7 +354,7 @@
 					
 					System.classPath 不填的话 默认是 项目的根目录（System.ROOT）
 
-				或者像下面这样可以添加自定义参数(注意:xhr 方式不能自定义参数)
+				非xhr方式添加自定义参数
 				System
 					.import([
 						{'src':'/Browser.class','data-main':'scripts/main.js'},
