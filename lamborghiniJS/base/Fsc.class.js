@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建文件流对象
  * 创建日期：2016-10-17
- * 修改日期：2017-11-18
+ * 修改日期：2018-1-2
  * 名称：LAMJS.Fsc
  * 功能：
  * 说明：
@@ -14,7 +14,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Xhr','Fsc');
+	System.is(System,'Xhr','Fsc',System.classPath+'/base');
 
 
 	var __this__=null;
