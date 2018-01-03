@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-11-3
+ * 修改日期:2018-1-3
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -37,7 +37,7 @@ if(!GRN_LHH){
 
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(W,namespace,undefined){
 	'use strict';
-	var version="2.0.3";
+	var VERSION="2.0.4";
 	var Interface,System;
 	// Used for trimming whitespace
 	var trimLeft = /^\s+/,
@@ -364,7 +364,7 @@ if(!GRN_LHH){
 	 * 注意：
 	 */
 	System = {
-		"version": version,
+		"VERSION": VERSION,
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -2155,7 +2155,11 @@ window[GRN_LHH].run([window],function(W,Config){
 			,'PLUGINS':_ROOT_+'/plugins'
 			,'Moudle':function(){return LAMJS.createDict();}
 		},
-		'components':{},
+		'components':{
+			'v':function(System){
+				return System.timestamp();
+			}
+		},
 		//hashcode 随机种子
 		'random':10000,
 		//定义模版标签
@@ -2266,13 +2270,14 @@ window[GRN_LHH].run([window],function(W,Config){
 
 	System.merge(System.Config.XHR || {},[Config.XHR]);
 	System.merge(System.Config || {},[Config]);
-	System.classPath = System.Config.getClassPath();
-	System.Public 	 = System.Config.Public || System.createDict();
-	System.params 	 = System.Config.params || System.createDict();
-	System.components 	 = System.Config.components || System.createDict();
+	System.classPath  = System.Config.getClassPath();
+	System.Public 	  = System.Config.Public || System.createDict();
+	System.params 	  = System.Config.params || System.createDict();
+	System.components = System.merge({},[System.Config.components,Config.components]) || System.createDict();
 	System.each(System.merge({},[System.components,System.Public]),function(name){
-		if(name in System){return true;}
-		System[name] = this;
+		if(!(name in System)){
+			System[name] = this;
+		}
 	});
 
 	System.LAM_DEBUG = System.Config.LAM_DEBUG;
