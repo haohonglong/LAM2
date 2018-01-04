@@ -242,33 +242,32 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         }
         return dom;
     }
-
-    if (!System.isset(window.CustomEvent)) {
-        /**
-         * 自定义事件
-         * 创建日期：2017-9-1
-         * 修改日期：2017-9-1
-         * @param event
-         * @param params
-         * @returns {Event}
-         * @constructor
-         */
-        Event.CustomEvent=function(event, params){
-            var defaults={
-                bubbles: false,
-                cancelable: false,
-                detail: undefined
-            };
-            params = System.isPlainObject(params) ? System.merge({},[params,defaults]) : defaults;
-            var evt = document.createEvent('Events');
-            var bubbles = true;
-            for (var name in params) {
-                (name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
-            }
-            evt.initEvent(event, bubbles, true);
-            return evt;
+    Event.createEvent=function(){
+        var evt = document.createEvent('Events');
+        return evt;
+    };
+    /**
+     * 自定义事件
+     * 创建日期：2017-9-1
+     * 修改日期：2018-1-4
+     * @param event
+     * @param params
+     * @returns {Event}
+     * @constructor
+     */
+    Event.CustomEvent=function(event, params){
+        var defaults={
+            bubbles: !1,
+            cancelable: !1,
+            detail: void 0
         };
-        Event.CustomEvent.prototype = window.Event.prototype;
+        params = System.isPlainObject(params) ? System.merge({},[params,defaults]) : defaults;
+        var evt = document.createEvent("CustomEvent");
+        return evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail),
+            evt;
+    };
+    Event.CustomEvent.prototype = window.Event.prototype;
+    if (!System.isset(window.CustomEvent)) {
         window.CustomEvent = Event.CustomEvent;
     }
 
