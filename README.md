@@ -3,7 +3,7 @@
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.0.4
+	version ：2.0.5
 	author  ：lhh
 	创建日期 ：2017-8-27
 	修改日期 ：2018-1-2

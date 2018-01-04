@@ -30,14 +30,14 @@ if(!GRN_LHH){
 }
 (function(global,namespace,factory,undefined){
 	'use strict';
-	if('LamborghiniJS_20150910123700_' in global){
+	if('_20150910123700_' in global){
 		return;
 	}
-	global['LAM'] = global['LAMJS'] = global['LamborghiniJS_20150910123700_'] = global[namespace] = factory(global,namespace);
+	global['LAM'] = global['LAMJS'] = global['_20150910123700_'] = global[namespace] = factory(global,namespace);
 
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(window,namespace,undefined){
 	'use strict';
-	var VERSION="2.0.4";
+	var VERSION="2.0.5";
 	var Interface,System;
 	// Used for trimming whitespace
 	var trimLeft = /^\s+/,
