@@ -94,7 +94,9 @@ if(!GRN_LHH){
 	var isXMLHttpRequest = type("XMLHttpRequest");
 	var isXMLSerializer = type("XMLSerializer");
 
-
+	function isWindow(obj) {
+		return null != obj && obj === obj.window;
+	}
 
 
 
@@ -1345,6 +1347,8 @@ if(!GRN_LHH){
 	System.isRegExp 		= isRegExp;
 	System.isDate 			= isDate;
 	System.isBlob 			= isBlob;
+
+	System.isWindow 			= isWindow;
 	//browser
 	System.isOpera 			= isOpera;
 
