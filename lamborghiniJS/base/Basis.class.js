@@ -1,12 +1,12 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-1-3
+ * 修改日期:2018-1-4
  * 名称：基类
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
  * 命名空间接口定义: var GRN_LHH='interfaceName';
- * 命名空间接口调用: window[GRN_LHH]  或者 W['interfaceName']
+ * 命名空间接口调用: window[GRN_LHH]  或者 window['interfaceName']
  * 说明 : 成员都是受保护的，不对外共享，如要在外面修改或者复写，都要通过接口。
  *        命名空间接口的设计是灵活的，修改接口名不影响库文件里的内核代码及类接口。
  *        命名空间接口设计的宗旨是:只要修改一处就可搞定一切与第三方插件的冲突。
@@ -35,7 +35,7 @@ if(!GRN_LHH){
 	}
 	global['LAM'] = global['LAMJS'] = global['LamborghiniJS_20150910123700_'] = global[namespace] = factory(global,namespace);
 
-})(typeof window !== "undefined" ? window : this,GRN_LHH,function(W,namespace,undefined){
+})(typeof window !== "undefined" ? window : this,GRN_LHH,function(window,namespace,undefined){
 	'use strict';
 	var VERSION="2.0.4";
 	var Interface,System;
@@ -521,8 +521,8 @@ if(!GRN_LHH){
 				// We use execScript on Internet Explorer
 				// We use an anonymous function so that context is window
 				// rather than jQuery in Firefox
-				(W.execScript || function(data) {
-					W["eval"].call(W, data);
+				(window.execScript || function(data) {
+					window["eval"].call(window, data);
 					// jscs:ignore requireDotNotation
 				})(data);
 			}
@@ -597,7 +597,7 @@ if(!GRN_LHH){
 		 * @return  (voide)
 		 */
 		'close':function(document){
-			document = document || W.document;
+			document = document || window.document;
 			document.close();
 		},
 		/**
@@ -963,7 +963,7 @@ if(!GRN_LHH){
 		 * 名称：System.extends_f
 		 * 功能：在指定对象的原型链上动态扩充方法
 		 * 说明：调用call方法改变this指针
-		 * 注意：不调用call方法，就是在W.System对象上扩充方法
+		 * 注意：不调用call方法，就是在window.System对象上扩充方法
 		 * @param   (Object)this 			NO NULL :指定对象
 		 * @param   (String)name   			NO NULL :扩充的方法名称
 		 * @param   (Function)fn 			NO NULL :方法原型
@@ -972,7 +972,7 @@ if(!GRN_LHH){
 		 *		在Basis 的原型上扩充一个set方法
 		 *		System.extends_f.call(Basis,'set',function(){});
 		 *
-		 *		在W.System 的原型上扩充一个set方法
+		 *		在window.System 的原型上扩充一个set方法
 		 *		System.extends_f('set',function(){});
 		 *
 		 */
@@ -1086,7 +1086,7 @@ if(!GRN_LHH){
 		 *
 		 */
 		'function_exists':function(fun_name){
-			if(W[fun_name] && System.isFunction(W[fun_name])){
+			if(window[fun_name] && System.isFunction(window[fun_name])){
 				return true;
 			}
 			return false;
@@ -1821,7 +1821,7 @@ if(!GRN_LHH){
 			if(!isFunction(fn)){
 				return this;
 			}
-			D = D || W;
+			D = D || window;
 			var a=[];
 			for(var i=0,len=this.length;i<len;++i) {
 				if(!fn.call(D, this[i], i, this)){
@@ -2107,7 +2107,7 @@ if(!GRN_LHH){
 		return arr;
 	}
 
-	return System.merge(null,[Interface,W[namespace]]);
+	return System.merge(null,[Interface,window[namespace]]);
 });
 
 /*
@@ -2127,7 +2127,7 @@ if(!GRN_LHH){
  ==========================================================================================
 */
 
-window[GRN_LHH].run([window],function(W,Config){
+window[GRN_LHH].run([window],function(window,Config){
 	'use strict';
 	var System=this;
 
