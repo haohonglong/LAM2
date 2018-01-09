@@ -34,14 +34,16 @@
     </style>
 </head>
 <body class="container-fluid">
+
 <ul class="list-group"></ul>
 <nav aria-label="Page navigation">
     <ul class="pagination"></ul>
 </nav>
 
 <script type="text/template" id="list:tp">
+    <li class="list-group-item active" style="margin-top: 10px;"><%=title%></li>
     <% for(var i=0,length =data.length; i < end && start < length;i++,start++){%>
-    <li class="list-group-item"><%=data[start]['title']%></li>
+    <li class="list-group-item"><%=data[start]['code']%> .<%=data[start]['name']%></li>
     <% }%>
 </script>
 <script type="text/template" id="pagination:tp">
@@ -68,7 +70,7 @@
 <script type="text/javascript">
     (function($){
         var DATA =[];
-        var TOTAL_NUM= 0,row_num= 10,pagination_num= 0,current_num=1;
+        var TOTAL_NUM= 0,row_num= 500,pagination_num= 0,current_num= 1,title="";
         function init(){
             TOTAL_NUM = DATA.length;
             pagination_num = Math.ceil(TOTAL_NUM / row_num);
@@ -78,6 +80,7 @@
 //            console.log(start,'---',row_num);
             $('.list-group').html(template('list:tp',{
                 'data':DATA,
+                'title':title,
                 'end':row_num,
                 'start':start
             }));
@@ -94,8 +97,9 @@
                 $current.eq(current_num-1).addClass('active');
             }
         }
-        $.post("json/data_1.json",function(D){//初始化数据
-            DATA = D.data;
+        $.post("json/data_3.json",function(D){//初始化数据
+            DATA  = D.data;
+            title = D.title;
             init();
             $(function(){
                 setPagination(pagination_num);

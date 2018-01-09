@@ -10,7 +10,13 @@ require_once(PHPEXCEL.'/Classes/PHPExcel/IOFactory.php');
 require_once(PHPEXCEL.'/Classes/PHPExcel/Reader/Excel5.php');
 $fileExtensions = 'xlsx';
 $basepath  = XLSX;
-$filepath = $basepath.'/118.xlsx';
+$names = [
+    "2017-2018年度CSSCI来源期刊目录公示(1)",
+    "2017年中国科技核心期刊目录（社会科学卷）",
+    "第七版《中文核心期刊要目总览》官方正式公布(1)"
+];
+$num = 1;
+$filepath = $basepath."/_00{$num}.xlsx";
 
 if("xlsx" === $fileExtensions){
     $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
@@ -28,36 +34,32 @@ for($i = 0; $i < $sheetCount; $i++)//遍历Excels的sheet页
     $sheet = $objPHPExcel->getSheet($i);
     //获取sheet页的名字：$sheetName = $sheet->getTitle();
     $highestRow = $sheet->getHighestRow(); // 取得总行数
-
     $highestColumn = $sheet->getHighestColumn(); // 取得总列数
-
     $maxColumns = \PHPExcel_Cell::columnIndexFromString($highestColumn);
-
     for($key = 1; $key <= $highestRow; $key++)
     {
         for($k = 0; $k < $maxColumns; $k++)
         {
-            $excel_data[$k][] = $sheet->getCellByColumnAndRow($k, $key)->getValue();//获取数据
+            $excel_data[$key][$k] = $sheet->getCellByColumnAndRow($k, $key)->getValue();//获取数据
         }
     }
 }
 
+$data['title']=$names[$num-1];
 foreach ($excel_data as $k1 => $item){
-    foreach ($item as $k2 =>$v){
-        if(0 === $k2){continue;}
-        $data['data'][] = [
-            "id"=>trim($excel_data[0][$k2]),
-            "name"=>trim($excel_data[1][$k2]),
-            "title"=>trim($excel_data[2][$k2]),
-            "code"=>trim($excel_data[3][$k2]),
-        ];
-    }
+    $data['data'][] = [
+        "id"=>$k1,
+        "code"=>trim($item[0]),
+        "name"=>trim($item[1]),
+        "title"=>isset($item[2]) ? trim($item[2]) : "",
+        "node"=>isset($item[3]) ? trim($item[3]) : "",
+    ];
 }
 //var_dump($data);
 $json =json_encode($data,JSON_UNESCAPED_UNICODE);
 $jsondir = ROOT_118.'/json/';
-if (!is_dir($jsondir)) mkdir($jsondir);
-$json_file = $jsondir.'data_1.json';
+if(!is_dir($jsondir)){mkdir($jsondir);}
+$json_file = $jsondir."data_{$num}.json";
 file_put_contents($json_file, $json);
 
 
