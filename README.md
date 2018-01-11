@@ -6,7 +6,7 @@
 	version ：2.0.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-1-2
+	修改日期 ：2018-1-11
 
 
 # 产品介绍：
@@ -469,8 +469,8 @@
 			LAMJS.use();   用document.createElement() 引入js,css 
             LAMJS.unuse(); 用document.write() 引入js,css
 			LAMJS.print('s'[,1,'a',...]);//打印
-			LAMJS.get_url_param(name);
-				 名称：get_url_param
+			LAMJS.get(name);
+				 名称：get
 		         功能：根据指定的url参数获取相对应的参数值
 		         说明：
 		         注意：

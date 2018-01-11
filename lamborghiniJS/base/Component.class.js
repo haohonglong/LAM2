@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2017-10-26
+ * 修改日期:2018-1-11
  * 名称：组件类
  * 功能：服务于应用层类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -209,8 +209,8 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期：2015-6-25
-		 * 修改日期：2015-6-25
-		 * 名称：get_url_param
+		 * 修改日期：2018-1-11
+		 * 名称：get
 		 * 功能：根据指定的url参数获取相对应的参数值
 		 * 说明：
 		 * 注意：
@@ -218,7 +218,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @return  {String}
 		 *
 		 */
-		'get_url_param':function(name){
+		'get':function(name){
 			var search = document.location.search;
 			var pattern = new RegExp("[?&]"+name+"\=([^&]+)", "g");
 			var matcher = pattern.exec(search);
