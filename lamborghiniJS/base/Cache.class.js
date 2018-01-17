@@ -36,7 +36,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Cache');
+	System.is(System,'Browser','Cache',System.classPath+'/base');
 	var __this__=null;
 
 

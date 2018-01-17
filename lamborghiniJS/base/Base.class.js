@@ -7,7 +7,7 @@
 window[GRN_LHH].run(function(){
 	'use strict';
 	var System=this;
-	System.is(System,'Basis','Base');
+	System.is(System,'Basis','Base',System.classPath+'/base');
 
 	var Base = function() {
 		// dummy

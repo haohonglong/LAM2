@@ -13,16 +13,12 @@
  * 
  */
 
-window[GRN_LHH].run([window],function(window,undefined){
+window[GRN_LHH].run([window,document],function(window,document,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Dom','Css');
-
+	System.is(System,'Dom','Css',System.classPath+'/base');
 
 	var __this__=null;
-	var document=window.document;
-
-
 
 	var Css = System.Dom.extend({
 		constructor: function(D) {

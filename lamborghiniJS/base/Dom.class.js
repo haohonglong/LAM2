@@ -13,7 +13,7 @@
 window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Dom');
+	System.is(System,'Browser','Dom',System.classPath+'/base');
 
 	var __this__=null;
 	/**

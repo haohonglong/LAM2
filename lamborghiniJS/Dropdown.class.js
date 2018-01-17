@@ -1,7 +1,7 @@
 window[GRN_LHH].run([jQuery],function($,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Dom','Dropdown');
+    System.is(System,'Dom','Dropdown',System.classPath+'/base');
     var __this__=null;
 
     var Dropdown = System.Dom.extend({

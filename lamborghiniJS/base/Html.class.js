@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Dom','Html');
+	System.is(System,'Dom','Html',System.classPath+'/base');
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
 

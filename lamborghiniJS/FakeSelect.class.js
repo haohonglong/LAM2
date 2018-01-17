@@ -14,8 +14,10 @@
 window[GRN_LHH].run([window],function(window,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Dom','FakeSelect');
-    System.is(System,'Event');
+    System.is(System,'Dom','FakeSelect',System.classPath+'/base');
+    System.import([
+        '/Event.class'
+    ],System.classPath+'/base');
 
     var __this__=null;
     var FakeSelect = System.Dom.extend({

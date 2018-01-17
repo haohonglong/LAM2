@@ -8,9 +8,12 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	function(window,document,$,undefined){
 		'use strict';
 		var System=this;
-		System.is(System,'Dom','EditTables');
+		System.is(System,'Dom','EditTables',System.classPath+'/base');
+		System.import([
+			'/Event.class'
+		],System.classPath+'/base');
 		var __this__=null;
-		var fixEvent = System.Browser.fixEvt;
+		var fixEvent = System.Event.fixEvt;
 
 
 

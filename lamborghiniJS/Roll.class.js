@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Roll');
+	System.is(System,'Browser','Roll',System.classPath+'/base');
 
 	var __this__=null;
 	/**

@@ -21,7 +21,10 @@
 window[GRN_LHH].run([window],function(window,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Drag','Drag_xy');
+    System.is(System,'Drag','Drag_xy',System.classPath+'/base');
+    System.import([
+        '/Event.class'
+    ],System.classPath+'/base');
     var __this__=null;
     var fixEvt = System.Event.fixEvt;
     //是否到最后了

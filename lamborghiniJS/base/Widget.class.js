@@ -17,7 +17,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	function(window,document,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Html','Widget');
+	System.is(System,'Html','Widget',System.classPath+'/base');
 
 	var __this__=null;
 

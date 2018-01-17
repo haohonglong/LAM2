@@ -42,7 +42,11 @@
                     }
 
                 },function(content){
-                    System.print(content);
+                    var render = template.compile(content);
+                    var html = render({
+                        'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+                    });
+                    System.print(html);
 
                 });
             },

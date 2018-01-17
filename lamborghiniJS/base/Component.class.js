@@ -16,7 +16,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Object','Component');
+	System.is(System,'Object','Component',System.classPath+'/base');
 	System.merge(null,[{
 		/**
 		 * @author: lhh

@@ -41,7 +41,7 @@
  window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 'use strict';
 	 var System=this;
-	 System.is(System,'Browser','PopupLayer');
+	 System.is(System,'Browser','PopupLayer',System.classPath+'/base');
 
 	 var __this__=null;
 	 var PopupLayer = System.Browser.extend({

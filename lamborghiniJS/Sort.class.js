@@ -1,7 +1,7 @@
 
 window[GRN_LHH].run([window],function(window,undefined){
 	var System=this;
-	System.is(System,'Helper','Sort');
+	System.is(System,'Helper','Sort',System.classPath+'/base');
 
 	var __this__=null;
 

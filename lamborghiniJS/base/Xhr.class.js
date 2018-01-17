@@ -14,7 +14,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Xhr');
+	System.is(System,'Browser','Xhr',System.classPath+'/base');
 	var __this__=null;
 	var allTypes = "*/".concat( "*" );
 	// Functions to create xhrs

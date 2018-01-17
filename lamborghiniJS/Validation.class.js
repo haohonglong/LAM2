@@ -16,7 +16,7 @@ window[GRN_LHH].run([window,window.document,jQuery],
 	function(window,document,$,undefined){
 		'use strict';
 	var System=this;
-	System.is(System,'Browser','Validation');
+	System.is(System,'Browser','Validation',System.classPath+'/base');
 	var __this__=null;
 	var Validation = System.Browser.extend({
 		constructor: function (D){

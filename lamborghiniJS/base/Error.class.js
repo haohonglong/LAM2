@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 
 	var System=this;
-	System.is(System,'Component','Error');
+	System.is(System,'Component','Error',System.classPath+'/base');
 
 	var __this__=null;
 	var Error = System.Component.extend({

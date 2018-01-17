@@ -3,7 +3,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
 
-	System.is(System,'Layout','Thumbnail');
+	System.is(System,'Layout','Thumbnail',System.classPath+'/base');
 	var __this__=null;
 	/**
 	 * @author: lhh

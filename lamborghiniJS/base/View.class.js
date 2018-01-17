@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Dom','View');
+	System.is(System,'Dom','View',System.classPath+'/base');
 
 	var __this__=null;
 	var View = System.Dom.extend({

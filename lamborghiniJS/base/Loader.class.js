@@ -15,7 +15,7 @@
 window[GRN_LHH].run([window,document],function(window,document,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Html','Loader');
+    System.is(System,'Html','Loader',System.classPath+'/base');
 
     var html,head,body,meta,script,link;
     var create;

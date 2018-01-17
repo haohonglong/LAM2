@@ -3,6 +3,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
+	System.import(['/Browser.class'],System.classPath+'/base');
 	System.is('System.Browser','System.Html5.Canvas');
 
 	var __this__=null;

@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Helper','BinaryTree');
+	System.is(System,'Helper','BinaryTree',System.classPath+'/base');
 
 	var None = System.Helper.extend({
 		constructor: function (root) {

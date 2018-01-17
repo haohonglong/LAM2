@@ -16,7 +16,7 @@
 window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Component','Controller');
+    System.is(System,'Component','Controller',System.classPath+'/base');
 
     var __this__=null;
     var Controller = System.Component.extend({

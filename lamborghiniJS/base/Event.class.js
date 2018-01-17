@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window,window['document']],function(window,document,undefined){
     'use strict';
     var System=this;
-    System.is(System,'Browser','Event');
+    System.is(System,'Browser','Event',System.classPath+'/base');
 
     var __this__=null;
     var Event = System.Browser.extend({

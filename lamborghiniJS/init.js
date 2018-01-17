@@ -4,10 +4,10 @@ window[GRN_LHH].run(function(){
     'use strict';
     var System=this;
     System.root={
-        'path':_ROOT_
+        'path':System.ROOT
     };
     System.import([
-        '/BiObject.class',
+        '/Object.class',
         '/Component.class',
         '/Helper.class',
         '/Browser.class',
@@ -15,5 +15,5 @@ window[GRN_LHH].run(function(){
         '/Html.class',
         '/Template.class',
         '/Controller.class'
-    ],System.classPath);
+    ],System.classPath+'/base');
 });

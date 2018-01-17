@@ -16,7 +16,7 @@
 window[GRN_LHH].run(function(undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Template');
+	System.is(System,'Browser','Template',System.classPath+'/base');
 
 
 	var __this__=null;

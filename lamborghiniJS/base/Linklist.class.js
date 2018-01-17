@@ -2,7 +2,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Dom','Linklist');
+	System.is(System,'Dom','Linklist',System.classPath+'/base');
 
 	var __this__=null;
 	var Linklist = System.Dom.extend({

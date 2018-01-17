@@ -4,7 +4,7 @@
 window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Browser','Sport');
+	System.is(System,'Browser','Sport',System.classPath+'/base');
 
 	var __this__=null;
 	var MOVE_TYPE={

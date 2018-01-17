@@ -16,7 +16,7 @@
 window[GRN_LHH].run([window],function(window,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Base','Object');
+	System.is(System,'Base','Object',System.classPath+'/base');
 
 	var __this__=null;
 	var Object = System.Base.extend({

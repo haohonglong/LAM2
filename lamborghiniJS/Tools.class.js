@@ -17,9 +17,12 @@
 window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	'use strict';
 	var System=this;
-	System.is(System,'Html','Tools');
+	System.is(System,'Html','Tools',System.classPath+'/base');
+	System.import([
+		'/Event.class'
+	],System.classPath+'/base');
 	var __this__=null;
-	var fixEvt = System.Browser.fixEvt;
+	var fixEvt = System.Event.fixEvt;
 	var isIE6 = System.Browser.isIE6;
 	var Tools = System.Html.extend({
 		constructor: function () {
