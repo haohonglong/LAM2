@@ -7,8 +7,9 @@ window[GRN_LHH].run([window],function(window,undefined){
     var System=this;
     System.is(System,'Html','Pagination');
     var __this__=null;
-    var Pagination = System.Helper.extend({
+    var Pagination = System.Html.extend({
         constructor: function (D) {
+            this.base();
             var defaults ={
                 "row_num":0
             };

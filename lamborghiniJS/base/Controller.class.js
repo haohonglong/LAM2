@@ -27,7 +27,7 @@ window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,u
 
             var route = System.get(init.route || 'r');
             if(!System.isFunction(this[route+'Action'])){
-                throw new Error('Warning: \''+route+'Action\' method not exist');
+                throw new Error('Warning:The method \''+route+'Action\' undefined');
                 return this;
             }
             this[route+'Action']();
