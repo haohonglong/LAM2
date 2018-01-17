@@ -1,3 +1,9 @@
+/*!
+ * LAM2 JavaScript Library v2.0.5
+ * created by lhh
+ * https://github.com/haohonglong/lam2
+ *
+ */
 /**
  * @author：lhh
  * 创建日期:2015-3-20
@@ -22,8 +28,6 @@
  *		
  * 
  */
-
-
 if(!GRN_LHH){
 	var GRN_LHH='System';
 	
