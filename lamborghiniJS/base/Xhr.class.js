@@ -195,18 +195,18 @@ window[GRN_LHH].run([window],function(window,undefined){
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2017-12-28
-	 * 修改日期：2017-12-28
-	 * 名称：include
+	 * 修改日期：2018-1-17
+	 * 名称：Xhr.import
 	 * 功能：include指定的js文件
 	 * 说明：System 参数不用传
 	 * 注意：
 	 * @param   (Array)url 			    NO NULL :要加载js文件
 	 * @param   (String|Boolean)baseUrl 		   NULL :文件路径
 	 * @param   (String)suffix 		       NULL :文件后缀名
-	 * @returns {Xhr}返回当前对象可以链式调用include方法
+	 * @returns {Xhr}
 	 * Example：
 	 */
-	Xhr.include = function(url,baseUrl,suffix){
+	Xhr.import = function(url,baseUrl,suffix){
 		if(System.isString(url)){
 			var str = url;
 			url = [];

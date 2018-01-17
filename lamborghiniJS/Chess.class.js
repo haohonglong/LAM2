@@ -3,7 +3,7 @@
  */
 window[GRN_LHH].run([window],function(window,undefined){
 	var System=this;
-	System.is(System.Html5,'Shape','Chess');
+	System.is(System.Html5,'Shape','Chess',System.classPath+'/base');
 	var __this__=null;
 	//棋盘行列数
 	var num = 15;

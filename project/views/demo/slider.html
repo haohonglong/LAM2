@@ -17,8 +17,7 @@
 
 
             System.import([
-                '/Sport.class'
-                ,'/Layout.class'
+                 '/Sport.class'
                 ,'/Slider.class'
             ],System.classPath);
         });
@@ -45,35 +44,14 @@
         <i class="pre">上一个</i>
         <i class="next">下一个</i>
         <ul class="imgs clearfix">
+            <% for(var i=0,len=list.length; i<len; i++){%>
             <li class="img">
                 <div class="border">
-                    <img src="http://img0.bdstatic.com/img/image/shouye/mingxing0923.jpg" />
+                    <img src="<%=list[i].src%>" />
                 </div>
 
             </li>
-            <li class="img">
-                <div class="border">
-                    <img src="http://img0.bdstatic.com/img/image/shouye/chongwu0923.jpg" />
-                </div>
-            </li>
-            <li class="img">
-                <div class="border"><img src="http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg" /></div>
-
-            </li>
-            <li class="img">
-                <div class="border"><img src="http://img0.bdstatic.com/img/image/shouye/touxiang0923.jpg" /></div>
-
-            </li>
-            <li class="img">
-                <div class="border"><img src="http://img0.bdstatic.com/img/image/shouye/xiaoqingxin0923.jpg" /></div>
-
-            </li>
-            <li class="img">
-                <div class="border last"><img src="http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg" /></div>
-
-            </li>
-
-
+            <% }%>
         </ul>
     </div>
     <include file="{{ROOT}}/project/controllers/include/test.html" dataType="html"></include>

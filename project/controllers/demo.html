@@ -6,6 +6,7 @@
         var System = this;
         var __this__=null;
         System.is(System,'Controller','DemoController');
+        System.import(['/artTemplate/artTemplate'],System.PLUGINS);
         var views = System.ROOT+'/project/views/demo';
         var DemoController = System.Controller.extend({
             constructor: function (init){
@@ -65,9 +66,18 @@
                     'D':{}
 
                 },function(content){
-                    System.print(content);
-
-
+                    var render = template.compile(content);
+                    var html = render({
+                        list: [
+                             {"src":"http://img0.bdstatic.com/img/image/shouye/mingxing0923.jpg"}
+                            ,{"src":"http://img0.bdstatic.com/img/image/shouye/chongwu0923.jpg"}
+                            ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
+                            ,{"src":"http://img0.bdstatic.com/img/image/shouye/touxiang0923.jpg"}
+                            ,{"src":"http://img0.bdstatic.com/img/image/shouye/xiaoqingxin0923.jpg"}
+                            ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
+                        ]
+                    });
+                    System.print(html);
                 });
             },
             'dragAction':function(){
