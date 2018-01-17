@@ -1,0 +1,651 @@
+<script type="text/javascript">
+    LAMJS.run(function() {
+        'use strict';
+        var System = this;
+        System.use();
+        System.Loadcommon
+                .load({
+                    'baseUrl':System.ROOT,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/common/css/lib/bootstrap'
+                        ,'/common/css/lib/reset'
+                        ,'/demo/css/style'
+                    ]
+                })
+                .print();
+
+
+        System.import([
+            '/Tab.class'
+        ],System.classPath);
+    });
+
+
+
+
+</script>
+<style type="text/css">
+    .content-tips .paper-section{margin-bottom:0;min-width:450px;}
+</style>
+<span id="gototop"></span>
+<div>
+    <div class="paper-txt P30">
+        <div class="paper-section" style="margin-bottom:0;">
+            <div class="font-bold MT5">
+                    该句相似度：<span class="g-font-color red similarNum">100%</span>
+            </div>
+            <div class="MT30">
+                <p class="font-bold">您的语句：</p>
+                <span>众所周知，为了辅助学习者实现预期的学习目标，教材内容应在语言项目、技巧和交际策略等方面去适应学习者的需求</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="tab-A">
+            <ul class="tab-A-ul clearfix" tab-a="ul" data-tab="ul">
+                <li class="active" data-id="qikan,xuewei,meeting,book,internet,all,selfbuild">
+                    <span class="tab-text">综合</span>
+                    <span class="tab-superscript">10</span>
+                </li>
+                <li data-id="tab,qikan,xuewei,meeting,book,selfbuild,local">
+                    <span class="tab-text">本地库</span>
+                    <span class="tab-superscript">10</span>
+                </li>
+                <li data-id="internet,5">
+                    <span class="tab-text">互联网</span>
+                    <span class="tab-superscript">10</span>
+                </li>
+            </ul>
+        </div>
+        <div class="none" tab="section" data-id="tab">
+            <div class="tab-B clearfix">
+                <div class="paper-section P30 PB0 clearfix">
+                    <span class="tab-B-span pull-left">本地库</span>
+                    <ul class="tab-B-ul pull-left clearfix" tab-b="ul" data-tab="ul">
+                        <li class="active" data-id="tab,qikan,xuewei,meeting,book,selfbuild,local">
+                            <span class="tab-text">全部</span>
+                            <span class="tab-superscript">10</span>
+                            <span class="black-spacer"></span>
+                        </li>
+                        <li data-id="tab,qikan,1">
+                            <span class="tab-text">期刊</span>
+                            <span class="tab-superscript">10</span>
+                            <span class="black-spacer"></span>
+                        </li>
+                        <li data-id="tab,xuewei,2">
+                            <span class="tab-text">学位</span>
+                            <span class="tab-superscript">10</span>
+                            <span class="black-spacer"></span>
+                        </li>
+                        <li data-id="tab,meeting,3">
+                            <span class="tab-text">会议</span>
+                            <span class="tab-superscript">10</span>
+                            <span class="black-spacer"></span>
+                        </li>
+                        <li data-id="tab,book,4">
+                            <span class="tab-text">图书</span>
+                            <span class="tab-superscript">10</span>
+                            <span class="black-spacer"></span>
+                        </li>
+                        <li data-id="tab,selfbuild,6">
+                            <span class="tab-text">自建库</span>
+                            <span class="tab-superscript">10</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="g-line-row MT30 tab-pane-line"></div>
+            </div>
+        </div>
+        <div class="content-tips">
+            <div class="tab-content none" tab="section" data-id="1">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在期刊库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="2">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在学位库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="3">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在会议库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="4">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在图书库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="5">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在互联网库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" tab="section" data-id="all">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在本地库和互联网库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="local">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在本地库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content none" tab="section" data-id="6">
+                <div class="paper-txt P30 paper-section clearfix">
+                    <p class="g-font-color green pull-left">
+                        在自建库共找出相似内容：<span>2</span>个
+                    <p>
+                    <div class="pull-right">
+                        <a href="#modify_suggest" class="g-btn g-btn-default g-btn-sm">查看修改意见</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 期刊库内容 -->
+        <div class="tab-content" tab="section" data-id="qikan">
+            <div>
+                <div class="g-line-row"></div>
+                <div class="paper-txt P30">
+                    <div class="paper-section" style="margin-bottom:0;">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <span class="chapter-symbol"></span>
+                                <span class="chapter-num">2</span>
+                            </div>
+                            <div class="font-bold pull-right">
+                                相似度：<span class="g-font-color red similarNum">100%</span>
+                            </div>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">您的句子：</p>
+                            <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">来源（学位论文）：</p>
+                            <div class="local-source-detail">
+                                <b>篇名：</b>
+                                《我国大学英语教材变革研究》
+                                <br>
+                                <b>相似来源：</b>
+                                学位论文
+                                <br>
+                                <b>作者：</b>
+                                左桂春
+                                <br>
+                                <b>分类号：</b>
+                                H319
+                                <br>
+                                <b>学科专业：</b>
+                                教育学原理
+                                <br>
+                                <b>授予学位：</b>
+                                硕士
+                                <br>
+                                <b>导师姓名：</b>
+                                张书丰
+                                <br>
+                                <b>学位授予单位：</b>
+                                山东师范大学
+                                <br>
+                                <b>学位年度：</b>
+                                2008
+                                <br>
+                                <b>关键词：</b>
+                                高等教育 英语教材 英语教学
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 学位库内容 -->
+        <div class="tab-content" tab="section" data-id="xuewei">
+            <div>
+                <div class="g-line-row"></div>
+                <div class="paper-txt P30">
+                    <div class="paper-section" style="margin-bottom:0;">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <span class="chapter-symbol"></span>
+                                <span class="chapter-num">2</span>
+                            </div>
+                            <div class="font-bold pull-right">
+                                相似度：<span class="g-font-color red similarNum">100%</span>
+                            </div>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">您的句子：</p>
+                            <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">来源（学位论文）：</p>
+                            <div class="local-source-detail">
+                                <b>篇名：</b>
+                                《我国大学英语教材变革研究》
+                                <br>
+                                <b>相似来源：</b>
+                                学位论文
+                                <br>
+                                <b>作者：</b>
+                                左桂春
+                                <br>
+                                <b>分类号：</b>
+                                H319
+                                <br>
+                                <b>学科专业：</b>
+                                教育学原理
+                                <br>
+                                <b>授予学位：</b>
+                                硕士
+                                <br>
+                                <b>导师姓名：</b>
+                                张书丰
+                                <br>
+                                <b>学位授予单位：</b>
+                                山东师范大学
+                                <br>
+                                <b>学位年度：</b>
+                                2008
+                                <br>
+                                <b>关键词：</b>
+                                高等教育 英语教材 英语教学
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 会议库内容 -->
+        <div class="tab-content" tab="section" data-id="meeting">
+            <div>
+                <div class="g-line-row"></div>
+                <div class="paper-txt P30">
+                    <div class="paper-section" style="margin-bottom:0;">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <span class="chapter-symbol"></span>
+                                <span class="chapter-num">3</span>
+                            </div>
+                            <div class="font-bold pull-right">
+                                相似度：<span class="g-font-color red similarNum">100%</span>
+                            </div>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">您的句子：</p>
+                            <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">来源（学位论文）：</p>
+                            <div class="local-source-detail">
+                                <b>篇名：</b>
+                                《我国大学英语教材变革研究》
+                                <br>
+                                <b>相似来源：</b>
+                                学位论文
+                                <br>
+                                <b>作者：</b>
+                                左桂春
+                                <br>
+                                <b>分类号：</b>
+                                H319
+                                <br>
+                                <b>学科专业：</b>
+                                教育学原理
+                                <br>
+                                <b>授予学位：</b>
+                                硕士
+                                <br>
+                                <b>导师姓名：</b>
+                                张书丰
+                                <br>
+                                <b>学位授予单位：</b>
+                                山东师范大学
+                                <br>
+                                <b>学位年度：</b>
+                                2008
+                                <br>
+                                <b>关键词：</b>
+                                高等教育 英语教材 英语教学
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 图书库内容 -->
+        <div class="tab-content" tab="section" data-id="book">
+            <div>
+                <div class="g-line-row"></div>
+                <div class="paper-txt P30">
+                    <div class="paper-section" style="margin-bottom:0;">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <span class="chapter-symbol"></span>
+                                <span class="chapter-num">4</span>
+                            </div>
+                            <div class="font-bold pull-right">
+                                相似度：<span class="g-font-color red similarNum">100%</span>
+                            </div>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">您的句子：</p>
+                            <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">来源（学位论文）：</p>
+                            <div class="local-source-detail">
+                                <b>篇名：</b>
+                                《我国大学英语教材变革研究》
+                                <br>
+                                <b>相似来源：</b>
+                                学位论文
+                                <br>
+                                <b>作者：</b>
+                                左桂春
+                                <br>
+                                <b>分类号：</b>
+                                H319
+                                <br>
+                                <b>学科专业：</b>
+                                教育学原理
+                                <br>
+                                <b>授予学位：</b>
+                                硕士
+                                <br>
+                                <b>导师姓名：</b>
+                                张书丰
+                                <br>
+                                <b>学位授予单位：</b>
+                                山东师范大学
+                                <br>
+                                <b>学位年度：</b>
+                                2008
+                                <br>
+                                <b>关键词：</b>
+                                高等教育 英语教材 英语教学
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 自建库内容 -->
+        <div class="tab-content" tab="section" data-id="selfbuild">
+            <div>
+                <div class="g-line-row"></div>
+                <div class="paper-txt P30">
+                    <div class="paper-section" style="margin-bottom:0;">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <span class="chapter-symbol"></span>
+                                <span class="chapter-num">4</span>
+                            </div>
+                            <div class="font-bold pull-right">
+                                相似度：<span class="g-font-color red similarNum">100%</span>
+                            </div>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">您的句子：</p>
+                            <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">相似句子：</p>
+                            ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                        </div>
+                        <div class="MT10">
+                            <p class="font-bold">来源（学位论文）：</p>
+                            <div class="local-source-detail">
+                                <b>篇名：</b>
+                                《我国大学英语教材变革研究》
+                                <br>
+                                <b>相似来源：</b>
+                                学位论文
+                                <br>
+                                <b>作者：</b>
+                                左桂春
+                                <br>
+                                <b>分类号：</b>
+                                H319
+                                <br>
+                                <b>学科专业：</b>
+                                教育学原理
+                                <br>
+                                <b>授予学位：</b>
+                                硕士
+                                <br>
+                                <b>导师姓名：</b>
+                                张书丰
+                                <br>
+                                <b>学位授予单位：</b>
+                                山东师范大学
+                                <br>
+                                <b>学位年度：</b>
+                                2008
+                                <br>
+                                <b>关键词：</b>
+                                高等教育 英语教材 英语教学
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 互联网 -->
+        <div class="tab-content" tab="section" data-id="internet">
+            <div class="tab-pane">
+                <div>
+                    <div class="g-line-row"></div>
+                    <div class="paper-txt P30">
+                        <div class="paper-section" style="margin-bottom:0;">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <span class="chapter-symbol"></span>
+                                    <span class="chapter-num">5</span>
+                                </div>
+                                <div class="font-bold pull-right">
+                                    相似度：<span class="g-font-color red similarNum">100%</span>
+                                </div>
+                            </div>
+                            <div class="MT10">
+                                <p class="font-bold">您的句子：</p>
+                                <span class="g-font-color red">众所周知</span>，<span class="g-font-color red">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color red">教材内容应在语言项目</span>、<span class="g-font-color red">技巧</span>和交际<span class="g-font-color red">策略等方面去适应学习者的需求</span>
+                            </div>
+                            <div class="MT10">
+                                <p class="font-bold">相似句子：</p>
+                                <span class="g-font-color green">众所周知</span>，<span class="g-font-color green">为了辅助学习者实现预期的学习目标</span>，<span class="g-font-color green">教材内容应在语言项目</span>、<span class="g-font-color green">技巧</span>和交际<span class="g-font-color green">策略等方面去适应学习者的需求</span>
+                            </div>
+                            <div class="MT10">
+                                <p class="font-bold">相似句子：</p>
+                                ……常识。总之，这一代教材受新的教育理论的影响，开始语言措辞交际能力的培养，继续注重语言措辞基础训练和阅读能力培养的同时普遍广泛加强了听的训练，对于说、写、译等也予以关注。突破冲破传统开始向系列化方向发展。<span class="g-font-color grey">众所周知，为了辅助学习者实现预期的学习目标，教材内容应语言措辞项目、技巧和策略战略等方面去适应学习者的需求</span>，同时教材应能帮助学习达到到达程度水平的自主学习。而这一代教材提供供应真实的语料，鼓励学习者参与介入活动，帮助他们发展……
+                            </div>
+                            <div class="MT10">
+                                <p class="font-bold">来源（学位论文）：</p>
+                                <div class="local-source-detail">
+                                    <b>篇名：</b>
+                                    《我国大学英语教材变革研究》
+                                    <br>
+                                    <b>相似来源：</b>
+                                    学位论文
+                                    <br>
+                                    <b>作者：</b>
+                                    左桂春
+                                    <br>
+                                    <b>分类号：</b>
+                                    H319
+                                    <br>
+                                    <b>学科专业：</b>
+                                    教育学原理
+                                    <br>
+                                    <b>授予学位：</b>
+                                    硕士
+                                    <br>
+                                    <b>导师姓名：</b>
+                                    张书丰
+                                    <br>
+                                    <b>学位授予单位：</b>
+                                    山东师范大学
+                                    <br>
+                                    <b>学位年度：</b>
+                                    2008
+                                    <br>
+                                    <b>关键词：</b>
+                                    高等教育 英语教材 英语教学
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--语句修改建议-->
+        <span id="modify_suggest"></span>
+        <div id="advice">
+            <div class="g-line-row"></div>
+            <div class="paper-txt P30 PB0">
+                <div class="paper-section">
+                    <p class="g-font-s16 font-bold g-font-color green MB10">该句修改建议（重度相似，请全面修改）</p>
+                    <span>众所周知，为了辅助学习者实现预期的学习目标，教材内容应在语言项目、技巧和交际策略等方面去适应学习者的需求</span>
+                    <div class="MT10">
+                        <p class="font-bold">同义词：</p>
+                        <ul class="local-source-detail">
+                            <li><span>篇名：</span>《我国大学英语教材变革研究》</li>
+                            <li><span>作者：</span>左桂春</li>
+                            <li><span>分类号：</span>H319</li>
+                            <li><span>学科专业：</span>教育学原理</li>
+                            <li><span>授予学位：</span>硕士</li>
+                            <li><span>导师姓名：</span>张书丰</li>
+                            <li><span>学位授予单位：</span>山东师范大学</li>
+                            <li><span>学位年度：</span>2008</li>
+                            <li><span>关键词：</span>高等教育 英语教材 英语教学</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="back-to-top text-center PB30">
+        <a href="#gototop" class="g-font-color green">回到顶部</a>
+    </div>
+    <div class="paper-footer" style="margin-bottom:100px;">
+        <p>检测报告由<a href="http://www.paperpass.com/" target="_black">PaperPass</a>文献相似度检测系统生成</p>
+        <p>Copyright © 2007-2017 PaperPass</p>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    LAMJS.run([jQuery],function($){
+        'use strict';
+        var System=this;
+
+        var $advice = null;
+        function run(){
+            var i = 0;
+            $advice.show();
+            System.Tab.tab.call(this,{
+                "section":'[tab="section"]',
+                callback:function(){
+                    var $num = $(this).find('.chapter-num');
+                    if($num.length>0){
+                        i++;
+                        $num.text(i);
+                    }
+            }});
+            //没有内容时同时不显示该句修改建议
+            if(0 === i){$advice.hide();}
+        }
+        $(function(){
+            $advice = $('#advice');
+            $(document).on('click','[tab-a="ul"] li',function(){
+                run.call(this);
+            });
+            $(document).on('click','[tab-b="ul"] li',function(){
+                run.call(this);
+            });
+        });
+
+
+    });
+
+
+
+</script>
+

@@ -341,7 +341,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2015-4-2
-	 * 修改日期：2017-10-20
+	 * 修改日期：2018-1-17
 	 * 名称：Tab.tab
 	 * 功能：tab 选项卡功能
 	 * 说明：
@@ -366,19 +366,21 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		$this.closest(D.ul).find(D.li).removeClass(D.active);
 		$this.addClass(D.active);
 		var id = $this.data('id');
-		if(!id){return;}
+		if(!System.isset(id)){return;}
 		var ids = id.toString().split(',');
 		var $section = $(D.section);
 		$section.hide();
 		$section.each(function(){
 			var $this = $(this);
 			var id = $this.data('id');
-			if(ids.in_array(id.toString()) !== -1){
+			if(ids.in_array(id.toString())){
 				D.callback.call(this);
 				$this.show();
 			}
 		});
 	};
+
+
 
 	System.Tab = Tab;
 

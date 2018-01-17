@@ -10,8 +10,8 @@
 			'use strict';
 			var System = this;
 			System.use();
-			System.Loadcommon.
-					load({
+			System.Loadcommon
+					.load({
 						'baseUrl':System.ROOT,
 						'suffix':'.css',
 						'rel':'stylesheet',
@@ -44,7 +44,7 @@
 </head>
 
 <body>
-<div data-controller="body" class="hide">
+<div data-controller="body" class="">
 	<ul class="list sectionFloat clearfix">
 		<li class="cur">111</li>
 		<li>222</li>
@@ -56,7 +56,7 @@
 	<div class="block hide">33333</div>
 
 </div>
-
+<include file="{{_ROOT_}}/demo/views/sentence_detail.html" dataType="html"></include>
 </body>
 <script type="text/javascript">
 
@@ -64,6 +64,7 @@
 		'use strict';
 		var System=this;
 
+		this.Html.include($('include'));
 		$(function(){
 			System.Html.analysisTpl();
 			$('[data-controller=body]').show();
