@@ -116,6 +116,43 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 		},
 		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2015-11-09
+		 * 修改日期：2015-11-09
+		 * 名称： System.defined
+		 * 功能：检查变量名是否已定义了
+		 * 说明：
+		 * 注意：
+		 * @param  (Object)System 	       		NO NULL : 命名空间
+		 * @param  (String)name         	　　	NO NULL : 变量名
+		 * @param  (Object)M	         	　　	NO NULL : 提示出错信息
+		 * @return (Boolean)
+		 * Example：
+		 *
+		 */
+		'defined':function(System,name,M){
+			var defaults={
+				'line':'行号',
+				'message':'message'
+			};
+			if(arguments.length !== 3) {
+				throw new Error("Warning: 缺少参数。");
+				return false;
+			}
+			if(!isObject(M)) {
+				throw new Error("Warning: 缺少错误提示信息");
+				return false;
+			}
+			M = isObject(M) ? this.merge({},[M,defaults]) : defaults;
+			if(!empty(name) && System[name]) {
+				throw new Error(["Warning: the name ","'",name,"'"," is already defined, at ","'",M.line,"'"," line tip: ","-> ",M.message].join(''));
+				return true;
+			}
+			return false;
+		},
+		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-11-22
@@ -191,6 +228,20 @@ window[GRN_LHH].run([window],function(window,undefined){
 			}
 
 		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-8-20
+		 * 修改日期：2016-8-20
+		 * 名称：System.fileExisted
+		 * 功能：检查系统加载器里的文件是否已加载过
+		 * 说明：
+		 * 注意：
+		 * @param file
+		 * @returns {boolean}
+		 */
+		'fileExisted':function(file) {return System.files.in_array(file);},
 
 		/**
 		 *
@@ -241,6 +292,82 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 		},
 		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2017-11-13
+		 * 修改日期：2017-11-13
+		 * 名称： System.http_build_query
+		 * 功能：生成 URL-encode 之后的请求字符串
+		 * 说明：此方法想法来源于php同名函数
+		 * 注意：
+		 * @param {JSON}json
+		 * @returns {*}
+		 */
+		'http_build_query':function(json){
+			if(!System.isPlainObject(json)){return '';}
+			var arr = [];
+			for(var k in json){
+				arr.push(k,'=',json[k],'&');
+			}
+			arr.pop();
+			return arr.join('');
+		},
+		/**
+		 * 检查字符串是否是json格式
+		 * @param s{String}
+		 * @returns {boolean}
+		 */
+		'isJson':function(s){
+			if(System.isset(s) && System.isString(s) && s.match("^\{(.+:.+,*){1,}\}$")){
+				return true;
+			}
+			return false;
+		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2015-11-09
+		 * 修改日期：2015-11-09
+		 * 名称： System.log
+		 * 功能：调试工具
+		 * 说明：
+		 * 注意：
+		 * @param  (Object)M	         	　　	NO NULL : 提示出错信息
+		 * @return (Boolean)
+		 * Example：
+		 *
+		 */
+		'log':function(M){
+			var defaults={
+				'line':'行号',
+				'message':'message'
+			};
+			M = isObject(M) ? System.merge({},[M,defaults]) : defaults;
+			throw new Error(["Warning:: at ","'",M.line,"'"," line tip: -> ",M.message].join(''));
+		},
+		/**
+		 * 产品介绍：
+		 * 创建日期：2017-9-5
+		 * 修改日期：2017-9-5
+		 * 名称：System.printErrorInfoOfObject
+		 * 功能：打印错误信息对象里的所有属性
+		 * 说明：
+		 * 注意：
+		 * @param D
+		 * @returns {string}
+		 */
+		'printErrorInfoOfObject':function(D){
+			var arr =['\n{'];
+			System.search(D,function(k,v){
+				if(!System.isObject(v)){
+					arr.push('\t'+k+':'+typeof v+',');
+				}
+			});
+			arr.push('}\n');
+			return arr.join('\n');
+		},
+		/**
 		 *
 		 * @author: lhh
 		 * 产品介绍：
@@ -264,6 +391,58 @@ window[GRN_LHH].run([window],function(window,undefined){
 			//获取带"/"的项目名，如：/uimcardprj
 			var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
 			return(localhostPaht+projectName);
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-1-18
+		 * 修改日期：2016-3-22
+		 * 名称：System.use
+		 * 功能：用createElement 方式创建标签并且设为异步
+		 * 说明：
+		 * 注意：
+		 * @return  (System)
+		 * Example：
+		 */
+		'use':function(){
+			this.Config.render.use();
+			return this;
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-1-18
+		 * 修改日期：2016-3-22
+		 * 名称：System.unuse
+		 * 功能：用document.write() 方式创建标签并且设为非异步
+		 * 说明：
+		 * 注意：
+		 * @return  (System)
+		 * Example：
+		 */
+		'unuse':function(){
+			this.Config.render.unuse();
+			return this;
+		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：覆写方法
+		 * 创建日期：
+		 * 修改日期：
+		 * 名称： System.override
+		 * 功能：
+		 * 说明：
+		 * 注意：
+		 * @param   (Function)old_fn 	 NO NULL :
+		 * @param 	(Function)new_fn     NO NULL :
+		 * Example：返回原有的方法原型
+		 *
+		 */
+		'override':function(old_fn,new_fn){
+			var old=old_fn;
+			old_fn=new_fn;
+			return old;
 		},
 		/**
 		 *
