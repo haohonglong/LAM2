@@ -113,7 +113,7 @@
 			System['Basis']=Basis;
 		});
 
-	})(window,GRN_LHH,function(window,namespace,undefined){
+	})(window,window.GRN_LHH,function(window,namespace,undefined){
 		'use strict';
 		// Used for trimming whitespace
 		var trimLeft = /^\s+/,
