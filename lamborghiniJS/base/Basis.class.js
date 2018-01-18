@@ -245,8 +245,8 @@
 
 
 
-		if(!alert){
-			alert=console.log;
+		if(!window.alert){
+			window.alert=console.log;
 		}
 
 		var Function;
