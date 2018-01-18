@@ -10,18 +10,6 @@
 			'use strict';
 			var System = this;
 			System.use();
-			System.Loadcommon
-					.load({
-						'baseUrl':System.ROOT,
-						'suffix':'.css',
-						'rel':'stylesheet',
-						'css':[
-							'/common/css/lib/lib'
-						]
-					})
-					.print();
-
-
 			System.import([
 				'/Tab.class'
 			],System.classPath);
@@ -50,21 +38,25 @@
 		<li>222</li>
 		<li>333</li>
 	</ul>
-	<div class="block"><a data-var="tpl" href="{{_ROOT_}}/hhh">1111</a> </div>
-	<img data-var="tpl" src="{{_ROOT_}}/333"/>
-	<div class="block hide">22222</div>
-	<div class="block hide">33333</div>
+	<div class="block">
+		<include file="{{_ROOT_}}/demo/views/sentence_detail.html" dataType="html"></include>
+	</div>
+
+	<div class="block none">
+		222
+	</div>
+	<div class="block none">33333</div>
 
 </div>
-<include file="{{_ROOT_}}/demo/views/sentence_detail.html" dataType="html"></include>
+
 </body>
 <script type="text/javascript">
 
 	LAMJS.run(function(){
 		'use strict';
 		var System=this;
+		System.Html.include($('include'));
 
-		this.Html.include($('include'));
 		$(function(){
 			System.Html.analysisTpl();
 			$('[data-controller=body]').show();
