@@ -42,7 +42,7 @@ if(!GRN_LHH){
 })(typeof window !== "undefined" ? window : this,GRN_LHH,function(window,namespace,undefined){
 	'use strict';
 	var VERSION="2.0.5";
-	var Interface,System;
+	var Interface,System,once=true;
 	// Used for trimming whitespace
 	var trimLeft = /^\s+/,
 		trimRight = /\s+$/,
@@ -375,7 +375,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2016-8-23
+		 * 修改日期：2018-1-18
 		 * 名称：System.main
 		 * 功能：程序主方法
 		 * 说明：
@@ -385,9 +385,7 @@ if(!GRN_LHH){
 		 * @return  (Object) 返回callback 里的返回值
 		 * Example：
 		 */
-		'main':function(args,callback){
-			return this.run(args,callback);
-		},
+		'main':null,
 		/**
 		 * 退出javascript 进程
 		 */
@@ -396,7 +394,7 @@ if(!GRN_LHH){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2016-8-23
+		 * 修改日期：2018-1-18
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -407,7 +405,12 @@ if(!GRN_LHH){
 		 * Example：
 		 */
 		'run':function(args,callback){
-			return runtime.apply(this,[args,callback]);
+			if(once && System.isFunction(this.main)){
+				once = false;
+				this.main.apply(this,args);
+			}else{
+				return runtime.apply(this,[args,callback]);
+			}
 		},
 		/**
 		 *
