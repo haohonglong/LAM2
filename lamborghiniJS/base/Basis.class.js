@@ -480,9 +480,9 @@
 				if(once && System.isFunction(this.main)){
 					once = false;
 					this.main.apply(this,args);
-				}else{
-					return runtime.apply(this,[args,callback]);
 				}
+				return runtime.apply(this,[args,callback]);
+
 			},
 			/**
 			 *
