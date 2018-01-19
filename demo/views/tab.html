@@ -24,33 +24,8 @@
 			System.import([
 				'/Tab.class'
 			],System.classPath);
-
-
 			System.Html.include($('include'));
 
-			$(function(){
-				System.Html.analysisTpl();
-				$('[data-controller=body]').show();
-				new System.Tab({
-					'list':$('.list li'),
-					'event':'click',
-					'hover':false,
-					'or':true,
-					'class':'cur',
-					'block':$('.block'),
-					'fn':function(obj){
-						var index=obj.this_index;
-						obj.current.block.hide();
-						obj.current.block.eq(index).show();
-
-					}
-				}).run();
-
-
-
-
-
-			});
 		};
 
 
@@ -70,28 +45,50 @@
 </style>
 </head>
 
-<body>
-<div data-controller="body" class="">
-	<ul class="list sectionFloat clearfix">
-		<li class="cur">111</li>
-		<li>222</li>
-		<li>333</li>
-	</ul>
-	<div class="block">
-		<include file="{{_ROOT_}}/demo/views/sentence_detail.html" dataType="html"></include>
+<body class="container-fluid">
+<div class="row">
+	<div class="col-md-4">
+		<ul class="list-group" data-tab="select">
+			<li class="list-group-item" data-id="sentence_detail">sentence_detail</li>
+			<li class="list-group-item" data-id="drag">drag</li>
+			<li class="list-group-item" data-id="dropdown">dropdown</li>
+			<li class="list-group-item" data-id="popLayer">popLayer</li>
+		</ul>
 	</div>
+	<div class="col-md-8">
+		<div class="block" data-tab="section" data-id="sentence_detail">
+			<include file="{{_ROOT_}}/demo/views/sentence_detail.html" dataType="html"></include>
+		</div>
 
-	<div class="block none">
-		222
+		<div class="block none" data-tab="section" data-id="drag">
+			<include file="{{_ROOT_}}/demo/views/drag.html" dataType="html"></include>
+		</div>
+		<div class="block none" data-tab="section" data-id="dropdown">
+			<include file="{{_ROOT_}}/demo/views/dropdown.html" dataType="html"></include>
+		</div>
+		<div class="block none" data-tab="section" data-id="popLayer">
+			<include file="{{_ROOT_}}/demo/views/popLayer.html" dataType="html"></include>
+		</div>
 	</div>
-	<div class="block none">33333</div>
-
 </div>
+
+
 
 </body>
 <script type="text/javascript">
 
-	LAMJS.run();
+	LAMJS.run(function(){
+		'use strict';
+		var System = this;
+
+		$(function(){
+			System.Html.analysisTpl();
+			$(document).on('click', '[data-tab="select"] li', function () {
+				System.Tab.tab.call(this);
+
+			});
+		});
+	});
 
 </script>
 </html>

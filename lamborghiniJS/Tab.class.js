@@ -341,7 +341,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2015-4-2
-	 * 修改日期：2018-1-17
+	 * 修改日期：2018-1-19
 	 * 名称：Tab.tab
 	 * 功能：tab 选项卡功能
 	 * 说明：
@@ -356,7 +356,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	Tab.tab=function(D){
 		var defaults ={
 			"li":"li",
-			"ul":'[data-tab="ul"]',
+			"ul":'ul',
 			"section":'[data-tab="section"]',
 			"active":'active',
 			"callback":function(){}
