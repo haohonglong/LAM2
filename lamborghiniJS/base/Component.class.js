@@ -120,19 +120,19 @@ window[GRN_LHH].run([window],function(window,undefined){
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-11-09
-		 * 修改日期：2015-11-09
+		 * 修改日期：2018-1-19
 		 * 名称： System.defined
 		 * 功能：检查变量名是否已定义了
 		 * 说明：
 		 * 注意：
-		 * @param  (Object)System 	       		NO NULL : 命名空间
+		 * @param  (Object)Obj 	       		    NO NULL : 命名空间
 		 * @param  (String)name         	　　	NO NULL : 变量名
 		 * @param  (Object)M	         	　　	NO NULL : 提示出错信息
 		 * @return (Boolean)
 		 * Example：
 		 *
 		 */
-		'defined':function(System,name,M){
+		'defined':function(Obj,name,M){
 			var defaults={
 				'line':'行号',
 				'message':'message'
@@ -141,12 +141,12 @@ window[GRN_LHH].run([window],function(window,undefined){
 				throw new Error("Warning: 缺少参数。");
 				return false;
 			}
-			if(!isObject(M)) {
+			if(!System.isObject(M)) {
 				throw new Error("Warning: 缺少错误提示信息");
 				return false;
 			}
-			M = isObject(M) ? this.merge({},[M,defaults]) : defaults;
-			if(!empty(name) && System[name]) {
+			M = System.isObject(M) ? this.merge({},[M,defaults]) : defaults;
+			if(!System.empty(name) && Obj[name]) {
 				throw new Error(["Warning: the name ","'",name,"'"," is already defined, at ","'",M.line,"'"," line tip: ","-> ",M.message].join(''));
 				return true;
 			}
