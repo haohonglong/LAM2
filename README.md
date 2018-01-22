@@ -93,27 +93,32 @@
 			config.js 分为两个，一个是当前配置文件(对应当前的视图或控制器的位置)，一个是主配置文件。
 			当前配置文件是跟视图文件或者控制器文件在同级目录里，
 			当前配置文件的作用：
-				1.配置项目主目录路径（修改factory函数的第二和第三参数）
+				1.配置项目主目录路径（修改factory函数参数的值）
 				2.检测类库文件是否已被加载过
 				3.引入主配置文件
 			内容如下：
 			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-				(function(window,factory){
+				(function(window){
                     'use strict';
-                    factory(window,"../..","/common/config/config.js");
-                })(typeof window !== "undefined" ? window : this,function(window,ROOT,url){
-                    'use strict';
-                    if(window.GRN_LHH && window[GRN_LHH] != undefined){return;}
-                    if(!window._ROOT_){
-                        window._ROOT_ = ROOT;
-                    }else{
-                        ROOT = window._ROOT_;
-                    }
-                    var tag = "script",attrs=[];
-                    attrs.push('type="text/javascript"');
-                    url=ROOT+url;
-                    document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
-                });
+                    if(window.GRN_LHH && window[window.GRN_LHH]){return;}
+                    (function(factory){
+                        'use strict';
+                        factory("../..","/common/config/config.js");
+                    })(function(ROOT,url){
+                        'use strict';
+                        if(!window._ROOT_){
+                            window._ROOT_ = ROOT;
+                        }else{
+                            ROOT = window._ROOT_;
+                        }
+                        var tag = "script",attrs=[];
+                        attrs.push('type="text/javascript"');
+                        url=ROOT+url;
+                        document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
+                    });
+                })(typeof window !== "undefined" ? window : this);
+                
+
 
 			<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		

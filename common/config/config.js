@@ -13,15 +13,14 @@
 
 (function(window,undefined){
     'use strict';
-    if(window.GRN_LHH && window[GRN_LHH] != undefined){return;}
-
-    //基础类的设置
-    if(!window.GRN_LHH){
+    var ROOT="",_ROOT_="",System={},Config={},namespace="";
+    //check
+    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){
+        return;
+    }else{
         window.GRN_LHH='System';
     }
-
-    var ROOT="",_ROOT_="";
-
+    namespace = window.GRN_LHH;
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
@@ -36,15 +35,18 @@
         return(localhostPaht+projectName);
     }
 
-    (function(global,namespace,System,Config){
-        'use strict';
+    if(!window._ROOT_){
+        _ROOT_ = window._ROOT_ = getRootPath();
+    }else{
+        _ROOT_ = window._ROOT_;
+    }
 
-        if(!global._ROOT_){
-            _ROOT_ = global._ROOT_ = getRootPath();
-        }else{
-            _ROOT_ = global._ROOT_;
-        }
-        Config = System.Config = {
+    (function(factory){
+        'use strict';
+        window[namespace] = System = factory(System);
+    })(function(System){
+        'use strict';
+        System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
@@ -160,9 +162,10 @@
                 return this.vendorPath;
             }
         };
+
         System.wait=function(callback,time){
             time = time || 15000;
-            global.setTimeout(function(){
+            window.setTimeout(function(){
                 callback.call(System);
             }, time);
         };
@@ -214,18 +217,16 @@
          * @return  (voide)
          */
         System.close=function(document){
-            document = document || global.document;
+            document = document || window.document;
             document.close();
         };
+        return System;
+    });
 
-        global[namespace] = System;
 
-    })(window,GRN_LHH,{});
-
-//加载初始化文件
-    (function(System,Config){
-        'use strict';
-        Config=System.Config;
+    //加载初始化文件
+    //=============================================================================================================
+    (function(System){
         Config.files = Config.files || [];
         var tag = "script";
         var scriptAttribute = Config.render.default.script.Attribute;
@@ -244,7 +245,7 @@
             requirejs(srcs,function(){});
 
         }else{
-            //=================================================================================================================================
+
             if(Config.render.create){
                 for(i=0,len = srcs.length;i < len; i++){
                     //确保每个文件只加载一次
@@ -283,8 +284,9 @@
             },30000);
             //=================================================================================================================================
         }
-    })(window[GRN_LHH]);
-})(window);
+    })(System);
+})(typeof window !== "undefined" ? window : this);
+
 
 
 

@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-3-20
- * 修改日期:2017-11-1
+ * 修改日期:2018-1-22
  * 功能：配置文件
  * 说明 : 这个文件要copy到项目里面可以修改 System.Config里的属性 和 GRN_LHH; 的值；
  *
@@ -10,17 +10,17 @@
  *
  *
  */
-(function(window){
-    'use strict';
-    if(window.GRN_LHH && window[GRN_LHH] != undefined){return;}
 
-    //基础类的设置
-    if(!window.GRN_LHH){
+(function(window,undefined){
+    'use strict';
+    var ROOT="",_ROOT_="",System={},Config={},namespace="";
+    //check
+    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){
+        return;
+    }else{
         window.GRN_LHH='System';
     }
-
-    var ROOT="",_ROOT_="";
-
+    namespace = window.GRN_LHH;
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
@@ -35,16 +35,18 @@
         return(localhostPaht+projectName);
     }
 
-    (function(global,namespace,System,Config){
+    if(!window._ROOT_){
+        _ROOT_ = window._ROOT_ = getRootPath();
+    }else{
+        _ROOT_ = window._ROOT_;
+    }
+
+    (function(factory){
         'use strict';
-
-        if(!global._ROOT_){
-            _ROOT_ = global._ROOT_ = getRootPath();
-        }else{
-            _ROOT_ = global._ROOT_;
-        }
-
-        Config = System.Config = {
+        window[namespace] = System = factory(System);
+    })(function(System){
+        'use strict';
+        System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
@@ -159,9 +161,10 @@
                 return this.vendorPath;
             }
         };
+
         System.wait=function(callback,time){
             time = time || 15000;
-            global.setTimeout(function(){
+            window.setTimeout(function(){
                 callback.call(System);
             }, time);
         };
@@ -213,18 +216,16 @@
          * @return  (voide)
          */
         System.close=function(document){
-            document = document || global.document;
+            document = document || window.document;
             document.close();
         };
+        return System;
+    });
 
-        global[namespace] = System;
 
-    })(window,GRN_LHH,{});
-
-//加载初始化文件
-    (function(System,Config){
-        'use strict';
-        Config=System.Config;
+    //加载初始化文件
+    //=============================================================================================================
+    (function(System){
         Config.files = Config.files || [];
         var tag = "script";
         var scriptAttribute = Config.render.default.script.Attribute;
@@ -243,7 +244,7 @@
             requirejs(srcs,function(){});
 
         }else{
-            //=================================================================================================================================
+
             if(Config.render.create){
                 for(i=0,len = srcs.length;i < len; i++){
                     //确保每个文件只加载一次
@@ -282,8 +283,9 @@
             },30000);
             //=================================================================================================================================
         }
-    })(window[GRN_LHH]);
-})(window);
+    })(System);
+})(typeof window !== "undefined" ? window : this);
+
 
 
 
