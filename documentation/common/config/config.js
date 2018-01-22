@@ -20,7 +20,7 @@
         window.GRN_LHH='System';
     }
 
-    var ROOT="";
+    var ROOT="",_ROOT_="";
 
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
@@ -39,7 +39,11 @@
     (function(global,namespace,System,Config){
         'use strict';
 
-        if(!global._ROOT_){global._ROOT_ = getRootPath();}
+        if(!global._ROOT_){
+            _ROOT_ = global._ROOT_ = getRootPath();
+        }else{
+            _ROOT_ = global._ROOT_;
+        }
         Config = System.Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,

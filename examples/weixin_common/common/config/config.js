@@ -19,7 +19,7 @@
         window.GRN_LHH='System';
     }
 
-    var ROOT="";
+    var ROOT="",_ROOT_="";
 
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
@@ -35,13 +35,13 @@
         return(localhostPaht+projectName);
     }
 
-
     (function(global,namespace,System,Config){
         'use strict';
 
         if(!global._ROOT_){
-            global._ROOT_ = getRootPath();
-
+            _ROOT_ = global._ROOT_ = getRootPath();
+        }else{
+            _ROOT_ = global._ROOT_;
         }
 
         Config = System.Config = {

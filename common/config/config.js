@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-1-18
+ * 修改日期:2018-1-22
  * 功能：配置文件
  * 说明 : 这个文件要copy到项目里面可以修改 System.Config里的属性 和 GRN_LHH; 的值；
  *
@@ -20,7 +20,7 @@
         window.GRN_LHH='System';
     }
 
-    var ROOT="";
+    var ROOT="",_ROOT_="";
 
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
@@ -39,7 +39,11 @@
     (function(global,namespace,System,Config){
         'use strict';
 
-        if(!global._ROOT_){global._ROOT_ = getRootPath();}
+        if(!global._ROOT_){
+            _ROOT_ = global._ROOT_ = getRootPath();
+        }else{
+            _ROOT_ = global._ROOT_;
+        }
         Config = System.Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,

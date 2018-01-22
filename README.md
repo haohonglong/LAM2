@@ -6,7 +6,7 @@
 	version ：2.0.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-1-11
+	修改日期 ：2018-1-22
 
 
 # 产品介绍：
@@ -93,22 +93,28 @@
 			config.js 分为两个，一个是当前配置文件(对应当前的视图或控制器的位置)，一个是主配置文件。
 			当前配置文件是跟视图文件或者控制器文件在同级目录里，
 			当前配置文件的作用：
-				1.配置项目主目录路径（_ROOT_ 变量）
-				2.引入主配置文件
-			当前配置文件的配置：这里只修改_ROOT_ 变量值其余都不用动
+				1.配置项目主目录路径（修改factory函数的第二和第三参数）
+				2.检测类库文件是否已被加载过
+				3.引入主配置文件
 			内容如下：
 			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-				if(!_ROOT_){
-					var _ROOT_ = '../..';
-		
-				}
-				(function(){
-					var tag = "script",attrs=[],src;
-					attrs.push('type="text/javascript"');
-					src=_ROOT_+'/config.js';
-		
-					document.write('<',tag,' ',attrs.join(' '),'src=','"',src,'"','>','<','/',tag,'>');
-				})();
+				(function(window,factory){
+                    'use strict';
+                    factory(window,"../..","/common/config/config.js");
+                })(typeof window !== "undefined" ? window : this,function(window,ROOT,url){
+                    'use strict';
+                    if(window.GRN_LHH && window[GRN_LHH] != undefined){return;}
+                    if(!window._ROOT_){
+                        window._ROOT_ = ROOT;
+                    }else{
+                        ROOT = window._ROOT_;
+                    }
+                    var tag = "script",attrs=[];
+                    attrs.push('type="text/javascript"');
+                    url=ROOT+url;
+                    document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
+                });
+
 			<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		
 
