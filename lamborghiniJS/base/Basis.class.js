@@ -46,7 +46,7 @@
 	 *
 	 */
 	if(!window.GRN_LHH){window.GRN_LHH='System';}
-	if('_20150910123700_' in window){return;}
+	if('LAM_20150910123700_' in window){return;}
 
 	var VERSION="2.0.5";
 	var Interface=null,System=null,once=true;
