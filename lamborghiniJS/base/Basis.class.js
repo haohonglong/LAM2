@@ -367,6 +367,7 @@
 			},
 			'View': {},
 			'Validation':{},
+			'Base64':{},
 			'Widget': {}
 		};
 
