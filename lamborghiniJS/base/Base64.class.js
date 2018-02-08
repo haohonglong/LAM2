@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2018-2-1
- * 修改日期:2018-2-1
+ * 修改日期:2018-2-8
  * 名称：Base64
  * 功能：
  * 说明 :
@@ -14,12 +14,63 @@ window[GRN_LHH].run(function(){
     System.is(System,'Component','Base64',System.classPath+'/base');
     var __this__=null;
 
-    var _table= [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-        'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
-        'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-        'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
-    ];
+    var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    /**
+     * private method for UTF-8 encoding
+     * @param string
+     * @returns {string}
+     * @private
+     */
+    var _utf8_encode = function (string) {
+        string = string.replace(/\r\n/g,"\n");
+        var utftext = "";
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n);
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            } else if((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            } else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+
+        }
+        return utftext;
+    },
+
+
+    /**
+     * private method for UTF-8 decoding
+     * @param utftext
+     * @returns {string}
+     * @private
+     */
+    _utf8_decode = function (utftext) {
+        var string = "";
+        var i = 0, c,c1,c2,c3;
+        c = c1 = c2 = 0;
+        while ( i < utftext.length ) {
+            c = utftext.charCodeAt(i);
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            } else if((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i+1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            } else {
+                c2 = utftext.charCodeAt(i+1);
+                c3 = utftext.charCodeAt(i+2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+        }
+        return string;
+    };
 
     var Base64 = System.Component.extend({
         constructor: function (){
@@ -47,82 +98,57 @@ window[GRN_LHH].run(function(){
     });
     /**
      *
-     * @param bin
+     * @param {string}input
      * @returns {string}
      */
-    Base64.encode= function (bin) {
-        var codes = [];
-        var un = 0;
-        un = bin.length % 3;
-        if (un == 1)
-            bin.push(0, 0);
-        else if (un == 2)
-            bin.push(0);
-        for (var i = 2; i < bin.length; i += 3) {
-            var c = bin[i - 2] << 16;
-            c |= bin[i - 1] << 8;
-            c |= bin[i];
-            codes.push(_table[c >> 18 & 0x3f]);
-            codes.push(_table[c >> 12 & 0x3f]);
-            codes.push(_table[c >> 6 & 0x3f]);
-            codes.push(_table[c & 0x3f]);
+    Base64.encode= function (input) {
+        var output = "",chr1, chr2, chr3, enc1, enc2, enc3, enc4,i = 0;
+        input = _utf8_encode(input);
+        while (i < input.length) {
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+            output = output +
+                _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+                _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
         }
-        if (un >= 1) {
-            codes[codes.length - 1] = "=";
-            bin.pop();
-        }
-        if (un == 1) {
-            codes[codes.length - 2] = "=";
-            bin.pop();
-        }
-        return codes.join("");
+        return output;
     };
     /**
      *
-     * @param base64Str
-     * @returns {Array}
+     * @param {string}input
+     * @returns {string}
      */
-    Base64.decode= function (base64Str) {
-        var i = 0;
-        var bin = [];
-        var x = 0, code = 0, eq = 0;
-        while (i < base64Str.length) {
-            var c = base64Str.charAt(i++);
-            var idx = _table.indexOf(c);
-            if (idx == -1) {
-                switch (c) {
-                    case '=': idx = 0; eq++; break;
-                    case ' ':
-                    case '\n':
-                    case "\r":
-                    case '\t':
-                        continue;
-                    default:
-                        throw { "message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u65E0\u6548\u7F16\u7801\uFF1A" + c };
-                }
+    Base64.decode= function (input) {
+        var output = "",chr1, chr2, chr3,enc1, enc2, enc3, enc4,i = 0;
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+        while (i < input.length) {
+            enc1 = _keyStr.indexOf(input.charAt(i++));
+            enc2 = _keyStr.indexOf(input.charAt(i++));
+            enc3 = _keyStr.indexOf(input.charAt(i++));
+            enc4 = _keyStr.indexOf(input.charAt(i++));
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+            output = output + String.fromCharCode(chr1);
+            if (enc3 != 64) {
+                output = output + String.fromCharCode(chr2);
             }
-            if (eq > 0 && idx != 0)
-                throw { "message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u683C\u5F0F\u9519\u8BEF\uFF01" };
-
-            code = code << 6 | idx;
-            if (++x != 4)
-                continue;
-            bin.push(code >> 16);
-            bin.push(code >> 8 & 0xff);
-            bin.push(code & 0xff);
-            code = x = 0;
+            if (enc4 != 64) {
+                output = output + String.fromCharCode(chr3);
+            }
         }
-        if (code != 0)
-            throw { "message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u6570\u636E\u957F\u5EA6\u9519\u8BEF" };
-        if (eq == 1)
-            bin.pop();
-        else if (eq == 2) {
-            bin.pop();
-            bin.pop();
-        } else if (eq > 2)
-            throw { "message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u683C\u5F0F\u9519\u8BEF\uFF01" };
-
-        return bin;
+        output = _utf8_decode(output);
+        return output;
     };
 
 
