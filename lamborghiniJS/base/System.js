@@ -57,7 +57,7 @@
 
 })(this,function(window,namespace,undefined){
 // Used for trimming whitespace
-	var VERSION="2.0.5";
+	var VERSION="2.0.6";
 	var Interface={},System={},once=true;
 	var trimLeft = /^\s+/,
 		trimRight = /\s+$/,
