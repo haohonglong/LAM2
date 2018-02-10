@@ -11,8 +11,8 @@
 		return;
 	}else{
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-				(System['EditTables'] = factory(System));
+		typeof define === 'function' && define.amd ? define(factory(System)) :
+		(System['EditTables'] = factory(System));
 	}
 
 })(this,function(System){

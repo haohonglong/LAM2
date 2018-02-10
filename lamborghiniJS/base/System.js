@@ -51,8 +51,8 @@
 	}else{
 		var namespace = IT.GRN_LHH;
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(IT,namespace) :
-			typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
-				(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
+		typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
+		(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
 	}
 
 })(this,function(window,namespace,undefined){

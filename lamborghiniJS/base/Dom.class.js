@@ -19,8 +19,8 @@
 		return;
 	}else{
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-				(System['Dom'] = factory(System));
+		typeof define === 'function' && define.amd ? define(factory(System)) :
+		(System['Dom'] = factory(System));
 	}
 
 })(this,function(System){
