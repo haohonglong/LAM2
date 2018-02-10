@@ -33,12 +33,21 @@
  *		
  * 
  */
-window[GRN_LHH].run([window],function(window,undefined){
+
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Cache'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Browser','Cache',System.classPath+'/base');
 	var __this__=null;
-
 
 	var Cache = System.Browser.extend({
 		constructor: function(name,type){
@@ -186,6 +195,5 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'destructor':function(){}
 	});
 
-	System['Cache'] = Cache;
-
+	return Cache;
 });

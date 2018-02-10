@@ -17,10 +17,18 @@
  *      
  * 
  */
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
     'use strict';
-    var System=this;
+    var System = IT['LAM_20150910123700_'];
+
+    if(!System){
+        return;
+    }else{
+        System['Drag_xy'] = factory(System);
+    }
+
+})(this,function(System){
+    'use strict';
     System.is(System,'Drag','Drag_xy',System.classPath+'/base');
     System.import([
         '/Event.class'
@@ -219,11 +227,9 @@ window[GRN_LHH].run([window],function(window,undefined){
         'destructor':function(){}
     });
 
-    System['Drag_xy']=Drag_xy;
-
-
-
+    return Drag_xy;
 });
+
 
 
 

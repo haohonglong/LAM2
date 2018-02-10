@@ -1,8 +1,18 @@
 /**
  * 棋盘
  */
-window[GRN_LHH].run([window],function(window,undefined){
-	var System=this;
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Html5']['Chess'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System.Html5,'Shape','Chess',System.classPath+'/base');
 	var __this__=null;
 	//棋盘行列数
@@ -188,7 +198,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 	});
 
 
-	System['Html5']['Chess'] = Chess;
-
+	return Chess;
 });
+
 

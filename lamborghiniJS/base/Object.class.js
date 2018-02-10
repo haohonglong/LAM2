@@ -12,12 +12,19 @@
  *
  *
  */
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
-	System.is(System,'Base','Object',System.classPath+'/base');
+	var System = IT['LAM_20150910123700_'];
 
+	if(!System){
+		return;
+	}else{
+		System['Object'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
+	System.is(System,'Base','Object',System.classPath+'/base');
 	var __this__=null;
 	var Object = System.Base.extend({
 		constructor: function() {
@@ -118,8 +125,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 	};
 
 
-	System['Object']=Object;
-
+	return Object;
 });
+
+
 
 

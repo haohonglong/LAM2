@@ -1,9 +1,15 @@
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
 
-window[GRN_LHH].run([window],function(window,undefined){
+	if(!System){
+		return;
+	}else{
+		System['Error'] = factory(System);
+	}
 
-	var System=this;
+})(this,function(System){
 	System.is(System,'Component','Error',System.classPath+'/base');
-
 	var __this__=null;
 	var Error = System.Component.extend({
 		constructor: function(sMessage, sUrl, sLine){
@@ -62,7 +68,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		}
 	});
 
-	System['Error']= Error;
-
+	return Error;
 });
+
 

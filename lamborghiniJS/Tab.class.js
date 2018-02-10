@@ -1,16 +1,21 @@
-
-window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Tab'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Browser','Tab',System.classPath+'/base');
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
 	var __this__=null;
 	var fixEvt = System.Event.fixEvt;
-
-
-
 	/**
 	 *
 	 * @author lhh
@@ -64,148 +69,148 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	 * Example：
 	 */
 	function bind_eve(D,eve,css){
-			var $list= $(D.list);
-			var $parent=$(D.parent);
-			//当鼠标事件为hover 同时 hover 没有设定 ture 时 鼠标离开时除去移入添加的样式
-			var hover = 'hover' === eve && !D.hover ? function(){D.temp.removeClass(css)} : null;
-			unbind(D,eve);
-			if('on' === D.on){
-				$parent.on(eve,D.list,function(event){
-					bind_eve_doit.call(this,D,eve,css,event);
-				},hover);
-			}else if('live' === D.on){
-				$list.live(eve,function(event){
-					bind_eve_doit.call(this,D,eve,css,event);
-				},hover);
-			}else{
-				$list.bind(eve,function(event){
-					bind_eve_doit.call(this,D,eve,css,event);
-				},hover);
-			}
-
-
+		var $list= $(D.list);
+		var $parent=$(D.parent);
+		//当鼠标事件为hover 同时 hover 没有设定 ture 时 鼠标离开时除去移入添加的样式
+		var hover = 'hover' === eve && !D.hover ? function(){D.temp.removeClass(css)} : null;
+		unbind(D,eve);
+		if('on' === D.on){
+			$parent.on(eve,D.list,function(event){
+				bind_eve_doit.call(this,D,eve,css,event);
+			},hover);
+		}else if('live' === D.on){
+			$list.live(eve,function(event){
+				bind_eve_doit.call(this,D,eve,css,event);
+			},hover);
+		}else{
+			$list.bind(eve,function(event){
+				bind_eve_doit.call(this,D,eve,css,event);
+			},hover);
 		}
-		/**
-		 *
-		 * @author lhh
-		 * 产品介绍：
-		 * 创建日期：2014-5-29
-		 * 修改日期：2017-8-10
-		 * 名称：private (void) select_event
-		 * 功能：选择相应的事件
-		 * 说明：
-		 * 注意：
-		 * (Object no null) 	 D,
-		 * (String no null) 	'eve',//要绑定的事件
-		 * (String no null) 	'css' //事件绑定时要添加的样式
-		 * Example：
-		 */
-		function select_event(D,eve,css){
-			var $list=$(D.list);
-			switch(eve){
-				case 'keydown'://判断键盘按下去的按键值
-					$list[eve](function(event){
-						var e = fixEvt(event);
-						switch(e && e.keyCode){
-							case System.Event.keyCode.ESCAPE:// 按 Esc
-
-								break;
-							case System.Event.keyCode.F2:// 按 F2
-
-								break;
-							case System.Event.keyCode.ENTER:// enter 键
-								e.keyCode=System.Event.keyCode.TAB;
-								return false;
-								break;
-							case System.Event.keyCode.TAB:// Tab 键
-
-								break;
 
 
+	}
+	/**
+	 *
+	 * @author lhh
+	 * 产品介绍：
+	 * 创建日期：2014-5-29
+	 * 修改日期：2017-8-10
+	 * 名称：private (void) select_event
+	 * 功能：选择相应的事件
+	 * 说明：
+	 * 注意：
+	 * (Object no null) 	 D,
+	 * (String no null) 	'eve',//要绑定的事件
+	 * (String no null) 	'css' //事件绑定时要添加的样式
+	 * Example：
+	 */
+	function select_event(D,eve,css){
+		var $list=$(D.list);
+		switch(eve){
+			case 'keydown'://判断键盘按下去的按键值
+				$list[eve](function(event){
+					var e = fixEvt(event);
+					switch(e && e.keyCode){
+						case System.Event.keyCode.ESCAPE:// 按 Esc
 
-							default:
+							break;
+						case System.Event.keyCode.F2:// 按 F2
+
+							break;
+						case System.Event.keyCode.ENTER:// enter 键
+							e.keyCode=System.Event.keyCode.TAB;
+							return false;
+							break;
+						case System.Event.keyCode.TAB:// Tab 键
+
+							break;
 
 
-						}
+
+						default:
+
+
+					}
+				});
+
+				break;
+			case 'hover':
+				$list.off('mouseenter').off('mouseleave')
+					.on('mouseenter',function() {
+						$(this).addClass(css);
+					})
+					.on('mouseleave',function() {
+						$(this).removeClass(css);
 					});
+				break;
 
-					break;
-				case 'hover':
-					$list.off('mouseenter').off('mouseleave')
-						.on('mouseenter',function() {
-							$(this).addClass(css);
-						})
-						.on('mouseleave',function() {
-							$(this).removeClass(css);
-						});
-					break;
-
-				default:
+			default:
 
 
-					bind_eve(D,eve,css);
-
-			}
-
+				bind_eve(D,eve,css);
 
 		}
-		/**
-		 *	创建日期：2014-11-10
-		 * 修改日期：2016-10-4
-		 *	名称：private (void) isArray_css
-		 * 功能：对个事件匹配多个样式
-		 * 参数： (Object no null) 	 D,
-		 *		   (Array no null) 	'arr_eve',//要绑定的事件集合
-		 *		   (Array no null) 	'arr_eve' //事件绑定时要添加的样式的集合
-		 *
-		 */
-		function multi_css(D,arr_eve,arr_css,css){
 
-			var flag=false;
-			if(arr_css.length > 1) flag=true;
-			for(var i=0;i<arr_eve.length;i++){
-				if(flag){//多个事件执行不同的选中状态样式 同传入的是对象执行的效果是一样的
-					select_event(D,arr_eve[i],arr_css[i]);
-				}else{
-					select_event(D,arr_eve[i],css);
 
-				}
-			}
+	}
+	/**
+	 *	创建日期：2014-11-10
+	 * 修改日期：2016-10-4
+	 *	名称：private (void) isArray_css
+	 * 功能：对个事件匹配多个样式
+	 * 参数： (Object no null) 	 D,
+	 *		   (Array no null) 	'arr_eve',//要绑定的事件集合
+	 *		   (Array no null) 	'arr_eve' //事件绑定时要添加的样式的集合
+	 *
+	 */
+	function multi_css(D,arr_eve,arr_css,css){
 
-		}
-		/**
-		 *	创建日期：
-		 * 修改日期：2016-10-4
-		 *	名称：private (void) execu_event
-		 * 功能：执行传入的事件行为
-		 * 参数：(Object no null) D
-		 *
-		 */
-		function execu_event(D,css){
-			if(System.isObject(D.event)){//传入的是对象目的多个事件执行不同的选中状态样式
-				//{'k':v}
-				var E=D.event;
-				for(var k in E){
-					select_event(D,k,E[k]);
-				}
+		var flag=false;
+		if(arr_css.length > 1) flag=true;
+		for(var i=0;i<arr_eve.length;i++){
+			if(flag){//多个事件执行不同的选中状态样式 同传入的是对象执行的效果是一样的
+				select_event(D,arr_eve[i],arr_css[i]);
+			}else{
+				select_event(D,arr_eve[i],css);
 
-			}else if(System.isArray(D.event)){//传入的数组
-				if(0 === D.event.length) {
-					throw new Error('Warning: 数组必须要有值');
-					return 0;
-				}
-				var arr_eve=D.event,arr_css=css;
-				multi_css(D,arr_eve,arr_css);
-			}else{//传入的是字符串用,号分割
-				var arr_eve=D.event.split(","),arr_css=css.split(",");
-				if(arr_eve.length > 1){
-					multi_css(D,arr_eve,arr_css,css);
-				}else{
-					bind_eve(D,D.event,css);
-
-				}
 			}
 		}
+
+	}
+	/**
+	 *	创建日期：
+	 * 修改日期：2016-10-4
+	 *	名称：private (void) execu_event
+	 * 功能：执行传入的事件行为
+	 * 参数：(Object no null) D
+	 *
+	 */
+	function execu_event(D,css){
+		if(System.isObject(D.event)){//传入的是对象目的多个事件执行不同的选中状态样式
+			//{'k':v}
+			var E=D.event;
+			for(var k in E){
+				select_event(D,k,E[k]);
+			}
+
+		}else if(System.isArray(D.event)){//传入的数组
+			if(0 === D.event.length) {
+				throw new Error('Warning: 数组必须要有值');
+				return 0;
+			}
+			var arr_eve=D.event,arr_css=css;
+			multi_css(D,arr_eve,arr_css);
+		}else{//传入的是字符串用,号分割
+			var arr_eve=D.event.split(","),arr_css=css.split(",");
+			if(arr_eve.length > 1){
+				multi_css(D,arr_eve,arr_css,css);
+			}else{
+				bind_eve(D,D.event,css);
+
+			}
+		}
+	}
 
 	/**
 	 * @author lhh
@@ -382,6 +387,5 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 
 
 
-	System.Tab = Tab;
-
+	return Tab;
 });

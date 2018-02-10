@@ -1,12 +1,21 @@
-
-//基本形
-window[GRN_LHH].run([window],function(window,undefined){
+/**
+ * 基本形
+ */
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Html5']['Shape'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System.Html5,'Canvas','Shape',System.classPath+'/base');
 
 	var __this__=null;
-
 
 	/**
 	 *
@@ -553,6 +562,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'destructor':function(){}
 	});
 
-	System['Html5']['Shape'] = Shape;
-
+	return Shape;
 });
+
+

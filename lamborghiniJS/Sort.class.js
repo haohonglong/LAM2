@@ -1,6 +1,15 @@
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
 
-window[GRN_LHH].run([window],function(window,undefined){
-	var System=this;
+	if(!System){
+		return;
+	}else{
+		System['Sort'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Helper','Sort',System.classPath+'/base');
 
 	var __this__=null;
@@ -414,8 +423,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 
 		return arr;
 	};
-	System['Sort'] = Sort;
+	return Sort;
 });
+
 
 
 

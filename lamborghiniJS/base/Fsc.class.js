@@ -11,11 +11,20 @@
  * @return  ()						:
  * Example：
  */
-window[GRN_LHH].run([window],function(window,undefined){
-	'use strict';
-	var System=this;
-	System.is(System,'Xhr','Fsc',System.classPath+'/base');
 
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Fsc'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
+	System.is(System,'Xhr','Fsc',System.classPath+'/base');
 
 	var __this__=null;
 	var Fsc = System.Xhr.extend({
@@ -72,7 +81,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'destructor':function(){}
 	});
 
-	System['Fsc']=Fsc;
-
+	return Fsc;
 });
+
 

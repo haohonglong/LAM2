@@ -77,6 +77,7 @@
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
+                    ,classPath+'/base/System.js'
                     ,classPath+'/base/Basis.class.js'
                     ,classPath+'/base/Base.class.js'
                     ,classPath+'/base/Object.class.js'
@@ -285,7 +286,7 @@
             //=================================================================================================================================
         }
     })(System);
-})(typeof window !== "undefined" ? window : this);
+})(this);
 
 
 

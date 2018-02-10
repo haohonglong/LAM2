@@ -12,12 +12,19 @@
  *
  *
  */
-
-window[GRN_LHH].run(function(undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
-	System.is(System,'Browser','Template',System.classPath+'/base');
+	var System = IT['LAM_20150910123700_'];
 
+	if(!System){
+		return;
+	}else{
+		System['Template'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
+	System.is(System,'Browser','Template',System.classPath+'/base');
 
 	var __this__=null;
 	var guid=0;
@@ -165,8 +172,8 @@ window[GRN_LHH].run(function(undefined){
 	 * @returns {var}
 	 */
 	Template.analysisVar=function(vars,
-						   v,
-						   root){
+								  v,
+								  root){
 
 		if(-1 === vars.indexOf('.')){
 			return System.eval(vars);
@@ -327,44 +334,44 @@ window[GRN_LHH].run(function(undefined){
 	 * 			html:
 	 * 				<div class="result"></div>
 
-	 			template:
-					 <script type="text/template-foreach:.result">
-						 <li sort:id="{{id}}">
-							 <div><a href="{{href}}">{{title}}</a></div>
-							 <img src="{{imgSrc}}" alt="{{title}}">
-						 </li>
+	 template:
+	 <script type="text/template-foreach:.result">
+	 <li sort:id="{{id}}">
+	 <div><a href="{{href}}">{{title}}</a></div>
+	 <img src="{{imgSrc}}" alt="{{title}}">
+	 </li>
 
-					 </script>
+	 </script>
 
-	 			data:
-						 [
-						 {
-							id : '1',
-							title : 'php web appliaction',
-							href : 'http://www.baidu.com',
-							imgSrc : 'http://www.baidu.com'
-						},
-						 {
-							id : '2',
-							title : 'java web appliaction',
-							href : 'http://www.baidu.com',
-							imgSrc : 'http://www.baidu.com'
-						},
-						 {
-							id : '3',
-							title : 'python web appliaction',
-							href : 'http://www.baidu.com',
-							imgSrc : 'http://www.baidu.com'
-						},
-						 {
-							id : '4',
-							title : 'js 权威指南',
-							href : 'http://www.qq.com',
-							imgSrc : 'http://www.qq.com'
-						}]
+	 data:
+	 [
+	 {
+        id : '1',
+        title : 'php web appliaction',
+        href : 'http://www.baidu.com',
+        imgSrc : 'http://www.baidu.com'
+    },
+	 {
+        id : '2',
+        title : 'java web appliaction',
+        href : 'http://www.baidu.com',
+        imgSrc : 'http://www.baidu.com'
+    },
+	 {
+        id : '3',
+        title : 'python web appliaction',
+        href : 'http://www.baidu.com',
+        imgSrc : 'http://www.baidu.com'
+    },
+	 {
+        id : '4',
+        title : 'js 权威指南',
+        href : 'http://www.qq.com',
+        imgSrc : 'http://www.qq.com'
+    }]
 
-	 			js:
-	 				document.querySelector('.result').innerHTML=(System.Template.foreach($('[type="text/template-foreach:.result"]').html(), data,['{{','}}']));
+	 js:
+	 document.querySelector('.result').innerHTML=(System.Template.foreach($('[type="text/template-foreach:.result"]').html(), data,['{{','}}']));
 	 */
 	Template.foreach=function(template, data,delimiters){
 		delimiters = delimiters || System.Config.templat.delimiters;
@@ -393,12 +400,11 @@ window[GRN_LHH].run(function(undefined){
 
 
 	System.merge(null,[{
-						'analysisVar':Template.analysisVar,
-						'template':Template.template,
-						'findTpl':Template.findTpl,
-						'replaceTpl':Template.replaceTpl
+		'analysisVar':Template.analysisVar,
+		'template':Template.template,
+		'findTpl':Template.findTpl,
+		'replaceTpl':Template.replaceTpl
 	}]);
 
-	System['Template']=Template;
-
+	return Template;
 });

@@ -12,12 +12,19 @@
  *		
  * 
  */
-
-window[GRN_LHH].run([window,document],function(window,document,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
-	System.is(System,'Dom','Css',System.classPath+'/base');
+	var System = IT['LAM_20150910123700_'];
 
+	if(!System){
+		return;
+	}else{
+		System['Css'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
+	System.is(System,'Dom','Css',System.classPath+'/base');
 	var __this__=null;
 
 	var Css = System.Dom.extend({
@@ -172,6 +179,5 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
 		}
 	};
 
-	System['Css']=Css;
-
+	return Css;
 });

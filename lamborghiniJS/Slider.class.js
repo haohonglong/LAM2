@@ -1,8 +1,15 @@
-
-window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
 
+	if(!System){
+		return;
+	}else{
+		System['Slider'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Layout','Slider',System.classPath+'/base');
 	var __this__=null;
 	/**
@@ -653,7 +660,7 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		'destructor':function(){}
 	});
 
-	System['Slider'] = Slider;
-
+	return Slider;
 });
+
 

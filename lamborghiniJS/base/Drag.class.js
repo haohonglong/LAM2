@@ -24,10 +24,18 @@
  * 
  */
 
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
     'use strict';
-    var System=this;
+    var System = IT['LAM_20150910123700_'];
+
+    if(!System){
+        return;
+    }else{
+        System['Drag'] = factory(System);
+    }
+
+})(this,function(System){
+    'use strict';
     System.is(System,'Browser','Drag',System.classPath+'/base');
     System.import([
          '/Event.class'
@@ -264,8 +272,6 @@ window[GRN_LHH].run([window],function(window,undefined){
         'destructor':function(){}
     });
 
-    System['Drag']=Drag;
-
-
-
+    return Drag;
 });
+

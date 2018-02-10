@@ -3,19 +3,23 @@
 	Copyright 2006-2010, Dean Edwards
 	License: http://www.opensource.org/licenses/mit-license.php
 */
-
-window[GRN_LHH].run(function(){
+(function(IT,factory){
 	'use strict';
-	var System=this;
-	System.is(System,'Basis','Base',System.classPath+'/base');
+	var System = IT['LAM_20150910123700_'];
 
+	if(!System){
+		return;
+	}else{
+		System['Base'] = factory(System);
+	}
+
+})(this,function(System){
+	System.is(System,'Basis','Base',System.classPath+'/base');
 	var Base = function() {
 		// dummy
 	};
 
 	Base.extend = function(_instance, _static) { // subclass
-
-		"use strict";
 
 		var extend = Base.prototype.extend;
 
@@ -150,9 +154,8 @@ window[GRN_LHH].run(function(){
 		}
 	});
 
-	System['Base'] = Base;
-
-
+	return Base;
 });
+
 
 

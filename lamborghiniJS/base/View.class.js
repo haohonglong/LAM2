@@ -1,7 +1,15 @@
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['View'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Dom','View',System.classPath+'/base');
 
 	var __this__=null;
@@ -29,7 +37,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'destructor':function(){}
 	});
 
-	System['View']=View;
+	return View;
 });
 
 

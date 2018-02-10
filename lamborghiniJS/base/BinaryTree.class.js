@@ -1,7 +1,15 @@
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['BinaryTree'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Helper','BinaryTree',System.classPath+'/base');
 
 	var None = System.Helper.extend({
@@ -23,7 +31,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		constructor: function () {
 			this.base();
 			__this__ = this;
-			
+
 		},
 		'_className':'BinaryTree',
 		'insert':function(key){
@@ -51,9 +59,9 @@ window[GRN_LHH].run([window],function(window,undefined){
 		}
 	});
 
-	System['BinaryTree']=BinaryTree;
-
+	return BinaryTree;
 });
+
 
 
 

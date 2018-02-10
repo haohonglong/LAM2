@@ -1,14 +1,18 @@
-
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System.Html5.Canvas = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.import(['/Browser.class'],System.classPath+'/base');
 	System.is('System.Browser','System.Html5.Canvas');
-
 	var __this__=null;
-
-
 	/**
 	 *
 	 * @author: lhh
@@ -708,6 +712,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		'destructor':function(){}
 	});
 
-	System.Html5.Canvas=Canvas;
-
+	return Canvas;
 });
+
+

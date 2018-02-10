@@ -1,7 +1,15 @@
-
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Roll'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Browser','Roll',System.classPath+'/base');
 
 	var __this__=null;
@@ -49,7 +57,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 				return false;
 			}
 			var select=obj.select,
-				//html  =obj.html,
+			//html  =obj.html,
 				fn 	  =obj.fn || this.fn;
 			arr =arr || this.arr;
 			if(!arr){
@@ -110,6 +118,5 @@ window[GRN_LHH].run([window],function(window,undefined){
 		}
 	});
 
-	System['Roll']=Roll;
-
+	return Roll;
 });

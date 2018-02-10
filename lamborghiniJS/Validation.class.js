@@ -12,10 +12,18 @@
  *
  *
  */
-window[GRN_LHH].run([window,window.document,jQuery],
-	function(window,document,$,undefined){
-		'use strict';
-	var System=this;
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Validation'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Browser','Validation',System.classPath+'/base');
 	var __this__=null;
 	var Validation = System.Browser.extend({
@@ -128,8 +136,8 @@ window[GRN_LHH].run([window,window.document,jQuery],
 		'number'  : /[0-9]/
 	};
 
-	System['Validation']=Validation;
-
+	return Validation;
 });
+
 
 

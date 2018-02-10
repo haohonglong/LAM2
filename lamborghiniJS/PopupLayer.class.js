@@ -37,10 +37,18 @@
 					});
 		});
  */
-
- window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
+ (function(IT,factory){
 	 'use strict';
-	 var System=this;
+	 var System = IT['LAM_20150910123700_'];
+
+	 if(!System){
+		 return;
+	 }else{
+		 System['PopupLayer'] = factory(System);
+	 }
+
+ })(this,function(System){
+	 'use strict';
 	 System.is(System,'Browser','PopupLayer',System.classPath+'/base');
 
 	 var __this__=null;
@@ -117,26 +125,26 @@
 			 switch(D['select']){
 				 case 0:
 					 container = tag('div',{'class':D["div_class_PopupLayer_wrap_name"]},
-									 [
-										  tag('div',{'class':D["div_class_colose_name"]})
-										 ,tag('div',{'class':'p10'},
-										  tag('div',{'class':'content'},
-											 [
-												  tag('div',{'class':D["div_title_name"]},
-													 [
-														  tag('h2',{},D["title"])
-														 ,D["more"] ? tag('div',{'class':'more'},D["more"]) : ''
-													 ]
-												  )
-												 ,tag('div',{'class':D["div_content_name"]},
-												  tag('div',{'class':'P20'},D["content"])
-											 )
-											 ]
-										 )
+						 [
+							 tag('div',{'class':D["div_class_colose_name"]})
+							 ,tag('div',{'class':'p10'},
+							 tag('div',{'class':'content'},
+								 [
+									 tag('div',{'class':D["div_title_name"]},
+										 [
+											 tag('h2',{},D["title"])
+											 ,D["more"] ? tag('div',{'class':'more'},D["more"]) : ''
+										 ]
 									 )
+									 ,tag('div',{'class':D["div_content_name"]},
+									 tag('div',{'class':'P20'},D["content"])
+								 )
+								 ]
+							 )
+						 )
 
-									 ]
-								 );
+						 ]
+					 );
 					 /*
 					  container ='<div class="'+D["div_class_PopupLayer_wrap_name"]+'"> \
 					  <div class="'+D["div_class_colose_name"]+'"></div> \
@@ -215,7 +223,7 @@
 		 'destructor':function(){}
 	 });
 
-	 System['PopupLayer']=PopupLayer;
-
+	 return PopupLayer;
  });
+
 

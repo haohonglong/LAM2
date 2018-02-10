@@ -1,9 +1,16 @@
-
-window[GRN_LHH].run([window,window['document']],function(window,document,undefined){
+(function(IT,factory){
     'use strict';
-    var System=this;
-    System.is(System,'Browser','Event',System.classPath+'/base');
+    var System = IT['LAM_20150910123700_'];
 
+    if(!System){
+        return;
+    }else{
+        System['Event'] = factory(System);
+    }
+
+})(this,function(System){
+    'use strict';
+    System.is(System,'Browser','Event',System.classPath+'/base');
     var __this__=null;
     var Event = System.Browser.extend({
         constructor: function(e){
@@ -332,7 +339,7 @@ window[GRN_LHH].run([window,window['document']],function(window,document,undefin
         UP: 38
     };
 
-    System['Event']=Event;
-
+    return Event;
 });
+
 

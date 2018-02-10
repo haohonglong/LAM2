@@ -1,6 +1,15 @@
-window[GRN_LHH].run([jQuery],function($,undefined){
+(function(IT,factory){
     'use strict';
-    var System=this;
+    var System = IT['LAM_20150910123700_'];
+
+    if(!System){
+        return;
+    }else{
+        System['Dropdown'] = factory(System);
+    }
+
+})(this,function(System){
+    'use strict';
     System.is(System,'Dom','Dropdown',System.classPath+'/base');
     var __this__=null;
 
@@ -133,7 +142,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
 
         /**
          *
-          * @returns {Dropdown}
+         * @returns {Dropdown}
          */
         "add":function(){
             var $eventTarget,text,id,i,old_text,old_input;
@@ -181,7 +190,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
         },
         /**
          *
-          * @param li
+         * @param li
          * @returns {Dropdown}
          */
         "appendLi":function(li){
@@ -190,7 +199,7 @@ window[GRN_LHH].run([jQuery],function($,undefined){
         },
         /**
          *
-          * @param id
+         * @param id
          * @returns {Dropdown}
          */
         "delOption":function(id){
@@ -214,6 +223,5 @@ window[GRN_LHH].run([jQuery],function($,undefined){
         "destructor":function(){}
     });
 
-    System['Dropdown']=Dropdown;
-
+    return Dropdown;
 });

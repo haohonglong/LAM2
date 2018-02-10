@@ -12,12 +12,19 @@
  *
  *
  */
-
-window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,undefined){
+(function(IT,factory){
     'use strict';
-    var System=this;
-    System.is(System,'Component','Controller',System.classPath+'/base');
+    var System = IT['LAM_20150910123700_'];
 
+    if(!System){
+        return;
+    }else{
+        System['Controller'] = factory(System);
+    }
+
+})(this,function(System){
+    'use strict';
+    System.is(System,'Component','Controller',System.classPath+'/base');
     var __this__=null;
     var Controller = System.Component.extend({
         constructor: function(init) {
@@ -51,9 +58,9 @@ window[GRN_LHH].run([window,window.document,jQuery],function(window,document,$,u
         'destructor':function(){}
     });
 
-    System['Controller']=Controller;
-
+    return Controller;
 });
+
 
 
 

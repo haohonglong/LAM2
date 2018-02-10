@@ -10,11 +10,20 @@
  * Example：
  *
  */
-window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefined){
-	'use strict';
-	var System=this;
-	System.is(System,'Browser','Dom',System.classPath+'/base');
 
+(function(IT,factory){
+	'use strict';
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Dom'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
+	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
 	/**
 	 * @author: lhh
@@ -1273,6 +1282,5 @@ window[GRN_LHH].run([window,document,jQuery],function(window,document,$,undefine
 		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		return element.nodeType;
 	};
-	System['Dom']=Dom;
-
+	return Dom;
 });

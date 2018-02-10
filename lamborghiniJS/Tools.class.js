@@ -13,10 +13,18 @@
  * 
  * 
  */
-
-window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Tools'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Html','Tools',System.classPath+'/base');
 	System.import([
 		'/Event.class'
@@ -154,8 +162,8 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 		 * @returns {Tools}
 		 * usage:
 		 * 	<span id="copy">7777</span>
-		 	<button data-copytarget="#copy">复制</button>
-		 	document.body.addEventListener('click', System.Tools.clipboard, true);
+		 <button data-copytarget="#copy">复制</button>
+		 document.body.addEventListener('click', System.Tools.clipboard, true);
 		 */
 		'clipboard':function(e){
 			// 找到要复制的区域
@@ -1302,6 +1310,5 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	});
 
 
-	System['Tools']= Tools;
-
+	return Tools;
 });

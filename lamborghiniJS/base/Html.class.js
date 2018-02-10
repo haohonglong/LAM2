@@ -1,7 +1,15 @@
-
-window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Html'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Dom','Html',System.classPath+'/base');
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
@@ -553,6 +561,6 @@ window[GRN_LHH].run([window,jQuery],function(window,$,undefined){
 	};
 
 
-	System['Html']=Html;
-
+	return Html;
 });
+

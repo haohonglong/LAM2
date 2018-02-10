@@ -11,9 +11,18 @@
  * @return  ()						:
  * Example：
  */
-window[GRN_LHH].run([window],function(window,undefined){
+(function(IT,factory){
 	'use strict';
-	var System=this;
+	var System = IT['LAM_20150910123700_'];
+
+	if(!System){
+		return;
+	}else{
+		System['Xhr'] = factory(System);
+	}
+
+})(this,function(System){
+	'use strict';
 	System.is(System,'Browser','Xhr',System.classPath+'/base');
 	var __this__=null;
 	var allTypes = "*/".concat( "*" );
@@ -242,7 +251,7 @@ window[GRN_LHH].run([window],function(window,undefined){
 		};
 	});
 
-	System['Xhr']=Xhr;
-
+	return Xhr;
 });
+
 

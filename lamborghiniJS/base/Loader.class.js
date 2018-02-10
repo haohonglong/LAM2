@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014-9-9
- * 修改日期：2017-9-15
+ * 修改日期：2018-2-10
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -12,11 +12,24 @@
  * Example：
  *
  */
-window[GRN_LHH].run([window,document],function(window,document,undefined){
-    'use strict';
-    var System=this;
-    System.is(System,'Html','Loader',System.classPath+'/base');
 
+(function(IT,factory){
+    'use strict';
+    var System = IT['LAM_20150910123700_'];
+    if(!System){
+        return;
+    }else{
+        var Loader = factory(System);
+        System['Cloader'] =Loader;
+        System['Loadcommon'] = System['Loader'] =new Loader();
+        System.merge(null,[{
+            'import': System.Loader.import
+            ,'loadScript': System.Loader.loadScript
+        }]);
+    }
+
+})(this,function(System){
+    System.is(System,'Html','Loader',System.classPath+'/base');
     var html,head,body,meta,script,link;
     var create;
     var sAttribute   = System.Config.render.default.script.Attribute;
@@ -112,18 +125,18 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
          * @param(String|Boolean)D.baseUrl		  	    NULL:文件路径
          * @param(String)D.suffix		  	    NULL:文件后缀名
          * 注意：
-          rules:[
-                   {
-                      tag: 'css',
-                      single:true,
-                      use: [
-                        'style-loader',
-                        'css-loader'
-                      ],
-                      attr:{},
-                      after_fn:function(){}
-                    }
-                ]
+         rules:[
+         {
+            tag: 'css',
+            single:true,
+            use: [
+              'style-loader',
+              'css-loader'
+            ],
+            attr:{},
+            after_fn:function(){}
+          }
+         ]
          * @returns {Loader}
          */
         'load':function(D){
@@ -260,7 +273,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
         'loadScript':function(url, callback){
             var self = this;
             var script = document.createElement("script") ;
-            　  script.type = "text/javascript";
+            script.type = "text/javascript";
             if(System.fileExisted(url)){
                 if(System.isFunction(callback)){callback();}
                 return this;
@@ -333,7 +346,7 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
             } catch (e) {
                 if(System.Html.getFiles && System.isFunction(System.Html.getFiles) && xhr){//xhr方式加载 script 脚本文件
                     var arr=[];
-                    url.each(function(){
+                    System.each(url,function(){
                         var src=this;
                         src = __this__.suffix_checkor(src,suffix);
                         src = baseUrl ? baseUrl+src : src;
@@ -458,15 +471,10 @@ window[GRN_LHH].run([window,document],function(window,document,undefined){
         'destructor':function(){}
     });
 
-    System['Cloader'] =Loader;
-    System['Loadcommon'] = System['Loader'] =new Loader();
-    System.merge(null,[{
-         'import': System.Loader.import
-        ,'loadScript': System.Loader.loadScript
-    }]);
-
+    return Loader;
 
 });
+
 
 
 
