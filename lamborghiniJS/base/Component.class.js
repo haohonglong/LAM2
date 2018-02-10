@@ -19,7 +19,9 @@
 	if(!System){
 		return;
 	}else{
-		System['Component'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+				(System['Component'] = factory(System));
 	}
 
 })(this,function(System){

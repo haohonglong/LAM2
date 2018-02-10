@@ -10,7 +10,10 @@
 	if(!System){
 		return;
 	}else{
-		System['Base'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+				(System['Base'] = factory(System));
+
 	}
 
 })(this,function(System){

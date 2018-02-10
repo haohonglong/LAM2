@@ -50,7 +50,9 @@
 		return;
 	}else{
 		var namespace = IT.GRN_LHH;
-		IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(IT,namespace) :
+			typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
+				(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
 	}
 
 })(this,function(window,namespace,undefined){
@@ -1268,7 +1270,7 @@
 	System.Super={};
 	System.app=null;
 	System.Object=Object.prototype;
-	System.Function=Function.prototype;
+	System.Function=Function.prototype || {};
 	System.Date=Date.prototype;
 	System.String=String.prototype;
 	System.Array=Array.prototype;
@@ -1959,7 +1961,7 @@
 		return arr;
 	}
 
-	System = System.merge(null,[Interface,window[namespace]]);
+	System = System.merge(null,[Interface,window[namespace] || {}]);
 
 	System.classPath  = System.Config.getClassPath();
 	System.Public 	  = System.Config.Public || System.createDict();

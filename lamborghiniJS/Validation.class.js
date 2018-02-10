@@ -19,7 +19,9 @@
 	if(!System){
 		return;
 	}else{
-		System['Validation'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+				(System['Validation'] = factory(System));
 	}
 
 })(this,function(System){
