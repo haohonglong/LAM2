@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-1-22
+ * 修改日期:2018-3-6
  * 功能：配置文件
  * 说明 : 这个文件要copy到项目里面可以修改 System.Config里的属性 和 GRN_LHH; 的值；
  *
@@ -202,9 +202,13 @@
          * Example：
          */
         System.print=function(S){
-            var document=System.open();
-            document.write(S);
-            System.close(document);
+            if(Config.render.create){
+                Config.render.H().body.appendChild(Config.render.fragment);
+            }else{
+                var document=System.open();
+                document.write(S);
+                System.close(document);
+            }
         };
         /**
          * @author: lhh

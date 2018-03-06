@@ -201,9 +201,13 @@
          * Example：
          */
         System.print=function(S){
-            var document=System.open();
-            document.write(S);
-            System.close(document);
+            if(Config.render.create){
+                Config.render.H().body.appendChild(Config.render.fragment);
+            }else{
+                var document=System.open();
+                document.write(S);
+                System.close(document);
+            }
         };
         /**
          * @author: lhh
