@@ -5,7 +5,8 @@
 	if(!System){
 		return;
 	}else{
-		System['Tab'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+		typeof define === 'function' && define.amd ? define(factory(System)) : (System['Tab'] = factory(System));
 	}
 
 })(this,function(System){
@@ -35,7 +36,7 @@
 	function bind_eve_doit(D,eve,css,event){
 		//D.or 为 true 时当前选中的按钮点击后仍触发事件。默认是如果在当前选中的按钮上再次单击不触发任何事件
 		var doif=D.or ? (D.temp || $(this)[0]!=D.temp[0]) : (D.temp && $(this)[0]!=D.temp[0]);
-		D.cur_even_this=this;//this 代表的是被点击的 dom 对象
+		D.cur_even_this=this;//this 代表的是触发时间的 dom 对象
 		if(doif) {
 			__this__.doit(D,css,event);
 		}
@@ -95,7 +96,7 @@
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2014-5-29
-	 * 修改日期：2017-8-10
+	 * 修改日期：2018-3-8
 	 * 名称：private (void) select_event
 	 * 功能：选择相应的事件
 	 * 说明：
@@ -137,10 +138,11 @@
 				break;
 			case 'hover':
 				$list.off('mouseenter').off('mouseleave')
-					.on('mouseenter',function() {
+					.on('mouseenter',function(event) {
+						bind_eve_doit.call(this,D,eve,css,event);
 						$(this).addClass(css);
 					})
-					.on('mouseleave',function() {
+					.on('mouseleave',function(event) {
 						$(this).removeClass(css);
 					});
 				break;

@@ -24,11 +24,8 @@
 		var System=this;
 
 		new System.Tab({
-			'list':$('.list li'),
-			'event':'click',
-			'hover':false,
-			'or':true,
-			'class':'cur',
+			'list':'.list li',
+			'event':{'hover':'cur'},
 			'block':$('.block'),
 			'fn':function(obj){
 				var index=obj.this_index;
