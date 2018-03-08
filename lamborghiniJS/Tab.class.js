@@ -36,7 +36,7 @@
 	function bind_eve_doit(D,eve,css,event){
 		//D.or 为 true 时当前选中的按钮点击后仍触发事件。默认是如果在当前选中的按钮上再次单击不触发任何事件
 		var doif=D.or ? (D.temp || $(this)[0]!=D.temp[0]) : (D.temp && $(this)[0]!=D.temp[0]);
-		D.cur_even_this=this;//this 代表的是触发时间的 dom 对象
+		D.cur_even_this=this;//this 代表的是触发事件的 dom 对象
 		if(doif) {
 			__this__.doit(D,css,event);
 		}
