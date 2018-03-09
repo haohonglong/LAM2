@@ -367,7 +367,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-25
-	 * 修改日期：2016-10-26
+	 * 修改日期：2018-3-9
 	 * 名称： tag
 	 * 功能：动态返回指定的标签
 	 * 说明：
@@ -403,7 +403,7 @@
 		//check
 		if(System.empty(name) || !System.isString(name)){throw new Error('Warning :标签名称不能为空，只能是字符串！');}
 		if(Attr && !System.isPlainObject(Attr)){throw new Error('Warning :<'+name+'>标签的属性,{Attr}参数必须是一个对象！');}
-		if(content && !System.isString(content) && !System.isArray(content)){throw new Error('Warning :<'+name+'>标签内容必须是字符串或者是数组');}
+		if(content && !(System.isString(content) || System.isArray(content))){throw new Error('Warning :<'+name+'>标签内容必须是字符串或者是数组');}
 
 		var tag=[];
 		tag.push('<',name);
