@@ -92,7 +92,7 @@
 	 * @param {Number}w
 	 * @param {Number}h
 	 * Example:
-	 *		Basis.inputSizeGetProportion(1280,720);
+	 *		Helper.inputSizeGetProportion(1280,720);
 	 *		w = 1280;
 	 *		h = 720;
 	 *		n = gcd(w, h);

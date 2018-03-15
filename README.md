@@ -3,7 +3,7 @@
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.0.6
+	version ：2.0.7
 	author  ：lhh
 	创建日期 ：2017-8-27
 	修改日期 ：2018-2-10
@@ -181,7 +181,7 @@
         	{}代表单例对象
         all classes：
         	{
-        		'Basis'      		:function(){},
+        		'Base'      		:function(){},
         		'Loader'   		    :{},
         		'BiObject'   		:function(){},
         		'Component'      	:function(){},
@@ -222,6 +222,7 @@
 				},
 				'View': function(){},
 				'Validation':function(){},
+				'Base64':function(){},
 				'Widget': function(){}
         	}
 
