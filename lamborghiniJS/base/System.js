@@ -56,6 +56,7 @@
 	}
 
 })(this,function(window,namespace,undefined){
+	'use strict';
 // Used for trimming whitespace
 	var VERSION="2.0.7";
 	var Interface={},System={},once=true;

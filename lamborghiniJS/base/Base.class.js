@@ -17,6 +17,8 @@
 	}
 
 })(this,function(System){
+	'use strict';
+
 	var Base = function() {};
 	Base.extend = function(_instance, _static) { // subclass
 		var extend = Base.prototype.extend;
