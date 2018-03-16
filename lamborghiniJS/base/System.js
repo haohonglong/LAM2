@@ -21,7 +21,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-2-10
+ * 修改日期:2018-3-16
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -42,6 +42,7 @@
  *
  *
  */
+
 (function(IT,factory){
 	'use strict';
 	var UNIQUE = "LAM_20150910123700_";
@@ -50,12 +51,13 @@
 		return;
 	}else{
 		var namespace = IT.GRN_LHH;
+		if(!namespace){namespace = {};}
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(IT,namespace) :
 		typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
 		(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
 	}
 
-})(this,function(window,namespace,undefined){
+})(typeof global !== 'undefined' ? global : this,function(window,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
 	var VERSION="2.0.7";
@@ -1270,11 +1272,11 @@
 	System.classes=[];
 	System.Super={};
 	System.app=null;
-	System.Object=Object.prototype;
-	System.Function=Function.prototype || {};
-	System.Date=Date.prototype;
-	System.String=String.prototype;
-	System.Array=Array.prototype;
+	System.Object = Object.prototype;
+	System.Function = window.Function && window.Function.prototype || {};
+	System.Date     = window.Date && window.Date.prototype || {};
+	System.String   = window.String && window.String.prototype || {};
+	System.Array    = window.Array && window.Array.prototype || {};
 
 	//extend
 	System.inherit=inherit;
@@ -1284,7 +1286,7 @@
 //==================================================================================
 
 	//函数在原型里定义一个方法
-	Function.prototype.method=function(name,fn){
+	window.Function.prototype.method=function(name,fn){
 		if(!this.prototype[name]){
 			this.prototype[name] = fn;
 		}
@@ -1962,35 +1964,5 @@
 		return arr;
 	}
 
-	System = System.merge(null,[Interface,window[namespace] || {}]);
-
-	System.classPath  = System.Config.getClassPath();
-	System.Public 	  = System.Config.Public || System.createDict();
-	System.params 	  = System.Config.params || System.createDict();
-	System.components = System.merge({},[System.Config.components]) || System.createDict();
-	System.each(System.merge({},[System.components,System.Public]),function(name){
-		if(!(name in System)){
-			System[name] = this;
-		}
-	});
-	System.LAM_DEBUG = System.Config.LAM_DEBUG;
-	System.LAM_ENV = System.Config.LAM_ENV;
-	System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
-	System.LAM_ENV_DEV  = 'dev'  === System.LAM_ENV;
-	System.LAM_ENV_TEST = 'test' === System.LAM_ENV;
-	//hashcode 随机种子
-	System.random 	 = System.Config.random || 10000;
-	//不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
-	//Object.freeze(System.Config);
-	//Object.freeze(System.Config.Public);
-
-	if(System.Config.files){
-		//把加载的基础文件放在加载器里
-		System.each(System.files = System.Config.files,function(){
-			if(System.isClassFile(this)){
-				System.classes.push(this);
-			}
-		});
-	}
-	return System;
+	return System.merge(null,[Interface,window[namespace] || {}]);
 });
