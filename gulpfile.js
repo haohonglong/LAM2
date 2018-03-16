@@ -26,7 +26,7 @@ gulp.task('js', function(){
     ])
         .pipe(concat('base.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(classPath+'/base'))
+        .pipe(gulp.dest(classPath+'/build'))
 });
 
 gulp.task('default', ['js']);
