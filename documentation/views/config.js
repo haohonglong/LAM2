@@ -16,5 +16,5 @@
         url=ROOT+url;
         document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
     });
-})(typeof window !== "undefined" ? window : this);
+})(this);
 

@@ -21,6 +21,8 @@
     }
 
 })(this,function(System){
+    'use strict';
+
     System.is(System,'Component','Base64',System.classPath+'/base');
     var __this__=null;
     var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

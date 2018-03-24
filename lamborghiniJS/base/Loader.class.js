@@ -29,6 +29,7 @@
     }
 
 })(this,function(System){
+    'use strict';
     System.is(System,'Html','Loader',System.classPath+'/base');
     var html,head,body,meta,script,link;
     var create;

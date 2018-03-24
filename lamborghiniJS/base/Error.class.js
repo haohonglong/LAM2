@@ -11,6 +11,7 @@
 	}
 
 })(this,function(System){
+	//'use strict';
 	System.is(System,'Component','Error',System.classPath+'/base');
 	var __this__=null;
 	var Error = System.Component.extend({

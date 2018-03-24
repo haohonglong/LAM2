@@ -179,7 +179,17 @@
 	});
 
 
-	Sort.swap=function(A,B){};
+	/**
+	 *
+	 * @param arr
+	 * @param i
+	 */
+	Sort.swap=function(arr,i){
+		var temp=0;
+		temp = arr[i];
+		arr[i] = arr[i+1];
+		arr[i+1] = temp;
+	};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -295,7 +305,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-9-5
-	 * 修改日期：2016-9-5
+	 * 修改日期：2018-3-14
 	 * 名称：Sort.bubbleSort
 	 * 功能：冒泡排序
 	 * 说明：反序用reverse()方法
@@ -306,14 +316,20 @@
 	 *
 	 *
 	 */
-	Sort.bubbleSort=function(arr){
-		for(var i= 0, j,len=arr.length;i < len;i++){
-			for (j = i+1; j < len; j++) {
-				if(arr[i]>arr[j]){
-					var tmp = arr[i];
-					arr[i] = arr[j];
-					arr[j] = tmp;
+	Sort.bubbleSort=function(arr,asc){
+		var n = arr.length, i,j;
+		for(i=0;i < n - 1;i++){
+			for(j=0;j < n - 1 - i; j++){
+				if(1 === asc){
+					if(arr[j] > arr[j+1]){
+						Sort.swap(arr,j);
+					}
+				}else{
+					if(arr[j] < arr[j+1]){
+						Sort.swap(arr,j);
+					}
 				}
+
 			}
 		}
 		return arr;

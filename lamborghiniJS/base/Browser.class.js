@@ -26,6 +26,7 @@
 	}
 
 })(this,function(System){
+	'use strict';
 	System.is(System,'Helper','Browser',System.classPath+'/base');
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
 		var __this__=null;

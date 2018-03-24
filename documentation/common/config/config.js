@@ -76,18 +76,18 @@
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
-                    ,classPath+'/base/System.js'
-                    ,classPath+'/base/Basis.class.js'
-                    ,classPath+'/base/Base.class.js'
-                    ,classPath+'/base/Object.class.js'
-                    ,classPath+'/base/Component.class.js'
-                    ,classPath+'/base/Helper.class.js'
-                    ,classPath+'/base/Browser.class.js'
-                    ,classPath+'/base/Event.class.js'
-                    ,classPath+'/base/Dom.class.js'
-                    ,classPath+'/base/Html.class.js'
-                    ,classPath+'/base/Loader.class.js'
-                    ,classPath+'/base/Template.class.js'
+                    ,classPath+'/build/base.min.js'
+                    //,classPath+'/base/System.js'
+                    //,classPath+'/base/Base.class.js'
+                    //,classPath+'/base/Object.class.js'
+                    //,classPath+'/base/Component.class.js'
+                    //,classPath+'/base/Helper.class.js'
+                    //,classPath+'/base/Browser.class.js'
+                    //,classPath+'/base/Event.class.js'
+                    //,classPath+'/base/Dom.class.js'
+                    //,classPath+'/base/Html.class.js'
+                    //,classPath+'/base/Loader.class.js'
+                    //,classPath+'/base/Template.class.js'
                 ];
             },
 
@@ -258,30 +258,24 @@
             requirejs(srcs,function(){});
 
         }else{
-
-            if(Config.render.create){
-                for(i=0,len = srcs.length;i < len; i++){
-                    //确保每个文件只加载一次
-                    if(Config.files.indexOf(srcs[i]) != -1){continue;}
-                    Config.files.push(srcs[i]);
-                    data.src = srcs[i];
-                    files.push(Config.render.bulid(tag,data));
-                    Config.files.push(srcs[i]);
-                }
-            }else{
-                var attrs=[];
-                for(var k in scriptAttribute){
-                    attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
-                }
-                for(i=0,len = srcs.length;i < len; i++){
-                    //确保每个文件只加载一次
-                    if(Config.files.indexOf(srcs[i]) != -1){continue;}
-                    files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
-                    Config.files.push(srcs[i]);
-                }
+            //确保每个文件只加载一次
+            var attrs=[];
+            for(var k in scriptAttribute){
+                attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
             }
-            System.print(files.join(''));
-
+            if(srcs.length){
+                for(i=0,len = srcs.length;i < len; i++){
+                    if(Config.files.indexOf(srcs[i]) != -1){continue;}
+                    Config.files.push(srcs[i]);
+                    if(Config.render.create){
+                        data.src = srcs[i];
+                        Config.render.bulid(tag,data)
+                    }else{
+                        files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
+                    }
+                }
+                System.print(files.join(''));
+            }
             //=================================================================================================================================
             //3分钟之后检测lamborghiniJS基础类文件是否加载成功
             //=================================================================================================================================

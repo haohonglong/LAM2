@@ -1,0 +1,29 @@
+{
+  "name": "LAM2",
+  "version": "1.0.0",
+  "description": "是一种javascript OO思想实现的类库，它可以为生产应用框架做更好的基础服务",
+  "main": "",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haohonglong/LAM2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haohonglong/LAM2/issues"
+  },
+  "homepage": "https://github.com/haohonglong/LAM2#readme",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp-js-minify": "0.0.3",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0"
+  }
+}
