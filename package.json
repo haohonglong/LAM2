@@ -1,6 +1,6 @@
 {
   "name": "LAM2",
-  "version": "1.0.0",
+  "version": "2.0.7",
   "description": "是一种javascript OO思想实现的类库，它可以为生产应用框架做更好的基础服务",
   "main": "",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/haohonglong/LAM2.git"
+    "url": "https://github.com/haohonglong/LAM2.git#develop"
   },
   "keywords": [],
   "author": "",
