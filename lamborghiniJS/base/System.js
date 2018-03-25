@@ -726,44 +726,43 @@
 			}
 			return obj;
 		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-8-26
-		 * 修改日期：2018-3-25
-		 * 名称： search
-		 * 功能：递归对象搜索
-		 * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
-		 * 注意：
-		 * @param 	(Object)D             			NO NULL : 对象
-		 * @returns {Function}(Funtion callback)
-		 * Example：
-		 *
-		 */
-		'search':function(D){
-			var loop,totalLoop,recursion = true;
-			totalLoop=loop=0;
-			var list=function(callback){
-				if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
-				if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
-				//算出找到指定内容，所需要遍历的次数
-				loop++;
-				System.each(D,function(k,v){
-					totalLoop++;
-					if (false === callback.apply(D,[k,v,loop,totalLoop])) {
-						if(System.LAM_DEBUG){console.log('共遍历'+loop+'次找到了');}
-						recursion = false;
-						return false;
-					}
-					//如果没找到，就继续递归搜索
-					if(v && recursion){
-						D = v;
-						list(callback);
-					}
-				});
-			};
-			return list;
-		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-8-26
+         * 修改日期：2017-7-14
+         * 名称： search
+         * 功能：递归对象搜索
+         * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
+         * 注意：
+         * @param 	(Object)D             			NO NULL : 对象
+         * @param 	(Funtion)callback             	NO NULL : 回调方法
+         * @returns {Object}
+         * Example：
+         *
+         */
+        'search':function(D,callback){
+            var loop,totalLoop,recursion = true;
+            totalLoop=loop=0;
+            var list=function(D,callback){
+                if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
+                if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
+                //算出找到指定内容，所需要遍历的次数
+                loop++;
+                System.each(D,function(k,v){
+                    totalLoop++;
+                    if (false === callback.apply(D,[k,v,loop,totalLoop])) {
+                        if(System.LAM_DEBUG){console.log('共遍历'+loop+'次找到了');}
+                        recursion = false;
+                        return false;
+                    }
+                    //如果没找到，就继续递归搜索
+                    if(v && recursion){list(v,callback);}
+                });
+            };
+            list(D,callback);
+            return {'totalLoop':totalLoop,'loop':loop};
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
