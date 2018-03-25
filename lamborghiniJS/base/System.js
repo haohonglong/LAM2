@@ -730,21 +730,20 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
-		 * 修改日期：2017-7-14
+		 * 修改日期：2018-3-25
 		 * 名称： search
 		 * 功能：递归对象搜索
 		 * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
 		 * 注意：
 		 * @param 	(Object)D             			NO NULL : 对象
-		 * @param 	(Funtion)callback             	NO NULL : 回调方法
-		 * @returns {Object}
+		 * @returns {Function}(Funtion callback)
 		 * Example：
 		 *
 		 */
-		'search':function(D,callback){
+		'search':function(D){
 			var loop,totalLoop,recursion = true;
 			totalLoop=loop=0;
-			var list=function(D,callback){
+			var list=function(callback){
 				if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
 				if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
 				//算出找到指定内容，所需要遍历的次数
@@ -757,11 +756,13 @@
 						return false;
 					}
 					//如果没找到，就继续递归搜索
-					if(v && recursion){list(v,callback);}
+					if(v && recursion){
+						D = v;
+						list(callback);
+					}
 				});
 			};
-			list(D,callback);
-			return {'totalLoop':totalLoop,'loop':loop};
+			return list;
 		},
 		/**
 		 * @author: lhh
