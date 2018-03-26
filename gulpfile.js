@@ -7,11 +7,11 @@ var classPath = "lamborghiniJS";
 
 gulp.task('clean', function () {
     del([
-        classPath+'/base/base.min.js'
+        classPath+'/build/base.min.js'
     ]);
 });
 gulp.task('js', function(){
-    //gulp.run('clean');
+    gulp.run('clean');
     return gulp.src([
          classPath+'/base/System.js'
         ,classPath+'/base/Base.class.js'
