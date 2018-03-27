@@ -1729,8 +1729,8 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015.11.12
-	 * 修改日期：2015.11.12
-	 * 名称：arrayMin
+	 * 修改日期：2018.3.27
+	 * 名称：min
 	 * 功能：找出数组里最小的数字
 	 * 说明：
 	 * 注意：
@@ -1738,7 +1738,7 @@
 	 * @return  (Number)
 	 * Example：
 	 */
-		.method('arrayMin',function(){
+		.method('min',function(){
 			var i = this.length,
 				min = this[0];
 
@@ -1755,8 +1755,8 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015.11.12
-	 * 修改日期：2015.11.12
-	 * 名称：arrayMax
+	 * 修改日期：2018.3.27
+	 * 名称：max
 	 * 功能：找出数组里最大的数字
 	 * 说明：
 	 * 注意：
@@ -1764,7 +1764,7 @@
 	 * @return  (Number)
 	 * Example：
 	 */
-		.method('arrayMax',function(){
+		.method('max',function(){
 			var i = this.length,
 				max = this[0];
 
