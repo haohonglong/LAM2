@@ -11,7 +11,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Tab',System.classPath+'/base');
+	System.is(System,'Dom','Tab',System.classPath+'/base');
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
@@ -239,7 +239,7 @@
 	 * 			(function)after    	   						:	ULL 回调
 	 *  Example：
 	 */
-	var Tab = System.Browser.extend({
+	var Tab = System.Dom.extend({
 		constructor: function(D) {
 			this.base();
 			var defaults ={
