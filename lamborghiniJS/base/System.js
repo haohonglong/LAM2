@@ -1020,7 +1020,7 @@
 
 				}
 				if(!System.empty(className) && System.isFunction (namespace[className])) {
-					// throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
+					throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
 					return false;
 				}
 			}
