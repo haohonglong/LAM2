@@ -1693,6 +1693,31 @@
 			}
 			return a;
 		})
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018.4.3
+         * 修改日期：2018.4.3
+         * 名称：merge_sort
+         * 功能：数组归并排序
+         * 说明：
+         * 注意：
+         * 调用方式：
+         * @return  (Array)返回排序后的数组
+         * Example：
+         */
+		.method('merge_sort',function(){
+            var merge = function(left, right) {
+                var final = [];
+                while (left.length && right.length)
+                    final.push(left[0] <= right[0] ? left.shift() : right.shift());
+                return final.merge(left.merge(right));
+            };
+            var len = this.length;
+            if (len < 2) return this;
+            var mid = len / 2;
+            return merge(this.slice(0, parseInt(mid)).merge_sort(), this.slice(parseInt(mid)).merge_sort());
+		})
 
 	/**
 	 *
