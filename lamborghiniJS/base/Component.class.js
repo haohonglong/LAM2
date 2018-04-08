@@ -248,22 +248,28 @@
 		 * 功能：检查系统加载器里的文件是否已加载过
 		 * 说明：
 		 * 注意：
-		 * @param file
+		 * @param file		NO NULL
+         * @param namespace NULL
 		 * @returns {boolean}
 		 */
-		'fileExisted':function(file) {
-            var arr,className;
-            if(file.indexOf("/") != -1){
-                arr=file.split("/");
-                file =arr[arr.length-1];
-            }
-            if(file.indexOf(".") != -1){
-                arr=file.split(".");
-                className=arr[0];
-                //这个文件已经加载过了
-                if(System.isFunction(System[className])){return true;}
-            }
-			return System.files.in_array(file);
+		'fileExisted':function(file,namespace) {
+            if(System.files.in_array(file)){
+            	return true;
+			}else{
+                var arr,className;
+                namespace = namespace || System;
+                if(file.indexOf("/") != -1){
+                    arr=file.split("/");
+                    file =arr[arr.length-1];
+                }
+                if(file.indexOf(".") != -1){
+                    arr=file.split(".");
+                    className=arr[0];
+                    //这个文件已经加载过了
+                    if(System.isFunction(namespace[className])){return true;}
+                }
+			}
+            return false;
 		},
 
 		/**
