@@ -243,7 +243,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-8-20
-		 * 修改日期：2016-8-20
+		 * 修改日期：2018-4-8
 		 * 名称：System.fileExisted
 		 * 功能：检查系统加载器里的文件是否已加载过
 		 * 说明：
@@ -251,7 +251,20 @@
 		 * @param file
 		 * @returns {boolean}
 		 */
-		'fileExisted':function(file) {return System.files.in_array(file);},
+		'fileExisted':function(file) {
+            var arr,className;
+            if(file.indexOf("/") != -1){
+                arr=file.split("/");
+                file =arr[arr.length-1];
+            }
+            if(file.indexOf(".") != -1){
+                arr=file.split(".");
+                className=arr[0];
+                //这个文件已经加载过了
+                if(System.isFunction(System[className])){return true;}
+            }
+			return System.files.in_array(file);
+		},
 
 		/**
 		 *
