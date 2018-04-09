@@ -60,7 +60,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.0.7";
+	var VERSION="2.0.8";
 	var Interface={},System={},once=true;
 	var trimLeft = /^\s+/,
 		trimRight = /\s+$/,
