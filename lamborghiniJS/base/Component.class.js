@@ -243,9 +243,9 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-8-20
-		 * 修改日期：2018-4-8
+		 * 修改日期：2018-4-9
 		 * 名称：System.fileExisted
-		 * 功能：检查系统加载器里的文件是否已加载过
+		 * 功能：检查系统加载器里的文件是否已加载过,class.js 是否已加载过了
 		 * 说明：
 		 * 注意：
 		 * @param file		NO NULL
@@ -255,7 +255,7 @@
 		'fileExisted':function(file,namespace) {
             if(System.files.in_array(file)){
             	return true;
-			}else{
+			}else if(System.isClassFile(file)){
                 var arr,className;
                 namespace = namespace || System;
                 if(file.indexOf("/") != -1){
@@ -264,7 +264,7 @@
                 }
                 if(file.indexOf(".") != -1){
                     arr=file.split(".");
-                    className=arr[0];
+                    className=arr[0].firstToUpperCase();
                     //这个文件已经加载过了
                     if(System.isFunction(namespace[className])){return true;}
                 }
