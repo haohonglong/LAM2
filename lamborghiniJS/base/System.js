@@ -21,7 +21,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-3-16
+ * 修改日期:2018-4-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -189,28 +189,10 @@
 	}
 
 
-
-
-	if(!window.alert){
-		window.alert=console.log;
-	}
-
-	var Function;
 	//对象里禁用的关键字
 	var arr_Object_key=['_hashCode','length','list'];
 
-	if(window){
-		Function = window.Function;
-		Date     = window.Date	;
-		String   = window.String;
-		Array    = window.Array	;
 
-	}else{
-		Function = {};
-		Date     = {};
-		String   = {};
-		Array    = {};
-	}
 
 	/**
 	 *
@@ -1045,20 +1027,22 @@
 		"isClassFile":function(path) {
 			var arr,className;
 			//查找是否有.class这个关键字
-			if(path.search(/.class/g) != -1){
-				if(path.indexOf("/") != -1){
-					arr=path.split("/");
-					path =arr[arr.length-1];
-
-				}
-				if(path.indexOf(".") != -1){
-					arr=path.split(".");
-					className=arr[0];
-					//这个类文件已经加载过了
-					//if(System.isFunction(System[className])){
-					return true;
-					//}
-				}
+			if(path.search(/.class/g) != -1 && path.search(/.js$/) != -1){
+				return true;
+				// if(path.indexOf("/") != -1){
+				// 	arr=path.split("/");
+				// 	path =arr[arr.length-1];
+                //
+				// }
+				//
+				// if(path.indexOf(".") != -1){
+				// 	arr=path.split(".");
+                 //    className=arr[0].firstToUpperCase();
+				// 	// 这个类文件已经加载过了
+				// 	if(System.isFunction(System[className])){
+				// 	return true;
+				// 	}
+				// }
 			}
 			//这个类文件没有加载过
 			return false;
@@ -1286,7 +1270,7 @@
 //==================================================================================
 
 	//函数在原型里定义一个方法
-	window.Function.prototype.method=function(name,fn){
+	Function.prototype.method=function(name,fn){
 		if(!this.prototype[name]){
 			this.prototype[name] = fn;
 		}
@@ -1922,7 +1906,6 @@
 		//try {
 		throw new Error(msg);
 		//} catch (e) {
-		//	alert(e.name + ": " + e.message );
 		//}
 
 	}
