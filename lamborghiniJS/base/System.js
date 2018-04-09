@@ -43,21 +43,21 @@
  *
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
 	var UNIQUE = "LAM_20150910123700_";
-	var System = IT[UNIQUE] || null;
+	var System = global[UNIQUE] || null;
 	if(System){
 		return;
 	}else{
-		var namespace = IT.GRN_LHH;
+		var namespace = global.GRN_LHH;
 		if(!namespace){namespace = {};}
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(IT,namespace) :
-		typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
-		(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(global,namespace) :
+		typeof define === 'function' && define.amd ? define(factory(global,namespace)) :
+		(global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = factory(global,namespace));
 	}
 
-})(typeof global !== 'undefined' ? global : this,function(window,namespace,undefined){
+})(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
 	var VERSION="2.0.7";
@@ -117,7 +117,7 @@
 	var isXMLSerializer = type("XMLSerializer");
 
 	function isWindow(obj) {
-		return null != obj && obj === obj.window;
+		return (null != obj && obj === obj.window);
 	}
 
 
@@ -500,8 +500,8 @@
 				// We use execScript on Internet Explorer
 				// We use an anonymous function so that context is window
 				// rather than jQuery in Firefox
-				(window.execScript || function(data) {
-					window["eval"].call(window, data);
+				(global.execScript || function(data) {
+					global["eval"].call(global, data);
 					// jscs:ignore requireDotNotation
 				})(data);
 			}
@@ -556,7 +556,7 @@
 		 * @return  (voide)
 		 */
 		'close':function(document){
-			document = document || window.document;
+			document = document || global.document;
 			document.close();
 		},
 		/**
@@ -1064,7 +1064,7 @@
 		 *
 		 */
 		'function_exists':function(fun_name){
-			if(window[fun_name] && System.isFunction(window[fun_name])){
+			if(global[fun_name] && System.isFunction(global[fun_name])){
 				return true;
 			}
 			return false;
@@ -1256,11 +1256,11 @@
 	System.classes=[];
 	System.Super={};
 	System.app=null;
-	System.Object = Object.prototype;
-	System.Function = window.Function && window.Function.prototype || {};
-	System.Date     = window.Date && window.Date.prototype || {};
-	System.String   = window.String && window.String.prototype || {};
-	System.Array    = window.Array && window.Array.prototype || {};
+	System.Object = Object.prototype     || System.createDict();
+	System.Function = Function.prototype || System.createDict();
+	System.Date     = Date.prototype     || System.createDict();
+	System.String   = String.prototype   || System.createDict();
+	System.Array    = Array.prototype    || System.createDict();
 
 	//extend
 	System.inherit=inherit;
@@ -1723,7 +1723,7 @@
 			if(!isFunction(fn)){
 				return this;
 			}
-			D = D || window;
+			D = D || global;
 			var a=[];
 			for(var i=0,len=this.length;i<len;++i) {
 				if(!fn.call(D, this[i], i, this)){
@@ -1972,5 +1972,5 @@
 		return arr;
 	}
 
-	return System.merge(null,[Interface,window[namespace] || {}]);
+	return System.merge(null,[Interface,global[namespace] || {}]);
 });
