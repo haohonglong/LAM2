@@ -1014,7 +1014,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-02
-		 * 修改日期：2015-8-02
+		 * 修改日期：2018-4-9
 		 * 名称：System.isClassFile
 		 * 功能：检查是否是类文件
 		 * 说明：
@@ -1027,7 +1027,7 @@
 		"isClassFile":function(path) {
 			var arr,className;
 			//查找是否有.class这个关键字
-			if(path.search(/.class/g) != -1 && path.search(/.js$/) != -1){
+			if(path.search(/.class.js/) != -1){
 				return true;
 				// if(path.indexOf("/") != -1){
 				// 	arr=path.split("/");
