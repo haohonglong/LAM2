@@ -13,8 +13,18 @@
             var System = this;
             VIEWS = System.ROOT+'/views';
 
+            System.Loader
+                .load({
+                    'baseUrl':System.ROOT,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/css/lib'
+                    ]
+                })
+                .print();
+
             System
-                    .import(['/common/common'],System.ROOT)
                     .import(['/Tab.class'],System.classPath);
 
 
