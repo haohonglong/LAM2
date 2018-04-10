@@ -561,6 +561,36 @@
 		Attr.src = src;
 		return Html.tag(true,'img',Attr);
 	};
+    /**
+     *
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-10
+     * 修改日期：2018-4-10
+     * 名称： img
+     * 功能：
+     * 说明：
+     * 注意：length 是关键字 属性里禁止使用
+     * @param 	(String)src      NO NULL : 图片 路径
+     * @param 	(Object)Attr        NULL : 标签的属性
+     * @return (String)
+     * Example：
+     *
+     */
+    /**
+	 *
+     * @param {Element}el
+     * @returns {Element}
+     */
+    Html.getOuterHTML = function(el) {
+        if (el.outerHTML) {
+            return el.outerHTML
+        } else {
+            var container = document.createElement('div');
+            container.appendChild(el.cloneNode(true));
+            return container.innerHTML
+        }
+    };
 
 
 	return Html;
