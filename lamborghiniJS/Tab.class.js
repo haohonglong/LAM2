@@ -11,7 +11,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Tab',System.classPath+'/base');
+	System.is(System,'Dom','Tab',System.classPath+'/base');
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
@@ -239,7 +239,7 @@
 	 * 			(function)after    	   						:	ULL 回调
 	 *  Example：
 	 */
-	var Tab = System.Browser.extend({
+	var Tab = System.Dom.extend({
 		constructor: function(D) {
 			this.base();
 			var defaults ={
@@ -348,12 +348,12 @@
 	 * @author lhh
 	 * 产品介绍：
 	 * 创建日期：2015-4-2
-	 * 修改日期：2018-1-19
+	 * 修改日期：2018-4-8
 	 * 名称：Tab.tab
 	 * 功能：tab 选项卡功能
 	 * 说明：
 	 * 注意：
-	 * @returns {Function}
+	 * @returns {void}
 	 * example:
 	 * <ul data-tab="ul">
 	 * <li></li>
@@ -373,18 +373,20 @@
 		$this.closest(D.ul).find(D.li).removeClass(D.active);
 		$this.addClass(D.active);
 		var id = $this.data('id');
-		if(!System.isset(id)){return;}
-		var ids = id.toString().split(',');
-		var $section = $(D.section);
-		$section.hide();
-		$section.each(function(){
-			var $this = $(this);
-			var id = $this.data('id');
-			if(ids.in_array(id.toString())){
-				D.callback.call(this);
-				$this.show();
-			}
-		});
+		if(System.isset(id)){
+            var ids = id.toString().split(',');
+            var $section = $(D.section);
+            $section.hide();
+            $section.each(function(){
+                var $this = $(this);
+                var id = $this.data('id');
+                if(ids.in_array(id.toString())){
+                    D.callback.call(this);
+                    $this.show();
+                }
+            });
+		}
+
 	};
 
 

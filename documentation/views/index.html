@@ -4,22 +4,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>文档说明</title>
+    <title></title>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript">
         var VIEWS;
-        LAM.main=function(){
+        LAM.run(function(){
             'use strict';
             var System = this;
             VIEWS = System.ROOT+'/views';
 
+            System.Loader
+                .load({
+                    'baseUrl':System.ROOT,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/css/lib'
+                    ]
+                })
+                .print();
+
             System
-                    .import(['/common/common'],System.ROOT)
                     .import(['/Tab.class'],System.classPath);
 
-            System.Html.include($('include'));
-            System.Html.analysisTpl();
-        };
+
+        });
 
 
 
@@ -39,29 +48,60 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <include file="{#VIEWS#}/include/menu.html"></include>
+            <div class="list-group">
+                <a href="javascript:void(0);" class="list-group-item">介绍<span class="caret ML5"></span></a>
+                <div class="none submenu">
+                    <a data-var="tpl" href="{#VIEWS#}/index.html?r=content/index" class="list-group-item">关于</a>
+                </div>
+                <a href="javascript:void(0);" class="list-group-item">入门<span class="caret ML5"></span></a>
+                <div class="none submenu">
+                    <a data-var="tpl" href="{#VIEWS#}/index.html?r=content/running" class="list-group-item">运行</a>
+                </div>
+
+
+                <a href="javascript:void(0);" class="list-group-item">结构<span class="caret ML5"></span></a>
+                <div class="none submenu" id="structList"></div>
+            </div>
         </div>
         <div id="content" class="col-md-9">
-            <include file="{#VIEWS#}/content/index.html"></include>
+            <include file="{#VIEWS#}/{#System.VNAME#}.html"></include>
         </div>
     </div>
 
 </div>
-
+<script type="text/template" id="structList_tpl">
+    <a data-var="tpl" href="{#url#}" class="list-group-item">{#title#}</a>
+</script>
 
 </body>
 
 
 <script type="text/javascript">
-   LAMJS.run(function(){
+   LAMJS.run([jQuery],function($){
         'use strict';
         var System=this;
 
-       var url='data-url';
-       System.replaceTpl('[data-url]',url);
+       System.Html.getFile(System.ROOT+'/database/data.json',function(data){
+           var menu = System.Template.foreach($('#structList_tpl').html(), data.menu);
+           document.querySelector('#structList').innerHTML=System.findTpl(menu,['{{','}}']);
+       },{
+           'dataType':'json',
+           'type':'POST'
+       });
+
+       System.VNAME = System.get('r') || 'content/index';
+       System.Html.include($('include'));
+       System.Html.analysisTpl();
+
+       System.setMenuSelectedStatus=function(href){
+           $('.list-group .submenu a[href*="'+href+'"]')
+               .addClass('active').closest('.submenu').show().prev('.list-group-item').addClass('p-active');
+       };
+
 
        $(function(){
-           var $title=$('title');
+           $('title').text(System.TITLE || 'index');
+           System.setMenuSelectedStatus(System.VNAME);
 
            $('.list-group [data-url]').hover(function(){
                $(this).addClass('hover');
@@ -70,40 +110,16 @@
            });
            new System.Tab({
                'list':'.list-group .list-group-item',
-               'event':{'click':'active'},
+               'event':{'click':''},
                'or':true,
                'on':'on',
-               'fn':function(obj){
-                   var $this=$(this);
-                   if(!$this.is('[data-url]')){
-                       $this.removeClass('active');
-                       $this.next().toggle();
-                       if(obj.temp.is('[data-url]')){
-                           obj.temp.addClass('active');
-                       }
-                   }else{
-                       $(obj.current.list).removeClass('active');
-
-                       $('.list-group .list-group-item').not('[data-url]').removeClass('p-active');
-                       $this.addClass('active');
-                       if(!$this.parent().prev().is('[data-url]')){
-                           $this.parent().prev().addClass('p-active');
-                       }
-                   }
-
-                   if($this.attr(url)){
-                       var data=System.eval($this.attr(url));
-                       if(System.isObject(data)){
-                           $title.text(data.title);
-                           $('#title').text(data.title);
-                           $('#content').load(data.url);
-                       }
-                   }
-
-
+               'fn':function(){
+                   $(this).next().toggle();
 
                }
            }).run();
+
+
 
        })
 

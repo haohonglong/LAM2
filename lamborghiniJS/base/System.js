@@ -21,7 +21,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-3-16
+ * 修改日期:2018-4-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -43,24 +43,24 @@
  *
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
 	var UNIQUE = "LAM_20150910123700_";
-	var System = IT[UNIQUE] || null;
+	var System = global[UNIQUE] || null;
 	if(System){
 		return;
 	}else{
-		var namespace = IT.GRN_LHH;
+		var namespace = global.GRN_LHH;
 		if(!namespace){namespace = {};}
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(IT,namespace) :
-		typeof define === 'function' && define.amd ? define(factory(IT,namespace)) :
-		(IT['LAM'] = IT['LAMJS'] = IT[UNIQUE] = IT[namespace] = factory(IT,namespace));
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(global,namespace) :
+		typeof define === 'function' && define.amd ? define(factory(global,namespace)) :
+		(global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = factory(global,namespace));
 	}
 
-})(typeof global !== 'undefined' ? global : this,function(window,namespace,undefined){
+})(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.0.7";
+	var VERSION="2.0.8";
 	var Interface={},System={},once=true;
 	var trimLeft = /^\s+/,
 		trimRight = /\s+$/,
@@ -117,7 +117,7 @@
 	var isXMLSerializer = type("XMLSerializer");
 
 	function isWindow(obj) {
-		return null != obj && obj === obj.window;
+		return (null != obj && obj === obj.window);
 	}
 
 
@@ -189,28 +189,10 @@
 	}
 
 
-
-
-	if(!window.alert){
-		window.alert=console.log;
-	}
-
-	var Function;
 	//对象里禁用的关键字
 	var arr_Object_key=['_hashCode','length','list'];
 
-	if(window){
-		Function = window.Function;
-		Date     = window.Date	;
-		String   = window.String;
-		Array    = window.Array	;
 
-	}else{
-		Function = {};
-		Date     = {};
-		String   = {};
-		Array    = {};
-	}
 
 	/**
 	 *
@@ -518,8 +500,8 @@
 				// We use execScript on Internet Explorer
 				// We use an anonymous function so that context is window
 				// rather than jQuery in Firefox
-				(window.execScript || function(data) {
-					window["eval"].call(window, data);
+				(global.execScript || function(data) {
+					global["eval"].call(global, data);
 					// jscs:ignore requireDotNotation
 				})(data);
 			}
@@ -574,7 +556,7 @@
 		 * @return  (voide)
 		 */
 		'close':function(document){
-			document = document || window.document;
+			document = document || global.document;
 			document.close();
 		},
 		/**
@@ -726,43 +708,43 @@
 			}
 			return obj;
 		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-8-26
-		 * 修改日期：2017-7-14
-		 * 名称： search
-		 * 功能：递归对象搜索
-		 * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
-		 * 注意：
-		 * @param 	(Object)D             			NO NULL : 对象
-		 * @param 	(Funtion)callback             	NO NULL : 回调方法
-		 * @returns {Object}
-		 * Example：
-		 *
-		 */
-		'search':function(D,callback){
-			var loop,totalLoop,recursion = true;
-			totalLoop=loop=0;
-			var list=function(D,callback){
-				if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
-				if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
-				//算出找到指定内容，所需要遍历的次数
-				loop++;
-				System.each(D,function(k,v){
-					totalLoop++;
-					if (false === callback.apply(D,[k,v,loop,totalLoop])) {
-						if(System.LAM_DEBUG){console.log('共遍历'+loop+'次找到了');}
-						recursion = false;
-						return false;
-					}
-					//如果没找到，就继续递归搜索
-					if(v && recursion){list(v,callback);}
-				});
-			};
-			list(D,callback);
-			return {'totalLoop':totalLoop,'loop':loop};
-		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-8-26
+         * 修改日期：2017-7-14
+         * 名称： search
+         * 功能：递归对象搜索
+         * 说明：如果对象的属性的值还是一个对象的话就递归搜索，直到对象下的属性不是对象为止
+         * 注意：
+         * @param 	(Object)D             			NO NULL : 对象
+         * @param 	(Funtion)callback             	NO NULL : 回调方法
+         * @returns {Object}
+         * Example：
+         *
+         */
+        'search':function(D,callback){
+            var loop,totalLoop,recursion = true;
+            totalLoop=loop=0;
+            var list=function(D,callback){
+                if(!System.isArray(D) && !System.isPlainObject(D)){return D;}
+                if(!System.isFunction(callback)){throw new Error('Warning: 第二参数 必须是个callback');}
+                //算出找到指定内容，所需要遍历的次数
+                loop++;
+                System.each(D,function(k,v){
+                    totalLoop++;
+                    if (false === callback.apply(D,[k,v,loop,totalLoop])) {
+                        if(System.LAM_DEBUG){console.log('共遍历'+loop+'次找到了');}
+                        recursion = false;
+                        return false;
+                    }
+                    //如果没找到，就继续递归搜索
+                    if(v && recursion){list(v,callback);}
+                });
+            };
+            list(D,callback);
+            return {'totalLoop':totalLoop,'loop':loop};
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -1032,7 +1014,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-02
-		 * 修改日期：2015-8-02
+		 * 修改日期：2018-4-9
 		 * 名称：System.isClassFile
 		 * 功能：检查是否是类文件
 		 * 说明：
@@ -1045,20 +1027,22 @@
 		"isClassFile":function(path) {
 			var arr,className;
 			//查找是否有.class这个关键字
-			if(path.search(/.class/g) != -1){
-				if(path.indexOf("/") != -1){
-					arr=path.split("/");
-					path =arr[arr.length-1];
-
-				}
-				if(path.indexOf(".") != -1){
-					arr=path.split(".");
-					className=arr[0];
-					//这个类文件已经加载过了
-					//if(System.isFunction(System[className])){
-					return true;
-					//}
-				}
+			if(path.search(/.class.js/) != -1){
+				return true;
+				// if(path.indexOf("/") != -1){
+				// 	arr=path.split("/");
+				// 	path =arr[arr.length-1];
+                //
+				// }
+				//
+				// if(path.indexOf(".") != -1){
+				// 	arr=path.split(".");
+                 //    className=arr[0].firstToUpperCase();
+				// 	// 这个类文件已经加载过了
+				// 	if(System.isFunction(System[className])){
+				// 	return true;
+				// 	}
+				// }
 			}
 			//这个类文件没有加载过
 			return false;
@@ -1080,7 +1064,7 @@
 		 *
 		 */
 		'function_exists':function(fun_name){
-			if(window[fun_name] && System.isFunction(window[fun_name])){
+			if(global[fun_name] && System.isFunction(global[fun_name])){
 				return true;
 			}
 			return false;
@@ -1272,11 +1256,11 @@
 	System.classes=[];
 	System.Super={};
 	System.app=null;
-	System.Object = Object.prototype;
-	System.Function = window.Function && window.Function.prototype || {};
-	System.Date     = window.Date && window.Date.prototype || {};
-	System.String   = window.String && window.String.prototype || {};
-	System.Array    = window.Array && window.Array.prototype || {};
+	System.Object = Object.prototype     || System.createDict();
+	System.Function = Function.prototype || System.createDict();
+	System.Date     = Date.prototype     || System.createDict();
+	System.String   = String.prototype   || System.createDict();
+	System.Array    = Array.prototype    || System.createDict();
 
 	//extend
 	System.inherit=inherit;
@@ -1286,7 +1270,7 @@
 //==================================================================================
 
 	//函数在原型里定义一个方法
-	window.Function.prototype.method=function(name,fn){
+	Function.prototype.method=function(name,fn){
 		if(!this.prototype[name]){
 			this.prototype[name] = fn;
 		}
@@ -1693,6 +1677,31 @@
 			}
 			return a;
 		})
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018.4.3
+         * 修改日期：2018.4.3
+         * 名称：merge_sort
+         * 功能：数组归并排序
+         * 说明：
+         * 注意：
+         * 调用方式：
+         * @return  (Array)返回排序后的数组
+         * Example：
+         */
+		.method('merge_sort',function(){
+            var merge = function(left, right) {
+                var final = [];
+                while (left.length && right.length)
+                    final.push(left[0] <= right[0] ? left.shift() : right.shift());
+                return final.merge(left.merge(right));
+            };
+            var len = this.length;
+            if (len < 2) return this;
+            var mid = len / 2;
+            return merge(this.slice(0, parseInt(mid)).merge_sort(), this.slice(parseInt(mid)).merge_sort());
+		})
 
 	/**
 	 *
@@ -1714,7 +1723,7 @@
 			if(!isFunction(fn)){
 				return this;
 			}
-			D = D || window;
+			D = D || global;
 			var a=[];
 			for(var i=0,len=this.length;i<len;++i) {
 				if(!fn.call(D, this[i], i, this)){
@@ -1729,8 +1738,8 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015.11.12
-	 * 修改日期：2015.11.12
-	 * 名称：arrayMin
+	 * 修改日期：2018.3.27
+	 * 名称：min
 	 * 功能：找出数组里最小的数字
 	 * 说明：
 	 * 注意：
@@ -1738,7 +1747,7 @@
 	 * @return  (Number)
 	 * Example：
 	 */
-		.method('arrayMin',function(){
+		.method('min',function(){
 			var i = this.length,
 				min = this[0];
 
@@ -1755,8 +1764,8 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015.11.12
-	 * 修改日期：2015.11.12
-	 * 名称：arrayMax
+	 * 修改日期：2018.3.27
+	 * 名称：max
 	 * 功能：找出数组里最大的数字
 	 * 说明：
 	 * 注意：
@@ -1764,7 +1773,7 @@
 	 * @return  (Number)
 	 * Example：
 	 */
-		.method('arrayMax',function(){
+		.method('max',function(){
 			var i = this.length,
 				max = this[0];
 
@@ -1897,7 +1906,6 @@
 		//try {
 		throw new Error(msg);
 		//} catch (e) {
-		//	alert(e.name + ": " + e.message );
 		//}
 
 	}
@@ -1964,5 +1972,5 @@
 		return arr;
 	}
 
-	return System.merge(null,[Interface,window[namespace] || {}]);
+	return System.merge(null,[Interface,global[namespace] || {}]);
 });

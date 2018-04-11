@@ -59,7 +59,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-1-15
-	 * 修改日期：2017-8-30
+	 * 修改日期：2018-4-10
 	 * 名称： getFile
 	 * 功能：返回指定的文件
 	 * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -70,6 +70,8 @@
 	 * @param 	(String)  	D.dataType         NO NULL :获取文件类型
 	 * @param 	(String)  	D.contentType      	  NULL :设置编码等
 	 * @param 	(String)  	D.url         	      NULL :请求地址
+	 * @param 	(String)  	D.url_404         	  NULL :404默认地址
+	 * @param 	(String)  	D.jump         	      NULL :404页面是否独立一个页面打开
 	 * @param 	(String|{}) D.data             	  NULL :请求地址的参数
 	 * @param 	(Boolean) 	D.async               NULL :是否异步加载
 	 * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
@@ -85,6 +87,8 @@
 						 dataType,
 						 contentType,
 						 url,
+						 url_404,
+						 jump,
 						 data,
 						 async,
 						 cache,
@@ -100,7 +104,9 @@
 		data  		= $dom && System.eval($dom.attr('data'))			|| D&&D.data  	 	||	{};
 		dataType 	= $dom && $dom.attr('dataType') 					|| D&&D.dataType 	||	"html";
 		contentType = $dom && $dom.attr('contentType') 					|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-		url  		= $dom && $dom.attr('file')  						|| D&&D.url;
+		url  		= $dom && $dom.attr('file')  						|| D&&D.url         || null;
+        url_404  	= $dom && $dom.attr('file_404')  				    || D&&D.url_404     || null;
+        jump  	    = $dom && eval($dom.attr('jump'))  				    || D&&D.jump        || null;
 		type  		= $dom && $dom.attr('type')  						|| D&&D.type  	 	||	"POST";
 		async 		= $dom && eval($dom.attr('async'))					|| D&&D.async ;
 		cache 		= $dom && eval($dom.attr('cache')) 					|| D&&D.cache ;
@@ -108,43 +114,62 @@
 		capture 	= $dom && System.eval($dom.attr('capture'))			|| D&&D.capture		||	0 ;
 		callBack 	= $dom && System.eval($dom.attr('callBack'))		|| D&&D.callBack	||	0 ;
 
-		$.ajax(System.template(url),{
-			type : 	  type,
-			data :    data,
-			async:    async ? true : false,
-			cache:    cache ? true : false,
-			contentType:contentType,
-			dataType: dataType,
-			beforeSend:function(jqXHR,PlainObject){
-				if(System.isFunction(beforeSend)){
-					beforeSend.call(this,jqXHR,PlainObject);
-				}
-			},
-			error:function(){
-				try{
-					throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
-				}catch(e){
+        if(System.isset(url)){
+            $.ajax(System.template(url),{
+                type : 	  type,
+                data :    data,
+                async:    async ? true : false,
+                cache:    cache ? true : false,
+                contentType:contentType,
+                dataType: dataType,
+                beforeSend:function(jqXHR,PlainObject){
+                    if(System.isFunction(beforeSend)){
+                        beforeSend.call(this,jqXHR,PlainObject);
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    try{
+                        switch(XMLHttpRequest.status)
+                        {
+                            case 404:
+                                if(System.isset(url_404)){
+                                    if(jump){
+                                        location.href = url_404;
+                                    }else if($dom && $dom.attr('file')){
+                                        $dom.attr('file',url_404);
+                                        getFile($dom,D);
+                                    }
+                                }
+                                break;
+                            default:
 
-				}
-			},
-			success: function(content){
-				if(System.isFunction(capture)){
-					content = capture(content);
-				}
-				if(callBack && System.isFunction(callBack)){
-					if($dom){
-						callBack.call($dom,content);
-					}else{
-						callBack(content);
-					}
-				}else{
-					if($dom){
-						$dom.after(content).remove();
-					}
-				}
+                        }
 
-			}
-		});
+                    }catch(e){
+                        throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
+
+                    }
+                },
+                success: function(content){
+                    if(System.isFunction(capture)){
+                        content = capture(content);
+                    }
+                    if(callBack && System.isFunction(callBack)){
+                        if($dom){
+                            callBack.call($dom,content);
+                        }else{
+                            callBack(content);
+                        }
+                    }else{
+                        if($dom){
+                            $dom.after(content).remove();
+                        }
+                    }
+
+                }
+            });
+        }
+
 	};
 
 	/**
@@ -268,7 +293,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-1-15
-	 * 修改日期：2016-10-1
+	 * 修改日期：2018-4-10
 	 * 名称： Html.include
 	 * 功能：html文件里包含另一个文件
 	 * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -295,19 +320,17 @@
 
 		$dom.each(function(){
 			var dom =this;
-			var file = $(this).attr('file');
-			if(file.indexOf('?') != -1){
-				location.href = file;
-			}
 			if(callBack && System.isFunction(callBack)){
-				D.callBack =function(content){
-					callBack.call(dom,content);
-				};
-
-			}
-
+                D.callBack =function(content){
+                    callBack.call(dom,content);
+                };
+            }
+            var jump = eval($(this).attr('jump'));
+            var path = $(this).attr('location');
+            if(jump && System.isset(path)){
+                location.href = path;
+            }
 			getFile($(dom),D);
-
 		});
 
 	};
@@ -561,6 +584,36 @@
 		Attr.src = src;
 		return Html.tag(true,'img',Attr);
 	};
+    /**
+     *
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-10
+     * 修改日期：2018-4-10
+     * 名称： img
+     * 功能：
+     * 说明：
+     * 注意：length 是关键字 属性里禁止使用
+     * @param 	(String)src      NO NULL : 图片 路径
+     * @param 	(Object)Attr        NULL : 标签的属性
+     * @return (String)
+     * Example：
+     *
+     */
+    /**
+	 *
+     * @param {Element}el
+     * @returns {Element}
+     */
+    Html.getOuterHTML = function(el) {
+        if (el.outerHTML) {
+            return el.outerHTML
+        } else {
+            var container = document.createElement('div');
+            container.appendChild(el.cloneNode(true));
+            return container.innerHTML
+        }
+    };
 
 
 	return Html;

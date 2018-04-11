@@ -15,11 +15,9 @@
     'use strict';
     var ROOT="",_ROOT_="",System={},Config={},namespace="";
     //check
-    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){
-        return;
-    }else{
-        window.GRN_LHH='System';
-    }
+    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){return;}
+
+    window.GRN_LHH='System';
     namespace = window.GRN_LHH;
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
