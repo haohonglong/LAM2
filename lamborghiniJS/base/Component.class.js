@@ -166,27 +166,18 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-11-22
-		 * 修改日期：2015-11-24
+		 * 修改日期：2018-4-11
 		 * 名称：System.module
 		 * 功能：模块
 		 * 说明：
 		 * 注意：
 		 * Example：
 		 */
-		'module':{
-			/**
-			 * @author: lhh
-			 * 产品介绍：
-			 * 创建日期：2015-11-22
-			 * 修改日期：2015-11-24
-			 * 名称：System.module.exports
-			 * 功能：
-			 * 说明：
-			 * 注意：
-			 * Example：
-			 */
-			'exports':{}
-		},
+		'module':(function(){
+			var module = System.createDict();
+			module.exports = System.createDict();
+            return module;
+		}()),
 
 		/**
 		 *
