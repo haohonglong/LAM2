@@ -211,10 +211,8 @@
 			try{
                 //用 ecma5 Object.create() 实现 prototype 原型继承
                 // subclass extends superclass
-				if(System.create){
-                    subClass.prototype = System.create(superClass.prototype);
-                    subClass.prototype.constructor = subClass;
-				}
+                subClass.prototype = System.create(superClass.prototype);
+                subClass.prototype.constructor = subClass;
 			}catch (e){
                 F.prototype = superClass.prototype;
                 subClass.prototype = new F();
