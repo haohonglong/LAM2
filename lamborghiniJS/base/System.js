@@ -216,7 +216,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-7-23
-	 * 修改日期：2017-10-10
+	 * 修改日期：2018-4-13
 	 * 名称：System.inherit
 	 * 功能：Extends a child object from a parent object using classical inheritance
 	 * pattern.
@@ -234,9 +234,9 @@
 		// proxy used to establish prototype chain
 		var F = function() {};
 		return function(subClass, superClass) {
-			if (Object.create) {//用 ecma5 Object.create() 实现 prototype 原型继承
+			if (System.create) {//用 ecma5 Object.create() 实现 prototype 原型继承
 				// subclass extends superclass
-				subClass.prototype = Object.create(superClass.prototype);
+				subClass.prototype = System.create(superClass.prototype);
 				subClass.prototype.constructor = subClass;
 			}else{
 				F.prototype = superClass.prototype;
@@ -761,6 +761,27 @@
             };
             list(D,callback);
             return {'totalLoop':totalLoop,'loop':loop};
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-4-13
+         * 修改日期：2018-4-13
+         * 名称：create
+         * 功能：
+         * 说明：
+         * 注意：
+         * @returns {Object}
+         */
+		'create':function (obj) {
+			if(!System.isObject(obj)){return {};}
+			if(System.isFunction(Object.create)){
+				return Object.create(obj);
+			}else{
+				var F = function () {};
+				F.prototype = obj;
+				return new F;
+			}
         },
 		/**
 		 * @author: lhh
