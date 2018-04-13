@@ -7,21 +7,41 @@
     <title></title>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript">
-        var VIEWS;
+        
         LAM.run(function(){
             'use strict';
             var System = this;
-            VIEWS = System.ROOT+'/views';
+            
 
             System.Loader
                 .load({
-                    'baseUrl':System.ROOT,
+                    'baseUrl':System.PLUGINS,
                     'suffix':'.css',
                     'rel':'stylesheet',
                     'css':[
-                        '/css/lib'
+                        '/bootstrap/bootstrap'
                     ]
                 })
+                .load({
+                    'baseUrl':System.COMMON,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/css/lib/global'
+                    ]
+                })
+                .load({
+                    'baseUrl':System.CSS,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/lib'
+                    ]
+                })
+
+
+
+
                 .print();
 
             System
@@ -42,7 +62,7 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a data-var="tpl" id="title" href="{#VIEWS#}/index.html">首页</a></li>
+                <li><a data-var="tpl" id="title" href="{#LAM.VIEWS#}/index.html">首页</a></li>
             </ol>
         </div>
     </div>
@@ -51,11 +71,12 @@
             <div class="list-group">
                 <a href="javascript:void(0);" class="list-group-item">介绍<span class="caret ML5"></span></a>
                 <div class="none submenu">
-                    <a data-var="tpl" href="{#VIEWS#}/index.html?r=content/index" class="list-group-item">关于</a>
+                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=introduce/index" class="list-group-item">快速开始</a>
+                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=introduce/about" class="list-group-item">关于</a>
                 </div>
                 <a href="javascript:void(0);" class="list-group-item">入门<span class="caret ML5"></span></a>
                 <div class="none submenu">
-                    <a data-var="tpl" href="{#VIEWS#}/index.html?r=content/running" class="list-group-item">运行</a>
+                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=content/running" class="list-group-item">运行</a>
                 </div>
 
 
@@ -64,7 +85,7 @@
             </div>
         </div>
         <div id="content" class="col-md-9">
-            <include file="{#VIEWS#}/{#System.VNAME#}.html"></include>
+            <include file="{#LAM.VIEWS#}/{#LAM.VNAME#}.html" file_404="404.html"></include>
         </div>
     </div>
 
@@ -80,6 +101,9 @@
    LAMJS.run([jQuery],function($){
         'use strict';
         var System=this;
+       System.VNAME = System.get('r') || 'introduce/index';
+       System.Html.include($('include'));
+       System.Html.analysisTpl();
 
        System.Html.getFile(System.ROOT+'/database/data.json',function(data){
            var menu = System.Template.foreach($('#structList_tpl').html(), data.menu);
@@ -89,9 +113,7 @@
            'type':'POST'
        });
 
-       System.VNAME = System.get('r') || 'content/index';
-       System.Html.include($('include'));
-       System.Html.analysisTpl();
+
 
        System.setMenuSelectedStatus=function(href){
            $('.list-group .submenu a[href*="'+href+'"]')
