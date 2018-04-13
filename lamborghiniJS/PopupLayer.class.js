@@ -176,6 +176,7 @@
 
 			 return container;
 		 },
+		 /*
 		 'hide':function(callback){
              callback = System.isFunction(callback) ? callback : null;
 			 if(this.animate){
@@ -209,7 +210,7 @@
 			 return this;
 		 },
 
-
+*/
 		 'append':function($div){},
 		 'empty':function(){this.$popLayout.empty();},
 		 'remove':function(){this.$popLayout.remove();},
@@ -228,6 +229,26 @@
 		  * Example：
 		  */
 		 'destructor':function(){}
+	 });
+
+	 System.each(['show','hide'],function(i,name){
+	 	PopupLayer.method(name,function(callback){
+             callback = System.isFunction(callback) ? callback : null;
+             if(this.animate){
+                 this.$popLayout.animate({
+                     opacity: name
+                 }, this.animate.speed, this.animate.easing,callback);
+                 this.$mask.animate({
+                     opacity: name
+                 }, this.animate.speed, this.animate.easing);
+             }else{
+                 this.$popLayout[name](null,callback);
+                 this.$mask[name]();
+             }
+
+             return this;
+	 	});
+
 	 });
 
 	 return PopupLayer;
