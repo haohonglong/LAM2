@@ -1,19 +1,7 @@
 /*!
- * LAM2 JavaScript Library v2.0.5
+ * LAM2 JavaScript Library
  * created by lhh
  * https://github.com/haohonglong/lam2
-    ===========================================================================================
-	|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-	///////////////////////////////////////////////////////////////////////////////////////////
-    *     *        *       *
-    *    *  *     * *     *  *
-    *   *    *   *   *   *    *
-    *  * **** * *     * *      *
-    * *        *       *        *
-	**********************************
-    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    //////////////////////////////////////////////////////////////////////////////////////////
-	===========================================================================================
  *
  */
 
@@ -76,21 +64,7 @@
 		trim = String.prototype.trim,
 		indexOf = Array.prototype.indexOf;
 
-    var arr = [];
-    arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-    arr.push('===========================================================================================');
-    arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push("*     *        *       *");
-    arr.push("*    *  *     * *     *  *");
-    arr.push("*   *    *   *   *   *    *");
-    arr.push("*  * **** * *     * *      *");
-    arr.push("* *        *       *        *");
-    arr.push('**********************************');
-    arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push('===========================================================================================');
-    console.log(arr.join('\n'));
+
 	/**
 	 *
 	 * @author: lhh
@@ -234,19 +208,22 @@
 		// proxy used to establish prototype chain
 		var F = function() {};
 		return function(subClass, superClass) {
-			if (System.create) {//用 ecma5 Object.create() 实现 prototype 原型继承
-				// subclass extends superclass
-				subClass.prototype = System.create(superClass.prototype);
-				subClass.prototype.constructor = subClass;
-			}else{
-				F.prototype = superClass.prototype;
-				subClass.prototype = new F();
-				subClass.prototype.constructor = superClass;
-				subClass.superClass = superClass.prototype;
-
-				if(superClass.prototype.constructor === Object.prototype.constructor){
-					superClass.prototype.constructor = superClass;
+			try{
+                //用 ecma5 Object.create() 实现 prototype 原型继承
+                // subclass extends superclass
+				if(System.create){
+                    subClass.prototype = System.create(superClass.prototype);
+                    subClass.prototype.constructor = subClass;
 				}
+			}catch (e){
+                F.prototype = superClass.prototype;
+                subClass.prototype = new F();
+                subClass.prototype.constructor = superClass;
+                subClass.superClass = superClass.prototype;
+
+                if(superClass.prototype.constructor === Object.prototype.constructor){
+                    superClass.prototype.constructor = superClass;
+                }
 			}
 			return subClass;
 		};
@@ -2010,5 +1987,21 @@
 		return arr;
 	}
 
+
+    var arr = [];
+    arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+    arr.push('===========================================================================================');
+    arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+    arr.push("*     *        *       *");
+    arr.push("*    *  *     * *     *  *");
+    arr.push("*   *    *   *   *   *    *");
+    arr.push("*  * **** * *     * *      *");
+    arr.push("* *        *       *        *");
+    arr.push('**********************************');
+    arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+    arr.push('===========================================================================================');
+    console.log(arr.join('\n'));
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });
