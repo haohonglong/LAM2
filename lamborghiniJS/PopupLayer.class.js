@@ -186,7 +186,7 @@
 					 opacity: 'hide'
                  }, this.animate.speed, this.animate.easing);
 			 }else{
-				 this.$popLayout.hide(null,callback);
+				 this.$popLayout.hide();
 				 this.$mask.hide();
 			 }
 
@@ -202,7 +202,7 @@
 					 opacity: 'show'
                  }, this.animate.speed, this.animate.easing);
 			 }else{
-				 this.$popLayout.show(null,callback);
+				 this.$popLayout.show();
 				 this.$mask.show();
 			 }
 
