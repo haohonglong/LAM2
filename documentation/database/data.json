@@ -1,35 +1,35 @@
 {
   "menu":[
      {
-        "url":"{{VIEWS}}/index.html?r=content/basis",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/basis",
         "title":"/Basis"
      },
      {
-        "url":"{{VIEWS}}/index.html?r=content/loader",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/loader",
         "title":"/Loader"
       },
      {
-        "url":"{{VIEWS}}/index.html?r=content/biObject",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/biObject",
         "title":"/BiObject"
      },
      {
-        "url":"{{VIEWS}}/index.html?r=content/browser",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/browser",
         "title":"/Browser"
      },
      {
-        "url":"{{VIEWS}}/index.html?r=content/cache",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/cache",
         "title":"/Cache"
       },
      {
-        "url":"{{VIEWS}}/index.html?r=content/controller",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/controller",
         "title":"/Controller"
       },
      {
-        "url":"{{VIEWS}}/index.html?r=content/cookie",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/cookie",
         "title":"/Cookie"
       },
      {
-        "url":"{{VIEWS}}/index.html?r=content/component",
+        "url":"{{LAM.VIEWS}}/index.html?r=content/component",
         "title":"/Component"
       }
 

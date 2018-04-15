@@ -1,6 +1,4 @@
 @charset "utf-8";
-@import "../../common/plugins/bootstrap/bootstrap.css";
-@import "../../common/css/lib/global.css";
 /* CSS Document */
 /*.list-group li{cursor: pointer;}*/
 .list-group-item.p-active,
