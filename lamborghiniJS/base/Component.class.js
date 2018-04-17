@@ -280,7 +280,7 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期：2015-6-25
-		 * 修改日期：2018-1-11
+		 * 修改日期：2018-4-18
 		 * 名称：get
 		 * 功能：根据指定的url参数获取相对应的参数值
 		 * 说明：
@@ -290,25 +290,7 @@
 		 *
 		 */
 		'get':function(name){
-			var search = document.location.search;
-			var pattern = new RegExp("[?&]"+name+"\=([^&]+)", "g");
-			var matcher = pattern.exec(search);
-			var items = null;
-			if(null != matcher){
-				try{
-					items = decodeURIComponent(decodeURIComponent(matcher[1]));
-				}catch(e){
-					try{
-						items = decodeURIComponent(matcher[1]);
-					}catch(e){
-						items = matcher[1];
-					}
-				}
-			}
-			if(System.LAM_DEBUG){
-				console.log(items);
-			}
-			return items;
+            return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(name).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1")) || null;
 
 		},
 		/**
