@@ -293,6 +293,24 @@
             return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(name).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1")) || null;
 
 		},
+        /**
+         * @author jQuery
+         * 产品介绍：
+         * 创建日期：2018-4-18
+         * 修改日期：2018-4-18
+         * 名称：camelCase
+         * 功能：转换横线链接单词为驼峰
+         * 说明：抄jQuery 同名方法
+         * 注意：
+         * @param   (String)string            NO NULL :
+         * @return  {String}
+         *
+         */
+        'camelCase': function( string ) {
+            return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z]|[0-9])/ig, function( all, letter ) {
+                return ( letter + "" ).toUpperCase();
+            });
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
