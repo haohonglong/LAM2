@@ -456,7 +456,7 @@
 			if(System.isFunction(callback)) {
                 time = time || 3000;
                 callback.timer = setInterval(function(){
-                    if(callback()){clearInterval(callback.timer);}
+                    if(callback(callback.timer)){clearInterval(callback.timer);}
                 },time);
 			}
 			return this;
