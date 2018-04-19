@@ -23,6 +23,7 @@
                 'el':'#app',
                 'data':{},
                 'methods':{},
+                'components':{},
                 'configMap':{
                     'template':''
                 },
