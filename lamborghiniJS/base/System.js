@@ -250,7 +250,6 @@
 		'Dropdown': {},
 		'Helper': {},
 		'Controller': {},
-		'Module': {},
 		'Model': {},
 		'Html': {},
 		'Browser': {},

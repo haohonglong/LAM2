@@ -5,17 +5,17 @@
     if(!System){
         return;
     }else{
-        System.isObject(exports) && System.isset(module) ? module.exports = factory(System) :
-            System.isFunction(define) && define.amd ? define(factory(System)) :
-                (System['Module'] = factory(System));
+        typeof exports === 'object' && typeof Model !== 'undefined' ? Model.exports = factory(System) :
+            typeof define === 'function' && define.amd ? define(factory(System)) :
+                (System['Model'] = factory(System));
     }
 
 })(this,function(System){
-    //'use strict';
-    System.is(System,'Html','Module',System.classPath+'/base');
+    'use strict';
+    System.is(System,'Html','Model',System.classPath+'/base');
     var __this__=null;
     var jqueryMap = {};
-    var Module = System.Html.extend({
+    var Model = System.Html.extend({
         constructor: function(options){
             this.base();
             __this__=this;
@@ -30,7 +30,7 @@
                 'created':function () {}
             };
 
-            System.isObject(options) ? System.merge(this,[options,defaults]) : defaults;
+            System.isObject(options) ? System.merge(this,[options,defaults]) : System.merge(this,[defaults]);
             this.$$el     = $(this.el);
             this.$el      = this.$$el[0];
             this.$data    = this.data;
@@ -38,7 +38,7 @@
 
 
         },
-        '_className':'Module',
+        '_className':'Model',
         '__constructor':function(){},
         //@overwrite
         'init':function(){
@@ -58,7 +58,7 @@
          * 创建日期：2015-4-2
          * 修改日期：2015-4-2
          * 名称：destructor
-         * 功能：在注销Module对象时调用此方法
+         * 功能：在注销Model对象时调用此方法
          * 说明：
          * 注意：
          * @return  ()						:
@@ -66,7 +66,7 @@
          */
         'destructor':function(){}
     });
-    Module.component = function (name,options,callback) {
+    Model.component = function (name,options,callback) {
         if(System.isFunction(options)){
             callback = options;
             options  = null;
@@ -87,7 +87,7 @@
 
     };
 
-    return Module;
+    return Model;
 });
 
 
