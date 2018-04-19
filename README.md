@@ -6,7 +6,7 @@
 	version ：2.0.8
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-2-10
+	修改日期 ：2018-4-19
 
 
 # 产品介绍：
@@ -188,6 +188,7 @@
         		'Cache'				:function(){},
         		'Helper'     		:function(){},
         		'Controller'     	:function(){},
+        		'Model'     	    :function(){},
         		'Browser'    		:function(){},
         		'Template'    		:function(){},
         		'Event'      		:function(){},
