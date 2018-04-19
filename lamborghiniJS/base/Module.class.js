@@ -5,17 +5,17 @@
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof Model !== 'undefined' ? Model.exports = factory(System) :
+        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
             typeof define === 'function' && define.amd ? define(factory(System)) :
-                (System['Model'] = factory(System));
+                (System['Module'] = factory(System));
     }
 
 })(this,function(System){
     'use strict';
-    System.is(System,'Html','Model',System.classPath+'/base');
+    System.is(System,'Html','Module',System.classPath+'/base');
     var __this__=null;
     var jqueryMap = {};
-    var Model = System.Html.extend({
+    var Module = System.Html.extend({
         constructor: function(options){
             this.base();
             __this__=this;
@@ -38,7 +38,7 @@
 
 
         },
-        '_className':'Model',
+        '_className':'Module',
         '__constructor':function(){},
         //@overwrite
         'init':function(){
@@ -50,7 +50,7 @@
             var $container = this.$$el;
         },
 
-        
+
         /**
          *
          * @author lhh
@@ -58,7 +58,7 @@
          * 创建日期：2015-4-2
          * 修改日期：2015-4-2
          * 名称：destructor
-         * 功能：在注销Model对象时调用此方法
+         * 功能：在注销Module对象时调用此方法
          * 说明：
          * 注意：
          * @return  ()						:
@@ -66,7 +66,7 @@
          */
         'destructor':function(){}
     });
-    Model.component = function (name,options,callback) {
+    Module.component = function (name,options,callback) {
         if(System.isFunction(options)){
             callback = options;
             options  = null;
@@ -87,7 +87,7 @@
 
     };
 
-    return Model;
+    return Module;
 });
 
 

@@ -251,6 +251,7 @@
 		'Helper': {},
 		'Controller': {},
 		'Model': {},
+		'Module': {},
 		'Html': {},
 		'Browser': {},
 		'Css': {},
