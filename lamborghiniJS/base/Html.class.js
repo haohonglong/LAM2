@@ -584,22 +584,7 @@
 		Attr.src = src;
 		return Html.tag(true,'img',Attr);
 	};
-    /**
-     *
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2018-4-10
-     * 修改日期：2018-4-10
-     * 名称： img
-     * 功能：
-     * 说明：
-     * 注意：length 是关键字 属性里禁止使用
-     * @param 	(String)src      NO NULL : 图片 路径
-     * @param 	(Object)Attr        NULL : 标签的属性
-     * @return (String)
-     * Example：
-     *
-     */
+
     /**
 	 *
      * @param {Element}el
@@ -614,6 +599,64 @@
             return container.innerHTML
         }
     };
+
+    Html.code_map={
+    	 '&' : '&#38'
+    	,'"' : '&#34'
+    	,"'" : '&#39'
+    	,'>' : '&#62'
+    	,'<' : '&#60'
+	};
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-19
+     * 修改日期：2018-4-19
+     * 名称： Html.encode
+     * 功能：html 转成实体
+     * 说明：
+     * 注意：
+     * @param {String}target
+     * @returns {string}
+     * Example：
+     *
+     */
+    Html.encode=function (target) {
+        target = String(target);
+    	return target
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;');
+
+	};
+    /**
+     *
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-19
+     * 修改日期：2018-4-19
+     * 名称： Html.decode
+     * 功能：实体转成html
+     * 说明：
+     * 注意：
+     * @param {String}target
+     * @returns {string}
+     * Example：
+     *
+     */
+    Html.decode=function (target) {
+        target = String(target);
+        return target
+            .replace(/&quot;/g, '"')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&') //处理转义的中文和实体字符
+            .replace(/&#([\d]+);/g, function ($0, $1) {
+				return String.fromCharCode(parseInt($1, 10));
+            })
+	};
 
 
 	return Html;
