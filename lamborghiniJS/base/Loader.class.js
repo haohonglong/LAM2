@@ -262,7 +262,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2017-10-31
-         * 修改日期：2017-10-31
+         * 修改日期：2018-4-20
          * 名称：loadScript
          * 功能：
          * 说明：
@@ -273,6 +273,7 @@
          */
         'loadScript':function(url, callback){
             var self = this;
+            var append = self.Config.render.append;
             var script = document.createElement("script") ;
             script.type = "text/javascript";
             if(System.fileExisted(url)){
@@ -293,8 +294,13 @@
                 };
             }
             script.src = url;
-            head.appendChild(script);
-            if(this.Config.render.remove){head.removeChild(script);}
+            if('befor' === append){
+                head.appendChild(script);
+                if(this.Config.render.remove){head.removeChild(script);}
+            }else if('after' === append){
+                body.appendChild(script);
+                if(this.Config.render.remove){body.removeChild(script);}
+            }
             if(System.isClassFile(url)){System.classes.push(url);}
             System.files.push(url);
             return this;
