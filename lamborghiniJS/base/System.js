@@ -258,6 +258,7 @@
 		'Template': {},
 		'Event': {},
 		'Dom': {},
+		'VNode': {},
 		'Cookie': {},
 		'Drag': {},
 		'Drag_xy': {},
@@ -1956,7 +1957,8 @@
 	}
 
 	function empty_(s) {
-		return !(isset(s) && s.toString().trim() != '');
+		s = s.toString().trim();
+		return !(isset_(s) && s.length > 0);
 	}
 
 	function isset() {
