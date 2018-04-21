@@ -30,6 +30,14 @@
 	
 	var VNode = System.Dom.extend({
 		constructor: function(single,tag,Attr,text,comment){
+			if(!System.isBoolean(single)){
+				comment = text;
+				text    = Attr;
+				Attr    = tag;
+				tag     = single;
+				single  = false;
+			}
+            if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');}
 			this.base(tag,Attr);
 			__this__=this;
 			this.single    = single  || false;
