@@ -390,7 +390,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-25
-	 * 修改日期：2018-3-9
+	 * 修改日期：2018-4-21
 	 * 名称： tag
 	 * 功能：动态返回指定的标签
 	 * 说明：
@@ -419,8 +419,11 @@
 			Attr	 = args[2] || {};
 			content	 = args[3] || '';
 		}
+		if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
+			content = Attr;
+			Attr = {};
+		}
 
-		if(single && content){throw new Error('Warning :单标签下没有参数:{content} 值是:\''+content+'\'');}
 		content = System.isNumeric(content) ? String(content) : content;
 
 		//check
