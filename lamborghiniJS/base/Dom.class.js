@@ -86,7 +86,7 @@
 			this.root=document;
 			this.node=null;
 			this.attributes=[];
-			this.Dtree = {};
+			this.Dtree = System.createDict();
 			//构造有参数时
 			if(arguments.length){this.create(tag,D);}
 			this.fragment = Dom.createFragment();
@@ -98,7 +98,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
-		 * 修改日期：2017-9-23
+		 * 修改日期：2018-4-22
 		 * 名称： create
 		 * 功能：创建节点元素
 		 * 说明：
@@ -114,6 +114,7 @@
 			this.attributes = this.node.attributes;
 			var k;
 			for(k in D){
+				if('__proto__' === k)continue;
 				this.Dtree[k] = D[k];
 				this.attr(k,D[k]);
 			}

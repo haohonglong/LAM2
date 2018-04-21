@@ -29,12 +29,11 @@
 	var __this__=null;
 	
 	var VNode = System.Dom.extend({
-		constructor: function(single,name,Attr,text,comment){
-			this.base();
+		constructor: function(single,tag,Attr,text,comment){
+			this.base(tag,Attr);
 			__this__=this;
 			this.single    = single  || false;
-			this.name      = name    || '';
-			this.Attr      = Attr    || System.createDict();
+			this.tag       = tag     || '';
 			this.text      = text    || '';
 			this.comment   = comment || '';
 
