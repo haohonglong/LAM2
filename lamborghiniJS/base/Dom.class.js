@@ -138,10 +138,7 @@
 				this.Attr[k] = v;
 				this.attr(k,v);
 			}
-			var obj = System.createDict();
-			obj['element'] = this.node;
-			obj['obj'] = this;
-			Dom.setElements(kid,obj);
+			Dom.setElement(kid,this);
 			return this;
 		},
 
@@ -1312,14 +1309,14 @@
 		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		return element.nodeType;
 	};
-	Dom.getElements=function (key) {
+	Dom.getElement=function (key) {
 		if(key){
 			return Elements[key];
 		}else{
 			return Elements;
 		}
     };
-	Dom.setElements=function (k,v) {
+	Dom.setElement=function (k,v) {
 		if(!Elements[k]){
 			Elements[k] = v;
 		}
