@@ -27,7 +27,13 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
-	var guid = 0,Elements=System.createDict();
+	var guid = 0,
+		Elements=System.createDict(),
+		setElement = function (k,v) {
+			if(!Elements[k]){
+				Elements[k] = v;
+			}
+		};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -156,7 +162,7 @@
 				this.Attr[k] = v;
 				this.attr(k,v);
 			}
-			Dom.setElement(kid,this);
+			setElement(kid,this);
 			return this;
 		},
 
@@ -1328,15 +1334,10 @@
 		return element.nodeType;
 	};
 	Dom.getElement=function (key) {
-		if(key){
+		if(System.isset(key) && System.isString(key) && !System.empty(key)){
 			return Elements[key];
 		}else{
 			return Elements;
-		}
-    };
-	Dom.setElement=function (k,v) {
-		if(!Elements[k]){
-			Elements[k] = v;
 		}
     };
 	Dom.createElement=function(single,tag,Attr,text,comment){
