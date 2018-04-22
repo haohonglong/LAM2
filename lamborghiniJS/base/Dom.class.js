@@ -27,7 +27,7 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
-	var guid = 0;
+	var guid = 0,Elements=System.createDict();
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -120,7 +120,8 @@
 		 * @returns {Dom}
 		 */
 		'create':function(Attr){
-            Attr['dom-kid'] = 'kid_'+guid++;
+			var kid = 'kid_'+guid++;
+            Attr['dom-kid'] = kid;
 			var tag = this.tag;
 			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
             if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
@@ -134,6 +135,10 @@
 				this.Attr[k] = v;
 				this.attr(k,v);
 			}
+			var obj = System.createDict();
+			obj['element'] = this.node;
+			obj['obj'] = this;
+			Dom.setElements(kid,obj);
 			return this;
 		},
 
@@ -1301,5 +1306,16 @@
 		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		return element.nodeType;
 	};
+	Dom.getElements=function (key) {
+		if(key){
+			return Elements[key];
+		}else{
+			return Elements;
+		}
+    };
+	Dom.setElements=function (k,v) {
+		Elements[k] = v;
+    };
+
 	return Dom;
 });
