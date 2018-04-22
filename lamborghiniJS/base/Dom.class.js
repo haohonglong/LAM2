@@ -379,7 +379,7 @@
             this.preNode    = this.previousSibling();
             this.nextNode   = this.nextSibling();
             this.parentNode = this.getParent();
-			this.node       = Dom.removeNode(this.node);
+			Dom.removeNode(this.node);
 			return this;
 		},
 		/**
