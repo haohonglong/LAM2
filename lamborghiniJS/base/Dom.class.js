@@ -90,6 +90,10 @@
                 tag     = single;
                 single  = false;
             }
+            if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
+                text = Attr;
+                Attr = System.createDict();
+            }
 			__this__=this;
             this.single    = single  || false;
             this.tag       = tag     || null;
@@ -125,11 +129,25 @@
 		'create':function(Attr){
 			var kid = 'kid_'+guid++;
             Attr['dom-kid'] = kid;
+            var _this = this;
 			var tag = this.tag;
 			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
             if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
 			this.node=document.createElement(tag);
-			if(!this.single && !System.empty(this.text)) {this.node.appendChild(document.createTextNode(this.text));}
+			if(!this.single){
+                if(System.isString(this.text) && !System.empty(this.text)){
+                    this.node.appendChild(document.createTextNode(this.text));
+                }else if(System.isArray(this.text)){
+                    System.each(this.text,function(){
+                        if(1 === this.nodeType){
+                            _this.node.appendChild(this);
+                        }
+                    });
+                }else if(1 === this.text.nodeType){
+                    this.node.appendChild(this.text);
+                }
+			}
+
 			this.attributes = this.node.attributes;
 			var k,v;
 			for(k in Attr){
@@ -1321,6 +1339,9 @@
 			Elements[k] = v;
 		}
     };
+	Dom.createElement=function(single,tag,Attr,text,comment){
+		return new Dom(single,tag,Attr,text,comment).node;
+	};
 
 	return Dom;
 });
