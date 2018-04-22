@@ -27,6 +27,7 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
+	var guid = 0;
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -80,15 +81,26 @@
 		};
 	}
 	var Dom = System.Browser.extend({
-		constructor: function(tag,D) {
+		constructor: function(single,tag,Attr,text,comment){
 			this.base();
+            if(!System.isBoolean(single)){
+                comment = text;
+                text    = Attr;
+                Attr    = tag;
+                tag     = single;
+                single  = false;
+            }
 			__this__=this;
+            this.single    = single  || false;
+            this.tag       = tag     || null;
+            this.text      = text    || '';
+            this.comment   = comment || '';
 			this.root=document;
 			this.node=null;
 			this.attributes=[];
-			this.Dtree = System.createDict();
+			this.Attr = System.createDict();
 			//构造有参数时
-			if(arguments.length){this.create(tag,D);}
+			if(arguments.length){this.create(Attr);}
 			this.fragment = Dom.createFragment();
 
 		},
@@ -104,19 +116,23 @@
 		 * 说明：
 		 * 注意：下面俩个参数是必须的
 		 * @param 	{String}tag             NO NULL : 标签名称
-		 * @param 	{Object}D             	NO NULL : 标签的属性
+		 * @param 	{Object}Attr             	NO NULL : 标签的属性
 		 * @returns {Dom}
 		 */
-		'create':function(tag,D){
-			tag = tag || "div";
-			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');}
+		'create':function(Attr){
+            Attr['dom-kid'] = 'kid_'+guid++;
+			var tag = this.tag;
+			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
+            if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
 			this.node=document.createElement(tag);
+			if(!this.single && !System.empty(this.text)) {this.node.appendChild(document.createTextNode(this.text));}
 			this.attributes = this.node.attributes;
-			var k;
-			for(k in D){
+			var k,v;
+			for(k in Attr){
+				v = Attr[k];
 				if('__proto__' === k)continue;
-				this.Dtree[k] = D[k];
-				this.attr(k,D[k]);
+				this.Attr[k] = v;
+				this.attr(k,v);
 			}
 			return this;
 		},
