@@ -44,6 +44,7 @@
 			this.tag       = tag     || '';
 			this.text      = text    || '';
 			this.comment   = comment || '';
+			this.Attr      = this.Dtree;
 
 
 		},

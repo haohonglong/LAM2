@@ -800,6 +800,25 @@
 			result.__proto__ = null;
 			return result;
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-4-22
+         * 修改日期：2018-4-22
+         * 名称：toDict
+         * 功能：过滤对象里__proto__ 属性，返回新对象
+         * 说明：
+         * 注意：
+         * @returns {Object}
+         */
+		'toDict':function (obj) {
+			var dict = System.createDict(),k;
+            for(k in obj){
+                if('__proto__' === k)continue;
+                dict[k] = obj[k];
+            }
+            return dict;
+		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -927,7 +946,7 @@
 					if(!override && (key in target)) {continue;}
 					var value = args[i][key];
 					if(deep && System.isObject(value) && System.isPlainObject(value)){
-						target[key] = self.merge(deep,{},[target[key],value],override);
+						target[key] = self.merge(deep,System.createDict(),[target[key],value],override);
 					}else{
 						target[key] = value;
 					}
@@ -1188,7 +1207,7 @@
 	};
 
 
-	System.String	 		= {};
+	System.String	 		= System.createDict();
 	System.Number	 		= {
 		/**
 		 *
@@ -1293,7 +1312,7 @@
 	System.guid=0;
 	System.classPath='./';
 	System.classes=[];
-	System.Super={};
+	System.Super=System.createDict();
 	System.app=null;
 	System.Object = Object.prototype     || System.createDict();
 	System.Function = Function.prototype || System.createDict();

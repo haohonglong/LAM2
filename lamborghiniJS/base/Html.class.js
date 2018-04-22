@@ -364,7 +364,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-9-4
-	 * 修改日期：2017-7-13
+	 * 修改日期：2018-4-22
 	 * 名称： Html.renderTagAttributes
 	 * 功能：
 	 * 说明：
@@ -375,7 +375,7 @@
 	 *
 	 */
 	Html.renderTagAttributes = function(Attr){
-		Attr = !Attr || !System.isPlainObject(Attr) ? {} : Attr;
+		Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
 		if(System.isEmptyObject(Attr)){return '';}
 		var attrs=[];
 		System.each(Attr,function(k,v){
@@ -390,7 +390,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-25
-	 * 修改日期：2018-4-21
+	 * 修改日期：2018-4-22
 	 * 名称： tag
 	 * 功能：动态返回指定的标签
 	 * 说明：
@@ -434,7 +434,10 @@
 		var tag=[];
 		tag.push('<',name);
 		//拼接属性
-		if(Attr && System.isObject(Attr)){tag.push(Html.renderTagAttributes(Attr));}
+		if(Attr && System.isObject(Attr)){
+			Attr = System.toDict(Attr);
+			tag.push(Html.renderTagAttributes(Attr));
+		}
 
 		if(single){
 			tag.push(' />');

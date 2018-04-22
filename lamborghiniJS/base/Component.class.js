@@ -201,7 +201,7 @@
 				className = arguments[1];
 			}
 			var obj;
-			obj = System.merge(deep,{},[className]);
+			obj = System.merge(deep,System.createDict(),[className]);
 			if(obj['_hashCode']){
 				obj['_hashCode'] += '_'+System.Object.generate();
 			}
