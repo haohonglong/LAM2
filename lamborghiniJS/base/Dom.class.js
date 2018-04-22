@@ -1314,7 +1314,9 @@
 		}
     };
 	Dom.setElements=function (k,v) {
-		Elements[k] = v;
+		if(!Elements[k]){
+			Elements[k] = v;
+		}
     };
 
 	return Dom;
