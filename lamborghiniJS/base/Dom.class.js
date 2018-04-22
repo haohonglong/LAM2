@@ -95,8 +95,11 @@
             this.tag       = tag     || null;
             this.text      = text    || '';
             this.comment   = comment || '';
-			this.root=document;
-			this.node=null;
+			this.root = document;
+			this.node = null;
+			this.preNode = null;
+			this.nextNode = null;
+			this.parentNode = null;
 			this.attributes=[];
 			this.Attr = System.createDict();
 			//构造有参数时
@@ -373,7 +376,10 @@
 		 * @returns {Dom}
 		 */
 		'delNode':function(){//在它的父节点调用removeChild 然后把它自身移除
-			this.node = Dom.removeNode(this.node);
+            this.preNode    = this.previousSibling();
+            this.nextNode   = this.nextSibling();
+            this.parentNode = this.getParent();
+			this.node       = Dom.removeNode(this.node);
 			return this;
 		},
 		/**
