@@ -159,7 +159,7 @@
     Object.key = 'node-id';
     //自增长数字
     var id = 0;
-    Object.g_key_id = function(){return '_'+System.timestamp()+'_'+id++;};
+    Object.g_key_id = function(){return '_'+id++;};
 
 	return Object;
 });
