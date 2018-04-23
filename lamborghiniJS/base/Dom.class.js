@@ -111,6 +111,7 @@
 			this.nextNode = null;
 			this.parentNode = null;
 			this.attributes=[];
+			this.childrens=[];
 			this.Attr = System.createDict();
 			//构造有参数时
 			if(arguments.length){this.create(Attr);}
@@ -123,12 +124,11 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
-		 * 修改日期：2018-4-22
+		 * 修改日期：2018-4-23
 		 * 名称： create
 		 * 功能：创建节点元素
 		 * 说明：
 		 * 注意：下面俩个参数是必须的
-		 * @param 	{String}tag             NO NULL : 标签名称
 		 * @param 	{Object}Attr             	NO NULL : 标签的属性
 		 * @returns {Dom}
 		 */
@@ -146,10 +146,12 @@
                 }else if(System.isArray(this.text)){
                     System.each(this.text,function(){
                         if(1 === this.nodeType){
+                        	_this.childrens.push(this);
                             _this.node.appendChild(this);
                         }
                     });
                 }else if(1 === this.text.nodeType){
+                    this.childrens.push(this.text);
                     this.node.appendChild(this.text);
                 }
 			}
