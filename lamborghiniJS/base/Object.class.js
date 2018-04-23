@@ -27,8 +27,6 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Base','Object',System.classPath+'/base');
-    //自增长数字
-    var id = 0;
 
 	System.classPath  = System.Config.getClassPath();
 	System.Public 	  = System.Config.Public || System.createDict();
@@ -159,6 +157,8 @@
 	};
 	//节点元素唯一标示符
     Object.key = 'node-id';
+    //自增长数字
+    var id = 0;
     Object.g_key_id = function(){return '_'+System.timestamp()+'_'+id++;};
 
 	return Object;
