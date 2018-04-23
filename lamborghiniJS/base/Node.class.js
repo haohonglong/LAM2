@@ -50,8 +50,8 @@
         /**
          * @author: lhh
          * 产品介绍：
-         * 创建日期：2015-8-26
-         * 修改日期：2018-4-22
+         * 创建日期：2018-4-23
+         * 修改日期：2018-4-23
          * 名称： create
          * 功能：创建节点元素
          * 说明：
@@ -60,17 +60,19 @@
          * @returns {Node}
          */
         'create':function(Attr){
-            var kid = 'kid_'+guid++;
-            Attr['Helper-kid'] = kid;
+            var kid = 'id_'+guid++;
+            Attr['index-id'] = kid;
             var _this = this;
             if(!this.single){
                 if(System.isArray(this.children)){
                     System.each(this.children,function(){
-                        if(System.isObject(this)){
+                        if(System.isObject(this) && (this instanceof Node)){
+                            this.parent = _this;
                         	_this.childrens.push(this);
 						}
                     });
-                }else if(System.isObject(this.children)){
+                }else if(System.isObject(this.children) && (this.children instanceof Node)){
+                    this.children.parent = this;
                     this.childrens.push(this.children);
                 }
             }
@@ -84,13 +86,20 @@
             setElement(kid,this);
             return this;
         },
+        'getParent':function () {
+              if(System.isset(this.parent) && (this.parent instanceof Node)){
+                  return this.parent;
+              }else{
+                  return null;
+              }
+        },
 
 		/**
 		 *
 		 * @author lhh
 		 * 产品介绍：析构方法
-		 * 创建日期：2015-4-2
-		 * 修改日期：2015-4-2
+		 * 创建日期：2018-4-23
+		 * 修改日期：2018-4-23
 		 * 名称：destructor
 		 * 功能：在注销Node对象时调用此方法
 		 * 说明：
@@ -98,10 +107,19 @@
 		 * @return  ()						:
 		 * Example：
 		 */
-		'destructor':function(){
-
-		}
+		'destructor':function(){}
 	});
+
+    Node.getParent=function(node){
+        if(System.isset(node) && (node instanceof Node) && System.isset(node.parent) && (node.parent instanceof Node)){
+            return node.parent;
+        }else{
+            return null;
+        }
+    };
+    Node.createElement=function( single, tag, Attr, text, children, comment ){
+        return new Node( single, tag, Attr, text, children, comment );
+    };
 
 	return Node;
 });
