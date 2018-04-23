@@ -36,6 +36,10 @@
                 text = Attr;
                 Attr = System.createDict();
             }
+            if(!System.isString(text)){
+                children = text;
+                text = '';
+            }
             this.single    = single  || false;
             this.tag       = tag     || null;
             this.text      = text    || '';
