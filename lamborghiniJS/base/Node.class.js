@@ -13,7 +13,7 @@
 	System.is(System,'Helper','Node',System.classPath+'/base');
 
 	var __this__=null;
-    var guid = 0,
+    var node_key = System.Object.key,
         Elements=System.createDict(),
         setElement = function (k,v) {
             if(!Elements[k]){
@@ -44,6 +44,14 @@
             this.parent    = null;
             this.childrens =[];
             this.Attr = System.createDict();
+            //构造有参数时
+            if(arguments.length){
+                var key = System.Object.g_key_id();
+                Attr[node_key] = key;
+                this[System.camelCase(node_key)] = key;
+                setElement(key,this);
+                this.create(Attr);
+            }
 		},
 		'_className':'Node',
 		'__constructor':function(){},
@@ -60,8 +68,6 @@
          * @returns {Node}
          */
         'create':function(Attr){
-            var kid = 'id_'+guid++;
-            Attr['index-id'] = kid;
             var _this = this;
             if(!this.single){
                 if(System.isArray(this.children)){
@@ -83,7 +89,6 @@
                 if('__proto__' === k)continue;
                 this.Attr[k] = v;
             }
-            setElement(kid,this);
             return this;
         },
         'getParent':function () {

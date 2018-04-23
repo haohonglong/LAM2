@@ -27,7 +27,7 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
-	var guid = 0,
+	var node_key = System.Object.key,
 		Elements=System.createDict(),
 		setElement = function (k,v) {
 			if(!Elements[k]){
@@ -110,11 +110,18 @@
 			this.preNode = null;
 			this.nextNode = null;
 			this.parentNode = null;
+			this.parent     = null;
 			this.attributes=[];
 			this.childrens=[];
 			this.Attr = System.createDict();
 			//构造有参数时
-			if(arguments.length){this.create(Attr);}
+			if(arguments.length){
+                var key = System.Object.g_key_id();
+                Attr[node_key] = key;
+                this[System.camelCase(node_key)] = key;
+                setElement(key,this);
+				this.create(Attr);
+			}
 			this.fragment = Dom.createFragment();
 
 		},
@@ -133,8 +140,6 @@
 		 * @returns {Dom}
 		 */
 		'create':function(Attr){
-			var kid = 'kid_'+guid++;
-            Attr['dom-kid'] = kid;
             var _this = this;
 			var tag = this.tag;
 			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
@@ -146,11 +151,13 @@
                 }else if(System.isArray(this.text)){
                     System.each(this.text,function(){
                         if(1 === this.nodeType){
+                        	this.parent = _this;
                         	_this.childrens.push(this);
                             _this.node.appendChild(this);
                         }
                     });
                 }else if(1 === this.text.nodeType){
+                	this.text.parent = this;
                     this.childrens.push(this.text);
                     this.node.appendChild(this.text);
                 }
@@ -164,7 +171,6 @@
 				this.Attr[k] = v;
 				this.attr(k,v);
 			}
-			setElement(kid,this);
 			return this;
 		},
 
