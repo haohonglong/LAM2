@@ -116,6 +116,8 @@
 			this.Attr = System.createDict();
 			//构造有参数时
 			if(arguments.length){
+				if(System.empty(this.tag)){throw new Error('Warning 缺少标签名称');}
+				if(!System.isString(this.tag)){throw new Error('Warning :标签名称必须是字符串');}
                 var key = System.Object.g_key_id();
                 Attr[node_key] = key;
                 this[System.camelCase(node_key)] = key;
@@ -141,10 +143,7 @@
 		 */
 		'create':function(Attr){
             var _this = this;
-			var tag = this.tag;
-			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
-            if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
-			this.node=document.createElement(tag);
+			this.node=document.createElement(this.tag);
 			if(!this.single){
                 if(System.isString(this.text) && !System.empty(this.text)){
                     this.node.appendChild(document.createTextNode(this.text));

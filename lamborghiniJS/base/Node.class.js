@@ -50,6 +50,8 @@
             this.Attr = System.createDict();
             //构造有参数时
             if(arguments.length){
+                if(System.empty(this.tag)){throw new Error('Warning 缺少标签名称');return;}
+                if(!System.isString(this.tag)){throw new Error('Warning :标签名称必须是字符串');return;}
                 var key = System.Object.g_key_id();
                 Attr[node_key] = key;
                 this[System.camelCase(node_key)] = key;

@@ -36,6 +36,9 @@
 		 */
 		'destructor':function(){}
 	});
+    Linklist.createElement=function( single, tag, Attr, text, children, comment ){
+        return new Linklist( single, tag, Attr, text, children, comment );
+    };
 
 	return Linklist;
 });
