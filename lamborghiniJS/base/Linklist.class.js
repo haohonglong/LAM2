@@ -10,16 +10,16 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Dom','Linklist',System.classPath+'/base');
-
+	System.is(System,'Node','Linklist',System.classPath+'/base');
 	var __this__=null;
-	var Linklist = System.Dom.extend({
-		constructor: function () {
-			this.base();
+	var Linklist = System.Node.extend({
+		constructor: function (single,tag,Attr,text,children,comment){
 			__this__ = this;
+			this.base(single,tag,Attr,text,children,comment);
 		},
 		'_className':'Linklist',
 		'__constructor':function(){},
+
 
 		/**
 		 *
@@ -34,9 +34,7 @@
 		 * @return  ()						:
 		 * Example：
 		 */
-		'destructor':function(){
-
-		}
+		'destructor':function(){}
 	});
 
 	return Linklist;
