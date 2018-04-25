@@ -123,6 +123,7 @@
                 this[System.camelCase(node_key)] = key;
                 setElement(key,this);
 				this.create(Attr);
+				this.init();
 				this.run();
 			}
 			this.fragment = Dom.createFragment();
@@ -173,6 +174,7 @@
 			}
 			return this;
 		},
+		'init':function () {},
 		'run':function () {},
 
 		/**
