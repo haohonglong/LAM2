@@ -2,7 +2,7 @@
  * @author: lhh
  * 产品介绍：
  * 创建日期：2015-8-26
- * 修改日期：2017-10-13
+ * 修改日期：2018-4-25
  * 名称：
  * 功能：操作dom
  * 说明：
@@ -123,6 +123,7 @@
                 this[System.camelCase(node_key)] = key;
                 setElement(key,this);
 				this.create(Attr);
+				this.run();
 			}
 			this.fragment = Dom.createFragment();
 
@@ -172,6 +173,7 @@
 			}
 			return this;
 		},
+		'run':function () {},
 
 		/**
 		 * @author: lhh

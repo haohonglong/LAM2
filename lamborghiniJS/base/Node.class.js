@@ -57,6 +57,7 @@
                 this[System.camelCase(node_key)] = key;
                 setElement(key,this);
                 this.create(Attr);
+                this.run();
             }
 		},
 		'_className':'Node',
@@ -97,6 +98,7 @@
             }
             return this;
         },
+        'run':function(){},
         'getParent':function () {
               if(System.isset(this.parent) && (this.parent instanceof Node)){
                   return this.parent;
