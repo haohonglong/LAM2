@@ -56,8 +56,8 @@
                 Attr[node_key] = key;
                 this[System.camelCase(node_key)] = key;
                 setElement(key,this);
-                this.create(Attr);
                 this.init();
+                this.create(Attr);
                 this.run();
             }
 		},
