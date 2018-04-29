@@ -364,7 +364,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-9-4
-	 * 修改日期：2017-7-13
+	 * 修改日期：2018-4-22
 	 * 名称： Html.renderTagAttributes
 	 * 功能：
 	 * 说明：
@@ -375,7 +375,7 @@
 	 *
 	 */
 	Html.renderTagAttributes = function(Attr){
-		Attr = !Attr || !System.isPlainObject(Attr) ? {} : Attr;
+		Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
 		if(System.isEmptyObject(Attr)){return '';}
 		var attrs=[];
 		System.each(Attr,function(k,v){
@@ -390,7 +390,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-25
-	 * 修改日期：2018-3-9
+	 * 修改日期：2018-4-22
 	 * 名称： tag
 	 * 功能：动态返回指定的标签
 	 * 说明：
@@ -419,8 +419,11 @@
 			Attr	 = args[2] || {};
 			content	 = args[3] || '';
 		}
+		if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
+			content = Attr;
+			Attr = {};
+		}
 
-		if(single && content){throw new Error('Warning :单标签下没有参数:{content} 值是:\''+content+'\'');}
 		content = System.isNumeric(content) ? String(content) : content;
 
 		//check
@@ -431,7 +434,10 @@
 		var tag=[];
 		tag.push('<',name);
 		//拼接属性
-		if(Attr && System.isObject(Attr)){tag.push(Html.renderTagAttributes(Attr));}
+		if(Attr && System.isObject(Attr)){
+			Attr = System.toDict(Attr);
+			tag.push(Html.renderTagAttributes(Attr));
+		}
 
 		if(single){
 			tag.push(' />');
@@ -584,22 +590,7 @@
 		Attr.src = src;
 		return Html.tag(true,'img',Attr);
 	};
-    /**
-     *
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2018-4-10
-     * 修改日期：2018-4-10
-     * 名称： img
-     * 功能：
-     * 说明：
-     * 注意：length 是关键字 属性里禁止使用
-     * @param 	(String)src      NO NULL : 图片 路径
-     * @param 	(Object)Attr        NULL : 标签的属性
-     * @return (String)
-     * Example：
-     *
-     */
+
     /**
 	 *
      * @param {Element}el
@@ -614,6 +605,64 @@
             return container.innerHTML
         }
     };
+
+    Html.code_map={
+    	 '&' : '&#38'
+    	,'"' : '&#34'
+    	,"'" : '&#39'
+    	,'>' : '&#62'
+    	,'<' : '&#60'
+	};
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-19
+     * 修改日期：2018-4-19
+     * 名称： Html.encode
+     * 功能：html 转成实体
+     * 说明：
+     * 注意：
+     * @param {String}target
+     * @returns {string}
+     * Example：
+     *
+     */
+    Html.encode=function (target) {
+        target = String(target);
+    	return target
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;');
+
+	};
+    /**
+     *
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-4-19
+     * 修改日期：2018-4-19
+     * 名称： Html.decode
+     * 功能：实体转成html
+     * 说明：
+     * 注意：
+     * @param {String}target
+     * @returns {string}
+     * Example：
+     *
+     */
+    Html.decode=function (target) {
+        target = String(target);
+        return target
+            .replace(/&quot;/g, '"')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&') //处理转义的中文和实体字符
+            .replace(/&#([\d]+);/g, function ($0, $1) {
+				return String.fromCharCode(parseInt($1, 10));
+            })
+	};
 
 
 	return Html;

@@ -27,6 +27,7 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
+	var guid = 0,Elements=System.createDict();
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -80,15 +81,33 @@
 		};
 	}
 	var Dom = System.Browser.extend({
-		constructor: function(tag,D) {
+		constructor: function(single,tag,Attr,text,comment){
 			this.base();
+            if(!System.isBoolean(single)){
+                comment = text;
+                text    = Attr;
+                Attr    = tag;
+                tag     = single;
+                single  = false;
+            }
+            if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
+                text = Attr;
+                Attr = System.createDict();
+            }
 			__this__=this;
-			this.root=document;
-			this.node=null;
+            this.single    = single  || false;
+            this.tag       = tag     || null;
+            this.text      = text    || '';
+            this.comment   = comment || '';
+			this.root = document;
+			this.node = null;
+			this.preNode = null;
+			this.nextNode = null;
+			this.parentNode = null;
 			this.attributes=[];
-			this.Dtree = {};
+			this.Attr = System.createDict();
 			//构造有参数时
-			if(arguments.length){this.create(tag,D);}
+			if(arguments.length){this.create(Attr);}
 			this.fragment = Dom.createFragment();
 
 		},
@@ -98,25 +117,46 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
-		 * 修改日期：2017-9-23
+		 * 修改日期：2018-4-22
 		 * 名称： create
 		 * 功能：创建节点元素
 		 * 说明：
 		 * 注意：下面俩个参数是必须的
 		 * @param 	{String}tag             NO NULL : 标签名称
-		 * @param 	{Object}D             	NO NULL : 标签的属性
+		 * @param 	{Object}Attr             	NO NULL : 标签的属性
 		 * @returns {Dom}
 		 */
-		'create':function(tag,D){
-			tag = tag || "div";
-			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');}
+		'create':function(Attr){
+			var kid = 'kid_'+guid++;
+            Attr['dom-kid'] = kid;
+            var _this = this;
+			var tag = this.tag;
+			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
+            if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
 			this.node=document.createElement(tag);
-			this.attributes = this.node.attributes;
-			var k;
-			for(k in D){
-				this.Dtree[k] = D[k];
-				this.attr(k,D[k]);
+			if(!this.single){
+                if(System.isString(this.text) && !System.empty(this.text)){
+                    this.node.appendChild(document.createTextNode(this.text));
+                }else if(System.isArray(this.text)){
+                    System.each(this.text,function(){
+                        if(1 === this.nodeType){
+                            _this.node.appendChild(this);
+                        }
+                    });
+                }else if(1 === this.text.nodeType){
+                    this.node.appendChild(this.text);
+                }
 			}
+
+			this.attributes = this.node.attributes;
+			var k,v;
+			for(k in Attr){
+				v = Attr[k];
+				if('__proto__' === k)continue;
+				this.Attr[k] = v;
+				this.attr(k,v);
+			}
+			Dom.setElement(kid,this);
 			return this;
 		},
 
@@ -343,7 +383,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-7-13
-		 * 修改日期：2017-9-13
+		 * 修改日期：2018-4-22
 		 * 名称：delNode
 		 * 功能：删除指定的节点，参数不填默认删除当前的节点
 		 * 说明：
@@ -351,7 +391,10 @@
 		 * @returns {Dom}
 		 */
 		'delNode':function(){//在它的父节点调用removeChild 然后把它自身移除
-			this.node = Dom.removeNode(this.node);
+            this.preNode    = this.previousSibling();
+            this.nextNode   = this.nextSibling();
+            this.parentNode = this.getParent();
+			Dom.removeNode(this.node);
 			return this;
 		},
 		/**
@@ -1284,5 +1327,21 @@
 		if(element.nodeType !== 1){throw new Error('Warning: element 必须是一个dom 节点元素 ');}
 		return element.nodeType;
 	};
+	Dom.getElement=function (key) {
+		if(key){
+			return Elements[key];
+		}else{
+			return Elements;
+		}
+    };
+	Dom.setElement=function (k,v) {
+		if(!Elements[k]){
+			Elements[k] = v;
+		}
+    };
+	Dom.createElement=function(single,tag,Attr,text,comment){
+		return new Dom(single,tag,Attr,text,comment).node;
+	};
+
 	return Dom;
 });

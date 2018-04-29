@@ -1,19 +1,7 @@
 /*!
- * LAM2 JavaScript Library v2.0.5
+ * LAM2 JavaScript Library
  * created by lhh
  * https://github.com/haohonglong/lam2
-    ===========================================================================================
-	|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-	///////////////////////////////////////////////////////////////////////////////////////////
-    *     *        *       *
-    *    *  *     * *     *  *
-    *   *    *   *   *   *    *
-    *  * **** * *     * *      *
-    * *        *       *        *
-	**********************************
-    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    //////////////////////////////////////////////////////////////////////////////////////////
-	===========================================================================================
  *
  */
 
@@ -76,21 +64,7 @@
 		trim = String.prototype.trim,
 		indexOf = Array.prototype.indexOf;
 
-    var arr = [];
-    arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-    arr.push('===========================================================================================');
-    arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push("*     *        *       *");
-    arr.push("*    *  *     * *     *  *");
-    arr.push("*   *    *   *   *   *    *");
-    arr.push("*  * **** * *     * *      *");
-    arr.push("* *        *       *        *");
-    arr.push('**********************************');
-    arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push('===========================================================================================');
-    console.log(arr.join('\n'));
+
 	/**
 	 *
 	 * @author: lhh
@@ -216,7 +190,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-7-23
-	 * 修改日期：2017-10-10
+	 * 修改日期：2018-4-13
 	 * 名称：System.inherit
 	 * 功能：Extends a child object from a parent object using classical inheritance
 	 * pattern.
@@ -234,19 +208,20 @@
 		// proxy used to establish prototype chain
 		var F = function() {};
 		return function(subClass, superClass) {
-			if (Object.create) {//用 ecma5 Object.create() 实现 prototype 原型继承
-				// subclass extends superclass
-				subClass.prototype = Object.create(superClass.prototype);
-				subClass.prototype.constructor = subClass;
-			}else{
-				F.prototype = superClass.prototype;
-				subClass.prototype = new F();
-				subClass.prototype.constructor = superClass;
-				subClass.superClass = superClass.prototype;
+			try{
+                //用 ecma5 Object.create() 实现 prototype 原型继承
+                // subclass extends superclass
+                subClass.prototype = System.create(superClass.prototype);
+                subClass.prototype.constructor = subClass;
+			}catch (e){
+                F.prototype = superClass.prototype;
+                subClass.prototype = new F();
+                subClass.prototype.constructor = superClass;
+                subClass.superClass = superClass.prototype;
 
-				if(superClass.prototype.constructor === Object.prototype.constructor){
-					superClass.prototype.constructor = superClass;
-				}
+                if(superClass.prototype.constructor === Object.prototype.constructor){
+                    superClass.prototype.constructor = superClass;
+                }
 			}
 			return subClass;
 		};
@@ -276,12 +251,14 @@
 		'Helper': {},
 		'Controller': {},
 		'Model': {},
+		'Module': {},
 		'Html': {},
 		'Browser': {},
 		'Css': {},
 		'Template': {},
 		'Event': {},
 		'Dom': {},
+		'VNode': {},
 		'Cookie': {},
 		'Drag': {},
 		'Drag_xy': {},
@@ -462,6 +439,30 @@
 			}
 			return this;
 		},
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-4-18
+         * 修改日期：2018-4-18
+         * 名称：System.listen
+         * 功能：支持链式调用，总是返回当前命名空间对象，
+         * 说明：启动一个监听器，callback 不返回true 监听器就不停止，一直监听
+         * 注意：
+         * @param   (Function)callback 		NO NULL :启动监听器要做的操作
+         * @param   (Number)time 			   NULL :监听时间间隔
+         * @return  (System)
+         * Example：
+         */
+		'listen':function (callback,time) {
+			if(System.isFunction(callback)) {
+                time = time || 3000;
+                callback.timer = setInterval(function(){
+                    if(callback(callback.timer)){clearInterval(callback.timer);}
+                },time);
+			}
+			return this;
+        },
 
 		/**
 		 *
@@ -762,6 +763,27 @@
             list(D,callback);
             return {'totalLoop':totalLoop,'loop':loop};
         },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-4-13
+         * 修改日期：2018-4-13
+         * 名称：create
+         * 功能：
+         * 说明：
+         * 注意：
+         * @returns {Object}
+         */
+		'create':function (obj) {
+			if(!System.isObject(obj)){return {};}
+			if(System.isFunction(Object.create)){
+				return Object.create(obj);
+			}else{
+				var F = function () {};
+				F.prototype = obj;
+				return new F;
+			}
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -777,6 +799,25 @@
 			var result = {};
 			result.__proto__ = null;
 			return result;
+		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-4-22
+         * 修改日期：2018-4-22
+         * 名称：toDict
+         * 功能：过滤对象里__proto__ 属性，返回新对象
+         * 说明：
+         * 注意：
+         * @returns {Object}
+         */
+		'toDict':function (obj) {
+			var dict = System.createDict(),k;
+            for(k in obj){
+                if('__proto__' === k)continue;
+                dict[k] = obj[k];
+            }
+            return dict;
 		},
 		/**
 		 * @author: lhh
@@ -905,7 +946,7 @@
 					if(!override && (key in target)) {continue;}
 					var value = args[i][key];
 					if(deep && System.isObject(value) && System.isPlainObject(value)){
-						target[key] = self.merge(deep,{},[target[key],value],override);
+						target[key] = self.merge(deep,System.createDict(),[target[key],value],override);
 					}else{
 						target[key] = value;
 					}
@@ -1166,7 +1207,7 @@
 	};
 
 
-	System.String	 		= {};
+	System.String	 		= System.createDict();
 	System.Number	 		= {
 		/**
 		 *
@@ -1271,7 +1312,7 @@
 	System.guid=0;
 	System.classPath='./';
 	System.classes=[];
-	System.Super={};
+	System.Super=System.createDict();
 	System.app=null;
 	System.Object = Object.prototype     || System.createDict();
 	System.Function = Function.prototype || System.createDict();
@@ -1935,7 +1976,8 @@
 	}
 
 	function empty_(s) {
-		return !(isset(s) && s.toString().trim() != '');
+		s = s.toString().trim();
+		return !(isset_(s) && s.length > 0);
 	}
 
 	function isset() {
@@ -1989,5 +2031,21 @@
 		return arr;
 	}
 
+
+    var arr = [];
+    arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+    arr.push('===========================================================================================');
+    arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+    arr.push("*     *        *       *");
+    arr.push("*    *  *     * *     *  *");
+    arr.push("*   *    *   *   *   *    *");
+    arr.push("*  * **** * *     * *      *");
+    arr.push("* *        *       *        *");
+    arr.push('**********************************');
+    arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+    arr.push('===========================================================================================');
+    console.log(arr.join('\n'));
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });

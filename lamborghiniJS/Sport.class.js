@@ -43,10 +43,6 @@
 
 				}
 
-
-
-
-
 				if(oTarget[arr] != iCur){bStop=false;}
 				if("opacity" === arr){
 					obj['style']['filter']  = "alpha(opacity:"+(iCur+speed)+")";
@@ -87,10 +83,10 @@
 			}
 			switch(iType){
 				case MOVE_TYPE.BUFFER :
-					fnMove=__this__.linear;
+					fnMove=Sport.linear;
 					break;
 				case MOVE_TYPE.FLEX :
-					fnMove=__this__.quad;
+					fnMove=Sport.quad;
 					break;
 				default:
 
@@ -130,13 +126,13 @@
 		'animation':function(obj,start,alter,dur){
 			var linear=this.linear;
 			var curTime=0;
-			var t=setInterval(function(){
-				if(curTime>=dur) clearInterval(t);
-				for(var i in start){
-					obj.style[i]=linear(start[i],alter[i],curTime,dur)+"px";
-				}
-				curTime+=50;
-			},50);
+			System.listen(function () {
+                if(curTime >= dur) {return true;}
+                for(var i in start){
+                    obj.style[i]=linear(start[i],alter[i],curTime,dur)+"px";
+                }
+                curTime+=50;
+            },50);
 		},
 
 
@@ -207,15 +203,7 @@
 				obj.style.filter="alpha(opacity="+opacity+")";
 			}
 		},
-		'linear':function(start,alter,curTime,dur){//最简单的线性变化，即匀速运动
-			return start+curTime/dur*alter;
-		},
-		'quad':function(start,alter,curTime,dur){//加速变化
-			return start+Math.pow(curTime/dur,2)*alter;
-		},
-		'FLEX':function(){//弹性运动
 
-		},
 
 
 
@@ -234,6 +222,15 @@
 		 */
 		'destructor':function(){}
 	});
+
+    Sport.linear=function(start,alter,curTime,dur){//最简单的线性变化，即匀速运动
+        return start+curTime/dur*alter;
+    };
+    Sport.quad=function(start,alter,curTime,dur){//加速变化
+        return start+Math.pow(curTime/dur,2)*alter;
+    };
+    //弹性运动
+    Sport.FLEX=function(){};
 
 	return Sport;
 });
