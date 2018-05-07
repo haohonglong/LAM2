@@ -57,7 +57,6 @@
                 ,'VIEWS':_ROOT_+'/documentation/views'
                 ,'CSS':_ROOT_+'/documentation/css'
                 ,'JS':_ROOT_+'/documentation/js'
-                ,'Moudle':function(){return LAM.createDict();}
             },
             //hashcode 随机种子
             'random':10000,
@@ -76,11 +75,12 @@
             //配置基础文件
             'autoLoadFile':function(){
                 ROOT = this.Public.ROOT;
+                var PLUGINS = this.Public.PLUGINS;
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
                     ,classPath+'/build/base.min.js'
-                    //,classPath+'/base/System.js'
+                    // ,classPath+'/base/System.js'
                     //,classPath+'/base/Base.class.js'
                     //,classPath+'/base/Object.class.js'
                     //,classPath+'/base/Component.class.js'
@@ -91,6 +91,7 @@
                     //,classPath+'/base/Html.class.js'
                     //,classPath+'/base/Loader.class.js'
                     //,classPath+'/base/Template.class.js'
+                    ,PLUGINS+'/vue/vue.js'
                 ];
             },
 
