@@ -50,7 +50,7 @@
 	'use strict';
 // Used for trimming whitespace
 	var VERSION="2.0.8";
-	var Interface={},System={},once=true;
+	var Interface={},System={},once=true,timers=[];
 	var trimLeft = /^\s+/,
 		trimRight = /\s+$/,
 
@@ -382,10 +382,7 @@
 		 * Example：
 		 */
 		'main':null,
-		/**
-		 * 退出javascript 进程
-		 */
-		'exit':function(){},
+		'exit':function () {},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -459,11 +456,36 @@
 			if(System.isFunction(callback)) {
                 time = time || 3000;
                 callback.timer = setInterval(function(){
-                    if(callback(callback.timer)){clearInterval(callback.timer);}
+                    if(callback(callback.timer)){System.stop(callback.timer);}
                 },time);
+                timers.push(callback.timer);
 			}
 			return this;
         },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-5-15
+         * 修改日期：2018-5-15
+         * 名称：System.stop
+         * 功能：停止 System.listen
+         * 说明：没有参数就停止全部监听器
+         * 注意：
+         * @param   (Number)id 			   NULL :定时器
+         * @return  (void)
+         */
+        'stop':function(id){
+			if(System.isNumber(id)){
+                timers.remove(id);
+                clearInterval(id);
+			}else{
+                System.each(timers,function(i,id){
+                    clearInterval(id);
+				});
+                timers = [];
+			}
+
+		},
 
 		/**
 		 *
@@ -2031,22 +2053,26 @@
 		}
 		return arr;
 	}
+	System.wait(function(){
+        if(System.LAM_DEBUG){
+            var arr = [];
+            arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+            arr.push('===========================================================================================');
+            arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+            arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+            arr.push("*     *        *       *");
+            arr.push("*    *  *     * *     *  *");
+            arr.push("*   *    *   *   *   *    *");
+            arr.push("*  * **** * *     * *      *");
+            arr.push("* *        *       *        *");
+            arr.push('**********************************');
+            arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+            arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+            arr.push('===========================================================================================');
+            console.log(arr.join('\n'));
+        }
+	});
 
 
-    var arr = [];
-    arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-    arr.push('===========================================================================================');
-    arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push("*     *        *       *");
-    arr.push("*    *  *     * *     *  *");
-    arr.push("*   *    *   *   *   *    *");
-    arr.push("*  * **** * *     * *      *");
-    arr.push("* *        *       *        *");
-    arr.push('**********************************');
-    arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-    arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-    arr.push('===========================================================================================');
-    console.log(arr.join('\n'));
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });
