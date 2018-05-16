@@ -175,8 +175,9 @@
 			var caches = this.caches;
 			for(var i=0,len=caches.length;i<len;i++){
 				if((key in caches[i]) && (value === caches[i][key])){
-					if(caches[i].expires !==0){
-						if(System.timestamp() >= caches[i].expires){//当前时间大于等于设定时间
+					var expires = caches[i].expires;
+					if(System.isset(expires) && System.isNumber(expires) && expires !==0){
+						if(System.timestamp() >= expires){//当前时间大于等于设定时间
 							this.remove(i);
 							return -1;
 						}
