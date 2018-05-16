@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期：2016-12-8
- * 修改日期：2017-11-10
+ * 修改日期：2018-5-16
  * 名称：Cookie
  * 功能：cookie
  * 说明 :
@@ -97,20 +97,14 @@
 			}
 			return value || null;
 		},
-		'getExpDate':function(day, hour, minute){
-			var expDate = new Date();
-			if(System.isNumber(day) && System.isNumber(hour) && System.isNumber(minute)){
-				expDate.setDate(expDate.getDate() + parseInt(day));
-				expDate.setHours(expDate.getHours() + parseInt(hour));
-				expDate.setMinutes(expDate.getMinutes() + parseInt(minute));
-				return expDate.toGMTString();
-			}
+		'getExpDate':function(timestamp){
+            var d = new Date();
+            d.setTime(timestamp);
+			return d.toUTCString();
 		},
 		'remove':function(name){//
-			var exp = new Date();
-			exp.setTime(exp.getTime() - 1);
 			var cval=this.cookie(name);
-			if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+			if(cval!=null) document.cookie= name + "="+cval+";expires="+this.getExpDate(System.timestamp()-1);
 		},
 		/**
 		 *
