@@ -2071,7 +2071,7 @@
             arr.push('===========================================================================================');
             console.log(arr.join('\n'));
         }
-	});
+	},10);
 
 
 	return System.merge(null,[Interface,global[namespace] || {}]);
