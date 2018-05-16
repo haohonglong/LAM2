@@ -118,13 +118,11 @@
 		/**
 		 *
 		 * @param index
-		 * @returns {*}
 		 */
 		'get':function(index){
 			if(System.isset(index) && System.isNumeric(index)){
 				return this.getItem().caches[index];
 			}
-			return this;
 		},
 
 		/**
