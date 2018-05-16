@@ -52,12 +52,25 @@
 	var __this__=null;
 
 	var Cache = System.Browser.extend({
-		constructor: function(name,type){
+        /**
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2017-1-5
+         * 修改日期:2018-5-16
+         * 功能：
+         * 说明：
+         * 注意：
+         * @param {String}name  							NOT NULL 缓存标示
+         * @param {localStorage | sessionStorage}type		NOT NULL 	 缓存类型
+         * @param {timeStamp}expires 						NULL 	 失效期的时间戳
+         */
+		constructor: function(name,type,expires){
 			this.base();
 			__this__=this;
 			this.caches = [];
 			this.name = name || 'cache';
 			this.Storage = type || localStorage;
+			this.expires = expires || 0;
 			this.key = "";
 			this.value = "";
 		},
@@ -115,12 +128,21 @@
 		},
 
 		/**
-		 *
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2017-1-5
+         * 修改日期:2018-5-16
+         * 名称：set
+         * 功能：添加数据，可以设置一个有效期
+         * 说明：
+         * 注意：
 		 * @param {json}data
+		 * @param {timeStamp}	expires NULL 失效期的时间戳
 		 * @returns {Cache}
 		 */
-		'set':function(data){
+		'set':function(data,expires){
 			data[this.key] = this.value;
+			data['expires'] = expires || this.expires;
 			this.caches.push(data);
 			this.setItem();
 			return this;
@@ -140,7 +162,7 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-9
+		 * 修改日期:2018-5-16
 		 * 名称：exists
 		 * 功能：检查数据是否存在，如果存在返回数据被存储在哪个数组的下标，不存在返回-1
 		 * 说明：
@@ -155,6 +177,12 @@
 			var caches = this.caches;
 			for(var i=0,len=caches.length;i<len;i++){
 				if((key in caches[i]) && (value === caches[i][key])){
+					if(caches[i].expires !==0){
+						if(System.timestamp() >= caches[i].expires){//当前时间大于等于设定时间
+							this.remove(i);
+							return -1;
+						}
+					}
 					return i;
 				}
 			}
