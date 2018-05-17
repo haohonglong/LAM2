@@ -261,6 +261,7 @@
 		'Dom': {},
 		'VNode': {},
 		'Cookie': {},
+		'Storage': {},
 		'PowerCookie': {},
 		'Drag': {},
 		'Drag_xy': {},
