@@ -125,7 +125,7 @@
 		'add':function(data,expires){
 			data[this.key] = this.value;
 			data['expires'] = expires || this.expires;
-			this.getItem().caches.push(data);
+			this.caches.push(data);
 			this.setItem();
 			return this;
 		},
