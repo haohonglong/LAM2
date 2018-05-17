@@ -82,7 +82,9 @@
 
 
                 <a href="javascript:void(0);" class="list-group-item">结构<span class="caret ML5"></span></a>
-                <div class="none submenu" id="structList"></div>
+                <div class="none submenu" id="structList">
+                    <a v-for="item in list" :href="item.url" class="list-group-item">{{item.title}}</a>
+                </div>
             </div>
         </div>
         <div id="content" class="col-md-9">
@@ -91,9 +93,7 @@
     </div>
 
 </div>
-<script type="text/template" id="structList_tpl">
-    <a data-var="tpl" href="{#url#}" class="list-group-item">{#title#}</a>
-</script>
+
 
 </body>
 
@@ -106,13 +106,27 @@
        System.Html.include($('include'));
        System.Html.analysisTpl();
 
-       System.Html.getFile(System.ROOT+'/database/data.json',function(data){
-           var menu = System.Template.foreach($('#structList_tpl').html(), data.menu);
-           document.querySelector('#structList').innerHTML=System.findTpl(menu,['{{','}}']);
-       },{
-           'dataType':'json',
-           'type':'POST'
+       new Vue({
+           el:'#structList',
+           data: {
+               list: []
+           },
+           created: function () {
+                var _this = this;
+               System.Html.getFile(System.ROOT+'/database/data.json',function(data){
+                   _this.list = data.menu;
+                   System.each(data.menu,function(){
+                       this.url = System.template(this.url,['{{','}}']);
+                   });
+
+               },{
+                   'dataType':'json',
+                   'type':'POST'
+               });
+           }
        });
+
+
 
 
 

@@ -2,7 +2,7 @@
  * @author: lhh
  * 产品介绍：
  * 创建日期：2015-8-26
- * 修改日期：2017-10-13
+ * 修改日期：2018-4-25
  * 名称：
  * 功能：操作dom
  * 说明：
@@ -27,7 +27,13 @@
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
 	var __this__=null;
-	var guid = 0,Elements=System.createDict();
+	var node_key = System.Object.key,
+		Elements=System.createDict(),
+		setElement = function (k,v) {
+			if(!Elements[k]){
+				Elements[k] = v;
+			}
+		};
 	/**
 	 * @author: lhh
 	 * 产品介绍：
@@ -104,10 +110,22 @@
 			this.preNode = null;
 			this.nextNode = null;
 			this.parentNode = null;
+			this.parent     = null;
 			this.attributes=[];
+			this.childrens=[];
 			this.Attr = System.createDict();
 			//构造有参数时
-			if(arguments.length){this.create(Attr);}
+			if(arguments.length){
+				if(System.empty(this.tag)){throw new Error('Warning 缺少标签名称');}
+				if(!System.isString(this.tag)){throw new Error('Warning :标签名称必须是字符串');}
+                var key = System.Object.g_key_id();
+                Attr[node_key] = key;
+                this[System.camelCase(node_key)] = key;
+                setElement(key,this);
+				this.init();
+				this.create(Attr);
+				this.run();
+			}
 			this.fragment = Dom.createFragment();
 
 		},
@@ -117,33 +135,31 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-26
-		 * 修改日期：2018-4-22
+		 * 修改日期：2018-4-23
 		 * 名称： create
 		 * 功能：创建节点元素
 		 * 说明：
 		 * 注意：下面俩个参数是必须的
-		 * @param 	{String}tag             NO NULL : 标签名称
 		 * @param 	{Object}Attr             	NO NULL : 标签的属性
 		 * @returns {Dom}
 		 */
 		'create':function(Attr){
-			var kid = 'kid_'+guid++;
-            Attr['dom-kid'] = kid;
             var _this = this;
-			var tag = this.tag;
-			if(System.empty(tag)){throw new Error('Warning 缺少标签名称');return this;}
-            if(!System.isString(tag)){throw new Error('Warning :标签名称必须是字符串');return this;}
-			this.node=document.createElement(tag);
+			this.node=document.createElement(this.tag);
 			if(!this.single){
                 if(System.isString(this.text) && !System.empty(this.text)){
                     this.node.appendChild(document.createTextNode(this.text));
                 }else if(System.isArray(this.text)){
                     System.each(this.text,function(){
                         if(1 === this.nodeType){
+                        	this.parent = _this;
+                        	_this.childrens.push(this);
                             _this.node.appendChild(this);
                         }
                     });
                 }else if(1 === this.text.nodeType){
+                	this.text.parent = this;
+                    this.childrens.push(this.text);
                     this.node.appendChild(this.text);
                 }
 			}
@@ -156,9 +172,10 @@
 				this.Attr[k] = v;
 				this.attr(k,v);
 			}
-			Dom.setElement(kid,this);
 			return this;
 		},
+		'init':function () {},
+		'run':function () {},
 
 		/**
 		 * @author: lhh
@@ -1328,15 +1345,10 @@
 		return element.nodeType;
 	};
 	Dom.getElement=function (key) {
-		if(key){
+		if(System.isset(key) && System.isString(key) && !System.empty(key)){
 			return Elements[key];
 		}else{
 			return Elements;
-		}
-    };
-	Dom.setElement=function (k,v) {
-		if(!Elements[k]){
-			Elements[k] = v;
 		}
     };
 	Dom.createElement=function(single,tag,Attr,text,comment){

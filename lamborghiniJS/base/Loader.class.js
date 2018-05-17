@@ -262,7 +262,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2017-10-31
-         * 修改日期：2018-4-20
+         * 修改日期：2018-4-25
          * 名称：loadScript
          * 功能：
          * 说明：
@@ -294,13 +294,14 @@
                 };
             }
             script.src = url;
-            if('befor' === append){
-                head.appendChild(script);
-                if(this.Config.render.remove){head.removeChild(script);}
-            }else if('after' === append){
-                body.appendChild(script);
-                if(this.Config.render.remove){body.removeChild(script);}
-            }
+            System.listen(function(){
+                if(body){
+                    body.appendChild(script);
+                    if(self.Config.render.remove){body.removeChild(script);}
+                    return true;
+                }
+            },1);
+
             if(System.isClassFile(url)){System.classes.push(url);}
             System.files.push(url);
             return this;

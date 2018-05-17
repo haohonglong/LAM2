@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2017-12-28
+ * 修改日期：2018-5-9
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -113,6 +113,7 @@
 				if(System.isClassFile(src)){System.classes.push(src);}
 				System.files.push(src);
 			}
+			return this;
 		},
 		'onreadystatechange': function () {
 			var self = this;
@@ -121,17 +122,16 @@
 				if ((200 === xhr.status) && (4 === xhr.readyState)) {
 					switch (self.dataType){
 						case 'json':
-							self.success(System.eval(xhr.responseText));
+							self.success(System.eval(xhr.responseText), xhr.status, xhr);
 							break;
 						case 'script':
-							self.loadScript(xhr.responseText);
-							self.success(xhr.responseText);
+							self.loadScript(xhr.responseText).success(xhr.responseText,xhr.status,xhr);
 							break;
 						default :
-							self.success(xhr.responseText);
+							self.success(xhr.responseText, xhr.status, xhr);
 					}
 				}else{
-					self.error(xhr.responseText);
+					self.error(xhr, xhr.status);
 				}
 			};
 		},

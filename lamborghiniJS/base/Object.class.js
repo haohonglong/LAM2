@@ -145,7 +145,7 @@
 	});
 
 
-	Object._hashCodeCounter=1;
+	Object._hashCodeCounter=0;
 	Object._hashCodePrefix='hc'+System.timestamp();
 	Object.generate=function(){
 		return Object._hashCodePrefix+Math.round(Math.random()*System.random)+Object._hashCodeCounter++;
@@ -155,7 +155,11 @@
 			return o._hashCode;
 		return o._hashCode=Object.generate();
 	};
-
+	//节点元素唯一标示符
+    Object.key = 'node-id';
+    //自增长数字
+    var id = 0;
+    Object.g_key_id = function(){return '_'+id++;};
 
 	return Object;
 });
