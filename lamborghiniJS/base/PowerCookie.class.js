@@ -9,6 +9,27 @@
  * note :
  * example:
  *
+ * new LAM.PowerCookie('mt11').cache('jobId',1,function (index,id) {
+		var data={
+			"id":id,
+			"jobId":id,
+			"job":"程序员",
+			"name":"李明",
+			"addres":"雨花台区软件大道",
+			"city":"南京",
+			"sex":"男"
+		};
+		if(-1 === index){
+			this.set(data);
+		}else{
+			this.update(index,data);
+			text = this.get(index).name;
+			this.remove(index);
+			console.log(text);
+
+		}
+	});
+ *
  *
  *
  *
@@ -51,7 +72,7 @@
             D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
             this.caches	= [];
             this.name 		= name || 'm_11';
-            this.expires 	= System.isset(D.expires) && System.isNumber(D.expires) && (D.expires > 0) ? this.getExpDate(D.expires) : 0;
+            this.expires 	= System.isset(D.expires) && System.isNumber(D.expires) && (D.expires > 0) ? D.expires : 0;
             this.path 		= System.isset(D.path) && System.isString(D.path) && !System.empty(D.path.trim()) ? D.path.trim() : null;
             this.domain 	= System.isset(D.domain) && System.isString(D.domain) && !System.empty(D.domain.trim()) ? D.domain.trim() : null;
             this.secure 	= System.isset(D.secure) && System.isBoolean(D.secure) ? D.secure : false;
