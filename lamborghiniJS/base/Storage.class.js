@@ -65,7 +65,7 @@
          * @param {timeStamp}expires 						NULL 	 失效期的时间戳
          */
 		constructor: function(name,type,expires){
-			this.base(name,type,expires);
+			this.base(name,expires);
 			__this__=this;
 			this.Storage = type || localStorage;
 		},
