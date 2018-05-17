@@ -20,7 +20,7 @@
 			"sex":"男"
 		};
 		if(-1 === index){
-			this.set(data);
+			this.add(data);
 		}else{
 			this.update(index,data);
 			text = this.get(index).name;
@@ -142,9 +142,8 @@
          * 功能：增加数据
          * 说明：
          * 注意：
-         * @param {String}key  		存储数据的标示符key
-         * @param {String}value		存储数据的标示符value
-         * @param {Function}callback
+         * @param {json}data
+         * @param {timeStamp}expires 	NULL 失效期的时间戳
          * @returns {PowerCookie}
          */
 		'add':function(data,expires){

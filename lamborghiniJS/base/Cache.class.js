@@ -20,7 +20,7 @@
 			"sex":"男"
 		};
 		if(-1 === index){
-			this.set(data);
+			this.add(data);
 		}else{
 			this.update(index,data);
 			text = this.get(index).name;
@@ -130,21 +130,24 @@
          * 产品介绍：
          * 创建日期:2017-1-5
          * 修改日期:2018-5-16
-         * 名称：set
+         * 名称：add
          * 功能：添加数据，可以设置一个有效期
          * 说明：
          * 注意：
 		 * @param {json}data
-		 * @param {timeStamp}	expires NULL 失效期的时间戳
+		 * @param {timeStamp}expires 	NULL 失效期的时间戳
 		 * @returns {Cache}
 		 */
-		'set':function(data,expires){
+		'add':function(data,expires){
 			data[this.key] = this.value;
 			data['expires'] = expires || this.expires;
 			this.caches.push(data);
 			this.setItem();
 			return this;
 		},
+        'set':function(data,expires){
+            this.add(data,expires);
+        },
 		/**
 		 *
 		 * @param index
