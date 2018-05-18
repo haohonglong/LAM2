@@ -4,12 +4,32 @@
  * 修改日期:2018-5-18
  * 名称：Cache类
  * 功能：缓存
- * 说明 : 这个类不能被实例化
+ * 说明 :
  *        
  * note :
  * example:
  *
- * 		  
+ * new LAM.Cache('mt11').find('jobId',1,function (index,id) {
+		var data={
+			"id":id,
+			"jobId":id,
+			"job":"程序员",
+			"name":"李明",
+			"addres":"雨花台区软件大道",
+			"city":"南京",
+			"sex":"男"
+		};
+		if(-1 === index){
+			this.add(data);
+		}else{
+			this.update(index,data);
+			text = this.get(index).name;
+			this.remove(index);
+			console.log(text);
+
+		}
+	});
+ *
  *		
  * 
  */
