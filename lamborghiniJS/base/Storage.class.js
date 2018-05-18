@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2018-5-16
+ * 修改日期:2018-5-18
  * 名称：Storage类
  * 功能：缓存
  * 说明 : 存数据时先存储到数组里，后由数组存储到Storage，取数据先从Storage里取然后在把数据赋给数组，最后从数组里取出数据,可以设置一个失效期
@@ -9,7 +9,7 @@
  * note :
  * example:
  *
- * new LAM.Storage('mt11',localStorage).cache('jobId',1,function (index,id) {
+ * new LAM.Storage('mt11',localStorage).find('jobId',1,function (index,id) {
 		var data={
 			"id":id,
 			"jobId":id,
@@ -86,9 +86,6 @@
 				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
 			}
 			return this;
-		},
-		'cache':function(key,value,callback){
-			return this.check(key,value,callback);
 		},
 		'clear':function(){
 			if(this.isStorage()){

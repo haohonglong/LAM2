@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期：2018-5-16
- * 修改日期：2018-5-17
+ * 修改日期：2018-5-18
  * 名称：PowerCookie
  * 功能：cookie
  * 说明 :
@@ -9,7 +9,7 @@
  * note :
  * example:
  *
- * new LAM.PowerCookie('mt11').cache('jobId',1,function (index,id) {
+ * new LAM.PowerCookie('mt11').find('jobId',1,function (index,id) {
 		var data={
 			"id":id,
 			"jobId":id,
@@ -104,9 +104,6 @@
                 this.caches = JSON.parse(value);
             }
             return this;
-		},
-		'cookie':function(key,value,callback){
-            return this.check(key,value,callback);
 		},
 		'getExpDate':function(timestamp){
             var d = new Date();

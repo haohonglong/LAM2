@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2018-5-16
+ * 修改日期:2018-5-18
  * 名称：Cache类
  * 功能：缓存
  * 说明 : 这个类不能被实例化
@@ -9,26 +9,6 @@
  * note :
  * example:
  *
- * new LAM.Cache('mt11',localStorage).cache('jobId',1,function (index,id) {
-		var data={
-			"id":id,
-			"jobId":id,
-			"job":"程序员",
-			"name":"李明",
-			"addres":"雨花台区软件大道",
-			"city":"南京",
-			"sex":"男"
-		};
-		if(-1 === index){
-			this.add(data);
-		}else{
-			this.update(index,data);
-			text = this.get(index).name;
-			this.remove(index);
-			console.log(text);
-
-		}
-	});
  * 		  
  *		
  * 
@@ -80,8 +60,8 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-9
-		 * 名称：check
+		 * 修改日期:2018-5-18
+		 * 名称：find
 		 * 功能：
 		 * 说明：入口处,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是Cache 实例化当前对象
 		 * 注意：
@@ -90,7 +70,7 @@
 		 * @param {Function}callback
 		 * @returns {Cache}
 		 */
-		'check':function(key,value,callback){
+		'find':function(key,value,callback){
 			this.key   = key.toString().trim();
 			this.value = value.toString().trim();
 			if(System.isFunction(callback)){
