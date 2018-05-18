@@ -154,8 +154,22 @@
 			}
 			return -1;
 		},
-		'clear':function(){return this;},
-		'remove':function(index){return this;},
+        'clear':function(){
+            this.caches = [];
+            return this;
+        },
+        'remove':function(index){
+            if(System.isset(index) && System.isNumeric(index)){
+                var caches = this.caches;
+                if (index > -1 && index <= caches.length-1) {
+                    caches.removeAt(index);
+                    this.setItem();
+                }
+            }else{
+                this.clear();
+            }
+            return this;
+        },
 		/**
 		 *
 		 * @author lhh
