@@ -77,7 +77,16 @@
 		'isStorage':function(){return (System.isset(this.Storage) && System.isset(this.Storage.setItem))},
 		'setItem':function(){
 			if(this.isStorage()){
-				this.Storage.setItem(this.name,JSON.stringify(this.caches));
+				try{
+					this.Storage.setItem(this.name,JSON.stringify(this.caches));
+				}catch (e){
+                    if ('QUOTA_EXCEEDED_ERR' === e.name || 'NS_ERROR_DOM_QUOTA_REACHED' === e.name) {
+                        throw new Error(['Warning: ',this.name,' 存储已满'].join(''));
+                    } else {
+                        // todo
+                    }
+
+				}
 			}
 			return this;
 		},
