@@ -23,7 +23,7 @@
             },
             created: function () {
                 var _this = this;
-                System.Html.getFile(System.ROOT+'/database/data.json',function(data){
+                System.Html.getFile(System.ROOT+'/database/menu.json',function(data){
                     _this.list = data.menu;
                     System.each(data.menu,function(){
                         System.each(this.submenu,function(){
