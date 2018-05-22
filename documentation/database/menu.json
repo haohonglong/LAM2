@@ -21,7 +21,7 @@
       "title": "入门",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=introduce/running",
+          "url": "{{LAM.VIEWS}}/index.html?r=content/running",
           "title": "运行"
         }
       ]
