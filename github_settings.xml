@@ -1,6 +1,7 @@
 <application>
   <component name="GithubSettings">
     <option name="LOGIN" value="haohonglong" />
+    <option name="HOST" value="https://github.com/haohonglong/" />
     <option name="AUTH_TYPE" value="BASIC" />
   </component>
 </application>
