@@ -1,15 +1,15 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2017-11-9
+ * 修改日期:2018-5-18
  * 名称：Cache类
  * 功能：缓存
- * 说明 : 存数据时先存储到数组里，后由数组存储到Storage，取数据先从Storage里取然后在把数据赋给数组，最后从数组里取出数据
+ * 说明 :
  *        
  * note :
  * example:
  *
- * new LAM.Cache('mt11',localStorage).cache('jobId',1,function (index,id) {
+ * new LAM.Cache('mt11').find('jobId',1,function (index,id) {
 		var data={
 			"id":id,
 			"jobId":id,
@@ -20,7 +20,7 @@
 			"sex":"男"
 		};
 		if(-1 === index){
-			this.set(data);
+			this.add(data);
 		}else{
 			this.update(index,data);
 			text = this.get(index).name;
@@ -29,7 +29,7 @@
 
 		}
 	});
- * 		  
+ *
  *		
  * 
  */
@@ -52,39 +52,36 @@
 	var __this__=null;
 
 	var Cache = System.Browser.extend({
-		constructor: function(name,type){
+        /**
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2017-1-5
+         * 修改日期:2018-5-16
+         * 功能：
+         * 说明：
+         * 注意：
+         * @param {String}name  							NOT NULL 缓存标示
+         * @param {timeStamp}expires 						NULL 	 失效期的时间戳
+         */
+		constructor: function(name,expires){
 			this.base();
 			__this__=this;
 			this.caches = [];
 			this.name = name || 'cache';
-			this.Storage = type || localStorage;
+			this.expires = System.isset(expires) && System.isNumber(expires) && (expires > 0) ? expires : 0;
 			this.key = "";
 			this.value = "";
 		},
 		'_className':'Cache',
-		/**
-		 *
-		 * @returns {*}
-		 */
-		'isStorage':function(){return (System.isset(this.Storage) && System.isset(this.Storage.setItem))},
-		'setItem':function(){
-			if(this.isStorage()){
-				this.Storage.setItem(this.name,JSON.stringify(this.caches));
-			}
-			return this;
-		},
-		'getItem':function(){
-			if(this.isStorage()){
-				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
-			}
-			return this;
-		},
+        'isStorage':function(){},
+		'setItem':function(){return this;},
+		'getItem':function(){return this;},
 		/**
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-9
-		 * 名称：cache
+		 * 修改日期:2018-5-18
+		 * 名称：find
 		 * 功能：
 		 * 说明：入口处,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是Cache 实例化当前对象
 		 * 注意：
@@ -93,7 +90,7 @@
 		 * @param {Function}callback
 		 * @returns {Cache}
 		 */
-		'cache':function(key,value,callback){
+		'find':function(key,value,callback){
 			this.key   = key.toString().trim();
 			this.value = value.toString().trim();
 			if(System.isFunction(callback)){
@@ -105,26 +102,36 @@
 		/**
 		 *
 		 * @param index
-		 * @returns {*}
 		 */
 		'get':function(index){
 			if(System.isset(index) && System.isNumeric(index)){
 				return this.getItem().caches[index];
 			}
-			return this;
 		},
 
 		/**
-		 *
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2017-1-5
+         * 修改日期:2018-5-16
+         * 名称：add
+         * 功能：添加数据，可以设置一个有效期
+         * 说明：
+         * 注意：
 		 * @param {json}data
+		 * @param {timeStamp}expires 	NULL 失效期的时间戳
 		 * @returns {Cache}
 		 */
-		'set':function(data){
+		'add':function(data,expires){
 			data[this.key] = this.value;
+			data['expires'] = expires || this.expires;
 			this.caches.push(data);
 			this.setItem();
 			return this;
 		},
+        'set':function(data,expires){
+            this.add(data,expires);
+        },
 		/**
 		 *
 		 * @param index
@@ -140,7 +147,7 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2017-11-9
+		 * 修改日期:2018-5-16
 		 * 名称：exists
 		 * 功能：检查数据是否存在，如果存在返回数据被存储在哪个数组的下标，不存在返回-1
 		 * 说明：
@@ -155,32 +162,34 @@
 			var caches = this.caches;
 			for(var i=0,len=caches.length;i<len;i++){
 				if((key in caches[i]) && (value === caches[i][key])){
+					var expires = caches[i].expires;
+					if(System.isset(expires) && System.isNumber(expires) && expires !==0){
+						if(System.timestamp() >= expires){//当前时间大于等于设定时间
+							this.remove(i);
+							return -1;
+						}
+					}
 					return i;
 				}
 			}
 			return -1;
 		},
-		'clear':function(){
-			if(this.isStorage()){
-				this.Storage.clear();
-			}
-			this.caches = [];
-			return this;
-		},
-		'remove':function(index){
-			if(System.isset(index) && System.isNumeric(index)){
-				var caches = this.caches;
-				if (index > -1 && index <= caches.length-1) {
-					caches.removeAt(index);
-					this.setItem();
-					// delete cache[index];
-				}
-			}else{
-				this.Storage.removeItem(this.name);
-				this.caches = [];
-			}
-			return this;
-		},
+        'clear':function(){
+            this.caches = [];
+            return this;
+        },
+        'remove':function(index){
+            if(System.isset(index) && System.isNumeric(index)){
+                var caches = this.caches;
+                if (index > -1 && index <= caches.length-1) {
+                    caches.removeAt(index);
+                    this.setItem();
+                }
+            }else{
+                this.clear();
+            }
+            return this;
+        },
 		/**
 		 *
 		 * @author lhh

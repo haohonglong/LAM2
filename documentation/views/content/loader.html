@@ -1,7 +1,117 @@
-loader.html
+<h1>Loader <span id="installing-yii"></span><a href="javascript:void(0)" class="hashlink">¶</a></h1>
+<pre>
+    <code class="hljs sql">
+文件加载器检测机制(参考 十、检测机制 文件加载器)
+	文件加载器有load()和import()两种调用方法。
+	1.执行import()方法时，先调用importScript()方法 加载 .js
+	2.如果1 不能执行，就用xhr方式加载 .js ，这种方式可以在.js文件里直接加载其它.js文件
+	3.如果不支持xhr方式，就调用 load() 方法
+		1.下面这种不仅适合脚本文件和样式文件的引入还适合less文件的引入。load方法是加载指定的文件到加载器中，load方法可以链式调用多个不同类型文件，当调用到print方法的时候才会一次性从加载器里输出到页面中
+			LAMJS.Loader
+				.load({
+					'baseUrl':jsPath,//baseUrl 默认是 项目的根目录（_ROOT_）
+					'suffix':'.js',//
+					'js':[
+						'/Helper.class',
+						'/Browser.class',
+						'/Drag.class',
+						'/Dom.class',
+						'/Tools.class',
+						'/PaintBase.class'
+					]
+				})
+				.load({
+					'baseUrl':cssPath,
+					'suffix':'.css',
+					'rel':'stylesheet',
+					'css':[
+						{'href':'/Browser','class':'c1'},
+						{'href':'/Drag','id':'t2'},
+						'/reset',
+						'/global',
+						'/lib'
+					]
+				})
+				//按照规则加载任何标签如:meat 后缀名不能省略。（load link script 最终走的这个方法）
+				.load({rules:[
+							  {
+								 tag: 'css',
+								 single:false,
+								 use: [
+								   '/global.css',
+                                   '/lib.css'
+								 ],
+								 attr:{},
+								 after_fn:function(){}
+							   }
+						   ]})
+				.load({
+					'baseUrl':lessPath,
+					'suffix':'.less',
+					'rel':'stylesheet/less',
+					'css':[
+						'/reset',
+						'/global',
+						'/lib'
+					]
+				}).print();
+
+		上面依次输出的是js、css、less文件。用对象的方式可以传自定义参数
+
+		2.调用加载器时打印出指定标签(或自定义标签)
+					LAMJS.Loader
+        					.load({//打印指定的标签（tag 属性是打印出指定的标签）
+        						'tag':[
+        							System.Html.tag(true,'meta',{"name":"csrf-param","content":"_csrf"}),
+        							System.Html.tag(true,'meta',{"name":"csrf-param","content":"YWdSbEhVZnElMDUmGRQnMwsQGg4ROFUCDg8qDSlkNggVHmYpAXgtRg=="}),
+        							System.Html.tag('title',{},'PaperPass论文检测_论文查重_免费论文检测系统_毕业论文抄袭检测'),
+        							System.Html.tag(true,'meta',{"name":"description","content":"★PaperPass★论文检测-全球首个中文论文相似度检测网站;提供论文查重,免费论文检测系统,毕业论文抄袭检测。最权威,动态指纹技术保障,已服务超300万人论文检测。"}),
+        							System.Html.tag(true,'meta',{"name":"keywords","content":"论文,论文检测,论文查重,免费论文检测,检测系统,论文抄袭,毕业论文"}),
+        						]
+        					})
+        					.print();
+
+		注意：tag 、js 、css 属性名称在load方法里只能选择一个。选择了tag属性时其余的属性都可不用,打印指定标签时必须要调用Html对象里的静态方法tag
+
+		3.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
+		用xhr方式加载 System.Xhr.include() 和 System.import() 这俩方法几乎类似,不同的时 System.import() 调用的是jQuery ajax 方式 ，System.Xhr.include() 用的是原生的XMLHttpRequest
+			System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false);
+
+			System
+				.import([
+					'/Browser.class'
+				],System.classPath);
+
+				System.classPath 不填的话 默认是 项目的根目录（System.ROOT）
+
+			非xhr方式添加自定义参数
+			System
+				.import([
+					{'src':'/Browser.class','data-main':'scripts/main.js'},
+					{'src':'/Drag.class','attr':2},
+					{'src':'/Drag_xy.class','attr':3},
+					{'src':'/Dom.class','attr':4}
+				],System.classPath,null,{xhr:false});
+
+			也可以链式调用
+			System
+				.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false)
+				.import([
+                    '/Browser.class',
+                    '/Drag.class',
+                    '/Dom.class',
+                    '/Tools.class',
+                    '/PaintBase.class'
+                ],System.classPath);
+</code>
+</pre>
+
+<div class="alert alert-warning" role="alert">
+    Warning! Better check yourself, you're not looking too good.
+</div>
 
 <script type="text/javascript">
-    LAM.TITLE= "loader";
+    LAM.TITLE= "Loader";
     LAM.wait(function(){
         'use strict';
         var System=this;

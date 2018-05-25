@@ -68,24 +68,7 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <div class="list-group">
-                <a href="javascript:void(0);" class="list-group-item">介绍<span class="caret ML5"></span></a>
-                <div class="none submenu">
-                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=introduce/index" class="list-group-item">快速开始</a>
-                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=introduce/about" class="list-group-item">关于</a>
-                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=introduce/configuration" class="list-group-item">配置文件</a>
-                </div>
-                <a href="javascript:void(0);" class="list-group-item">入门<span class="caret ML5"></span></a>
-                <div class="none submenu">
-                    <a data-var="tpl" href="{#LAM.VIEWS#}/index.html?r=content/running" class="list-group-item">运行</a>
-                </div>
-
-
-                <a href="javascript:void(0);" class="list-group-item">结构<span class="caret ML5"></span></a>
-                <div class="none submenu" id="structList">
-                    <a v-for="item in list" :href="item.url" class="list-group-item">{{item.title}}</a>
-                </div>
-            </div>
+            <include file="{#LAM.VIEWS#}/inc_menu.html"></include>
         </div>
         <div id="content" class="col-md-9">
             <include file="{#LAM.VIEWS#}/{#LAM.VNAME#}.html" file_404="404.html"></include>
@@ -106,39 +89,9 @@
        System.Html.include($('include'));
        System.Html.analysisTpl();
 
-       new Vue({
-           el:'#structList',
-           data: {
-               list: []
-           },
-           created: function () {
-                var _this = this;
-               System.Html.getFile(System.ROOT+'/database/data.json',function(data){
-                   _this.list = data.menu;
-                   System.each(data.menu,function(){
-                       this.url = System.template(this.url,['{{','}}']);
-                   });
-
-               },{
-                   'dataType':'json',
-                   'type':'POST'
-               });
-           }
-       });
-
-
-
-
-
-       System.setMenuSelectedStatus=function(href){
-           $('.list-group .submenu a[href*="'+href+'"]')
-               .addClass('active').closest('.submenu').show().prev('.list-group-item').addClass('p-active');
-       };
-
 
        $(function(){
            $('title').text(System.TITLE || 'index');
-           System.setMenuSelectedStatus(System.VNAME);
 
            $('.list-group [data-url]').hover(function(){
                $(this).addClass('hover');

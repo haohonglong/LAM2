@@ -1,0 +1,88 @@
+{
+  "menu": [
+    {
+      "title": "介绍",
+      "submenu": [
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=introduce/index",
+          "title": "快速开始"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=introduce/about",
+          "title": "关于"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=introduce/configuration",
+          "title": "配置文件"
+        }
+      ]
+    },
+    {
+      "title": "入门",
+      "submenu": [
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/running",
+          "title": "运行"
+        }
+      ]
+    },
+    {
+      "title": "缓存",
+      "submenu": [
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/cache",
+          "title": "Cache"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/powerCookie",
+          "title": "PowerCookie"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/cookie",
+          "title": "Cookie"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/storage",
+          "title": "Storage"
+        }
+      ]
+    }
+    ,{
+      "title": "结构",
+      "submenu": [
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/basis",
+          "title": "/Basis"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/loader",
+          "title": "/Loader"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/biObject",
+          "title": "/BiObject"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/browser",
+          "title": "/Browser"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/controller",
+          "title": "/Controller"
+        }
+      ,{
+          "url": "{{LAM.VIEWS}}/index.html?r=content/component",
+          "title": "/Component"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/base64",
+          "title": "/Base64"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/node",
+          "title": "/Node"
+        }
+      ]
+    }
+  ]
+}
