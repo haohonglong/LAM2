@@ -69,8 +69,8 @@
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/controller",
           "title": "/Controller"
-        }
-      ,{
+        },
+        {
           "url": "{{LAM.VIEWS}}/index.html?r=content/component",
           "title": "/Component"
         },
@@ -81,6 +81,10 @@
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/node",
           "title": "/Node"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/html",
+          "title": "/Html"
         }
       ]
     }

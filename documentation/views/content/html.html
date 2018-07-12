@@ -1,0 +1,82 @@
+<h1>Html <span id="installing-yii"></span><a href="javascript:void(0)" class="hashlink">¶</a></h1>
+<pre>
+    <code class="hljs sql">
+&lt;script type=&quot;text/javascript&quot;&gt;
+    LAMJS.run(function () {
+        'use strict';
+        var System = this;
+        System.Html.tag('nav',
+            System.Html.tag('ul', {'class': 'pagination'},
+                (function(){
+                    var arr=[];
+                    var li;
+                    li =System.Html.tag('li',
+                        System.Html.tag('a',{'href':'#','aria-label':'Previous'},
+                            System.Html.tag('span', {'aria-hidden':'true'})
+                        )
+                    );
+
+                    arr.push(li);
+
+                    for(var i=1;i&lt;=5;i++){
+                        arr.push(System.Html.tag('li',
+                            System.Html.tag('a', {'href':'#'},i)
+                        ));
+
+                    }
+                    li = System.Html.tag('li',
+                        System.Html.tag('a', {'href':'#','aria-label':'Next'},
+                            System.Html.tag('span', {'aria-hidden':'true'})
+                        )
+                    );
+                    arr.push(li);
+                    return arr;
+                })()
+
+            )
+        );
+
+    });
+&lt;/script&gt;
+	</code>
+</pre>
+
+
+<div class="MT10 MB10">上面的代码生成下面的字符串</div>
+<pre>
+	<code>
+&lt;nav&gt;
+    &lt;ul class=&quot;pagination&quot;&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;#&quot; aria-label=&quot;Previous&quot;&gt;
+                &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;4&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;5&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;#&quot; aria-label=&quot;Next&quot;&gt;
+                &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+
+	</code>
+</pre>
+
+
+<script type="text/javascript">
+    LAM.TITLE= "Html";
+    LAM.wait(function(){
+        'use strict';
+        var System=this;
+
+
+
+
+    });
+</script>
