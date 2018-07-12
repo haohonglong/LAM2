@@ -281,7 +281,6 @@
                 for(i=0,len = srcs.length;i < len; i++){
                     if(Config.files.indexOf(srcs[i]) != -1){continue;}
                     Config.files.push(srcs[i]);
-                    if(body){Config.render.use();}
                     if(Config.render.create){
                         data.src = srcs[i];
                         Config.render.bulid(tag,data)
