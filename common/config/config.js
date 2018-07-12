@@ -125,7 +125,8 @@
                         'body'    : document.getElementsByTagName('body')[0],
                         'meta'    : document.getElementsByTagName('meta')[0],
                         'script'  : document.getElementsByTagName('script')[0],
-                        'link'    : document.getElementsByTagName('link')[0]
+                        'link'    : document.getElementsByTagName('link')[0],
+                        'div'     : document.getElementsByTagName('div')[0]
                     };
                 },
                 'bulid':function(tag,D){
@@ -233,13 +234,14 @@
         Config.files = Config.files || [];
         var tag = "script";
         var scriptAttribute = Config.render.default.script.Attribute;
-        var i = 0;
+        var i = 0,body;
         var len;
         var data = scriptAttribute;
         var classPath=Config.getClassPath();
         var files=[];
         //加载基础类
         var srcs =Config.autoLoadFile();
+        body = Config.render.H().body;
         if(typeof requirejs != 'undefined'){
             requirejs.config({
                 baseUrl: ''
@@ -257,6 +259,7 @@
                 for(i=0,len = srcs.length;i < len; i++){
                     if(Config.files.indexOf(srcs[i]) != -1){continue;}
                     Config.files.push(srcs[i]);
+                    if(body){Config.render.use();}
                     if(Config.render.create){
                         data.src = srcs[i];
                         Config.render.bulid(tag,data)
@@ -267,18 +270,28 @@
                 System.print(files.join(''));
             }
             //=================================================================================================================================
-            //3分钟之后检测lamborghiniJS基础类文件是否加载成功
+            //检测lamborghiniJS基础类文件是否加载成功
             //=================================================================================================================================
-            System.wait(function(){
-                if(!LAMJS){
-                    throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
-                }else{
-                    LAMJS.run(function() {
-                        'use strict';
-                        var System=this;
-                    });
+            i =0;
+            var timer = setInterval(function(){
+                i++;
+                body = Config.render.H().body;
+                console.log(i);
+                if(body){
+                    console.log(body);
+                    if(!LAMJS){
+                        throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
+                    }else{
+                        LAMJS.main=function() {
+                            'use strict';
+                            var System=this;
+                            System.use();
+                            console.log('function of main  called');
+                        };
+                    }
+                    clearInterval(timer);
                 }
-            },30000);
+            },55);
             //=================================================================================================================================
         }
     })(System);

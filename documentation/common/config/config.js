@@ -256,13 +256,14 @@
         Config.files = Config.files || [];
         var tag = "script";
         var scriptAttribute = Config.render.default.script.Attribute;
-        var i = 0;
+        var i = 0,body;
         var len;
         var data = scriptAttribute;
         var classPath=Config.getClassPath();
         var files=[];
         //加载基础类
         var srcs =Config.autoLoadFile();
+        body = Config.render.H().body;
         if(typeof requirejs != 'undefined'){
             requirejs.config({
                 baseUrl: ''
@@ -280,6 +281,7 @@
                 for(i=0,len = srcs.length;i < len; i++){
                     if(Config.files.indexOf(srcs[i]) != -1){continue;}
                     Config.files.push(srcs[i]);
+                    if(body){Config.render.use();}
                     if(Config.render.create){
                         data.src = srcs[i];
                         Config.render.bulid(tag,data)
@@ -290,9 +292,9 @@
                 System.print(files.join(''));
             }
             //=================================================================================================================================
-            //3分钟之后检测lamborghiniJS基础类文件是否加载成功
+            //检测lamborghiniJS基础类文件是否加载成功
             //=================================================================================================================================
-            var i =0,body;
+            i =0;
             var timer = setInterval(function(){
                 i++;
                 body = Config.render.H().body;
@@ -305,18 +307,17 @@
                         LAMJS.main=function() {
                             'use strict';
                             var System=this;
+                            System.use();
                             console.log('function of main  called');
                         };
                     }
                     clearInterval(timer);
                 }
-                if(LAM){console.log(LAM);}
             },55);
-
             //=================================================================================================================================
         }
     })(System);
-})(typeof window !== "undefined" ? window : this);
+})(this);
 
 
 
