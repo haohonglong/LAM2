@@ -129,7 +129,8 @@
                         'body'    : document.getElementsByTagName('body')[0],
                         'meta'    : document.getElementsByTagName('meta')[0],
                         'script'  : document.getElementsByTagName('script')[0],
-                        'link'    : document.getElementsByTagName('link')[0]
+                        'link'    : document.getElementsByTagName('link')[0],
+                        'div'    : document.getElementsByTagName('div')[0]
                     };
                 },
                 'bulid':function(tag,D){
@@ -223,6 +224,14 @@
             }
         };
         /**
+         *
+         * @param s
+         * @returns {boolean}
+         */
+        System.isset=function(s){
+            return (typeof s !== "undefined" &&  s !== null);
+        };
+        /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-9-30
@@ -283,16 +292,27 @@
             //=================================================================================================================================
             //3分钟之后检测lamborghiniJS基础类文件是否加载成功
             //=================================================================================================================================
-            System.wait(function(){
-                if(!LAMJS){
-                    throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
-                }else{
-                    LAMJS.run(function() {
-                        'use strict';
-                        var System=this;
-                    });
+            var i =0,body;
+            var timer = setInterval(function(){
+                i++;
+                body = Config.render.H().body;
+                console.log(i);
+                if(body){
+                    console.log(body);
+                    if(!LAMJS){
+                        throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
+                    }else{
+                        LAMJS.main=function() {
+                            'use strict';
+                            var System=this;
+                            console.log('function of main  called');
+                        };
+                    }
+                    clearInterval(timer);
                 }
-            },30000);
+                if(LAM){console.log(LAM);}
+            },55);
+
             //=================================================================================================================================
         }
     })(System);
