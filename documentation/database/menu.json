@@ -48,56 +48,60 @@
       ]
     }
     ,{
-      "title": "结构",
+      "title": "classes",
       "submenu": [
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/system",
-          "title": "/System"
+          "title": "System"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/loader",
-          "title": "/Loader"
+          "title": "Loader"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/biObject",
-          "title": "/BiObject"
+          "title": "BiObject"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/browser",
-          "title": "/Browser"
+          "title": "Browser"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/controller",
-          "title": "/Controller"
+          "title": "Controller"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/component",
-          "title": "/Component"
+          "title": "Component"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/base64",
-          "title": "/Base64"
+          "title": "Base64"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/node",
-          "title": "/Node"
+          "title": "Node"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/vnode",
-          "title": "/VNode"
+          "title": "VNode"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/xhr",
-          "title": "/Xhr"
+          "title": "Xhr"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/template",
-          "title": "/Template"
+          "title": "Template"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/dom",
+          "title": "Dom"
         },
 
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/html",
-          "title": "/Html"
+          "title": "Html"
         }
       ]
     }
