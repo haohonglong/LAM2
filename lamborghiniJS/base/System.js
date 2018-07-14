@@ -945,7 +945,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-3-27
-		 * 修改日期：2016-8-23
+		 * 修改日期：2018-7-14
 		 * 名称：merge
 		 * 功能：一个或多个对象合并成一个指定的对象
 		 * 说明：默认同名的键值前面的不会被覆盖
@@ -991,7 +991,7 @@
 				for(key in args[i]){
 					if(!override && (key in target)) {continue;}
 					var value = args[i][key];
-					if(deep && System.isObject(value) && System.isPlainObject(value)){
+					if(deep && (System.isObject(value) && System.isPlainObject(value)) || System.isArray(value)){
 						target[key] = self.merge(deep,System.createDict(),[target[key],value],override);
 					}else{
 						target[key] = value;
