@@ -4,8 +4,10 @@
         |-documentation  #手册文档
         |-demo 		 #
             |-views	 #html文件
-                |-index	 #html文件
-                    |-config.js	 #当前配置文件
+                |-index.html	#入口文件
+                |-404.html	    #404页面
+                |-config.js	    #当前配置文件
+                |-content	    #每个不同的页面
         |-composer  #脚手架工具
         |-common  #公共文件
             |-css
@@ -27,48 +29,68 @@
 </span></code></pre>
 
 <h2>使用：<span id="application-usage"></span><a href="#application-usage" class="hashlink">¶</a></h2>
+<div class="MB10 lead">
+    <p>1.给全局变量_ROOT_ 分配路径</p>
+    <p>&lt;script type=&quot;text/javascript&quot;&gt;var _ROOT_ = '../..'&lt;/script&gt;</p>
+    <p>2.引入当前配置文件或主配置文件,文件的位置可以随便放，也可放在项目根目录（具体配置参考 一、配置）</p>
+    <p>&lt;script type=&quot;text/javascript&quot; src=&quot;./config.js&quot;&gt;&lt;/script&gt;</p>
+    <p>3.可以使用LAMJS对象了。</p>
+</div>
+
+
+
+
+
+<pre><code class="hljs sql">
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        LAMJS.run(function() {
+            'use strict';
+            var System=this;
+            // doing here coded ....
+        });
+    &lt;/script&gt;
+
+    </span></code></pre>
+
+
+
+
+<h5>tip:</h5>
+<div class="MB10 lead">
+    <p>config.js 分为两个，一个是当前配置文件(对应当前的视图或控制器的位置)，一个是主配置文件。</p>
+    <p>当前配置文件是跟视图文件或者控制器文件在同级目录里，</p>
+    <p>当前配置文件的作用</p>
+    <p>1.配置项目主目录路径（_ROOT_ 变量）</p>
+    <p>2.引入主配置文件</p>
+    <p>当前配置文件的配置：这里只修改_ROOT_ 变量值其余都不用动</p>
+    <p>内容如下：</p>
+</div>
 
 <pre>
-1.给全局变量_ROOT_ 分配路径
-&lt;script type=&quot;text/javascript&quot;&gt;var _ROOT_ = '../..'&lt;/script&gt;
-2.引入当前配置文件或主配置文件,文件的位置可以随便放，也可放在项目根目录（具体配置参考 一、配置）
-&lt;script type=&quot;text/javascript&quot; src=&quot;./config.js&quot;&gt;&lt;/script&gt;
-3.可以使用LAMJS对象了。
-&lt;script type=&quot;text/javascript&quot;&gt;
-    LAMJS.run(function() {
+    <code class="hljs sql">
+    (function(window){
         'use strict';
-        var System=this;
-        // doing here coded ....
-    });
-&lt;/script&gt;
+        if(window.GRN_LHH && window[window.GRN_LHH]){return;}
+        (function(factory){
+            'use strict';
+            factory("../..","/documentation/common/config/config.js");
+        })(function(ROOT,url){
+            'use strict';
+            if(!window._ROOT_){
+                window._ROOT_ = ROOT;
+            }else{
+                ROOT = window._ROOT_;
+            }
+            var tag = "script",attrs=[];
+            attrs.push('type="text/javascript"');
+            url=ROOT+url;
+            document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
+        });
+    })(this);
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-tip:
-
-config.js 分为两个，一个是当前配置文件(对应当前的视图或控制器的位置)，一个是主配置文件。
-当前配置文件是跟视图文件或者控制器文件在同级目录里，
-当前配置文件的作用：
-1.配置项目主目录路径（_ROOT_ 变量）
-2.引入主配置文件
-当前配置文件的配置：这里只修改_ROOT_ 变量值其余都不用动
-内容如下：
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-if(!_ROOT_){
-var _ROOT_ = '../..';
-
-}
-(function(){
-var tag = "script",attrs=[],src;
-attrs.push('type="text/javascript"');
-src=_ROOT_+'/config.js';
-
-document.write('<',tag,' ',attrs.join(' '),'src=','"',src,'"','>','<','/',tag,'>');
-})();
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    </code>
 </pre>
-
-
 <script type="text/javascript">
     LAM.TITLE= "运行";
     LAM.wait(function(){

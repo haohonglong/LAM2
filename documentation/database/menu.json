@@ -51,8 +51,8 @@
       "title": "结构",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/basis",
-          "title": "/Basis"
+          "url": "{{LAM.VIEWS}}/index.html?r=content/system",
+          "title": "/System"
         },
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/loader",
@@ -82,6 +82,19 @@
           "url": "{{LAM.VIEWS}}/index.html?r=content/node",
           "title": "/Node"
         },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/vnode",
+          "title": "/VNode"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/xhr",
+          "title": "/Xhr"
+        },
+        {
+          "url": "{{LAM.VIEWS}}/index.html?r=content/template",
+          "title": "/Template"
+        },
+
         {
           "url": "{{LAM.VIEWS}}/index.html?r=content/html",
           "title": "/Html"
