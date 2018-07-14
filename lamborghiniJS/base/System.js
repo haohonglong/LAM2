@@ -991,7 +991,7 @@
 				for(key in args[i]){
 					if(!override && (key in target)) {continue;}
 					var value = args[i][key];
-					if(deep && (System.isObject(value) && System.isPlainObject(value)) || System.isArray(value)){
+					if(deep && (System.isPlainObject(value) || System.isArray(value))){
 						target[key] = self.merge(deep,System.createDict(),[target[key],value],override);
 					}else{
 						target[key] = value;
