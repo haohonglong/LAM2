@@ -407,6 +407,27 @@
 			return runtime.apply(this,[args,callback]);
 
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-7-14
+         * 修改日期：2018-7-14
+         * 名称：System.once
+         * 功能：行为仅执行一次
+         * 说明：
+         * 注意：
+         * @param fn
+         * @returns {Function}
+         */
+        'once':function (fn) {
+            var called = false;
+            return function () {
+                if (!called) {
+                    called = true;
+                    fn.apply(System, arguments);
+                }
+            };
+        },
 		/**
 		 *
 		 * @author: lhh
