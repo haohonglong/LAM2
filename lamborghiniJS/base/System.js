@@ -108,7 +108,7 @@
 	var isXMLSerializer = type("XMLSerializer");
 
 	function isWindow(obj) {
-		return (null != obj && obj === obj.window);
+		return (null != obj && obj == obj.window);
 	}
 
 
@@ -1191,7 +1191,7 @@
 		 */
 		'isPlainObject': function( obj ) {
 			var key;
-			if (!System.isset(obj) || !System.isObject(obj) || System.isArray(obj) || obj.nodeType) {
+			if (!System.isset(obj) || !System.isObject(obj) || System.isArray(obj) || obj.nodeType || System.isWindow(obj)) {
 				return false;
 			}
 			try {
@@ -1327,6 +1327,9 @@
 	System.arr_isEmpty 		= arr_isEmpty;
 	System.type 			= type;
 	System.isObject 		= isObject;
+	System.isobject 		= function (obj) {
+        return obj !== null && typeof obj === 'object';
+    };
 	System.isString 		= isString;
 	System.isArray 			= isArray;
 	System.isFunction 		= isFunction;
