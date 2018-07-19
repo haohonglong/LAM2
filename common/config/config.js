@@ -34,7 +34,7 @@
     }
 
     if(!window._ROOT_){
-        _ROOT_ = window._ROOT_ = getRootPath();
+        _ROOT_ = window._ROOT_ = window.location.pathname || getRootPath();
     }else{
         _ROOT_ = window._ROOT_;
     }
