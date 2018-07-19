@@ -56,7 +56,7 @@
 
 	// Save a reference to some core methods
 
-		toString = Object.prototype.toString,
+		toString = {}.toString,
 		getPrototypeOf = Object.getPrototypeOf,
 		hasOwn = Object.prototype.hasOwnProperty,
 		push = Array.prototype.push,
