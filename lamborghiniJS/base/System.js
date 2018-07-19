@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-4-9
+ * 修改日期:2018-7-19
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -55,8 +55,8 @@
 		trimRight = /\s+$/,
 
 	// Save a reference to some core methods
-
-		toString = {}.toString,
+        class2type = {},//Object.prototype equal {}
+        toString = class2type.toString,
 		getPrototypeOf = Object.getPrototypeOf,
 		hasOwn = Object.prototype.hasOwnProperty,
 		push = Array.prototype.push,
