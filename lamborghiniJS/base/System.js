@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-4-9
+ * 修改日期:2018-7-21
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -117,13 +117,14 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014-12-23
-	 * 修改日期：2016-9-30
+	 * 修改日期：2018-07-21
 	 * 名称：runtime
 	 * 功能：run 时执行的方法
 	 * 说明：可传多个参数第一个必须是数组，在回调里接收的参数跟传来的参数一一对应
 	 * 注意：不能链式调用，如要链式调用，用 System.then方法
 	 * @param   (Array)args 			   NULL :传入的参数
-	 * @param   (Function)callback 		NO NULL :调用main 方法要执行的操作
+	 * @param   (Function)callback 		NO NULL :callback 里的this 是被克隆后的对象，修改this里面的成员不会影响LAM 的源对象。
+	 * 											每个沙箱里的this 都是一个单独的克隆，这样可避免污染 LAM 源对象和别的沙箱。
 	 * @return  {*} 返回callback 里的返回值
 	 * Example：
 	 */
@@ -136,22 +137,21 @@
 			callback = args;
 			args = null;
 		}
-
-
 		if (!System.isFunction(callback) ) {
 			throw new Error('Warning: 参数必须要有一个 Function 类型');
 			return this;
 		}
 
-		if(args){
-			if(System.isArray(args)){
-				return callback.apply(this,args);
-			}else{
-				return callback.call(this,args);
-			}
-		}else{
-			return callback.call(this);
-		}
+        var _this = this.clone(true,this);
+        if(args){
+            if(System.isArray(args)){
+                return callback.apply(_this,args);
+            }else{
+                return callback.call(_this,args);
+            }
+        }else{
+            return callback.call(_this);
+        }
 
 	}
 
@@ -389,7 +389,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-1-18
+		 * 修改日期：2018-7-21
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -400,11 +400,11 @@
 		 * Example：
 		 */
 		'run':function(args,callback){
-			if(once && System.isFunction(this.main)){
-				once = false;
-				this.main.apply(this,args);
-			}
-			return runtime.apply(this,[args,callback]);
+            if(once && System.isFunction(this.main)){
+                once = false;
+                runtime.apply(this,[this.main]);
+            }
+            return runtime.apply(this,[args,callback]);
 
 		},
         /**
@@ -421,10 +421,13 @@
          */
         'once':function (fn) {
             var called = false;
+            var _this = this.clone(true,this);
             return function () {
                 if (!called) {
                     called = true;
-                    fn.apply(System, arguments);
+                    //[].slice.call(arguments) arguments 转成数组
+                    // _this.run([].slice.call(arguments),fn);
+                    fn.apply(_this, arguments);
                 }
             };
         },
@@ -2077,25 +2080,23 @@
 		return arr;
 	}
 	System.wait(function(){
-        if(System.LAM_DEBUG){
-            var arr = [];
-            arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-            arr.push('===========================================================================================');
-            arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-            arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-            arr.push("*     *        *       *");
-            arr.push("*    *  *     * *     *  *");
-            arr.push("*   *    *   *   *   *    *");
-            arr.push("*  * **** * *     * *      *");
-            arr.push("* *        *       *        *");
-            arr.push('**********************************');
-            arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-            arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-            arr.push('===========================================================================================');
-            console.log(arr.join('\n'));
-        }
+		if(System.LAM_DEBUG){
+			var arr = [];
+			arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+			arr.push('===========================================================================================');
+			arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+			arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+			arr.push("*     *        *       *");
+			arr.push("*    *  *     * *     *  *");
+			arr.push("*   *    *   *   *   *    *");
+			arr.push("*  * **** * *     * *      *");
+			arr.push("* *        *       *        *");
+			arr.push('**********************************');
+			arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+			arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+			arr.push('===========================================================================================');
+			console.log(arr.join('\n'));
+		}
 	},10);
-
-
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });
