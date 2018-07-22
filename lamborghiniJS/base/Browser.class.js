@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2017-9-1
+ * 修改日期:2018-7-22
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -29,7 +29,8 @@
 	'use strict';
 	System.is(System,'Helper','Browser',System.classPath+'/base');
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
-		var __this__=null;
+		var __this__=null,
+			isOpera = System.type("Opera");
 		/**
 		 *
 		 * @author lhh
@@ -212,8 +213,8 @@
 		Browser.isSafari=function(){
 			return (4===getExplorer());
 		};
-		Browser.isOpera=function(){
-			return (5===getExplorer());
+		Browser.isOpera=function(s){
+			return (5===getExplorer() || isOpera(s));
 		};
 
 

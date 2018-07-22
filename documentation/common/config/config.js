@@ -79,18 +79,18 @@
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
-                    ,classPath+'/build/base.min.js'
-                    // ,classPath+'/base/System.js'
-                    //,classPath+'/base/Base.class.js'
-                    //,classPath+'/base/Object.class.js'
-                    //,classPath+'/base/Component.class.js'
-                    //,classPath+'/base/Helper.class.js'
-                    //,classPath+'/base/Browser.class.js'
-                    //,classPath+'/base/Event.class.js'
-                    //,classPath+'/base/Dom.class.js'
-                    //,classPath+'/base/Html.class.js'
-                    //,classPath+'/base/Loader.class.js'
-                    //,classPath+'/base/Template.class.js'
+                    // ,classPath+'/build/base.min.js'
+                    ,classPath+'/base/System.js'
+                    ,classPath+'/base/Base.class.js'
+                    ,classPath+'/base/Object.class.js'
+                    ,classPath+'/base/Component.class.js'
+                    ,classPath+'/base/Helper.class.js'
+                    ,classPath+'/base/Browser.class.js'
+                    ,classPath+'/base/Event.class.js'
+                    ,classPath+'/base/Dom.class.js'
+                    ,classPath+'/base/Html.class.js'
+                    ,classPath+'/base/Loader.class.js'
+                    ,classPath+'/base/Template.class.js'
                     ,PLUGINS+'/vue/vue.js'
                 ];
             },
@@ -218,9 +218,9 @@
             if(Config.render.create){
                 Config.render.H().body.appendChild(Config.render.fragment);
             }else{
-                var document=System.open();
+                // var document=System.open();
                 document.write(S);
-                System.close(document);
+                // System.close(document);
             }
         };
         /**

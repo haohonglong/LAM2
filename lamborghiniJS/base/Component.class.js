@@ -179,56 +179,7 @@
             return module;
 		}()),
 
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-10-13
-		 * 修改日期：2016-8-23
-		 * 名称：clone
-		 * 功能：对象克隆
-		 * 说明：_hashCode里的'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
-		 * 注意：
-		 * @param   (Boolean)deep  		   	   NULL :是否要深度拷贝对象
-		 * @param   (Object)className 		NO NULL : 要克隆的类
-		 * @return  (Object)				:返回克隆后的新对象
-		 * Example：
-		 */
-		'clone': function(className) {
-			var deep =false;
-			if(System.isBoolean(className)) {
-				deep = className;
-				className = arguments[1];
-			}
-			var obj;
-			obj = System.merge(deep,System.createDict(),[className]);
-			if(obj['_hashCode']){
-				obj['_hashCode'] += '_'+System.Object.generate();
-			}
-			return obj;
 
-		},
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-7-15
-		 * 修改日期：2016-8-23
-		 * 名称：isclone
-		 * 功能：检查对象是否是克隆对象
-		 * 说明：'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
-		 * 注意：
-		 * @param   (Object)className 		NO NULL : 检查的对象
-		 * @returns {boolean}
-		 */
-		'isclone': function(obj) {
-			if(-1 === obj._hashCode.indexOf('_')){
-				return false;
-			}else{
-				return true;
-			}
-
-		},
 		/**
 		 *
 		 * @author: lhh
@@ -493,7 +444,7 @@
 			if(!W || !w || !H || !h) return 0;
 			return {'x':parseInt((W-w-p)/2),'y':parseInt((H-h-p)/2)};
 		}
-	}]);
+	}],true);
 
 	var __this__=null;
 
