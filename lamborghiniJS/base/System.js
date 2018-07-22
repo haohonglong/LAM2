@@ -57,7 +57,7 @@
 
 	// Save a reference to some core methods
 		class2type = {},//Object.prototype equal {}
-        deletedIds = [],
+        deletedIds = [],//Array.prototype equal []
      	toString = class2type.toString,
 		getPrototypeOf = Object.getPrototypeOf,
 		hasOwn = class2type.hasOwnProperty,
