@@ -444,7 +444,7 @@
 			if(!W || !w || !H || !h) return 0;
 			return {'x':parseInt((W-w-p)/2),'y':parseInt((H-h-p)/2)};
 		}
-	}]);
+	}],true);
 
 	var __this__=null;
 

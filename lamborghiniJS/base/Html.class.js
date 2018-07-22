@@ -16,7 +16,17 @@
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
 
+
+
+
 	System.merge(null,[{
+		'isHTMLDocument'	: System.type("HTMLDocument"),
+        'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),
+		'isHTMLBodyElement' : System.type("HTMLBodyElement"),
+		'isHTMLHeadElement' : System.type("HTMLHeadElement"),
+		'isHTMLCollection' 	: System.type("HTMLCollection"),
+		'isXMLHttpRequest' 	: System.type("XMLHttpRequest"),
+		'isXMLSerializer' 	: System.type("XMLSerializer"),
         /**
          * @author: lhh
          * 产品介绍：
@@ -50,7 +60,7 @@
          */
         'print':function(){
             // var document=System.open();
-            var arr=prints.apply(Array,arguments);
+            var arr=System.printf.apply(Array,arguments);
             document.write(arr.join(' '));
             // System.close(document);
         },
@@ -70,7 +80,7 @@
             document = document || global.document;
             document.close();
         }
-	}]);
+	}],true);
 
 	var __this__=null;
 	var Html = System.Dom.extend({

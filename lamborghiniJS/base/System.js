@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-7-21
+ * 修改日期:2018-7-22
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -49,20 +49,28 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.0.8";
-	var Interface={},System={},once=true,timers=[];
-	var trimLeft = /^\s+/,
-		trimRight = /\s+$/,
+	var VERSION="2.0.8",
+		Interface={},
+		System={},
+		once=true,
+		timers=[],
 
 	// Save a reference to some core methods
-
-		toString = Object.prototype.toString,
+		class2type = {},
+        deletedIds = [],
+     	toString = class2type.toString,
 		getPrototypeOf = Object.getPrototypeOf,
-		hasOwn = Object.prototype.hasOwnProperty,
-		push = Array.prototype.push,
-		slice = Array.prototype.slice,
-		trim = String.prototype.trim,
-		indexOf = Array.prototype.indexOf;
+		hasOwn = class2type.hasOwnProperty,
+		push = deletedIds.push,
+		slice = deletedIds.slice,
+        concat = deletedIds.concat,
+		indexOf = deletedIds.indexOf,
+        trimLeft = /^\s+/,
+        trimRight = /\s+$/,
+        // Support: Android<4.1, IE<9
+        // Make sure we trim BOM and NBSP
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
+		trim = String.prototype.trim;
 
 
 	/**
@@ -85,33 +93,21 @@
 		};
 	}
 
-	var isObject = type("Object");
-	var isString = type("String");
-	var isArray = Array.isArray || type("Array");
-	var isFunction = type("Function");
-	var isBoolean = type("Boolean");
-	var isNumber = type("Number");
-	var isDate = type("Date");
-	var isRegExp = type("RegExp");
-	var isBlob = type("Blob");
-	var isNull = type("Null");
-	var isUndefined = type("Undefined");
-	//browser
-	var isOpera = type("Opera");
-
-	var isHTMLDocument = type("HTMLDocument");
-	var isHTMLHtmlEment = type("HTMLHtmlElement");
-	var isHTMLBodyElement = type("HTMLBodyElement");
-	var isHTMLHeadElement = type("HTMLHeadElement");
-	var isHTMLCollection = type("HTMLCollection");
-	var isXMLHttpRequest = type("XMLHttpRequest");
-	var isXMLSerializer = type("XMLSerializer");
+	var isObject 	= type("Object"),
+		isString 	= type("String"),
+		isArray 	= Array.isArray || type("Array"),
+		isFunction 	= type("Function"),
+		isBoolean 	= type("Boolean"),
+		isNumber 	= type("Number"),
+		isDate 		= type("Date"),
+		isRegExp 	= type("RegExp"),
+		isBlob 		= type("Blob"),
+		isNull 		= type("Null"),
+		isUndefined = type("Undefined");
 
 	function isWindow(obj) {
 		return (null != obj && obj === obj.window);
 	}
-
-
 
 	/**
 	 * @author: lhh
@@ -1337,16 +1333,6 @@
 	System.isBlob 			= isBlob;
 
 	System.isWindow 			= isWindow;
-	//browser
-	System.isOpera 			= isOpera;
-
-	System.isHTMLDocument = isHTMLDocument;
-	System.isHTMLHtmlEment = isHTMLHtmlEment;
-	System.isHTMLBodyElement = isHTMLBodyElement;
-	System.isHTMLHeadElement = isHTMLHeadElement;
-	System.isHTMLCollection = isHTMLCollection;
-	System.isXMLHttpRequest = isXMLHttpRequest;
-	System.isXMLSerializer  = isXMLSerializer;
 
 	System.arr_Object_key = arr_Object_key;
 	System.arr_Object_key_has = arr_Object_key_has;
