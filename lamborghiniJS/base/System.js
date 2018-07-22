@@ -573,59 +573,7 @@
 				})(data);
 			}
 		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-9-30
-		 * 修改日期：2016-9-30
-		 * 名称：System.open
-		 * 功能：打开一个新文档，并擦除当前文档的内容
-		 * 说明：
-		 * 注意：
-		 * @return  {Document}
-		 */
-		'open':function(mimetype,replace){
-			mimetype = mimetype || "text/html";
-			replace = replace 	|| "replace";
-			return document.open(mimetype,replace)
-		},
 
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-9-16
-		 * 修改日期：2016-9-30
-		 * 名称：System.print
-		 * 功能：输出
-		 * 说明：
-		 * 注意：
-		 * @param   (Object)D 			NO NULL :传入的参数
-		 * @return  (voide)						:
-		 * Example：
-		 * 		System.print('s'[,1,'a',...])
-		 */
-		'print':function(){
-			// var document=System.open();
-			var arr=prints.apply(Array,arguments);
-			document.write(arr.join(' '));
-			// System.close(document);
-		},
-
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-9-30
-		 * 修改日期：2016-9-30
-		 * 名称：System.close
-		 * 功能：关闭输出文档流
-		 * 说明：
-		 * 注意：
-		 * @return  (voide)
-		 */
-		'close':function(document){
-			document = document || global.document;
-			document.close();
-		},
 		/**
 		 *
 		 * @author: lhh
@@ -1005,6 +953,56 @@
 
 			return target;
 		},
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-10-13
+         * 修改日期：2016-8-23
+         * 名称：clone
+         * 功能：对象克隆
+         * 说明：_hashCode里的'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
+         * 注意：
+         * @param   (Boolean)deep  		   	   NULL :是否要深度拷贝对象
+         * @param   (Object)className 		NO NULL : 要克隆的类
+         * @return  (Object)				:返回克隆后的新对象
+         * Example：
+         */
+        'clone': function(className) {
+            var deep =false;
+            if(System.isBoolean(className)) {
+                deep = className;
+                className = arguments[1];
+            }
+            var obj;
+            obj = System.merge(deep,System.createDict(),[className]);
+            if(obj['_hashCode']){
+                obj['_hashCode'] += '_'+System.Object.generate();
+            }
+            return obj;
+
+        },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-7-15
+         * 修改日期：2016-8-23
+         * 名称：isclone
+         * 功能：检查对象是否是克隆对象
+         * 说明：'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
+         * 注意：
+         * @param   (Object)className 		NO NULL : 检查的对象
+         * @returns {boolean}
+         */
+        'isclone': function(obj) {
+            if(-1 === obj._hashCode.indexOf('_')){
+                return false;
+            }else{
+                return true;
+            }
+
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
