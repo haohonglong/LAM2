@@ -605,10 +605,10 @@
 		 * 		System.print('s'[,1,'a',...])
 		 */
 		'print':function(){
-			var document=System.open();
+			// var document=System.open();
 			var arr=prints.apply(Array,arguments);
 			document.write(arr.join(' '));
-			System.close(document);
+			// System.close(document);
 		},
 
 		/**

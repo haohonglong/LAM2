@@ -204,9 +204,9 @@
             if(Config.render.create){
                 Config.render.H().body.appendChild(Config.render.fragment);
             }else{
-                var document=System.open();
+                // var document=System.open();
                 document.write(S);
-                System.close(document);
+                // System.close(document);
             }
         };
         /**
