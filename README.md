@@ -3,10 +3,10 @@
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.0.8
+	version ：2.0.9
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-4-19
+	修改日期 ：2018-7-22
 
 
 # 产品介绍：
@@ -980,6 +980,9 @@
 		
 		LAMJS.run()是LamborghiniJS 的沙箱机制 
 		沙箱的作用防止全局变量污染
+		每个沙箱里的this 是LAM对象的不同克隆体，修改它不会影响的 LAM 源对象，也不会影响到其他沙箱里的数据。
+
+
 		
 		
 		

@@ -49,7 +49,8 @@
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
             'Public':{
-                'ROOT':_ROOT_
+                 'ROOT':_ROOT_
+                ,'ROUTE':''
                 ,'COMMON':_ROOT_+'/common'
                 ,'PLUGINS':_ROOT_+'/common/plugins'
                 ,'Moudle':function(){return LAMJS.createDict();}
