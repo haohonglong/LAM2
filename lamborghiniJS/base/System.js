@@ -488,7 +488,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-5-15
-         * 修改日期：2018-5-15
+         * 修改日期：2018-7-28
          * 名称：System.stop
          * 功能：停止 System.listen
          * 说明：没有参数就停止全部监听器
@@ -498,8 +498,10 @@
          */
         'stop':function(id){
 			if(System.isNumber(id)){
-                timers.remove(id);
-                clearInterval(id);
+                if(timers.in_array(id)){
+                    timers.remove(id);
+                    clearInterval(id);
+				}
 			}else{
                 System.each(timers,function(i,id){
                     clearInterval(id);
