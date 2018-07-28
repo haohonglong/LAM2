@@ -497,8 +497,8 @@
          * @return  (void)
          */
         'stop':function(id){
-			if(System.isNumber(id)){
-                if(timers.in_array(id)){
+			if(1 === arguments.length){
+                if(timers.in_array(id) && System.isNumber(id)){
                     timers.remove(id);
                     clearInterval(id);
 				}
