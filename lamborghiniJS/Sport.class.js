@@ -55,7 +55,7 @@
 			}
 
 			if(bStop){
-				clearInterval(obj.timer);
+				System.stop(obj.timer);
 				obj.timer=null;
 			}
 			if(System.isFunction(fn)){fn.call(__this__);}
@@ -152,12 +152,11 @@
 		 * Example：
 		 */
 		'animate':function(obj,json,unit,time){
-
 			time=time || 30;
-			if(obj.timer){
-				clearInterval(obj.timer);
-			}
-			obj.timer = setInterval(function(){move(obj,json,unit)}, time);
+			System.listen(function (id) {
+				obj.timer = id;
+                move(obj,json,unit);
+            },time);
 		},
 
 		/**
