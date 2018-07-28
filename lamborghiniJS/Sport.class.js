@@ -12,7 +12,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Sport',System.classPath+'/base');
+	System.is(System,'Css','Sport',System.classPath+'/base');
 
 	var __this__=null;
 	var MOVE_TYPE={
@@ -27,9 +27,9 @@
 
 			for(var arr in oTarget){
 				if("opacity" === arr){
-					iCur=parseInt(parseFloat(System.Dom.getStyle(obj, 'opacity'))*100);
+					iCur=parseInt(parseFloat(System.Css.getStyles(obj, 'opacity'))*100);
 				}else{
-					iCur=parseInt(System.Dom.getStyle(obj,arr));
+					iCur=parseInt(System.Css.getStyles(obj,arr));
 				}
 
 				if(!System.isNumeric(iCur)){iCur=0;}
@@ -124,12 +124,11 @@
 		 *
 		 */
 		'animation':function(obj,start,alter,dur){
-			var linear=this.linear;
 			var curTime=0;
 			System.listen(function () {
                 if(curTime >= dur) {return true;}
                 for(var i in start){
-                    obj.style[i]=linear(start[i],alter[i],curTime,dur)+"px";
+                    obj.style[i]=Sport.linear(start[i],alter[i],curTime,dur)+"px";
                 }
                 curTime+=50;
             },50);
