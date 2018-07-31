@@ -1969,27 +1969,8 @@
 		});
 	})();
 
-	/**
-	 *
-	 * @author: lhh
-	 * 创建日期：2014/12/10
-	 * 修改日期：2014/12/10
-	 * 名称：private (Number) contains
-	 * 功能：检查一个对象是否包含在另外一个对象中的方法，contains方法。MSIE和FireFox分别提供了检查的方法
-	 * 注意：这个函数在IE中不支持,但文档上却写在在FF中原本为4的结果,在IE中为2
-	 * 说明：ExtJS的源码用到的方法
-	 * @param   parentNode() 	NO NULL :
-	 * @param 	childNode()     NO NULL :
-	 * Example：
-	 *
-	 */
-	function contains(parentNode, childNode){
-		if (parentNode.contains) {
-			return parentNode != childNode && parentNode.contains(childNode);
-		} else {
-			return !!(parentNode.compareDocumentPosition(childNode) & 16);
-		}
-	}
+
+	function contains(parentNode, childNode){}
 	function isEmptyObject( obj ) {
 		for ( var name in obj ) {return false;}
 		return true;

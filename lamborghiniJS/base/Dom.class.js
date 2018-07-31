@@ -26,6 +26,16 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
+	System.merge(null,[{
+            'isHTMLDocument'	: System.type("HTMLDocument"),
+            'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),
+            'isHTMLBodyElement' : System.type("HTMLBodyElement"),
+            'isHTMLHeadElement' : System.type("HTMLHeadElement"),
+            'isHTMLCollection' 	: System.type("HTMLCollection"),
+            'isXMLHttpRequest' 	: System.type("XMLHttpRequest"),
+            'isXMLSerializer' 	: System.type("XMLSerializer")
+
+	}],true);
 	var __this__=null;
 	var node_key = System.Object.key,
 		Elements=System.createDict(),
@@ -1354,6 +1364,27 @@
 	Dom.createElement=function(single,tag,Attr,text,comment){
 		return new Dom(single,tag,Attr,text,comment).node;
 	};
+    /**
+     *
+     * @author: lhh
+     * 创建日期：2014/12/10
+     * 修改日期：2014/12/10
+     * 名称：contains
+     * 功能：检查一个对象是否包含在另外一个对象中的方法，contains方法。MSIE和FireFox分别提供了检查的方法
+     * 注意：这个函数在IE中不支持,但文档上却写在在FF中原本为4的结果,在IE中为2
+     * 说明：ExtJS的源码用到的方法
+     * @param   parentNode() 	NO NULL :
+     * @param 	childNode()     NO NULL :
+     * Example：
+     *
+     */
+    Dom.contains=function(parentNode, childNode){
+        if (parentNode.contains) {
+            return parentNode != childNode && parentNode.contains(childNode);
+        } else {
+            return !!(parentNode.compareDocumentPosition(childNode) & 16);
+        }
+    };
 
 	return Dom;
 });
