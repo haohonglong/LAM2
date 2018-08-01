@@ -2,7 +2,7 @@
     <template v-for="menu in list">
         <a href="javascript:void(0);" class="list-group-item">{{menu.title}}<span class="caret ML5"></span></a>
         <div class="none submenu">
-            <a v-for="submenu in menu.submenu" :href="submenu.url" class="list-group-item">{{submenu.title}}</a>
+            <a v-for="submenu in menu.submenu" :href="submenu.url+'&title='+submenu.title" class="list-group-item">{{submenu.title}}</a>
         </div>
     </template>
 </div>
