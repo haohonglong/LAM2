@@ -16,6 +16,72 @@
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
 
+
+
+
+	System.merge(null,[{
+		'isHTMLDocument'	: System.type("HTMLDocument"),
+        'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),
+		'isHTMLBodyElement' : System.type("HTMLBodyElement"),
+		'isHTMLHeadElement' : System.type("HTMLHeadElement"),
+		'isHTMLCollection' 	: System.type("HTMLCollection"),
+		'isXMLHttpRequest' 	: System.type("XMLHttpRequest"),
+		'isXMLSerializer' 	: System.type("XMLSerializer"),
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.open
+         * 功能：打开一个新文档，并擦除当前文档的内容
+         * 说明：
+         * 注意：
+         * @return  {Document}
+         */
+        'open':function(mimetype,replace){
+            mimetype = mimetype || "text/html";
+            replace = replace 	|| "replace";
+            return document.open(mimetype,replace)
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-16
+         * 修改日期：2016-9-30
+         * 名称：System.print
+         * 功能：输出
+         * 说明：
+         * 注意：
+         * @param   (Object)D 			NO NULL :传入的参数
+         * @return  (voide)						:
+         * Example：
+         * 		System.print('s'[,1,'a',...])
+         */
+        'print':function(){
+            // var document=System.open();
+            var arr=System.printf.apply(Array,arguments);
+            document.write(arr.join(' '));
+            // System.close(document);
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.close
+         * 功能：关闭输出文档流
+         * 说明：
+         * 注意：
+         * @return  (voide)
+         */
+        'close':function(document){
+            document = document || global.document;
+            document.close();
+        }
+	}],true);
+
 	var __this__=null;
 	var Html = System.Dom.extend({
 		constructor: function(dom,init) {
@@ -59,7 +125,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-1-15
-	 * 修改日期：2018-4-10
+	 * 修改日期：2018-8-1
 	 * 名称： getFile
 	 * 功能：返回指定的文件
 	 * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -101,18 +167,18 @@
 			$dom = null;
 		}
 
-		data  		= $dom && System.eval($dom.attr('data'))			|| D&&D.data  	 	||	{};
-		dataType 	= $dom && $dom.attr('dataType') 					|| D&&D.dataType 	||	"html";
-		contentType = $dom && $dom.attr('contentType') 					|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-		url  		= $dom && $dom.attr('file')  						|| D&&D.url         || null;
-        url_404  	= $dom && $dom.attr('file_404')  				    || D&&D.url_404     || null;
-        jump  	    = $dom && eval($dom.attr('jump'))  				    || D&&D.jump        || null;
-		type  		= $dom && $dom.attr('type')  						|| D&&D.type  	 	||	"POST";
-		async 		= $dom && eval($dom.attr('async'))					|| D&&D.async ;
-		cache 		= $dom && eval($dom.attr('cache')) 					|| D&&D.cache ;
-		beforeSend 	= $dom && System.eval($dom.attr('beforeSend'))		|| D&&D.beforeSend	||	0 ;
-		capture 	= $dom && System.eval($dom.attr('capture'))			|| D&&D.capture		||	0 ;
-		callBack 	= $dom && System.eval($dom.attr('callBack'))		|| D&&D.callBack	||	0 ;
+		data  		= $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
+		dataType 	= $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
+		contentType = $dom && $dom.attr('contentType') 											|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
+		url  		= $dom && $dom.attr('file')  												|| D&&D.url         || null;
+        url_404  	= $dom && $dom.attr('file_404')  				    						|| D&&D.url_404     || null;
+        jump  	    = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
+		type  		= $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
+		async 		= $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
+		cache 		= $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
+		beforeSend 	= $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
+		capture 	= $dom && $dom.attr('capture') 		&& System.eval($dom.attr('capture'))	|| D&&D.capture		||	0 ;
+		callBack 	= $dom && $dom.attr('callBack') 	&& System.eval($dom.attr('callBack'))	|| D&&D.callBack	||	0 ;
 
         if(System.isset(url)){
             $.ajax(System.template(url),{
