@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-7-22
+ * 修改日期:2018-8-1
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -94,6 +94,7 @@
 	}
 
 	var isObject 	= type("Object"),
+		isJSON 		= type("JSON"),
 		isString 	= type("String"),
 		isArray 	= Array.isArray || type("Array"),
 		isFunction 	= type("Function"),
@@ -545,7 +546,15 @@
 		 * Example：
 		 */
 		'eval':function(expression){
-			return eval('(' +expression+ ')');
+			try{
+                // if(System.isJson(expression) && System.isJSON(JSON)){
+                    return JSON.parse(expression);
+                // }
+			}catch (e){
+                return eval('(' +expression+ ')');
+			}
+
+
 		},
 		/**
 		 * @author: lhh
@@ -1326,6 +1335,7 @@
 	System.arr_isEmpty 		= arr_isEmpty;
 	System.type 			= type;
 	System.isObject 		= isObject;
+	System.isJSON 			= isJSON;
 	System.isobject 		= function (obj) {
         return obj !== null && typeof obj === 'object';
     };
