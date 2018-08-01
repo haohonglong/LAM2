@@ -128,8 +128,8 @@
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-            this.url  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
-            this.url_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.url_404     || null;
+            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
+            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404     || null;
             this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
@@ -139,9 +139,9 @@
             this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
             this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform	||	0 ;
 
-            _this.url     = System.template(_this.url);
-            _this.url_404 = System.template(_this.url_404);
-            if(System.isFunction(_this.preform)){_this.preform();}
+            this.file     = System.template(this.file);
+            this.file_404 = System.template(this.file_404);
+            if(System.isFunction(this.preform)){this.preform();}
 		},
 		'_className':'Html',
 		'__constructor':function(){},
@@ -154,8 +154,8 @@
 		},
         'ajax':function () {
 		    var _this = this;
-            if(System.isset(_this.url)){
-                $.ajax(_this.url,{
+            if(System.isset(_this.file)){
+                $.ajax(_this.file,{
                     type : 	  _this.type,
                     data :    _this.data,
                     async:    _this.async ? true : false,
@@ -172,10 +172,10 @@
                             switch(XMLHttpRequest.status)
                             {
                                 case 404:
-                                    if(System.isset(_this.url_404)){
-                                        _this.url = _this.url_404;
+                                    if(System.isset(_this.file_404)){
+                                        _this.file = _this.file_404;
                                         if(_this.jump){
-                                            location.href = _this.url;
+                                            location.href = _this.file;
                                         }else{
                                             _this.ajax();
                                         }
