@@ -85,9 +85,9 @@
                     //,classPath+'/base/Browser.class.js'
                     //,classPath+'/base/Event.class.js'
                     //,classPath+'/base/Dom.class.js'
+                    //,classPath+'/base/Template.class.js'
                     //,classPath+'/base/Html.class.js'
                     //,classPath+'/base/Loader.class.js'
-                    //,classPath+'/base/Template.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Css.class.js'
                 ];
