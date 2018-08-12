@@ -10,6 +10,7 @@
             System.use();
             System.Loader
                     .load({
+                        'baseUrl':System._ROOT_,
                         'css':[
                              '/common/plugins/bootstrap/bootstrap'
                             ,'/common/css/lib/global'
@@ -45,7 +46,7 @@
 <body>
 <!--嵌套三层 每一层是一个对象-->
 <div id="container" class="">
-    <div class="sidbar"><include file="{{ROOT}}/project/controllers/include/test.html" dataType="html"></include></div>
+    <div class="sidbar"><include file="{{VIEWS}}/include/test.html" dataType="html"></include></div>
 
     <div class="content over-h" id="content">
         <div class="P10">

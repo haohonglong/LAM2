@@ -20,7 +20,7 @@
 		constructor: function () {
 			this.base();
 			__this__ = this;
-            var r = System.get('r').toLowerCase().split('/');
+            var r = System.get('r').split('/');
             var str = r[0];
             var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
             var ControllerName = Controller+'Controller';

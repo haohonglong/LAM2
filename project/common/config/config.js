@@ -54,6 +54,7 @@
                 var ROOT = _ROOT_+'/project';
                 return {
                     'ROOT':ROOT
+                    ,'_ROOT_':_ROOT_
                     ,'_COMMON':ROOT+'/common'
                     ,'COMMON':_ROOT_+'/common'
                     ,'PLUGINS':_ROOT_+'/common/plugins'
