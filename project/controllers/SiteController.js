@@ -7,22 +7,22 @@
     }else{
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
             typeof define === 'function' && define.amd ? define(factory(System)) :
-                (System['IndexController'] = factory(System));
+                (System['SiteController'] = factory(System));
     }
 
 })(this,function(System){
     'use strict';
     var __this__=null;
-    System.is(System,'Controller','IndexController',System.classPath+'/base');
+    System.is(System,'Controller','SiteController',System.classPath+'/base');
     var ROOT  = System.ROOT;
-    var views = System.ROOT+'/views/index';
-    var IndexController = System.Controller.extend({
+    var views = System.ROOT+'/views/site';
+    var SiteController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
             __this__=this;
 
         },
-        '_className':'IndexController',
+        '_className':'SiteController',
         'indexAction':function(){
             new System.Template().render(views+'/index.html',{
                 'COMMON':System.COMMON,
@@ -50,7 +50,7 @@
          * 创建日期：2015-4-2
          * 修改日期：2015-4-2
          * 名称：destructor
-         * 功能：在注销IndexController对象时调用此方法
+         * 功能：在注销SiteController对象时调用此方法
          * 说明：
          * 注意：
          * @return  ()
@@ -58,7 +58,7 @@
          */
         'destructor':function(){}
     });
-    return IndexController;
+    return SiteController;
 });
 
 
