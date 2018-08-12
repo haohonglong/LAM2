@@ -3,7 +3,7 @@
     if(window.GRN_LHH && window[window.GRN_LHH]){return;}
     (function(factory){
         'use strict';
-        factory("../..","/documentation/common/config/config.js");
+        factory("..","/documentation/common/config/config.js");
     })(function(ROOT,url){
         'use strict';
         if(!window._ROOT_){
