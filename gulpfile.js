@@ -11,7 +11,6 @@ gulp.task('clean', function () {
     ]);
 });
 gulp.task('js', function(){
-    gulp.run('clean');
     return gulp.src([
          classPath+'/base/System.js'
         ,classPath+'/base/Base.class.js'
@@ -30,4 +29,4 @@ gulp.task('js', function(){
         .pipe(gulp.dest(classPath+'/build'))
 });
 
-gulp.task('default', ['js']);
+gulp.task('default', ['clean','js']);
