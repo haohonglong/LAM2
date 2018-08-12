@@ -33,14 +33,16 @@
             this.base();
             __this__=this;
             init = init || {};
-
-            var route = System.get(init.route || 'r');
-            if(!System.isFunction(this[route+'Action'])){
-                throw new Error('Warning:The method \''+route+'Action\' undefined');
-                return this;
+            if(!System.isFunction(System.Router)){
+                var route = System.get(init.route || 'r');
+                if(!System.isFunction(this[route+'Action'])){
+                    throw new Error('Warning:The method \''+route+'Action\' undefined');
+                    return this;
+                }
+                this[route+'Action']();
+                this.route = route;
             }
-            this[route+'Action']();
-            this.route = route;
+
         },
         '_className':'Controller',
 
