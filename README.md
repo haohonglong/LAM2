@@ -6,7 +6,7 @@
 	version ：2.0.9
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-7-22
+	修改日期 ：2018-8-12
 
 
 # 产品介绍：
@@ -1072,68 +1072,78 @@
 	
 ## 十九、MVC (详细demo看project目录里)
 				
-	访问url格式：
-		localhost/project/controllers/controllerName.html?r=view
-			controllers:控制器文件夹
-			controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
-			r:接收控制器中的方法名的参数。r关键字可以在控制器中自定义
-			view：调用对应控制器中的方法（对应着视图文件名）
-	//controllers/index.html
+
 
   1. Controller 范例一、参考 [LAM](https://github.com/haohonglong/LAM)
 													
   2. Controller 范例二、(面向对象方式):
+
 	
-			LAMJS.run(function() {
-					'use strict';
-					var System = this;
-					var __this__=null;
-					System.is(System,'Controller','IndexController');
-					var ROOT  = System.ROOT;
-					var views = System.Config.Public.ROOT+'/project/views/index';
-					var IndexController = System.Controller.extend({
-						constructor: function (init){
-							this.base(init || {});
-							__this__=this;
-		
-					},
-					'_className':'IndexController',
-					'indexAction':function(){
-						new System.Template().render(views+'/index.html',{
-							'ROOT':ROOT,
-							'D':{
-								'title':'你好，世界！',
-								'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
-							}
-		
-						},function(content){
-							System.print(content);
-						},{
-							beforeSend:function(a,b){
-								this.async=true;
-							}
-						});
-					},
-		
-		
-		
-					/**
-					 *
-					 * @author lhh
-					 * 产品介绍：析构方法
-					 * 创建日期：2015-4-2
-					 * 修改日期：2015-4-2
-					 * 名称：destructor
-					 * 功能：在注销IndexController对象时调用此方法
-					 * 说明：
-					 * 注意：
-					 * @return  ()
-					 * Example：
-					 */
-					'destructor':function(){}
-				});
-				new IndexController();
-			});
+			(function(IT,factory){
+                'use strict';
+                var System = IT['LAM_20150910123700_'];
+
+                if(!System){
+                    return;
+                }else{
+                    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+                        typeof define === 'function' && define.amd ? define(factory(System)) :
+                            (System['SiteController'] = factory(System));
+                }
+
+            })(this,function(System){
+                'use strict';
+                var __this__=null;
+                System.is(System,'Controller','SiteController',System.classPath+'/base');
+                var ROOT  = System.ROOT;
+                var views = System.ROOT+'/views/site';
+                var SiteController = System.Controller.extend({
+                    constructor: function (init){
+                        this.base(init || {});
+                        __this__=this;
+
+                    },
+                    '_className':'SiteController',
+                    'indexAction':function(){
+                        new System.Template().render(views+'/index.html',{
+                            'COMMON':System.COMMON,
+                            'ROOT':ROOT,
+                            'D':{
+                                'title':'你好，世界！',
+                                'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+                            }
+
+                        },function(content){
+                            System.print(content);
+                        },{
+                            beforeSend:function(a,b){
+                                this.async=true;
+                            }
+                        });
+                    },
+
+
+
+                    /**
+                     *
+                     * @author lhh
+                     * 产品介绍：析构方法
+                     * 创建日期：2015-4-2
+                     * 修改日期：2015-4-2
+                     * 名称：destructor
+                     * 功能：在注销SiteController对象时调用此方法
+                     * 说明：
+                     * 注意：
+                     * @return  ()
+                     * Example：
+                     */
+                    'destructor':function(){}
+                });
+                return SiteController;
+            });
+
+
+
 			
 			render参数：
 				参数1：请求视图的路径
@@ -1143,37 +1153,44 @@
 			  
 			note:
 		
-				不要忘了方法名称前缀action
-				注1： System.Html.include($('include'))是可选的， 要放在渲染视图的下面。
-						MVC方式的include标签的action属性值是请求的控制器，而后通过控制器请求视图，而不是直接去请求视图。
-						错误的方式：System.Html.include($('include'))放在视图里。
-				注2：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
+				不要忘了方法名称后缀Action
+				注：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
 												render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
 												函数里的两个参数请参考jQuery Ajax API。
 			//views/index/index.html
-				<!DOCTYPE html>
-				<html>
-				<head>
-					<title>{{title}}</title>
-					<link rel="stylesheet" type="text/css" href="{{ROOT}}/project/common/css/bootstrap.css"/>
-					<!--[if lt IE 8]>
-					<script>
-						alert('请使用谷歌、火狐浏览器！');
-					</script>
-					<![endif]-->
-				
-				
-				</head>
-				<body>
-					<div class="container">
-						<div class="jumbotron">
-							<h1>{{D.title}}</h1>
-							<p>{{D.content}}</p>
-							<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-						</div>
-					</div>
-				</body>
-				</html>
+				<!doctype html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Bootstrap 101 Template</title>
+                    <link rel="stylesheet" type="text/css" href="{{COMMON}}/plugins/bootstrap/bootstrap.css"/>
+                    <!--[if lt IE 8]>
+                    <script>
+                        alert('H+已不支持IE6-8，请使用谷歌、火狐等浏览器\n或360、QQ等国产浏览器的极速模式浏览本页面！');
+                    </script>
+                    <![endif]-->
+
+
+                </head>
+                <body>
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>{{D.title}}</h1>
+                        <p>{{D.content}}</p>
+                        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                    </div>
+                </div>
+                </body>
+                </html>
+
+
+                访问url格式：
+                		localhost/project/index.html?r=controllerName/action
+                			r:路由。
+                			controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
+                			action：调用对应控制器中的方法（对应着视图文件名）
+
+
                 
                
                 
