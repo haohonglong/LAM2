@@ -15,6 +15,7 @@
 	System.is(System,'Browser','Router',System.classPath+'/base');
 
 	var __this__=null;
+
 	var Router = System.Browser.extend({
 		constructor: function () {
 			this.base();
@@ -28,10 +29,8 @@
             System
                 .import(['/'+ControllerName],System.CONTROLLERS);
 
-            System.wait(function(){
-                var controller  = (new System[ControllerName]());
-                controller[action]();
-            });
+            var controller  = (new System[ControllerName]());
+            controller[action]();
 		},
 		'_className':'Router',
 		'__constructor':function(){},
