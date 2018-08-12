@@ -18,7 +18,6 @@
 	var Router = System.Browser.extend({
 		constructor: function () {
 			this.base();
-			alert(222)
 			__this__ = this;
             var r = System.get('r').toLowerCase().split('/');
             var str = r[0];
