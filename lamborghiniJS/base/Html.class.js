@@ -109,6 +109,7 @@
          * @param 	(Function)	D.capture       	  NULL :可以在第一时间捕获返回的数据字符串，处理修改后返回
          * @param 	(Function)	D.success       	  NULL :
          * @param 	(Function)	D.error       	  	  NULL :
+         * @param 	(Function)	D.done       	  	  NULL :
          * @param 	(Function)	D.preform       	  NULL :参数：Html 对象
          * @return (void)
          * Example：
@@ -139,6 +140,7 @@
             this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
             this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
             this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
+            this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	0 ;
             this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
 
 		},
@@ -160,56 +162,62 @@
         'ajax':function () {
 		    var _this = this;
             if(System.isset(_this.file)){
-                $.ajax(_this.file,{
-                    type : 	  _this.type,
-                    data :    _this.data,
-                    async:    _this.async ? true : false,
-                    cache:    _this.cache ? true : false,
-                    contentType:_this.contentType,
-                    dataType: _this.dataType,
-                    beforeSend:function(jqXHR,PlainObject){
-                        if(System.isFunction(_this.beforeSend)){
-                            _this.beforeSend.call(this,jqXHR,PlainObject);
-                        }
-                    },
-                    error:function(XMLHttpRequest, textStatus, errorThrown){
-                        try{
-                            switch(XMLHttpRequest.status) {
-                                case 404:
-                                    if(System.isset(_this.file_404)){
-                                        _this.file = _this.file_404;
-                                        if(_this.jump){
-                                            location.href = _this.file;
-                                        }else{
-                                            _this.ajax();
-                                        }
-                                    }
-                                    break;
-                                default:
+                jQuery
+					.ajax(_this.file,{
+						type : 	  _this.type,
+						data :    _this.data,
+						async:    _this.async ? true : false,
+						cache:    _this.cache ? true : false,
+						contentType:_this.contentType,
+						dataType: _this.dataType,
+						beforeSend:function(jqXHR,PlainObject){
+							if(System.isFunction(_this.beforeSend)){
+								_this.beforeSend.call(this,jqXHR,PlainObject);
+							}
+						},
+						error:function(XMLHttpRequest, textStatus, errorThrown){
+							try{
+								switch(XMLHttpRequest.status) {
+									case 404:
+										if(System.isset(_this.file_404)){
+											_this.file = _this.file_404;
+											if(_this.jump){
+												location.href = _this.file;
+											}else{
+												_this.ajax();
+											}
+										}
+										break;
+									default:
 
-                            }
+								}
 
-                        }catch(e){
-                            throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
-                        }
-                        if(_this.error && System.isFunction(_this.error)){
-                            _this.error(XMLHttpRequest, textStatus, errorThrown);
-                        }
-                    },
-                    success: function(data,textStatus,jqXHR){
+							}catch(e){
+								throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
+							}
+							if(_this.error && System.isFunction(_this.error)){
+								_this.error(XMLHttpRequest, textStatus, errorThrown);
+							}
+						},
+						success: function(data,textStatus,jqXHR){
+							if(_this.success && System.isFunction(_this.success)){
+								_this.success(data,textStatus,jqXHR);
+							}
+
+						}
+					})
+					.done(function(data){
                         if(System.isFunction(_this.capture)){
-                            data = _this.capture(data,textStatus,jqXHR);
+                            data = _this.capture(data);
                         }
-                        if(_this.success && System.isFunction(_this.success)){
-                            _this.success(data,textStatus,jqXHR);
+                        if(_this.done && System.isFunction(_this.done)){
+                            _this.done(data);
                         }else{
                             if(_this.$dom){
                                 _this.$dom.after(data).remove();
                             }
                         }
-
-                    }
-                });
+					});
             }
         },
 
