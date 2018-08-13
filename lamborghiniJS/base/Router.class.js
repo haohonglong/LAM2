@@ -39,19 +39,23 @@
 		 */
 		'destructor':function(){}
 	});
-
+	Router.once = true;
     Router.init=function () {
-        var r = System.get('r').split('/');
-        var str = r[0];
-        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-        var ControllerName = Controller+'Controller';
-        var action = r[1];
-        action = action+'Action';
-        System
-            .import(['/'+ControllerName],System.CONTROLLERS);
+    	if(Router.once){
+            var r = System.get('r').split('/');
+            var str = r[0];
+            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+            var ControllerName = Controller+'Controller';
+            var action = r[1];
+            action = action+'Action';
+            System
+                .import(['/'+ControllerName],System.CONTROLLERS);
 
-        var controller  = (new System[ControllerName]());
-        controller[action]();
+            var controller  = (new System[ControllerName]());
+            controller[action]();
+            Router.once = false;
+		}
+
     };
     Router.init();
 
