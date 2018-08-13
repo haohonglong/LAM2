@@ -13,24 +13,13 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-
 	var __this__=null;
 
 	var Router = System.Browser.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;
-            var r = System.get('r').split('/');
-            var str = r[0];
-            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-            var ControllerName = Controller+'Controller';
-            var action = r[1];
-            action = action+'Action';
-            System
-                .import(['/'+ControllerName],System.CONTROLLERS);
 
-            var controller  = (new System[ControllerName]());
-            controller[action]();
 		},
 		'_className':'Router',
 		'__constructor':function(){},
@@ -50,6 +39,21 @@
 		 */
 		'destructor':function(){}
 	});
+
+    Router.init=function () {
+        var r = System.get('r').split('/');
+        var str = r[0];
+        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+        var ControllerName = Controller+'Controller';
+        var action = r[1];
+        action = action+'Action';
+        System
+            .import(['/'+ControllerName],System.CONTROLLERS);
+
+        var controller  = (new System[ControllerName]());
+        controller[action]();
+    };
+    Router.init();
 
 	return Router;
 });

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-1-11
+ * 修改日期:2018-8-13
  * 名称：助手类
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -33,16 +33,6 @@
             this.base();
             __this__=this;
             init = init || {};
-            if(!System.isFunction(System.Router)){
-                var route = System.get(init.route || 'r');
-                if(!System.isFunction(this[route+'Action'])){
-                    throw new Error('Warning:The method \''+route+'Action\' undefined');
-                    return this;
-                }
-                this[route+'Action']();
-                this.route = route;
-            }
-
         },
         '_className':'Controller',
 

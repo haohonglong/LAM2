@@ -247,6 +247,7 @@
 		'Dropdown': {},
 		'Helper': {},
 		'Controller': {},
+		'Router': {},
 		'Model': {},
 		'Module': {},
 		'Html': {},

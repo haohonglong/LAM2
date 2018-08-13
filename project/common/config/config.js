@@ -314,11 +314,9 @@
                         LAMJS.main=function() {
                             'use strict';
                             var System=this;
-                            new System.Router();
-
-
-
                         };
+
+
                     }
                     clearInterval(timer);
                 }
