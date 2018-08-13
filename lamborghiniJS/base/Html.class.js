@@ -140,7 +140,7 @@
             this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
             this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
             this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
-            this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	0 ;
+            this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
             this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
 
 		},
@@ -170,9 +170,9 @@
 						cache:    _this.cache ? true : false,
 						contentType:_this.contentType,
 						dataType: _this.dataType,
-						beforeSend:function(jqXHR,PlainObject){
+						beforeSend:function(jqXHR,settings){
 							if(System.isFunction(_this.beforeSend)){
-								_this.beforeSend.call(this,jqXHR,PlainObject);
+								_this.beforeSend.call(this,jqXHR,settings);
 							}
 						},
 						error:function(XMLHttpRequest, textStatus, errorThrown){
@@ -200,24 +200,20 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
+                            if(System.isFunction(_this.capture)){
+                                data = _this.capture(data);
+                            }
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
-							}
+							}else{
+                                if(_this.$dom){
+                                    _this.$dom.after(data).remove();
+                                }
+                            }
 
 						}
 					})
-					.done(function(data){
-                        if(System.isFunction(_this.capture)){
-                            data = _this.capture(data);
-                        }
-                        if(_this.done && System.isFunction(_this.done)){
-                            _this.done(data);
-                        }else{
-                            if(_this.$dom){
-                                _this.$dom.after(data).remove();
-                            }
-                        }
-					});
+					.done(_this.done);
             }
         },
 
