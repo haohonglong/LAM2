@@ -48,7 +48,6 @@
 
     //事件兼容类方法
     var fixEvt=System.Event.fixEvt;
-    var css = new System.Css();
 
     var Drag = System.Browser.extend({
         constructor: function(dom,init) {
