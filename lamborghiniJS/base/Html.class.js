@@ -89,7 +89,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-8-1
+         * 修改日期：2018-8-13
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -108,6 +108,7 @@
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
          * @param 	(Function)	D.capture       	  NULL :可以在第一时间捕获返回的数据字符串，处理修改后返回
          * @param 	(Function)	D.success       	  NULL :
+         * @param 	(Function)	D.error       	  	  NULL :
          * @param 	(Function)	D.preform       	  NULL :参数：Html 对象
          * @return (void)
          * Example：
@@ -129,7 +130,7 @@
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
-            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404     || null;
+            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
             this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
@@ -137,14 +138,18 @@
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
             this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
             this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
-            this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform	||	0 ;
+            this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
+            this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
 
-            this.file     = System.template(this.file);
-            this.file_404 = System.template(this.file_404);
-            if(System.isFunction(this.preform)){this.preform();}
 		},
 		'_className':'Html',
 		'__constructor':function(){},
+		'init':function () {
+            this.file     = System.template(this.file);
+            this.file_404 = System.template(this.file_404);
+            if(System.isFunction(this.preform)){this.preform();}
+            return this;
+        },
 		'render':function(content){
 			System.print(content);
 		},
@@ -169,8 +174,7 @@
                     },
                     error:function(XMLHttpRequest, textStatus, errorThrown){
                         try{
-                            switch(XMLHttpRequest.status)
-                            {
+                            switch(XMLHttpRequest.status) {
                                 case 404:
                                     if(System.isset(_this.file_404)){
                                         _this.file = _this.file_404;
@@ -187,22 +191,20 @@
 
                         }catch(e){
                             throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
-
+                        }
+                        if(_this.error && System.isFunction(_this.error)){
+                            _this.error(XMLHttpRequest, textStatus, errorThrown);
                         }
                     },
-                    success: function(content){
+                    success: function(data,textStatus,jqXHR){
                         if(System.isFunction(_this.capture)){
-                            content = _this.capture(content);
+                            data = _this.capture(data,textStatus,jqXHR);
                         }
                         if(_this.success && System.isFunction(_this.success)){
-                            if(_this.$dom){
-                                _this.success.call(_this.$dom,content);
-                            }else{
-                                _this.success(content);
-                            }
+                            _this.success(data,textStatus,jqXHR);
                         }else{
                             if(_this.$dom){
-                                _this.$dom.after(content).remove();
+                                _this.$dom.after(data).remove();
                             }
                         }
 
@@ -230,7 +232,7 @@
 		}
 	});
 
-	var getFile=function($dom,D){(new Html($dom,D)).ajax();};
+	var getFile=function($dom,D){(new Html($dom,D)).init().ajax();};
 
 	/**
 	 *
