@@ -172,7 +172,7 @@
 						dataType: _this.dataType,
 						beforeSend:function(jqXHR,settings){
 							if(System.isFunction(_this.beforeSend)){
-								_this.beforeSend.call(this,jqXHR,settings);
+								_this.beforeSend(jqXHR,settings);
 							}
 						},
 						error:function(XMLHttpRequest, textStatus, errorThrown){
