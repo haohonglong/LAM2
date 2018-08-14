@@ -177,40 +177,6 @@
 			 return container;
 		 },
 
-		 'hide':function(callback){
-             callback = System.isFunction(callback) ? callback : null;
-			 if(this.animate){
-				 this.$popLayout.animate({
-					 opacity: 'hide'
-                 }, this.animate.speed, this.animate.easing,callback);
-				 this.$mask.animate({
-					 opacity: 'hide'
-                 }, this.animate.speed, this.animate.easing);
-			 }else{
-				 this.$popLayout.hide();
-				 this.$mask.hide();
-			 }
-
-			 return this;
-		 },
-		 'show':function(callback){
-             callback = System.isFunction(callback) ? callback : null;
-			 if(this.animate){
-				 this.$popLayout.animate({
-					 opacity: 'show'
-                 }, this.animate.speed, this.animate.easing,callback);
-				 this.$mask.animate({
-					 opacity: 'show'
-                 }, this.animate.speed, this.animate.easing);
-			 }else{
-				 this.$popLayout.show();
-				 this.$mask.show();
-			 }
-
-			 return this;
-		 },
-
-
 		 'append':function($div){},
 		 'empty':function(){this.$popLayout.empty();},
 		 'remove':function(){this.$popLayout.remove();},
@@ -231,7 +197,25 @@
 		 'destructor':function(){}
 	 });
 
+     System.each(['show','hide'],function(i,name){
+         PopupLayer.method(name,function(callback){
+             callback = System.isFunction(callback) ? callback : null;
+             if(this.animate){
+                 this.$popLayout.animate({
+                     opacity: name
+                 }, this.animate.speed, this.animate.easing,callback);
+                 this.$mask.animate({
+                     opacity: name
+                 }, this.animate.speed, this.animate.easing);
+             }else{
+                 this.$popLayout[name](null,callback);
+                 this.$mask[name]();
+             }
 
+             return this;
+         });
+
+     });
 
 	 return PopupLayer;
  });
