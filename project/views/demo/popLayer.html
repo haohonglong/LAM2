@@ -82,6 +82,8 @@
                 '$mask':$('.mask'),
                 'padding':6
             });
+            pop.$popLayout.appendTo($('body'));
+            pop.$mask.appendTo($('body'));
             pop.setCenter();
 
             $(window).scroll(function() {
@@ -91,7 +93,6 @@
             });
             $(window).resize(function() {
                 pop.resize();
-                pop.scroll();
             });
 
 
@@ -102,7 +103,6 @@
             });
 
             $('#button').on('click',function(){
-                pop.resize();
                 pop.show();
             });
 

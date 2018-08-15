@@ -166,6 +166,7 @@
                 this._resize();
             },
 			'scroll':function ($div,$context,animate) {
+                this.resize();
                 this.setFixed($div,$context,animate);
             },
 
@@ -181,7 +182,6 @@
 			 */
 			'setFixed':function($div,$context,animate){
                 $div.css('position','absolute');
-                this.resize();
                 Browser.fixed_element($div,$context,animate);
 				return this;
 			},
