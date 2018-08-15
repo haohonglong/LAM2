@@ -150,24 +150,25 @@
 			 *
 			 *
 			 */
-			'autoScreenCenter':function($div,pandding,fn){
-				pandding = pandding || 0;
-				if('fixed' != $div.css('position') && 'absolute' != $div.css('position')){
-					$div.css('position','absolute');
-
-				}
-
-				this.resize = Browser.resize($div,function($window){
+			'autoScreenCenter':function($div,padding,fn){
+				padding = padding || 0;
+				this._resize = Browser.resize($div,function($window){
 					if(System.isFunction(fn)){
 						fn.call($div,$window);
 					}else{
-						Browser.setElemAutoCenter($div,pandding);
+						Browser.setElemAutoCenter($div,padding);
 					}
 				});
-				this.setFixed($div);
 				return this;
 
 			},
+			'resize':function () {
+                this._resize();
+            },
+			'scroll':function ($div,$context,animate) {
+                this.setFixed($div,$context,animate);
+            },
+
 			/**
 			 * 创建日期：2014-12-1
 			 * 修改日期：2017-9-1
@@ -178,14 +179,10 @@
 			 *
 			 *
 			 */
-			'setFixed':function($div){
-				if('fixed' != $div.css('position')){
-					$div.css('position','absolute');
-					this.scroll = function(){
-						this.resize();
-						Browser.fixed_element($div);
-					};
-				}
+			'setFixed':function($div,$context,animate){
+                $div.css('position','absolute');
+                this.resize();
+                Browser.fixed_element($div,$context,animate);
 				return this;
 			},
 			'showDialog':function(url){
@@ -502,14 +499,13 @@
 		 * 调用方式：
 		 *
 		 */
-		Browser.setElemAutoCenter=function($div,pandding){
+		Browser.setElemAutoCenter=function($div,padding){
 			$div = $div || this;
 			if('fixed' != $div.css('position') && 'absolute' != $div.css('position')){
 				$div.css('position','absolute');
-
 			}
 			var size=System.autoCenter($(window).width(),$div.width(),
-				$(window).height(),$div.height(),pandding || 0);
+				$(window).height(),$div.height(),padding || 0);
 			$div.css({
 				'top' :size.y+'px',
 				'left':size.x+'px'

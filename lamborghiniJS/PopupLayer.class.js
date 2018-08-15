@@ -93,9 +93,18 @@
 		  */
 		 'setCenter':function(D){
 			 var callBack =(D && D.callBack) || null;
-			 this.autoScreenCenter(this.$popLayout,this.padding,callBack).resize();
+			 this.autoScreenCenter(this.$popLayout,this.padding,callBack);
+			 this.resize();
 			 return this;
 		 },
+         'resize':function () {
+             this.base();
+             return this;
+         },
+         'scroll':function () {
+             this.base(this.$popLayout);
+             return this;
+         },
 
 		 /**
 		  *
