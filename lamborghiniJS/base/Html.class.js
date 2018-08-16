@@ -62,7 +62,7 @@
             // var document=System.open();
             var arr=System.printf.apply(Array,arguments);
             document.write(arr.join(' '));
-            // System.close(document);
+            System.close(document);
         },
 
         /**
