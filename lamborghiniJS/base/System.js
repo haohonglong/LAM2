@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-4-9
+ * 修改日期:2018-8-1
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -49,20 +49,28 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.0.8";
-	var Interface={},System={},once=true,timers=[];
-	var trimLeft = /^\s+/,
-		trimRight = /\s+$/,
+	var VERSION="2.0.9",
+		Interface={},
+		System={},
+		once=true,
+		timers=[],
 
 	// Save a reference to some core methods
-
-		toString = Object.prototype.toString,
+		class2type = {},//Object.prototype equal {}
+        deletedIds = [],//Array.prototype equal []
+     	toString = class2type.toString,
 		getPrototypeOf = Object.getPrototypeOf,
-		hasOwn = Object.prototype.hasOwnProperty,
-		push = Array.prototype.push,
-		slice = Array.prototype.slice,
-		trim = String.prototype.trim,
-		indexOf = Array.prototype.indexOf;
+		hasOwn = class2type.hasOwnProperty,
+		push = deletedIds.push,
+		slice = deletedIds.slice,
+        concat = deletedIds.concat,
+		indexOf = deletedIds.indexOf,
+        trimLeft = /^\s+/,
+        trimRight = /\s+$/,
+        // Support: Android<4.1, IE<9
+        // Make sure we trim BOM and NBSP
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
+		trim = String.prototype.trim;
 
 
 	/**
@@ -85,45 +93,35 @@
 		};
 	}
 
-	var isObject = type("Object");
-	var isString = type("String");
-	var isArray = Array.isArray || type("Array");
-	var isFunction = type("Function");
-	var isBoolean = type("Boolean");
-	var isNumber = type("Number");
-	var isDate = type("Date");
-	var isRegExp = type("RegExp");
-	var isBlob = type("Blob");
-	var isNull = type("Null");
-	var isUndefined = type("Undefined");
-	//browser
-	var isOpera = type("Opera");
-
-	var isHTMLDocument = type("HTMLDocument");
-	var isHTMLHtmlEment = type("HTMLHtmlElement");
-	var isHTMLBodyElement = type("HTMLBodyElement");
-	var isHTMLHeadElement = type("HTMLHeadElement");
-	var isHTMLCollection = type("HTMLCollection");
-	var isXMLHttpRequest = type("XMLHttpRequest");
-	var isXMLSerializer = type("XMLSerializer");
+	var isObject 	= type("Object"),
+		isJSON 		= type("JSON"),
+		isString 	= type("String"),
+		isArray 	= Array.isArray || type("Array"),
+		isFunction 	= type("Function"),
+		isBoolean 	= type("Boolean"),
+		isNumber 	= type("Number"),
+		isDate 		= type("Date"),
+		isRegExp 	= type("RegExp"),
+		isBlob 		= type("Blob"),
+		isNull 		= type("Null"),
+		isUndefined = type("Undefined");
 
 	function isWindow(obj) {
-		return (null != obj && obj === obj.window);
+		return (null != obj && obj == obj.window);
 	}
-
-
 
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014-12-23
-	 * 修改日期：2016-9-30
+	 * 修改日期：2018-07-21
 	 * 名称：runtime
 	 * 功能：run 时执行的方法
 	 * 说明：可传多个参数第一个必须是数组，在回调里接收的参数跟传来的参数一一对应
 	 * 注意：不能链式调用，如要链式调用，用 System.then方法
 	 * @param   (Array)args 			   NULL :传入的参数
-	 * @param   (Function)callback 		NO NULL :调用main 方法要执行的操作
+	 * @param   (Function)callback 		NO NULL :callback 里的this 是被克隆后的对象，修改this里面的成员不会影响LAM 的源对象。
+	 * 											每个沙箱里的this 都是一个单独的克隆，这样可避免污染 LAM 源对象和别的沙箱。
 	 * @return  {*} 返回callback 里的返回值
 	 * Example：
 	 */
@@ -136,22 +134,21 @@
 			callback = args;
 			args = null;
 		}
-
-
 		if (!System.isFunction(callback) ) {
 			throw new Error('Warning: 参数必须要有一个 Function 类型');
 			return this;
 		}
 
-		if(args){
-			if(System.isArray(args)){
-				return callback.apply(this,args);
-			}else{
-				return callback.call(this,args);
-			}
-		}else{
-			return callback.call(this);
-		}
+        var _this = this.clone(true,this);
+        if(args){
+            if(System.isArray(args)){
+                return callback.apply(_this,args);
+            }else{
+                return callback.call(_this,args);
+            }
+        }else{
+            return callback.call(_this);
+        }
 
 	}
 
@@ -250,6 +247,7 @@
 		'Dropdown': {},
 		'Helper': {},
 		'Controller': {},
+		'Router': {},
 		'Model': {},
 		'Module': {},
 		'Html': {},
@@ -389,7 +387,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-1-18
+		 * 修改日期：2018-7-21
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -400,13 +398,37 @@
 		 * Example：
 		 */
 		'run':function(args,callback){
-			if(once && System.isFunction(this.main)){
-				once = false;
-				this.main.apply(this,args);
-			}
-			return runtime.apply(this,[args,callback]);
+            if(once && System.isFunction(this.main)){
+                once = false;
+                runtime.apply(this,[this.main]);
+            }
+            return runtime.apply(this,[args,callback]);
 
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-7-14
+         * 修改日期：2018-7-14
+         * 名称：System.once
+         * 功能：行为仅执行一次
+         * 说明：
+         * 注意：
+         * @param fn
+         * @returns {Function}
+         */
+        'once':function (fn) {
+            var called = false;
+            var _this = this.clone(true,this);
+            return function () {
+                if (!called) {
+                    called = true;
+                    //[].slice.call(arguments) arguments 转成数组
+                    // _this.run([].slice.call(arguments),fn);
+                    fn.apply(_this, arguments);
+                }
+            };
+        },
 		/**
 		 *
 		 * @author: lhh
@@ -468,7 +490,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-5-15
-         * 修改日期：2018-5-15
+         * 修改日期：2018-7-29
          * 名称：System.stop
          * 功能：停止 System.listen
          * 说明：没有参数就停止全部监听器
@@ -477,9 +499,11 @@
          * @return  (void)
          */
         'stop':function(id){
-			if(System.isNumber(id)){
-                timers.remove(id);
-                clearInterval(id);
+			if(arguments.length > 0){
+                if(System.isNumber(id) && timers.in_array(id)){
+                    timers.remove(id);
+                    clearInterval(id);
+				}
 			}else{
                 System.each(timers,function(i,id){
                     clearInterval(id);
@@ -523,7 +547,15 @@
 		 * Example：
 		 */
 		'eval':function(expression){
-			return eval('(' +expression+ ')');
+			try{
+                // if(System.isJson(expression) && System.isJSON(JSON)){
+                    return JSON.parse(expression);
+                // }
+			}catch (e){
+                return eval('(' +expression+ ')');
+			}
+
+
 		},
 		/**
 		 * @author: lhh
@@ -549,59 +581,7 @@
 				})(data);
 			}
 		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-9-30
-		 * 修改日期：2016-9-30
-		 * 名称：System.open
-		 * 功能：打开一个新文档，并擦除当前文档的内容
-		 * 说明：
-		 * 注意：
-		 * @return  {Document}
-		 */
-		'open':function(mimetype,replace){
-			mimetype = mimetype || "text/html";
-			replace = replace 	|| "replace";
-			return document.open(mimetype,replace)
-		},
 
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-9-16
-		 * 修改日期：2016-9-30
-		 * 名称：System.print
-		 * 功能：输出
-		 * 说明：
-		 * 注意：
-		 * @param   (Object)D 			NO NULL :传入的参数
-		 * @return  (voide)						:
-		 * Example：
-		 * 		System.print('s'[,1,'a',...])
-		 */
-		'print':function(){
-			var document=System.open();
-			var arr=prints.apply(Array,arguments);
-			document.write(arr.join(' '));
-			System.close(document);
-		},
-
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-9-30
-		 * 修改日期：2016-9-30
-		 * 名称：System.close
-		 * 功能：关闭输出文档流
-		 * 说明：
-		 * 注意：
-		 * @return  (voide)
-		 */
-		'close':function(document){
-			document = document || global.document;
-			document.close();
-		},
 		/**
 		 *
 		 * @author: lhh
@@ -924,7 +904,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-3-27
-		 * 修改日期：2016-8-23
+		 * 修改日期：2018-7-14
 		 * 名称：merge
 		 * 功能：一个或多个对象合并成一个指定的对象
 		 * 说明：默认同名的键值前面的不会被覆盖
@@ -970,7 +950,7 @@
 				for(key in args[i]){
 					if(!override && (key in target)) {continue;}
 					var value = args[i][key];
-					if(deep && System.isObject(value) && System.isPlainObject(value)){
+					if(deep && (System.isPlainObject(value) || System.isArray(value))){
 						target[key] = self.merge(deep,System.createDict(),[target[key],value],override);
 					}else{
 						target[key] = value;
@@ -981,6 +961,56 @@
 
 			return target;
 		},
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-10-13
+         * 修改日期：2016-8-23
+         * 名称：clone
+         * 功能：对象克隆
+         * 说明：_hashCode里的'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
+         * 注意：
+         * @param   (Boolean)deep  		   	   NULL :是否要深度拷贝对象
+         * @param   (Object)className 		NO NULL : 要克隆的类
+         * @return  (Object)				:返回克隆后的新对象
+         * Example：
+         */
+        'clone': function(className) {
+            var deep =false;
+            if(System.isBoolean(className)) {
+                deep = className;
+                className = arguments[1];
+            }
+            var obj;
+            obj = System.merge(deep,System.createDict(),[className]);
+            if(obj['_hashCode']){
+                obj['_hashCode'] += '_'+System.Object.generate();
+            }
+            return obj;
+
+        },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-7-15
+         * 修改日期：2016-8-23
+         * 名称：isclone
+         * 功能：检查对象是否是克隆对象
+         * 说明：'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
+         * 注意：
+         * @param   (Object)className 		NO NULL : 检查的对象
+         * @returns {boolean}
+         */
+        'isclone': function(obj) {
+            if(-1 === obj._hashCode.indexOf('_')){
+                return false;
+            }else{
+                return true;
+            }
+
+        },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -1170,7 +1200,7 @@
 		 */
 		'isPlainObject': function( obj ) {
 			var key;
-			if (!System.isset(obj) || !System.isObject(obj) || System.isArray(obj) || obj.nodeType) {
+			if (!System.isset(obj) || !System.isObject(obj) || System.isArray(obj) || obj.nodeType || System.isWindow(obj)) {
 				return false;
 			}
 			try {
@@ -1306,6 +1336,10 @@
 	System.arr_isEmpty 		= arr_isEmpty;
 	System.type 			= type;
 	System.isObject 		= isObject;
+	System.isJSON 			= isJSON;
+	System.isobject 		= function (obj) {
+        return obj !== null && typeof obj === 'object';
+    };
 	System.isString 		= isString;
 	System.isArray 			= isArray;
 	System.isFunction 		= isFunction;
@@ -1315,16 +1349,6 @@
 	System.isBlob 			= isBlob;
 
 	System.isWindow 			= isWindow;
-	//browser
-	System.isOpera 			= isOpera;
-
-	System.isHTMLDocument = isHTMLDocument;
-	System.isHTMLHtmlEment = isHTMLHtmlEment;
-	System.isHTMLBodyElement = isHTMLBodyElement;
-	System.isHTMLHeadElement = isHTMLHeadElement;
-	System.isHTMLCollection = isHTMLCollection;
-	System.isXMLHttpRequest = isXMLHttpRequest;
-	System.isXMLSerializer  = isXMLSerializer;
 
 	System.arr_Object_key = arr_Object_key;
 	System.arr_Object_key_has = arr_Object_key_has;
@@ -1956,27 +1980,8 @@
 		});
 	})();
 
-	/**
-	 *
-	 * @author: lhh
-	 * 创建日期：2014/12/10
-	 * 修改日期：2014/12/10
-	 * 名称：private (Number) contains
-	 * 功能：检查一个对象是否包含在另外一个对象中的方法，contains方法。MSIE和FireFox分别提供了检查的方法
-	 * 注意：这个函数在IE中不支持,但文档上却写在在FF中原本为4的结果,在IE中为2
-	 * 说明：ExtJS的源码用到的方法
-	 * @param   parentNode() 	NO NULL :
-	 * @param 	childNode()     NO NULL :
-	 * Example：
-	 *
-	 */
-	function contains(parentNode, childNode){
-		if (parentNode.contains) {
-			return parentNode != childNode && parentNode.contains(childNode);
-		} else {
-			return !!(parentNode.compareDocumentPosition(childNode) & 16);
-		}
-	}
+
+	function contains(parentNode, childNode){}
 	function isEmptyObject( obj ) {
 		for ( var name in obj ) {return false;}
 		return true;
@@ -2056,25 +2061,23 @@
 		return arr;
 	}
 	System.wait(function(){
-        if(System.LAM_DEBUG){
-            var arr = [];
-            arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-            arr.push('===========================================================================================');
-            arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-            arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-            arr.push("*     *        *       *");
-            arr.push("*    *  *     * *     *  *");
-            arr.push("*   *    *   *   *   *    *");
-            arr.push("*  * **** * *     * *      *");
-            arr.push("* *        *       *        *");
-            arr.push('**********************************');
-            arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-            arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-            arr.push('===========================================================================================');
-            console.log(arr.join('\n'));
-        }
+		if(System.LAM_DEBUG){
+			var arr = [];
+			arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+			arr.push('===========================================================================================');
+			arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+			arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+			arr.push("*     *        *       *");
+			arr.push("*    *  *     * *     *  *");
+			arr.push("*   *    *   *   *   *    *");
+			arr.push("*  * **** * *     * *      *");
+			arr.push("* *        *       *        *");
+			arr.push('**********************************');
+			arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+			arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+			arr.push('===========================================================================================');
+			console.log(arr.join('\n'));
+		}
 	},10);
-
-
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });

@@ -82,16 +82,16 @@
 
 
 <script type="text/javascript">
-   LAMJS.run([jQuery],function($){
+   LAMJS.run([LAM,jQuery],function(LAM,$){
         'use strict';
         var System=this;
-       System.VNAME = System.get('r') || 'introduce/index';
+       LAM.VNAME = System.get('r') || 'introduce/index';
        System.Html.include($('include'));
        System.Html.analysisTpl();
 
 
        $(function(){
-           $('title').text(System.TITLE || 'index');
+           $('title').text(LAM.TITLE || 'index');
 
            $('.list-group [data-url]').hover(function(){
                $(this).addClass('hover');

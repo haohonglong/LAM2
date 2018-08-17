@@ -12,7 +12,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Sport',System.classPath+'/base');
+	System.is(System,'Css','Sport',System.classPath+'/base');
 
 	var __this__=null;
 	var MOVE_TYPE={
@@ -27,15 +27,13 @@
 
 			for(var arr in oTarget){
 				if("opacity" === arr){
-					iCur=parseInt(parseFloat(System.Dom.getStyle(obj, 'opacity'))*100);
+					iCur=parseInt(parseFloat(System.Css.getStyles(obj, 'opacity'))*100);
 				}else{
-					iCur=parseInt(System.Dom.getStyle(obj,arr));
+					iCur=parseInt(System.Css.getStyles(obj,arr));
 				}
 
 				if(!System.isNumeric(iCur)){iCur=0;}
-				if(System.isFunction(oTarget[arr])){
-					return;
-				}
+				if(System.isFunction(oTarget[arr])){break;}
 
 				if(System.isNumeric(oTarget[arr])){
 					speed = (oTarget[arr]-iCur) / 5;
@@ -55,7 +53,7 @@
 			}
 
 			if(bStop){
-				clearInterval(obj.timer);
+				System.stop(obj.timer);
 				obj.timer=null;
 			}
 			if(System.isFunction(fn)){fn.call(__this__);}
@@ -64,8 +62,8 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期：2014-11-28
-		 * 修改日期：2014-11-28
-		 * 名称：private Movei
+		 * 修改日期：2018-7-29
+		 * 名称：private imove
 		 * 功能：运动框架
 		 * 说明：
 		 * 注意：
@@ -76,11 +74,9 @@
 		 * @param   (Function)fnDuring 		   NULL : 运动进行时调用 (同步)
 		 * Example：
 		 */
-		Movei=function(obj,oTarget,iType,fnCallBack,fnDuring){
+		imove=function(obj,oTarget,iType,fnCallBack,fnDuring){
 			var fnMove=null;
-			if(obj.timer){
-				clearInterval(obj.timer);
-			}
+            System.stop(obj.timer);
 			switch(iType){
 				case MOVE_TYPE.BUFFER :
 					fnMove=Sport.linear;
@@ -92,9 +88,10 @@
 
 			}
 
-			obj.timer=setInterval(function(){
-				fnMove(obj,oTarget,fnCallBack,fnDuring)
-			},15);
+			System.listen(function (id) {
+				obj.timer = id;
+                fnMove(obj,oTarget,fnCallBack,fnDuring);
+            },15);
 		};
 
 	var Sport = System.Browser.extend({
@@ -106,17 +103,14 @@
 		'__constructor':function(){},
 		'doMove':function (obj,oTarget,time,fn){
 			var time=time||30;
-			if(obj.timer){clearInterval(obj.timer);}
-			obj.timer=setInterval(function(){Move(obj,oTarget,fn)},time);
+			System.stop(obj.timer);
+			System.listen(function(id){obj.timer = id;Move(obj,oTarget,fn)},time);
 		},
 		'startMove':function (obj,oTarget,time,fn){
 			var time=time||30;
-			if(obj.timer){clearInterval(obj.timer);}
-			obj.timer=setInterval(function(){fn(obj,oTarget)},time);
+            System.stop(obj.timer);
+			System.listen(function(id){obj.timer = id;fn(obj,oTarget)},time);
 		},
-
-
-
 
 		/**
 		 * 动画（对象，增量用对象方式传经来，开始值用对象方式传经来，时间）
@@ -124,12 +118,11 @@
 		 *
 		 */
 		'animation':function(obj,start,alter,dur){
-			var linear=this.linear;
 			var curTime=0;
 			System.listen(function () {
                 if(curTime >= dur) {return true;}
                 for(var i in start){
-                    obj.style[i]=linear(start[i],alter[i],curTime,dur)+"px";
+                    obj.style[i]=Sport.linear(start[i],alter[i],curTime,dur)+"px";
                 }
                 curTime+=50;
             },50);
@@ -153,12 +146,11 @@
 		 * Example：
 		 */
 		'animate':function(obj,json,unit,time){
-
 			time=time || 30;
-			if(obj.timer){
-				clearInterval(obj.timer);
-			}
-			obj.timer = setInterval(function(){move(obj,json,unit)}, time);
+			System.listen(function (id) {
+				obj.timer = id;
+                move(obj,json,unit);
+            },time);
 		},
 
 		/**
@@ -176,28 +168,26 @@
 			 */
 
 			var curTime=0;
-			var t=setInterval(function(){
-				if(curTime>=dur) clearInterval(t);
+			System.listen(function(){
+				if(curTime>=dur) return true;
 				for(var i in start){
 					obj.style[i]=fx(start[i],alter[i],curTime,dur)+"px";
 				}
 				curTime+=50;
 			},50);
-			return t;
 		},
 		'opacity':function(obj,opacity){//透明度（对象，透明度值）
 			var __this__=this;
-			//var linear=this.linear;
 			var setOpacity=this.setOpacity;
 			var curTime=0;
-			var t=setInterval(function(){
-				if(curTime>=dur) clearInterval(t);
-				obj.style=__this__.linear(start,alter,curTime,dur)+"px";
+			System.listen(function(){
+				if(curTime>=dur) return true;
+				obj.style=Sport.linear(start,alter,curTime,dur)+"px";
 				curTime+=50;
 			},50);
 		},
 		'setOpacity':function(obj,opacity){
-			if(typeof obj.style.opacity=="string"){//FF
+			if(System.isString(obj.style.opacity)){//FF
 				obj.style.opacity=opacity/100;
 			}else {//IE
 				obj.style.filter="alpha(opacity="+opacity+")";

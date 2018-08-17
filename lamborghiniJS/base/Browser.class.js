@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2017-9-1
+ * 修改日期:2018-7-22
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -28,8 +28,64 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Browser',System.classPath+'/base');
+    System.merge(null,[{
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.open
+         * 功能：打开一个新文档，并擦除当前文档的内容
+         * 说明：
+         * 注意：
+         * @return  {Document}
+         */
+        'open':function(mimetype,replace){
+            mimetype = mimetype || "text/html";
+            replace = replace 	|| "replace";
+            return document.open(mimetype,replace)
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-16
+         * 修改日期：2016-9-30
+         * 名称：System.print
+         * 功能：输出
+         * 说明：
+         * 注意：
+         * @param   (Object)D 			NO NULL :传入的参数
+         * @return  (voide)						:
+         * Example：
+         * 		System.print('s'[,1,'a',...])
+         */
+        'print':function(){
+            // var document=System.open();
+            var arr=System.printf.apply(Array,arguments);
+            document.write(arr.join(' '));
+            // System.close(document);
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.close
+         * 功能：关闭输出文档流
+         * 说明：
+         * 注意：
+         * @return  (voide)
+         */
+        'close':function(document){
+            document = document || global.document;
+            document.close();
+        }
+    }],true);
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
-		var __this__=null;
+		var __this__=null,
+			isOpera = System.type("Opera");
 		/**
 		 *
 		 * @author lhh
@@ -212,8 +268,8 @@
 		Browser.isSafari=function(){
 			return (4===getExplorer());
 		};
-		Browser.isOpera=function(){
-			return (5===getExplorer());
+		Browser.isOpera=function(s){
+			return (5===getExplorer() || isOpera(s));
 		};
 
 

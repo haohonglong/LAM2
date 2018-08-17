@@ -50,14 +50,17 @@
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
-            'Public':{
-                 'ROOT':_ROOT_+'/documentation'
-                ,'COMMON':_ROOT_+'/common'
-                ,'PLUGINS':_ROOT_+'/common/plugins'
-                ,'VIEWS':_ROOT_+'/documentation/views'
-                ,'CSS':_ROOT_+'/documentation/css'
-                ,'JS':_ROOT_+'/documentation/js'
-            },
+            'Public':(function(){
+                var root = _ROOT_+'/examples/react/dom_b';
+                return {
+                    'ROOT': root
+                    ,'COMMON':_ROOT_+'/common'
+                    ,'PLUGINS':_ROOT_+'/common/plugins'
+                    ,'VIEWS':root+'/views'
+                    ,'CSS':root+'/css'
+                    ,'JS':root+'/js'
+                };
+            })(),
             //hashcode 随机种子
             'random':10000,
             //定义模版标签
@@ -88,10 +91,12 @@
                     // ,classPath+'/base/Browser.class.js'
                     // ,classPath+'/base/Event.class.js'
                     // ,classPath+'/base/Dom.class.js'
-                    // ,classPath+'/base/Template.class.js'
                     // ,classPath+'/base/Html.class.js'
                     // ,classPath+'/base/Loader.class.js'
-                    ,PLUGINS+'/vue/vue.js'
+                    // ,classPath+'/base/Template.class.js'
+                    ,'https://unpkg.com/react@16/umd/react.development.js'
+                    ,'https://unpkg.com/react-dom@16/umd/react-dom.development.js'
+                    ,'https://unpkg.com/babel-standalone@6/babel.min.js'
                 ];
             },
 

@@ -11,7 +11,6 @@ gulp.task('clean', function () {
     ]);
 });
 gulp.task('js', function(){
-    gulp.run('clean');
     return gulp.src([
          classPath+'/base/System.js'
         ,classPath+'/base/Base.class.js'
@@ -22,12 +21,12 @@ gulp.task('js', function(){
         ,classPath+'/base/Event.class.js'
         ,classPath+'/base/Dom.class.js'
         ,classPath+'/base/Html.class.js'
-        ,classPath+'/base/Loader.class.js'
         ,classPath+'/base/Template.class.js'
+        ,classPath+'/base/Loader.class.js'
     ])
         .pipe(concat('base.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(classPath+'/build'))
 });
 
-gulp.task('default', ['js']);
+gulp.task('default', ['clean','js']);

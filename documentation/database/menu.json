@@ -4,15 +4,15 @@
       "title": "介绍",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=introduce/index",
+          "url": "{{LAM.ROOT}}/index.html?r=introduce/index",
           "title": "快速开始"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=introduce/about",
+          "url": "{{LAM.ROOT}}/index.html?r=introduce/about",
           "title": "关于"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=introduce/configuration",
+          "url": "{{LAM.ROOT}}/index.html?r=introduce/configuration",
           "title": "配置文件"
         }
       ]
@@ -21,7 +21,7 @@
       "title": "入门",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/running",
+          "url": "{{LAM.ROOT}}/index.html?r=content/running",
           "title": "运行"
         }
       ]
@@ -30,57 +30,78 @@
       "title": "缓存",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/cache",
+          "url": "{{LAM.ROOT}}/index.html?r=content/cache",
           "title": "Cache"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/powerCookie",
+          "url": "{{LAM.ROOT}}/index.html?r=content/powerCookie",
           "title": "PowerCookie"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/cookie",
+          "url": "{{LAM.ROOT}}/index.html?r=content/cookie",
           "title": "Cookie"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/storage",
+          "url": "{{LAM.ROOT}}/index.html?r=content/storage",
           "title": "Storage"
         }
       ]
     }
     ,{
-      "title": "结构",
+      "title": "classes",
       "submenu": [
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/basis",
-          "title": "/Basis"
+          "url": "{{LAM.ROOT}}/index.html?r=content/system",
+          "title": "System"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/loader",
-          "title": "/Loader"
+          "url": "{{LAM.ROOT}}/index.html?r=content/loader",
+          "title": "Loader"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/biObject",
-          "title": "/BiObject"
+          "url": "{{LAM.ROOT}}/index.html?r=content/biObject",
+          "title": "BiObject"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/browser",
-          "title": "/Browser"
+          "url": "{{LAM.ROOT}}/index.html?r=content/browser",
+          "title": "Browser"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/controller",
-          "title": "/Controller"
-        }
-      ,{
-          "url": "{{LAM.VIEWS}}/index.html?r=content/component",
-          "title": "/Component"
+          "url": "{{LAM.ROOT}}/index.html?r=content/controller",
+          "title": "Controller"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/base64",
-          "title": "/Base64"
+          "url": "{{LAM.ROOT}}/index.html?r=content/component",
+          "title": "Component"
         },
         {
-          "url": "{{LAM.VIEWS}}/index.html?r=content/node",
-          "title": "/Node"
+          "url": "{{LAM.ROOT}}/index.html?r=content/base64",
+          "title": "Base64"
+        },
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/node",
+          "title": "Node"
+        },
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/vnode",
+          "title": "VNode"
+        },
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/xhr",
+          "title": "Xhr"
+        },
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/template",
+          "title": "Template"
+        },
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/dom",
+          "title": "Dom"
+        },
+
+        {
+          "url": "{{LAM.ROOT}}/index.html?r=content/html",
+          "title": "Html"
         }
       ]
     }

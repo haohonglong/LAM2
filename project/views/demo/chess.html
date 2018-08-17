@@ -12,8 +12,8 @@
 					.load({
 						'baseUrl':System.ROOT,
 						'css':[
-								 '/project/css/lib.css'
-								,'/project/css/chess'
+								 '/css/lib.css'
+								,'/css/chess'
 						]
 					}).print();
 
@@ -39,7 +39,7 @@
 		$(function(){
 			chess=new System.Html5.Chess($('#chess')[0],19);
 			chess
-					.add_watermark(System.ROOT+'/project/images/11.jpg',function(){
+					.add_watermark(System.ROOT+'/images/11.jpg',function(){
 						chess
 								.draw()
 								.click();
