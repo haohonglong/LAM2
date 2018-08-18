@@ -5,7 +5,8 @@
  * 功能：可自动居中且兼容IE6
  * 创建日期：2014-12-1
  * 修改日期：2018-8-18
- * 注意：如果是垂直居中显示，必须要这样写 show().scroll()；
+ * 说明：
+ * 注意：妈的蛋，居中显示的时候，弹窗隐藏时滚动条发生改变，显示后就发生了居中不对齐的现象，最后终于找到了这个原因，解决办法：要在show()后加个scroll()的行为，这样写 show().scroll()；
  * @param	        popLayout(jQuery)   NO NULL : //弹出层jQuery对象
  * @param	        mask 	 (jQuery)      NULL : //弹出层下的蒙版jQuery对象
  * @param 			padding  (Number)    NULL : callBack 有padding值时
