@@ -92,7 +92,7 @@
 
             });
             $(window).resize(function() {
-                pop.resize();
+                pop.resize().scroll();
             });
 
 
@@ -103,7 +103,7 @@
             });
 
             $('#button').on('click',function(){
-                pop.show();
+                pop.show().scroll();
             });
 
 
