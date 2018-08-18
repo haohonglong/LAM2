@@ -4,7 +4,8 @@
  * 名称：弹出层 
  * 功能：可自动居中且兼容IE6
  * 创建日期：2014-12-1
- * 修改日期：2018-8-13
+ * 修改日期：2018-8-18
+ * 注意：如果是垂直居中显示，必须要这样写 show().scroll()；
  * @param	        popLayout(jQuery)   NO NULL : //弹出层jQuery对象
  * @param	        mask 	 (jQuery)      NULL : //弹出层下的蒙版jQuery对象
  * @param 			padding  (Number)    NULL : callBack 有padding值时
@@ -33,7 +34,8 @@
 					});
 
 					$('#button').on('click',function(){
-						pop.show();
+					如果是垂直居中显示，必须要这样写 show().scroll()
+						pop.show().scroll();
 					});
 		});
  */
