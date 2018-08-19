@@ -358,6 +358,7 @@
 		 * 修改日期：2016-9-8
 		 * 名称： fixed_element
 		 * 功能： 固定元素 （模拟css fixed 功能）
+		 * 注意：元素display:none;的时候 offset().top 获取的永远是0，详细解释参考看 http://api.jquery.com/offset/
 		 * @param (jQuery)$elem 被fixed 的元素
 		 * @param (jQuery)$context 出现滚动条的容器，默认是窗口
 		 * @param (Boolean)animate 是否有缓冲效果 默认没有
