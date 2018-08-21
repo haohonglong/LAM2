@@ -207,7 +207,7 @@
 						},
 						success: function(data,textStatus,jqXHR){
 							if(System.isString(data) && System.isPlainObject(_this.datas)){
-								data = System.Template.render(data,_this.datas,_this.delimiters);
+								data = System.Template.parser(data,_this.datas,_this.delimiters);
 							}
                             if(System.isFunction(_this.capture)){
                                 data = _this.capture(data);

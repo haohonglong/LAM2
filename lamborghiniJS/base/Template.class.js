@@ -398,7 +398,7 @@
      * 产品介绍：
      * 创建日期：2018-08-21
      * 修改日期：2018-08-21
-     * 名称：Template.render
+     * 名称：Template.parser
      * 功能：解析模版标签
      * 说明：
      * 注意：
@@ -407,7 +407,7 @@
      * @param delimiters
      * @returns {*|String}
      */
-	Template.render=function(S,D,delimiters){
+	Template.parser=function(S,D,delimiters){
 		if(!T){T = new Template();}
         return T.find(S,D,delimiters);
 	};
