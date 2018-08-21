@@ -206,15 +206,17 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
-                            var s = '',total = _this.repeat >= 1 ? _this.repeat : 1;
-							if(System.isPlainObject(_this.datas)){
+							if(System.isString(data) && System.isPlainObject(_this.datas)){
 								data = System.Template.render(data,_this.datas,_this.delimiters);
 							}
                             if(System.isFunction(_this.capture)){
                                 data = _this.capture(data);
                             }
-                            while((total--) > 0){s+=data;}
-                            data = s;
+                            if(System.isString(data)){
+                                var s = '',total = _this.repeat >= 1 ? _this.repeat : 1;
+                                while((total--) > 0){s+=data;}
+                                data = s;
+                            }
 
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
@@ -223,7 +225,6 @@
                                     _this.$dom.after(data).remove();
                                 }
                             }
-
 						}
 					})
 					.done(_this.done);
