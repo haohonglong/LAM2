@@ -103,7 +103,7 @@
          * @param 	(String)  	D.url_404         	  NULL :404默认地址
          * @param 	(String)  	D.jump         	      NULL :404页面是否独立一个页面打开
          * @param 	(String|{}) D.data             	  NULL :请求地址的参数
-         * @param 	(JSON) 		D.datas               NULL :分配模版里的数据
+         * @param 	(JSON) 		D.tpData               NULL :分配模版里的数据
          * @param 	(Array) 	D.delimiters          NULL :模版分隔符
          * @param 	(Number) 	D.repeat          	  NULL :模版循环次数
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
@@ -137,7 +137,7 @@
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
             this.delimiters  = $dom && $dom.attr('delimiters') 	&& System.eval($dom.attr('delimiters'))	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
-            this.datas  	 = $dom && $dom.attr('datas') 		&& System.eval($dom.attr('datas'))		|| D&&D.datas  	 	||	null;
+            this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
@@ -161,7 +161,14 @@
 		'render':function(content){
 			System.print(content);
 		},
-
+        'parser':function (S) {
+            return System.Template.parser(S,this.tpData,this.delimiters);
+        },
+        'loop':function (S) {
+            var s = '',total = this.repeat >= 1 ? this.repeat : 1;
+            while((total--) > 0){s+=S;}
+            return s;
+        },
 		'html':function(obj){
 
 		},
@@ -206,17 +213,9 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
-							if(System.isString(data) && System.isPlainObject(_this.datas)){
-								data = System.Template.parser(data,_this.datas,_this.delimiters);
-							}
-                            if(System.isFunction(_this.capture)){
-                                data = _this.capture(data);
-                            }
-                            if(System.isString(data)){
-                                var s = '',total = _this.repeat >= 1 ? _this.repeat : 1;
-                                while((total--) > 0){s+=data;}
-                                data = s;
-                            }
+							if(System.isString(data) && System.isPlainObject(_this.tpData)){data = _this.parser(data);}
+                            if(System.isFunction(_this.capture)){data = _this.capture(data);}
+                            if(System.isString(data)){data = _this.loop(data);}
 
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
