@@ -136,7 +136,7 @@
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
-            this.delimiters  = $dom && $dom.attr('delimiters') 	&& System.eval($dom.attr('delimiters'))	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
+            this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
