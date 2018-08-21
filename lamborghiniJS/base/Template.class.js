@@ -48,20 +48,22 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-9
-		 * 修改日期：2017-3-3
+		 * 修改日期：2018-8-21
 		 * 名称：find
 		 * 功能：查找模版标签
 		 * 说明：
 		 * 注意：
-		 * @param (String)S NO NULL:要查找的字符串
-		 * @param (Object)D NO NULL:对象模板中的数据
+		 * @param (String)S 			NO NULL:要查找的字符串
+		 * @param (Object)D 			NO NULL:对象模板中的数据
+		 * @param (Array)delimiters     NULL:模板分隔符
 		 * @returns {String}
 		 */
-		'find':function(S,D){
+		'find':function(S,D,delimiters){
 			var self=this;
 			var ss=[],arr=[],v=[],$1,$2;
-			var delimiterLeft  = this.delimiters[0];
-			var delimiterRight = this.delimiters[1];
+            delimiters = delimiters || this.delimiters;
+			var delimiterLeft  = delimiters[0];
+			var delimiterRight = delimiters[1];
 			//没找到模版分隔符就返回传入的字符串
 			if(S.indexOf(delimiterLeft) !== -1){
 				ss=S.split(delimiterLeft);
@@ -72,16 +74,12 @@
 						v=this.split(delimiterRight);
 						$1=v[0];
 						$2=v[1].trim();
-
 						arr.push([self.analysis($1,D),self.find($2,D)].join('').trim());
-
 					}
-
 				});
 			}else{
 				return S ||'';
 			}
-
 			return arr.join('');
 		},
 		'replace':function(){},
@@ -98,19 +96,15 @@
 							root=root[this];
 						}
 					});
-
 					return root;
 				}
+                if(v = System.eval(vars)){return v;}
 			}else{
 				if((k=vars) in D){
 					return D[k];
-
 				}
 			}
-
 			throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' '));
-
-
 		},
 		/**
 		 *
@@ -399,6 +393,25 @@
 	Template.getGuid=function(){
 		return guid;
 	};
+	var T = null;
+    /**
+     * 产品介绍：
+     * 创建日期：2018-08-21
+     * 修改日期：2018-08-21
+     * 名称：Template.render
+     * 功能：解析模版标签
+     * 说明：
+     * 注意：
+     * @param S
+     * @param D
+     * @param delimiters
+     * @returns {*|String}
+     */
+	Template.render=function(S,D,delimiters){
+		if(!T){T = new Template();}
+        return T.find(S,D,delimiters);
+	};
+
 
 
 	System.merge(null,[{

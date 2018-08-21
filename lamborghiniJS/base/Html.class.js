@@ -89,7 +89,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-8-13
+         * 修改日期：2018-8-21
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -103,6 +103,9 @@
          * @param 	(String)  	D.url_404         	  NULL :404默认地址
          * @param 	(String)  	D.jump         	      NULL :404页面是否独立一个页面打开
          * @param 	(String|{}) D.data             	  NULL :请求地址的参数
+         * @param 	(JSON) 		D.datas               NULL :分配模版里的数据
+         * @param 	(Array) 	D.delimiters          NULL :模版分隔符
+         * @param 	(Number) 	D.repeat          	  NULL :模版循环次数
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
          * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
@@ -127,13 +130,16 @@
             }
 
             this.$dom = $dom;
-            this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
-            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
+            this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
+            this.delimiters  = $dom && $dom.attr('delimiters') 	&& System.eval($dom.attr('delimiters'))	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
+            this.datas  	 = $dom && $dom.attr('datas') 		&& System.eval($dom.attr('datas'))		|| D&&D.datas  	 	||	null;
+            this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
+            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
             this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
@@ -200,9 +206,16 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
+                            var s = '',total = _this.repeat >= 1 ? _this.repeat : 1;
+							if(System.isPlainObject(_this.datas)){
+								data = System.Template.render(data,_this.datas,_this.delimiters);
+							}
                             if(System.isFunction(_this.capture)){
                                 data = _this.capture(data);
                             }
+                            while((total--) > 0){s+=data;}
+                            data = s;
+
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
 							}else{
