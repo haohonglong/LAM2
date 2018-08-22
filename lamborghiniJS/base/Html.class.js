@@ -161,8 +161,8 @@
 		'render':function(content){
 			System.print(content);
 		},
-        'parser':function (S) {
-            return System.Template.parser(S,this.tpData,this.delimiters);
+        'compile':function (S) {
+            return System.Template.compile(S,this.tpData,this.delimiters);
         },
         'loop':function (S) {
             var s = '',total = this.repeat >= 1 ? this.repeat : 1;
@@ -213,9 +213,9 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
-							if(System.isString(data) && System.isPlainObject(_this.tpData)){data = _this.parser(data);}
+							if(System.isString(data) && System.isPlainObject(_this.tpData)){data = _this.compile(data);}
                             if(System.isFunction(_this.capture)){data = _this.capture(data);}
-                            if(System.isString(data)){data = _this.loop(data);}
+                            if(_this.$dom && System.isString(data)){data = _this.loop(data);}
 
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
