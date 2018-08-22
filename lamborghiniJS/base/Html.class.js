@@ -148,14 +148,14 @@
             this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
             this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
             this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
+            this.file     = System.template(this.file);
+            this.file_404 = System.template(this.file_404);
+            if(System.isFunction(this.preform)){this.preform();}
 
 		},
 		'_className':'Html',
 		'__constructor':function(){},
 		'init':function () {
-            this.file     = System.template(this.file);
-            this.file_404 = System.template(this.file_404);
-            if(System.isFunction(this.preform)){this.preform();}
             return this;
         },
         'compile':function (S) {
