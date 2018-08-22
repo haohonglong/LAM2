@@ -320,7 +320,7 @@
 	 * @author: lhh
 	 * 产品介绍：获取容器里带模板标签的html 字符串 ，然后迭代解析后输出到指定标签里
 	 * 创建日期：2016-10-22
-	 * 修改日期：2017-3-3
+	 * 修改日期：2018-8-22
 	 * 名称：Template.foreach
 	 * @param {String}template NO NULL:容器里带模板标签的html 字符串
 	 * @param {Array}data		NO NUll:解析模板标签的数据
@@ -352,44 +352,29 @@
         title : 'java web appliaction',
         href : 'http://www.baidu.com',
         imgSrc : 'http://www.baidu.com'
-    },
-	 {
-        id : '3',
-        title : 'python web appliaction',
-        href : 'http://www.baidu.com',
-        imgSrc : 'http://www.baidu.com'
-    },
-	 {
-        id : '4',
-        title : 'js 权威指南',
-        href : 'http://www.qq.com',
-        imgSrc : 'http://www.qq.com'
     }]
 
 	 js:
 	 document.querySelector('.result').innerHTML=(System.Template.foreach($('[type="text/template-foreach:.result"]').html(), data,['{{','}}']));
 	 */
 	Template.foreach=function(template, data,delimiters){
-		delimiters = delimiters || System.Config.templat.delimiters;
-		var delimiterLeft  = delimiters[0];
-		var delimiterRight = delimiters[1];
 		var i = 0,
 			len = data.length,
 			fragment = '';
-		function replace(obj){
-			var t, key, reg;
-			for(key in obj){
-				reg = new RegExp(delimiterLeft + key + delimiterRight, 'ig');
-				t = (t || template).replace(reg, obj[key]);
-			}
-			return t;
-		}
 		for(; i < len; i++){
-			fragment += replace(data[i]);
+			fragment += Template.replace(template,data[i],delimiters);
 		}
 		return fragment;
 	};
-
+	Template.replace=function (template, data,delimiters) {
+        delimiters = delimiters || System.Config.templat.delimiters;
+        var L = delimiters[0],R = delimiters[1],t, key, reg;
+        for(key in data){
+            reg = new RegExp(L + key + R, 'ig');
+            t = (t || template).replace(reg, data[key]);
+        }
+        return t || template;
+    };
 	Template.getGuid=function(){
 		return guid;
 	};
