@@ -12,7 +12,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Dom','Html',System.classPath+'/base');
+	System.is(System,'Template','Html',System.classPath+'/base');
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
 
@@ -83,7 +83,7 @@
 	}],true);
 
 	var __this__=null;
-	var Html = System.Dom.extend({
+	var Html = System.Template.extend({
         /**
          *
          * @author: lhh
@@ -158,20 +158,15 @@
             if(System.isFunction(this.preform)){this.preform();}
             return this;
         },
-		'render':function(content){
-			System.print(content);
-		},
         'compile':function (S) {
-            return System.Template.compile(S,this.tpData,this.delimiters);
+            return this.base(S,this.tpData);
         },
         'loop':function (S) {
             var s = '',total = this.repeat >= 1 ? this.repeat : 1;
             while((total--) > 0){s+=S;}
             return s;
         },
-		'html':function(obj){
-
-		},
+		'html':function(obj){},
         'ajax':function () {
 		    var _this = this;
             if(System.isset(_this.file)){

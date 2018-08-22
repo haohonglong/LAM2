@@ -26,11 +26,11 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Template',System.classPath+'/base');
+	System.is(System,'Dom','Template',System.classPath+'/base');
 
 	var __this__=null;
 	var guid=0;
-	var Template = System.Browser.extend({
+	var Template = System.Dom.extend({
 		constructor: function(Config) {
 			this.base();
 			__this__=this;
@@ -49,8 +49,8 @@
 		 * 产品介绍：
 		 * 创建日期：2016-03-9
 		 * 修改日期：2018-8-21
-		 * 名称：find
-		 * 功能：查找模版标签
+		 * 名称：compile
+		 * 功能：编译模版标签
 		 * 说明：
 		 * 注意：
 		 * @param (String)S 			NO NULL:要查找的字符串
@@ -58,7 +58,7 @@
 		 * @param (Array)delimiters     NULL:模板分隔符
 		 * @returns {String}
 		 */
-		'find':function(S,D,delimiters){
+		'compile':function(S,D,delimiters){
 			var self=this;
 			var ss=[],arr=[],v=[],$1,$2;
             delimiters = delimiters || this.delimiters;
@@ -74,7 +74,7 @@
 						v=this.split(delimiterRight);
 						$1=v[0];
 						$2=v[1].trim();
-						arr.push([self.analysis($1,D),self.find($2,D)].join('').trim());
+						arr.push([self.analysis($1,D),self.compile($2,D)].join('').trim());
 					}
 				});
 			}else{
@@ -125,7 +125,7 @@
 		'render':function(view,D,callBack,Cajax){
 			var self=this,S;
 			System.Html.getFile(view,function(content){
-				S=self.find(content,D);
+				S=self.compile(content,D);
 
 				if(System.isFunction(callBack)){
 					callBack(S);
@@ -409,7 +409,7 @@
      */
 	Template.compile=function(S,D,delimiters){
 		if(!T){T = new Template();}
-        return T.find(S,D,delimiters);
+        return T.compile(S,D,delimiters);
 	};
 
 
