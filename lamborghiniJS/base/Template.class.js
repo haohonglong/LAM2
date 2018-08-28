@@ -366,6 +366,17 @@
 		}
 		return fragment;
 	};
+    /**
+     * 产品介绍：
+     * 创建日期：2016-10-22
+     * 修改日期：2018-08-22
+     * 名称：Template.replace
+     * 功能：解析模版标签
+     * @param {String}template
+     * @param {JSON}data
+     * @param {Array}delimiters
+     * @returns {*}
+     */
 	Template.replace=function (template, data,delimiters) {
         delimiters = delimiters || System.Config.templat.delimiters;
         var L = delimiters[0],R = delimiters[1],t, key, reg;
