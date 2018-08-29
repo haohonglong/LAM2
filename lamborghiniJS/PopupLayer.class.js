@@ -62,6 +62,7 @@
 			 this.base();
 			 __this__=this;
 			 var defaults={
+			 	 '$body':$('body'),
 				 '$popLayout':$('.pop-layer'),
 				 '$mask':$('.pop-mask'),
 				 'padding':6,
@@ -73,7 +74,7 @@
 
 			 D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
-
+			 this.$body = D.$body || $('body');
 			 this.$popLayout  = D.$popLayout;
 			 this.$mask 		=  D.$mask    || null;
 			 this.padding	=  D.padding || 0;
@@ -116,13 +117,13 @@
 		  * @author: lhh
 		  * 产品介绍：
 		  * 创建日期：2014-12-1
-		  * 修改日期：2018-8-28
+		  * 修改日期：2018-8-29
 		  * 名称：create
 		  * 功能：动态创建html
 		  * 说明：
 		  * 注意：
 		  * @param   (Object)D 	 NO NULL : 创建的信息
-		  * @return  (String)
+		  * @return  (PopupLayer)
 		  * Example:
 		  */
 		 'create':function(init){
@@ -155,23 +156,21 @@
 							 'title':'',
 							 'content':'',
 							 'attributes':{},
-						 },
+						 }
 					 },
-					 'select':0
+					 'option':0
 				 };
 
-			 var D = System.isObject(init) ? System.merge({},[init,defaults]) : defaults;
-			 var tag = System.Html.tag,container,close,title,more,content;
+			 var D = System.isObject(init) ? System.merge(true,System.createDict(),[defaults,init],true) : defaults;
+			 var tag = System.Html.tag,container,close,title,more,content,className='',text='';
 			 container = D.container;
 			 close = container.close;
 			 title = container.title;
 			 content = container.content;
 			 more = title.more;
 
-
-			 var text='';
-			 switch(D['select']){
-				 case 0:
+			 switch(D.option){
+				 case 1:
                      text = tag('div',container.attributes,
 						 [
                              System.isset(close) && System.isPlainObject(close) ? tag(close.tag,close.attributes) : ''
@@ -199,16 +198,39 @@
 
 						 ]
 					 );
-
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
 					 break;
-
+				 case 2:
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     text = tag('div',container.attributes,System.Dom.getOuterHTML(this.$popLayout[0]));
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
+				 	break;
+				 case 3:
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     text = tag('div',container.attributes,this.$popLayout.html());
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
+				 	break;
 
 				 default:
 
 			 }
-
-
-			 return text;
+			 this.hide();
+             this.$popLayout.appendTo(this.$body);
+             this.$mask.appendTo(this.$body);
+			 return this;
 		 },
 
 		 'append':function($div){},

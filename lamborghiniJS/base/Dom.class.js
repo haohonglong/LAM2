@@ -1366,6 +1366,17 @@
 	};
     /**
      *
+     * @param {Element}el
+     * @returns {String}
+     */
+    Dom.getOuterHTML = function(el) {
+        if (el.outerHTML) {return el.outerHTML}
+        var container = document.createElement('div');
+        container.appendChild(el.cloneNode(true));
+        return container.innerHTML
+    };
+    /**
+     *
      * @author: lhh
      * 创建日期：2014/12/10
      * 修改日期：2014/12/10

@@ -665,21 +665,6 @@
 		return Html.tag(true,'img',Attr);
 	};
 
-    /**
-	 *
-     * @param {Element}el
-     * @returns {Element}
-     */
-    Html.getOuterHTML = function(el) {
-        if (el.outerHTML) {
-            return el.outerHTML
-        } else {
-            var container = document.createElement('div');
-            container.appendChild(el.cloneNode(true));
-            return container.innerHTML
-        }
-    };
-
     Html.code_map={
     	 '&' : '&#38'
     	,'"' : '&#34'
