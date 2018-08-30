@@ -1810,6 +1810,32 @@
             return merge(this.slice(0, parseInt(mid)).merge_sort(), this.slice(parseInt(mid)).merge_sort());
 		})
 
+	   /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018.8.30
+         * 修改日期：2018.8.30
+         * 名称：unique
+         * 功能：去重
+         * 说明：
+         * 注意：
+         * 调用方式：
+         * @return  (Array)返回去重后的数组
+         * Example：
+         */
+		.method('unique',function(arr){
+			arr = this;
+            var hash=[];
+            for (var i = 0; i < arr.length; i++) {
+                if(hash.indexOf(arr[i])==-1){
+                    hash.push(arr[i]);
+                }
+            }
+            return hash;
+		})
+
+
+
 	/**
 	 *
 	 * @author: lhh
