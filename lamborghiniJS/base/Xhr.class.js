@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2018-8-20
+ * 修改日期：2018-9-4
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -95,12 +95,12 @@
 		 */
 		'getXHR':function(){return this.xhr;},
 		'get': function () {
-			this.xhr.open('get', this.url,this.async,this.user,this.password);
+			this.xhr.open('GET', this.url,this.async,this.user,this.password);
 			this.ready();
 			this.xhr.send();
 		},
 		'post': function () {
-			this.xhr.open('post', this.url,this.async,this.user,this.password);
+			this.xhr.open('POST', this.url,this.async,this.user,this.password);
 			this.ready();
 			this.xhr.send(this.data);
 		},
