@@ -42,6 +42,7 @@
 	Router.once = true;
     Router.init=function () {
     	if(Router.once){
+            if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
             var r = System.get('r').split('/');
             var str = r[0];
             var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
@@ -49,10 +50,15 @@
             var action = r[1];
             action = action+'Action';
             System
-                .import(['/'+ControllerName],System.CONTROLLERS);
+                .import(['/'+ControllerName],System.CONTROLLERS)
+                .import(['/View.class'],System.classPath+'/base');
 
-            var controller  = (new System[ControllerName]());
-            controller[action]();
+            try{
+            	(new System[ControllerName]())[action]();
+			}catch(e){
+                System.View.ERROR_404();
+			}
+
             Router.once = false;
 		}
 

@@ -60,6 +60,7 @@
                     ,'PLUGINS':_ROOT_+'/common/plugins'
                     ,'CONTROLLERS':ROOT+'/controllers'
                     ,'VIEWS':ROOT+'/views'
+                    ,'ERROR_404':ROOT+'/views/404.html'
                     ,'CSS':ROOT+'/css'
                     ,'JS':ROOT+'/js'
                 };

@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="content-Type" content="text/html" charset="utf-8">
 <title>背景半透明覆盖整个可视区域</title>
-    <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript">
         var pop;
         LAMJS.run(function() {
@@ -85,13 +84,9 @@ html,body{ height:100%; margin:0; padding:0}
 
             $(window).scroll(function() {
                 pop.scroll();
-                pop.destructor();
-
-
             });
             $(window).resize(function() {
-                pop.resize();
-                pop.scroll();
+                pop.resize().scroll();
             });
 
 
@@ -102,8 +97,7 @@ html,body{ height:100%; margin:0; padding:0}
             });
 
             $('#button').on('click',function(){
-                pop.resize();
-                pop.show();
+                pop.show().scroll();
             });
 
 

@@ -1,34 +1,20 @@
-<plate>
-	<ul class="list sectionFloat clearfix">
-		<li class="cur">111</li>
-		<li>222</li>
-		<li>333</li>
-	</ul>
-	<div class="block">{{D.content}}</div>
-	<div class="block hide">22222</div>
-	<div class="block hide">33333</div>
-</plate>
+<ul class="list sectionFloat clearfix">
+	<li class="cur">111</li>
+	<li>222</li>
+	<li>333</li>
+</ul>
+<div class="block">{{content}}</div>
+<div class="block hide">22222</div>
+<div class="block hide">33333</div>
+
 
 <script type="text/javascript">
 	LAMJS.run(function() {
 		'use strict';
 		var System=this;
-
 		System.import([
 			'/Tab.class'
 		],System.classPath);
-
-
-       	var $plate = $('plate');
-        var content  = new System.Template().find($plate.html(),{
-            'ROOT':System.ROOT,
-            'D':{
-                'title':'你好，世界！',
-                'content':'this is include'
-            }
-        });
-
-        $plate.after(content).remove();
 
     });
 

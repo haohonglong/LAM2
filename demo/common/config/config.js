@@ -50,21 +50,27 @@
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
-            'Public':{
-                 'ROOT':_ROOT_+'/documentation'
-                ,'COMMON':_ROOT_+'/common'
-                ,'PLUGINS':_ROOT_+'/common/plugins'
-                ,'VIEWS':_ROOT_+'/documentation/views'
-                ,'ERROR_404':_ROOT_+'/documentation/views/404.html'
-                ,'CSS':_ROOT_+'/documentation/css'
-                ,'JS':_ROOT_+'/documentation/js'
-            },
+            'Public':(function(){
+                var ROOT = _ROOT_+'/demo';
+                return {
+                    'ROOT':ROOT
+                    ,'_ROOT_':_ROOT_
+                    ,'_COMMON':ROOT+'/common'
+                    ,'COMMON':_ROOT_+'/common'
+                    ,'PLUGINS':_ROOT_+'/common/plugins'
+                    ,'CONTROLLERS':ROOT+'/controllers'
+                    ,'VIEWS':ROOT+'/views'
+                    ,'ERROR_404':ROOT+'/views/404.html'
+                    ,'CSS':ROOT+'/css'
+                    ,'JS':ROOT+'/js'
+                };
+            })(),
             //hashcode 随机种子
             'random':10000,
             //定义模版标签
             'templat':{
                 'custom_attr':'[data-var=tpl]',
-                'delimiters':['{#','#}']
+                'delimiters':['{{','}}']
             },
             'files':[],
             'XHR':{//配置加载xhr 的公共参数
@@ -81,6 +87,8 @@
                 return [
                     classPath+'/jQuery/jquery.js'
                     ,classPath+'/build/base.min.js'
+                    ,classPath+'/base/Controller.class.js'
+                    ,classPath+'/base/Router.class.js'
                     // ,classPath+'/base/System.js'
                     // ,classPath+'/base/Base.class.js'
                     // ,classPath+'/base/Object.class.js'
@@ -307,13 +315,13 @@
                         LAMJS.main=function() {
                             'use strict';
                             var System=this;
-                            System.use();
-                            console.log('function of main  called');
                         };
+
+
                     }
                     clearInterval(timer);
                 }
-            },55);
+            },1);
             //=================================================================================================================================
         }
     })(System);

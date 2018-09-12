@@ -45,7 +45,9 @@
 <body>
 <!--嵌套三层 每一层是一个对象-->
 <div id="container" class="">
-    <div class="sidbar"><include file="{{VIEWS}}/include/test.html" dataType="html"></include></div>
+    <div class="sidbar">
+        <include tp-data="{'content':'this is include'}" file="{{VIEWS}}/include/test.html" dataType="html"></include>
+    </div>
 
     <div class="content over-h" id="content">
         <ul id="ul1" class="sectionFloat clearfix P10">

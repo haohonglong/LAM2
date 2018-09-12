@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 function deldir($dir) {
   //先删除目录下的文件：

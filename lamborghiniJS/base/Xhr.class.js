@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2018-5-9
+ * 修改日期：2018-9-4
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -52,9 +52,10 @@
 				user:"",
 				password:"",
 				success:function(){},
+                beforeSend:function(XHR,Xhr){},
 				error:function(){}
 			};
-			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+			D = System.isPlainObject(D) ? System.merge(System.createDict(),[D,defaults]) : defaults;
 			this.D = D;
 			this.url         = url;
 			this.xhr         = D.xhr;
@@ -65,11 +66,13 @@
 			this.async       = System.isBoolean(D.async) ? D.async : true;
 			this.user        = D.user;
 			this.password    = D.password;
+			this.beforeSend  = D.beforeSend;
 			this.success     = D.success;
 			this.error       = D.error;
 
 			this.check();
 			this.parseJson();
+            this.beforeSend(this.xhr,this);
 			if('post' === this.type.toLowerCase()){
 				this.post();
 			}else{
@@ -92,12 +95,12 @@
 		 */
 		'getXHR':function(){return this.xhr;},
 		'get': function () {
-			this.xhr.open('get', this.url,this.async,this.user,this.password);
+			this.xhr.open('GET', this.url,this.async,this.user,this.password);
 			this.ready();
 			this.xhr.send();
 		},
 		'post': function () {
-			this.xhr.open('post', this.url,this.async,this.user,this.password);
+			this.xhr.open('POST', this.url,this.async,this.user,this.password);
 			this.ready();
 			this.xhr.send(this.data);
 		},

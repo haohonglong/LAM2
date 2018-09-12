@@ -4,7 +4,7 @@
  * 名称：弹出层 
  * 功能：可自动居中且兼容IE6
  * 创建日期：2014-12-1
- * 修改日期：2018-8-18
+ * 修改日期：2018-8-28
  * 说明：
  * 注意：妈的蛋，居中显示的时候，弹窗隐藏时滚动条发生改变，显示后就发生了居中不对齐的现象，最后终于找到了这个原因:元素display:none;的时候 offset().top 获取的永远是0,详细解释参考看 http://api.jquery.com/offset/ 解决办法：要在show()后加个scroll()的行为，要这样写 show().scroll()；
   * resize 时会y位置会跑偏，解决方法：resize().scroll()
@@ -62,6 +62,7 @@
 			 this.base();
 			 __this__=this;
 			 var defaults={
+			 	 '$body':$('body'),
 				 '$popLayout':$('.pop-layer'),
 				 '$mask':$('.pop-mask'),
 				 'padding':6,
@@ -73,7 +74,7 @@
 
 			 D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
-
+			 this.$body = D.$body || $('body');
 			 this.$popLayout  = D.$popLayout;
 			 this.$mask 		=  D.$mask    || null;
 			 this.padding	=  D.padding || 0;
@@ -116,53 +117,80 @@
 		  * @author: lhh
 		  * 产品介绍：
 		  * 创建日期：2014-12-1
-		  * 修改日期：2016-9-11
+		  * 修改日期：2018-8-29
 		  * 名称：create
 		  * 功能：动态创建html
 		  * 说明：
 		  * 注意：
 		  * @param   (Object)D 	 NO NULL : 创建的信息
-		  * @return  (String)
+		  * @return  (PopupLayer)
 		  * Example:
 		  */
 		 'create':function(init){
 			 var defaults={
-				 'div_class_PopupLayer_wrap_name':'section sectionPopupLayer-A1',
-				 'div_class_colose_name':'close',
-				 'div_title_name':'sectionBox sectionTitle',
-				 'div_content_name':'content',
-				 'more':'更多>>',
-				 'title':'标题',
-				 'content':'内容',
-				 'select':0
-			 };
+					 'container':{
+						 'attributes':{
+							 'class':'section sectionPopupLayer-A1'
+						 },
+						 'close':{
+							 'tag':'div',
+							 'attributes':{
+								 'class':'div_class_colose_name'
+							 }
+						 },
+						 'title':{
+							 'tag':'h2',
+							 'title':'title',
+                             'attributes':{
+                                 'class':'sectionBox sectionTitle'
+                             },
+							 'more':{
+								 'tag':'span',
+								 'text':'更多>>',
+								 'attributes':{
+									 'class':'more'
+								 }
+							 }
+						 },
+						 'content':{
+							 'title':'',
+							 'content':'',
+							 'attributes':{},
+						 }
+					 },
+					 'option':0
+				 };
 
-			 var D = System.isObject(init) ? System.merge({},[init,defaults]) : defaults;
-			 var tag = System.Html.tag;
+			 var D = System.isObject(init) ? System.merge(true,System.createDict(),[defaults,init],true) : defaults;
+			 var tag = System.Html.tag,container,close,title,more,content,className='',text='';
+			 container = D.container;
+			 close = container.close;
+			 title = container.title;
+			 content = container.content;
+			 more = title.more;
 
-			 var container='';
-			 switch(D['select']){
-				 case 0:
-					 container = tag('div',{'class':D["div_class_PopupLayer_wrap_name"]},
+			 switch(D.option){
+				 case 1:
+                     text = tag('div',container.attributes,
 						 [
-                             D["div_class_colose_name"] ? tag('div',{'class':D["div_class_colose_name"]}) : ''
+                             System.isset(close) && System.isPlainObject(close) ? tag(close.tag,close.attributes) : ''
 							 ,tag('div',{'class':'p10'},
 							 tag('div',{'class':'content'},
 								 [
 									 (function () {
-                                         return D["div_title_name"]
+                                         return System.isset(title) && System.isPlainObject(title)
 											 ?
-												 tag('div',{'class':D["div_title_name"]},
+												 tag('div',title.attributes,
 													 [
-														 tag('h2',{},D["title"])
-														 ,D["more"] ? tag('div',{'class':'more'},D["more"]) : ''
+														 tag(title.tag,title.title)
+														 ,System.isset(more) && System.isPlainObject(more) ? tag(more.tag,more.attributes,more.text) : ''
 													 ]
 												 )
 											 :
 											 '';
                                      })()
-									 ,tag('div',{'class':D["div_content_name"]},
-										 tag('div',{'class':'P20'},D["content"])
+									 ,tag('div',content.attributes,
+										 tag('div',{'class':'P20'},content.content)
 									 )
 								 ]
 							 )
@@ -170,16 +198,39 @@
 
 						 ]
 					 );
-
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
 					 break;
-
+				 case 2:
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     text = tag('div',container.attributes,System.Dom.getOuterHTML(this.$popLayout[0]));
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
+				 	break;
+				 case 3:
+                     className = this.$popLayout.attr('class');
+                     this.$popLayout.attr('class','');
+                     text = tag('div',container.attributes,this.$popLayout.html());
+                     this.$popLayout.remove();
+                     this.$popLayout = null;
+                     this.$popLayout = $(text);
+                     this.$popLayout.attr('class',className);
+				 	break;
 
 				 default:
 
 			 }
-
-
-			 return container;
+			 this.hide();
+             this.$popLayout.appendTo(this.$body);
+             this.$mask.appendTo(this.$body);
+			 return this;
 		 },
 
 		 'append':function($div){},

@@ -12,7 +12,7 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Dom','Html',System.classPath+'/base');
+	System.is(System,'Template','Html',System.classPath+'/base');
 	var sAttribute   = System.Config.render.default.script.Attribute;
 	var cAttribute   = System.Config.render.default.css.Attribute;
 
@@ -83,13 +83,13 @@
 	}],true);
 
 	var __this__=null;
-	var Html = System.Dom.extend({
+	var Html = System.Template.extend({
         /**
          *
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-8-13
+         * 修改日期：2018-8-22
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -103,6 +103,9 @@
          * @param 	(String)  	D.url_404         	  NULL :404默认地址
          * @param 	(String)  	D.jump         	      NULL :404页面是否独立一个页面打开
          * @param 	(String|{}) D.data             	  NULL :请求地址的参数
+         * @param 	(JSON) 		D.tpData               NULL :分配模版里的数据
+         * @param 	(Array) 	D.delimiters          NULL :模版分隔符
+         * @param 	(Number) 	D.repeat          	  NULL :模版循环次数
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
          * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
@@ -127,13 +130,16 @@
             }
 
             this.$dom = $dom;
-            this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
-            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
+            this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
+            this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
+            this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
+            this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
+            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
             this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
@@ -142,23 +148,25 @@
             this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
             this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
             this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
+            this.file     = System.template(this.file);
+            this.file_404 = System.template(this.file_404);
+            if(System.isFunction(this.preform)){this.preform();}
 
 		},
 		'_className':'Html',
 		'__constructor':function(){},
 		'init':function () {
-            this.file     = System.template(this.file);
-            this.file_404 = System.template(this.file_404);
-            if(System.isFunction(this.preform)){this.preform();}
             return this;
         },
-		'render':function(content){
-			System.print(content);
-		},
-
-		'html':function(obj){
-
-		},
+        'compile':function (S) {
+            return this.base(S,this.tpData);
+        },
+        'loop':function (S) {
+            var s = '',total = this.repeat >= 1 ? this.repeat : 1;
+            while((total--) > 0){s+=S;}
+            return s;
+        },
+		'html':function(obj){},
         'ajax':function () {
 		    var _this = this;
             if(System.isset(_this.file)){
@@ -200,9 +208,10 @@
 							}
 						},
 						success: function(data,textStatus,jqXHR){
-                            if(System.isFunction(_this.capture)){
-                                data = _this.capture(data);
-                            }
+							if(System.isString(data) && System.isPlainObject(_this.tpData)){data = _this.compile(data);}
+                            if(System.isFunction(_this.capture)){data = _this.capture(data);}
+                            if(_this.$dom && System.isString(data)){data = _this.loop(data);}
+
 							if(_this.success && System.isFunction(_this.success)){
 								_this.success(data,textStatus,jqXHR);
 							}else{
@@ -210,7 +219,6 @@
                                     _this.$dom.after(data).remove();
                                 }
                             }
-
 						}
 					})
 					.done(_this.done);
@@ -656,21 +664,6 @@
 		Attr.src = src;
 		return Html.tag(true,'img',Attr);
 	};
-
-    /**
-	 *
-     * @param {Element}el
-     * @returns {Element}
-     */
-    Html.getOuterHTML = function(el) {
-        if (el.outerHTML) {
-            return el.outerHTML
-        } else {
-            var container = document.createElement('div');
-            container.appendChild(el.cloneNode(true));
-            return container.innerHTML
-        }
-    };
 
     Html.code_map={
     	 '&' : '&#38'
