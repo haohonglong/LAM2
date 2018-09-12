@@ -36,14 +36,14 @@
             this.layout = 'main';
             this.viewpath = System.ViEWS+'/layouts';
             this.suffix = '.html';
-            this.viewpath = this.viewpath+'/'+this.layout+this.suffix;
+            this.view = this.viewpath+'/'+this.layout+this.suffix;
         },
         '_className':'Controller',
         'init':function (data) {
             data = data || {
                 'ROOT':System.ROOT
             };
-            new System.Template().render(this.viewpath,data,function(content){
+            new System.Template().render(this.view,data,function(content){
                 System.print(content);
             },{
                 beforeSend:function(a,b){
