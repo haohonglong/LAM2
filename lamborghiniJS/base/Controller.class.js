@@ -34,10 +34,11 @@
             __this__=this;
             init = init || {};
             this.layout = 'main';
+            this.viewpath = System.ViEWS+'/layouts/';
         },
         '_className':'Controller',
         'init':function () {
-            new System.Template().render(System.ViEWS+'/layout/'+this.layout+'.html',{
+            new System.Template().render(this.viewpath+this.layout+'.html',{
                 'ROOT':System.ROOT
             },function(content){
                 System.print(content);
