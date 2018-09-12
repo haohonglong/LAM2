@@ -10,13 +10,16 @@
  *
  *
  */
+
 (function(window,undefined){
     'use strict';
     var ROOT="",_ROOT_="",System={},Config={},namespace="";
     //check
-    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){return;}
-
-    window.GRN_LHH='System';
+    if(window.GRN_LHH && window[window.GRN_LHH] != undefined){
+        return;
+    }else{
+        window.GRN_LHH='System';
+    }
     namespace = window.GRN_LHH;
     //js获取项目根路径，如： http://localhost:8083/uimcardprj
     function getRootPath(){
@@ -33,7 +36,7 @@
     }
 
     if(!window._ROOT_){
-        _ROOT_ = window._ROOT_ = window.location.pathname || getRootPath();
+        _ROOT_ = window._ROOT_ = getRootPath();
     }else{
         _ROOT_ = window._ROOT_;
     }
@@ -47,18 +50,23 @@
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
-            'Public':{
-                 'ROOT':_ROOT_+'/demo'
-                ,'ROUTE':''
-                ,'COMMON':_ROOT_+'/common'
-                ,'PLUGINS':_ROOT_+'/common/plugins'
-                ,'CONTROLLERS':_ROOT_+'/demo/controllers'
-                ,'VIEWS':_ROOT_+'/demo/views'
-                ,'ERROR_404':_ROOT_+'/demo/views/404.html'
-            },
-            'components':{},
+            'Public':(function(){
+                var ROOT = _ROOT_+'/demo';
+                return {
+                    'ROOT':ROOT
+                    ,'_ROOT_':_ROOT_
+                    ,'_COMMON':ROOT+'/common'
+                    ,'COMMON':_ROOT_+'/common'
+                    ,'PLUGINS':_ROOT_+'/common/plugins'
+                    ,'CONTROLLERS':ROOT+'/controllers'
+                    ,'VIEWS':ROOT+'/views'
+                    ,'ERROR_404':ROOT+'/views/404.html'
+                    ,'CSS':ROOT+'/css'
+                    ,'JS':ROOT+'/js'
+                };
+            })(),
             //hashcode 随机种子
-            'random':999,
+            'random':10000,
             //定义模版标签
             'templat':{
                 'custom_attr':'[data-var=tpl]',
@@ -74,26 +82,28 @@
             //配置基础文件
             'autoLoadFile':function(){
                 ROOT = this.Public.ROOT;
+                var PLUGINS = this.Public.PLUGINS;
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
                     ,classPath+'/build/base.min.js'
-                    //,classPath+'/base/System.js'
-                    //,classPath+'/base/Base.class.js'
-                    //,classPath+'/base/Object.class.js'
-                    //,classPath+'/base/Component.class.js'
-                    //,classPath+'/base/Helper.class.js'
-                    //,classPath+'/base/Browser.class.js'
-                    //,classPath+'/base/Event.class.js'
-                    //,classPath+'/base/Dom.class.js'
-                    //,classPath+'/base/Template.class.js'
-                    //,classPath+'/base/Html.class.js'
-                    //,classPath+'/base/Loader.class.js'
-                    ,classPath+'/base/Router.class.js'
                     ,classPath+'/base/Controller.class.js'
-                    ,classPath+'/base/Css.class.js'
+                    ,classPath+'/base/Router.class.js'
+                    // ,classPath+'/base/System.js'
+                    // ,classPath+'/base/Base.class.js'
+                    // ,classPath+'/base/Object.class.js'
+                    // ,classPath+'/base/Component.class.js'
+                    // ,classPath+'/base/Helper.class.js'
+                    // ,classPath+'/base/Browser.class.js'
+                    // ,classPath+'/base/Event.class.js'
+                    // ,classPath+'/base/Dom.class.js'
+                    // ,classPath+'/base/Template.class.js'
+                    // ,classPath+'/base/Html.class.js'
+                    // ,classPath+'/base/Loader.class.js'
+                    ,PLUGINS+'/vue/vue.js'
                 ];
             },
+
             //标签的渲染方式
             'render':{
                 //加载文件的后缀名称
@@ -109,7 +119,7 @@
                     'script':{
                         'Attribute':{
                             'type':'text/javascript',
-                            //'async':true,
+                            //'async':'async',
                             //'defer':'defer',
                             'charset':'utf-8'
                         }
@@ -129,25 +139,35 @@
                         'meta'    : document.getElementsByTagName('meta')[0],
                         'script'  : document.getElementsByTagName('script')[0],
                         'link'    : document.getElementsByTagName('link')[0],
-                        'div'     : document.getElementsByTagName('div')[0]
+                        'div'    : document.getElementsByTagName('div')[0]
                     };
                 },
                 'bulid':function(tag,D){
                     tag = tag || "script";
                     var node;
                     var k;
+                    var fragment;
                     node=document.createElement(tag);
-                    for(k in D){node[k] = D[k];}
-                    if(!Config.render.fragment){Config.render.fragment = window.document.createDocumentFragment();}
+
+                    for(k in D){
+                        node[k] = D[k];
+                    }
+
+                    if(!Config.render.fragment){
+                        Config.render.fragment = document.createDocumentFragment();
+                    }
+                    fragment = Config.render.fragment;
+
                     Config.render.fragment.appendChild(node);
-                    return node.outerHTML;
+
+                    return fragment;
                 },
                 /**
                  * 用createElement 创建标签并且设为异步
                  */
                 'use':function(){
                     this.create=true;
-                    this.default.script.Attribute.async=true;
+                    this.default.script.Attribute.async='async';
                     this.default.script.Attribute.defer='defer';
                 },
                 /**
@@ -211,6 +231,14 @@
                 document.write(S);
                 // System.close(document);
             }
+        };
+        /**
+         *
+         * @param s
+         * @returns {boolean}
+         */
+        System.isset=function(s){
+            return (typeof s !== "undefined" &&  s !== null);
         };
         /**
          * @author: lhh
@@ -287,17 +315,20 @@
                         LAMJS.main=function() {
                             'use strict';
                             var System=this;
-                            System.use();
-                            console.log('function of main  called');
                         };
+
+
                     }
                     clearInterval(timer);
                 }
-            },55);
+            },1);
             //=================================================================================================================================
         }
     })(System);
 })(this);
+
+
+
 
 
 
