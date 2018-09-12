@@ -23,6 +23,7 @@
 		'_className':'View',
 		'__constructor':function(){},
 
+
 		/**
 		 *
 		 * @author lhh
@@ -38,7 +39,28 @@
 		 */
 		'destructor':function(){}
 	});
-
+    /**
+     * @author lhh
+     * 产品介绍：
+     * 创建日期：2019-9-12
+     * 修改日期：2019-9-12
+     * 名称：View.ERROR_404
+     * 功能：not found of page then display the page of error_404
+     * 说明：
+     * 注意：
+     * @return  (void)						:
+     * Example：
+     *
+     */
+	View.ERROR_404 = function () {
+        new System.Template().render(System.ERROR_404,{},function(content){
+            System.print(content);
+        },{
+            beforeSend:function(a,b){
+                this.async=false;
+            }
+        });
+    };
 	return View;
 });
 
