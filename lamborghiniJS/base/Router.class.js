@@ -54,8 +54,7 @@
                 .import(['/View.class'],System.classPath+'/base');
 
             try{
-            	var controller  = (new System[ControllerName]());
-                controller[action]();
+            	(new System[ControllerName]())[action]();
 			}catch(e){
                 System.View.ERROR_404();
 			}
