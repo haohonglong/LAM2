@@ -2,8 +2,8 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-8-13
- * 名称：助手类
+ * 修改日期:2018-9-12
+ * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
  *
@@ -33,8 +33,20 @@
             this.base();
             __this__=this;
             init = init || {};
+            this.layout = 'main';
         },
         '_className':'Controller',
+        'init':function () {
+            new System.Template().render(System.ViEWS+'/layout/'+this.layout+'.html',{
+                'ROOT':System.ROOT
+            },function(content){
+                System.print(content);
+            },{
+                beforeSend:function(a,b){
+                    this.async=false;
+                }
+            });
+        },
 
         /**
          *
