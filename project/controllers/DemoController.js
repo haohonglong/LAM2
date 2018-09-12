@@ -16,15 +16,16 @@
     var __this__=null;
     System.is(System,'Controller','DemoController',System.classPath+'/base');
     System.import(['/artTemplate/artTemplate'],System.PLUGINS);
-    var views = System.VIEWS+'/demo';
+
     var DemoController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
             __this__=this;
+            this.viewpath = System.VIEWS+'/demo';
 
         },
         'layoutAction':function(){
-            new System.Template().render(views+'/layout.html',{
+            this.render('layout',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'布局demo',
@@ -33,17 +34,15 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                System.print(content);
-
-            },{
+            },null,{
+                file_404:System.ERROR_404,
                 beforeSend:function(a,b){
                     // this.async=true;
                 }
             });
         },
         'thumbnailAction':function(){
-            new System.Template().render(views+'/thumbnail.html',{
+            this.render('thumbnail',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'缩略图 适应不同的分辨率显示',
@@ -63,19 +62,16 @@
         },
 
         'popLayerAction':function(){
-            new System.Template().render(views+'/popLayer.html',{
+            this.render('popLayer',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'弹出层',
                 'D':{}
 
-            },function(content){
-                System.print(content);
-
             });
         },
         'sliderAction':function(){
-            new System.Template().render(views+'/slider.html',{
+            this.render('slider',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'背景半透明覆盖整个可视区域',
@@ -98,30 +94,22 @@
             });
         },
         'dragAction':function(){
-            new System.Template().render(views+'/drag.html',{
+            this.render('drag',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'拖拽实例',
                 'LAMJS':System.classPath,
                 'D':{}
 
-            },function(content){
-                System.print(content);
-
-
             });
         },
         'chessAction':function(){
-            new System.Template().render(views+'/chess.html',{
+            this.render('chess',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'五子棋',
                 'LAMJS':System.classPath,
                 'D':{}
-
-            },function(content){
-                System.print(content);
-
 
             });
         },
