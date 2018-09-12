@@ -34,13 +34,16 @@
             __this__=this;
             init = init || {};
             this.layout = 'main';
-            this.viewpath = System.ViEWS+'/layouts/';
+            this.viewpath = System.ViEWS+'/layouts';
+            this.suffix = '.html';
+            this.viewpath = this.viewpath+'/'+this.layout+this.suffix;
         },
         '_className':'Controller',
-        'init':function () {
-            new System.Template().render(this.viewpath+this.layout+'.html',{
+        'init':function (data) {
+            data = data || {
                 'ROOT':System.ROOT
-            },function(content){
+            };
+            new System.Template().render(this.viewpath,data,function(content){
                 System.print(content);
             },{
                 beforeSend:function(a,b){
