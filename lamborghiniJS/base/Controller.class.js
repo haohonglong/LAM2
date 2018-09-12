@@ -34,22 +34,47 @@
             __this__=this;
             init = init || {};
             this.layout = 'main';
-            this.viewpath = System.ViEWS+'/layouts';
             this.suffix = '.html';
-            this.view = this.viewpath+'/'+this.layout+this.suffix;
+            this.view = '/layouts/'+this.layout;
+            this.viewpath = System.VIEWS;
+
         },
         '_className':'Controller',
         'init':function (data) {
-            data = data || {
-                'ROOT':System.ROOT
-            };
-            new System.Template().render(this.view,data,function(content){
-                System.print(content);
-            },{
+            this.render(this.view,data);
+        },
+        /**
+         * @author lhh
+         * 产品介绍：析构方法
+         * 创建日期：2018-9-12
+         * 修改日期：2018-9-12
+         * 名称：render
+         * 功能：render the page
+         * 说明：
+         * 注意：
+         * @param name{String}      name of view
+         * @param data{Object}      assign data to page
+         * @param print{Function}
+         * @param D{Object}         for ajax configure
+         */
+        'render':function (name,data,print,D) {
+            data = data || {};
+            D = System.merge({},[D,{
+                file_404:System.ERROR_404,
                 beforeSend:function(a,b){
                     this.async=false;
                 }
-            });
+            }]);
+            if('/' !== name.trim().substring(0,1)){name = '/'+name;}
+
+            new System.Template().render(this.viewpath+name+this.suffix,data,function(content){
+                if(System.isFunction(print)){
+                    print(content);
+                }else {
+                    System.print(content);
+                }
+
+            },D);
         },
 
         /**
