@@ -55,6 +55,7 @@
                 ,'COMMON':_ROOT_+'/common'
                 ,'PLUGINS':_ROOT_+'/common/plugins'
                 ,'VIEWS':_ROOT_+'/documentation/views'
+                ,'ERROR_404':_ROOT_+'/documentation/views/404.html'
                 ,'CSS':_ROOT_+'/documentation/css'
                 ,'JS':_ROOT_+'/documentation/js'
             },
