@@ -22,7 +22,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014.6.4
-	 * 修改日期：2015.9.22
+	 * 修改日期：2019.9.13
 	 * 名称： Canvas
 	 * 功能：
 	 * 说明：
@@ -133,10 +133,10 @@
 		 */
 		'polygon':function(D){
 			var defaults={
-				'position':{'x':300,'y':100},
+				'position':{'x':60,'y':70},
 				'width':0,
 				'n':6,
-				'r':50,
+				'r':60,
 				'strokeStyle':'#f60',
 				'callback':function(that){
 					that.closePath().stroke().fill(this.strokeStyle);
@@ -545,6 +545,9 @@
 
 			return this;
 		},
+		'cube':function () {
+
+        },
 
 		/**
 		 *
