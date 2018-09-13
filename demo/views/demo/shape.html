@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>拖拽实例</title>
+
+
+
+	<script type="text/javascript">
+		LAMJS.run(function() {
+			'use strict';
+			var System = this;
+			System.use();
+
+			System.import([
+				'/base/Drag.class'
+				, '/Tools.class'
+				, '/Tab.class'
+				, '/base/Shape.class'
+			], System.classPath);
+
+
+		});
+
+	</script>
+
+
+
+
+
+
+<style type="text/css">
+.abs{position:absolute;top:0;left:0;}
+.box{width:50px;height:50px;background:red;}
+#box3{background:#fff;}
+.top{top:300px;}
+.left{left:300px;}
+</style>
+</head>
+
+<body>
+<canvas id="box1" class="abs left" width="1000" height="1000">box3</canvas>
+
+<script type="text/javascript">
+
+	LAMJS.run(function(){
+		'use strict';
+		var System=this;
+		var dbox1,canvas;
+
+
+
+        function polygon(){
+            canvas.polygon().closePath().fill('green');
+            new System.Drag(canvas.theCanvas,{'noText':true});
+        }
+
+		$(function () {
+            canvas=new System.Html5.Shape(document.getElementById("box1"));
+            var colors = ['#f60','#c45100','#ff9300'];
+            canvas.cube({
+                'positions':[
+                    [200,100,100,200,300,200],
+                    [200,100,300,200,400,100],
+                    [100,200,300,200,200,300],
+                    [300,200,200,300,400,300],
+                    [400,100,300,200,500,200],
+                    [300,200,400,300,500,200]
+                ]
+            })
+                .triangle({'strokeStyle':'#e5e5e5','position':[200,300,400,300,300,400]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':'#e5e5e5','position':[300,400,400,300,500,400]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':'#e5e5e5','position':[400,300,500,200,500,400]}).closePath().stroke().fill(colors[1])
+                // .triangle({'strokeStyle':'#e5e5e5','position':[400,400,400,300,400,100]}).closePath().stroke().fill(colors[0]);
+
+            new System.Drag(canvas.theCanvas,{'noText':true});
+        });
+
+
+	});
+</script>
+</body>
+</html>
