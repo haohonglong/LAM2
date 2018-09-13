@@ -134,7 +134,7 @@
 					[400,100,300,200,500,200],
 					[300,200,400,300,500,200]
 				],
-				'colors':['#ff9300','#f60','#c45100'],
+				'colors':['#ff9300','#f60','#c45100'],//top,left,right
                 'strokeStyle':'#e5e5e5'
             };
             D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
