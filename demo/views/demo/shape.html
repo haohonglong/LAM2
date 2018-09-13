@@ -57,7 +57,6 @@
 
 		$(function () {
             canvas=new System.Html5.Shape(document.getElementById("box1"));
-            var colors = ['#f60','#c45100','#ff9300'];
             canvas.cube({
                 'positions':[
                     [200,100,100,200,300,200],
@@ -68,12 +67,17 @@
                     [300,200,400,300,500,200]
                 ]
             })
-                .triangle({'strokeStyle':'#e5e5e5','position':[200,300,400,300,300,400]}).closePath().stroke().fill(colors[0])
-                .triangle({'strokeStyle':'#e5e5e5','position':[300,400,400,300,500,400]}).closePath().stroke().fill(colors[0])
-                .triangle({'strokeStyle':'#e5e5e5','position':[400,300,500,200,500,400]}).closePath().stroke().fill(colors[1])
-                // .triangle({'strokeStyle':'#e5e5e5','position':[400,400,400,300,400,100]}).closePath().stroke().fill(colors[0]);
+				.cube({
+                    'positions':[
+                        [200,300,400,300,300,400],
+						[300,400,400,300,500,400],
+						[400,300,500,200,500,400],
+						[500,400,500,200,600,300]
+                    ],
+					'colors':['#f60','#c45100','#ff9300']
+				});
 
-            new System.Drag(canvas.theCanvas,{'noText':true});
+            // new System.Drag(canvas.theCanvas,{'noText':true});
         });
 
 

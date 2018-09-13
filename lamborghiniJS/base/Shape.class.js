@@ -135,16 +135,16 @@
 					[300,200,400,300,500,200]
 				],
 				'colors':['#ff9300','#f60','#c45100'],//top,left,right
-                'strokeStyle':'#e5e5e5'
+                'strokeStyles':['#e5e5e5','#e5e5e5','#e5e5e5','#e5e5e5','#e5e5e5','#e5e5e5']
             };
             D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-            this
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[0]}).closePath().stroke().fill(D.colors[0])
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[1]}).closePath().stroke().fill(D.colors[0])
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[2]}).closePath().stroke().fill(D.colors[1])
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[3]}).closePath().stroke().fill(D.colors[1])
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[4]}).closePath().stroke().fill(D.colors[2])
-                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[5]}).closePath().stroke().fill(D.colors[2]);
+            var strokeStyle = '#e5e5e5';
+            if(D.positions[0]){this.triangle({'strokeStyle':D.strokeStyles[0] || strokeStyle,'position':D.positions[0]}).closePath().stroke().fill(D.colors[0]);}
+            if(D.positions[1]){this.triangle({'strokeStyle':D.strokeStyles[1] || strokeStyle,'position':D.positions[1]}).closePath().stroke().fill(D.colors[0]);}
+            if(D.positions[2]){this.triangle({'strokeStyle':D.strokeStyles[2] || strokeStyle,'position':D.positions[2]}).closePath().stroke().fill(D.colors[1]);}
+            if(D.positions[3]){this.triangle({'strokeStyle':D.strokeStyles[3] || strokeStyle,'position':D.positions[3]}).closePath().stroke().fill(D.colors[1]);}
+            if(D.positions[4]){this.triangle({'strokeStyle':D.strokeStyles[4] || strokeStyle,'position':D.positions[4]}).closePath().stroke().fill(D.colors[2]);}
+            if(D.positions[5]){this.triangle({'strokeStyle':D.strokeStyles[5] || strokeStyle,'position':D.positions[5]}).closePath().stroke().fill(D.colors[2]);}
             return this;
         },
 
