@@ -110,6 +110,43 @@
 			}
 			return this;
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-9-13
+         * 修改日期：2018-9-13
+         * 名称： cube
+         * 功能：绘制立方体
+         * 说明：
+         * 注意：
+		 * @param 	(Array)D.positions      NO NULL : 位置
+		 * @param 	(Array)D.colors         NO NULL : 立方体可见的三个面颜色
+         * @param 	(String)D.strokeStyle   NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
+         * @returns {Shape}
+         */
+        'cube':function (D) {
+            var defaults={
+                'positions':[
+                    [200,100,100,200,300,200],
+					[200,100,300,200,400,100],
+					[100,200,300,200,200,300],
+					[300,200,200,300,400,300],
+					[400,100,300,200,500,200],
+					[300,200,400,300,500,200]
+				],
+				'colors':['#ff9300','#f60','#c45100'],
+                'strokeStyle':'green'
+            };
+            D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+            this
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[0]}).closePath().stroke().fill(D.colors[0])
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[1]}).closePath().stroke().fill(D.colors[0])
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[2]}).closePath().stroke().fill(D.colors[1])
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[3]}).closePath().stroke().fill(D.colors[1])
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[4]}).closePath().stroke().fill(D.colors[2])
+                .triangle({'strokeStyle':D.strokeStyle,'position':D.positions[5]}).closePath().stroke().fill(D.colors[2]);
+            return this;
+        },
 
 		/**
 		 *
@@ -545,9 +582,6 @@
 
 			return this;
 		},
-		'cube':function () {
-
-        },
 
 		/**
 		 *
