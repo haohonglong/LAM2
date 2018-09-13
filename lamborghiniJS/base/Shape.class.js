@@ -117,7 +117,7 @@
          * 修改日期：2018-9-13
          * 名称： cube
          * 功能：绘制立方体
-         * 说明：
+         * 说明：一个面由两个等边三角形构成，三个面构成立方体
          * 注意：
 		 * @param 	(Array)D.positions      NO NULL : 位置
 		 * @param 	(Array)D.colors         NO NULL : 立方体可见的三个面颜色
@@ -135,7 +135,7 @@
 					[300,200,400,300,500,200]
 				],
 				'colors':['#ff9300','#f60','#c45100'],
-                'strokeStyle':'green'
+                'strokeStyle':'#e5e5e5'
             };
             D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
             this
