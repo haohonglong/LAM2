@@ -698,6 +698,25 @@
 			this.ctx.restore();
 			return this;
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-9-14
+         * 修改日期：2018-9-14
+         * 名称： fillRect
+         * 功能：在坐标为x,y处画一个矩形
+         * 说明：
+         * 注意：
+         * @param x{int}		矩形左上角的 x 坐标
+         * @param y{int}		矩形左上角的 y 坐标
+         * @param width{int}	矩形的宽度，以像素计
+         * @param height{int}	矩形的高度，以像素计
+         * @returns {Canvas}
+         */
+		'fillRect':function (x, y, width, height) {
+            this.ctx.fillRect(x, y, width, height);
+            return this;
+        },
 
 		/**
 		 *
