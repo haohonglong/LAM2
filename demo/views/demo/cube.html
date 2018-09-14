@@ -16,7 +16,7 @@
 				'/base/Drag.class'
 				, '/Tools.class'
 				, '/Tab.class'
-				, '/base/Shape.class'
+				, '/base/Three.class'
 			], System.classPath);
 
 
@@ -31,7 +31,7 @@
 
 <style type="text/css">
 .abs{position:absolute;top:0;left:0;}
-.box{width:50px;height:50px;background:red;}
+.box{width:50%;height:50%;float: left}
 #box3{background:#fff;}
 .top{top:300px;}
 .left{left:300px;}
@@ -39,7 +39,8 @@
 </head>
 
 <body>
-<canvas id="box1" class="abs left" width="1000" height="1000">box3</canvas>
+<canvas id="box1" class="box" width="1000" height="450">box3</canvas>
+<canvas id="box2" class="box" width="1000" height="500">box3</canvas>
 
 <script type="text/javascript">
 
@@ -55,8 +56,45 @@
             new System.Drag(canvas.theCanvas,{'noText':true});
         }
 
+        function box() {
+            canvas=new System.Html5.Shape(document.getElementById("box2"));
+
+            var colors = ['#ff9300','#c45100','#f60'];
+            var strokeStyle = '#e5e5e5';
+            canvas
+                .triangle({'strokeStyle':strokeStyle,'position':[100,0,50,100,150,100]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[50,100,150,100,100,200]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[50,100,0,200,100,200]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[0,200,100,200,50,300]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,300,100,200,50,300]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,300,100,400,50,300]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,300,100,200,200,200]}).closePath().stroke().fill(colors[0])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,100,100,200,200,200]}).closePath().stroke().fill(colors[0])
+
+                .triangle({'strokeStyle':strokeStyle,'position':[200,200,150,300,250,300]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[200,200,300,200,250,300]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[300,200,250,300,350,300]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[300,200,350,300,400,200]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,300,100,400,200,400]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,300,200,400,250,300]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[250,300,200,400,300,400]}).closePath().stroke().fill(colors[1])
+                .triangle({'strokeStyle':strokeStyle,'position':[250,300,300,400,350,300]}).closePath().stroke().fill(colors[1])
+
+                .triangle({'strokeStyle':strokeStyle,'position':[100,0,150,100,200,0]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[200,0,150,100,250,100]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[200,0,250,100,300,0]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[300,0,250,100,350,100]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[150,100,250,100,200,200]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[250,100,200,200,300,200]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[250,100,300,200,350,100]}).closePath().stroke().fill(colors[2])
+                .triangle({'strokeStyle':strokeStyle,'position':[350,100,300,200,400,200]}).closePath().stroke().fill(colors[2])
+
+
+            ;
+        }
+
 		$(function () {
-            canvas=new System.Html5.Shape(document.getElementById("box1"));
+            canvas=new System.Html5.Three(document.getElementById("box1"));
             canvas.cube({
                 'positions':[
                     [200,100,100,200,300,200],
@@ -86,6 +124,8 @@
 				})
 
 			;
+
+            box();
 
             // new System.Drag(canvas.theCanvas,{'noText':true});
         });
