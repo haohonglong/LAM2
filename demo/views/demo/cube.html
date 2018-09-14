@@ -16,7 +16,7 @@
 				'/base/Drag.class'
 				, '/Tools.class'
 				, '/Tab.class'
-				, '/base/Shape.class'
+				, '/base/Three.class'
 			], System.classPath);
 
 
@@ -94,7 +94,7 @@
         }
 
 		$(function () {
-            canvas=new System.Html5.Shape(document.getElementById("box1"));
+            canvas=new System.Html5.Three(document.getElementById("box1"));
             canvas.cube({
                 'positions':[
                     [200,100,100,200,300,200],
