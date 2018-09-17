@@ -490,57 +490,7 @@
 
 		},
 
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-9-18
-		 * 修改日期：2015-9-18
-		 * 名称： text
-		 * 功能：创建文字
-		 * 说明：
-		 * 注意：渲染文字以后再定义属性是不起作用的
-		 * @param 	(String)D.text   				NO NULL : 文字内容
-		 * @param 	(Number)D.position.x    		NO NULL :  x 坐标位置。
-		 * @param 	(Number)D.position.y    		NO NULL :  y 坐标位置。
-		 * @param 	(String)D.align   				NO NULL : 文字水平对齐方式
-		 * @param 	(String)D.valign   				NO NULL : 文字垂直对齐方式
-		 * @param 	(String)D.font   				NO NULL : 文字的大小及字体
-		 * @param 	(String)D.style   				NO NULL : 文字的颜色
-		 * @param 	(Boolean)D.isRender   			   NULL : 是否渲染文字
-		 * @returns {Shape}
-		 * Example：
 
-		 */
-		'text':function(D){//
-
-			var defaults={
-				'text':'text',
-				'position':{'x':100,'y':75},
-				'align':'center',
-				'valign':'top',
-				'isRender':true,
-				'font':'40px Arial',
-				'style':'#f00'
-
-			};
-			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-
-			var x= D.position.x;
-			var y= D.position.y;
-			var metrics,textWidth,textHeight;
-
-			this.font(D.font).textAlign(D.align).textBaseline(D.valign).fillStyle(D.style);
-			if(D.isRender){
-				this.fillText(D.text,x,y);
-			}
-
-
-			metrics = this.ctx.measureText(D.text);
-			textWidth = metrics.width;
-
-			return this;
-		},
 
 		/**
 		 *
