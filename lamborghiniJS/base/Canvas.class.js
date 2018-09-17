@@ -129,6 +129,39 @@
 			this.ctx.lineTo(x,y);
 			return this;
 		},
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-18
+         * 修改日期：2015-9-18
+         * 名称： line
+         * 功能：画线
+         * 说明：
+         * 注意：别忘了最后要stroke
+         * @param 	(Array)D.position         NO NULL : 线的位置
+         * @param 	(Number)D.width           NO NULL : 线的粗细
+         * @param 	(String)D.strokeStyle     NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
+         * @param 	(String)D.lineCap         NO NULL : 定义上下文中线的端点
+         * @returns {Canvas}
+         * Example：
+
+         */
+        'line':function(D){
+            var defaults={
+                'position':[20,0,100,0],
+                'width':1,
+                'strokeStyle':'#f60',
+                'lineCap':'square'
+            };
+            D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+            var width = D.width || 0;
+            var strokeStyle = D.strokeStyle;
+
+            this.strokeStyle(strokeStyle).lineWidth(width).lineCap(D.lineCap).beginPath().moveTo(D.position[0],D.position[1]).lineTo(D.position[2],D.position[3]);
+
+            return this;
+        },
 
 		/**
 		 *
@@ -761,6 +794,78 @@
 		'fillRect':function (x, y, width, height) {
             this.ctx.fillRect(x, y, width, height);
             return this;
+        },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-18
+         * 修改日期：2016-4-16
+         * 名称： image
+         * 功能：在画布上绘制图像、画布或视频
+         * 说明：
+         * 注意：在callback里 执行drawImage 有异常报:"Illegal invocation" 错误
+         * @param 	(String)src             NO NULL : 规定要使用的图像、画布或视频 的路径
+         * @param 	(Number)D.position.x    NO NULL : 在画布上放置图像的 x 坐标位置
+         * @param 	(Number)D.position.y    NO NULL : 在画布上放置图像的 y 坐标位置
+         * @param 	(Number)D.size.w	       NULL : 可选。要使用的图像的宽度。（伸展或缩小图像）
+         * @param 	(Number)D.size.h	       NULL : 可选。要使用的图像的高度。（伸展或缩小图像）
+         * @param 	(Number)D.clip.sx          NULL : 可选。开始剪切的 x 坐标位置。
+         * @param 	(Number)D.clip.sy          NULL : 可选。开始剪切的 y 坐标位置。
+         * @param 	(Number)D.clip.sw          NULL : 可选。被剪切图像的宽度
+         * @param 	(Number)D.clip.sh          NULL : 可选。被剪切图像的高度
+         * @param 	(Function)callback         NULL : drawImage 原型
+         * @returns {Canvas}
+         * Example：
+
+         */
+        'image':function(D){
+            var defaults={
+                'src':'',
+                'position':{'x':10,'y':10},
+                'size':{'w':540,'h':258},
+                'clip':{'sx':90,'sy':130,'sw':90,'sh':80}
+            };
+            D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+
+            var self=this;
+            var src = D.src;
+            var x 	= D.position.x;
+            var y 	= D.position.y;
+            if(D.size){
+                var w 	= D.size.w;
+                var h 	= D.size.h;
+            }
+            if(D.clip){
+                var sx = D.clip.sx;
+                var sy = D.clip.sy;
+                var sw = D.clip.sw;
+                var sh = D.clip.sh;
+            }
+
+            var callback = D.callback;
+            var img=new Image();
+            img.src=src;
+            img.onload=function(){
+                if(D.clip){
+                    self.ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
+                }else{
+                    if(D.size){
+                        self.ctx.drawImage(img,x,y,w,h);
+                    }else{
+                        self.ctx.drawImage(img,x,y);
+                    }
+
+                }
+
+                if(System.isFunction(callback)){
+                    callback.call(this,self.ctx.drawImage);
+                }
+            };
+            //$(img).load(function(){});
+
+            return this;
+
         },
 
 		/**
