@@ -57,9 +57,13 @@
         'tabAction':function(){
             this.render('tab');
         },
+        'rectAction':function(){
+            this.render('rect');
+        },
         'cubeAction':function(){
             this.render('cube');
         },
+
 
 
         /**

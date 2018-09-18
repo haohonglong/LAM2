@@ -656,6 +656,24 @@
 
 			return this;
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-9-18
+         * 修改日期：2018-9-18
+         * 名称： strokeStyle
+         * 功能：设置或返回用于笔触的颜色、渐变或模式。
+         * 说明：stroke()方法一定要在这个方法后面调用否则没有作用
+         * 注意：
+         * @param x		NO NULL 矩形左上角的 x 坐标
+         * @param y		NO NULL 矩形左上角的 y 坐标
+         * @param w		NO NULL 矩形的宽度，以像素计
+         * @param h		NO NULL 矩形的高度，以像素计
+         * @returns {Canvas}
+         */
+		'strokeRect':function (x,y,w,h) {
+            this.ctx.strokeRect(x,y,w,h);
+        },
 
 		/**
 		 *
