@@ -16,7 +16,6 @@
 				'/base/Drag.class'
 				, '/Tools.class'
 				, '/Tab.class'
-				, '/shapes/Triangle.class'
 				, '/base/Three.class'
 			], System.classPath);
 
@@ -58,39 +57,41 @@
         }
 
         function box() {
-            canvas=new System.Html5.Canvas(document.getElementById("box2"));
+            canvas=new System.Html5.Shape(document.getElementById("box2"));
 
             var colors = ['#ff9300','#c45100','#f60'];
             var strokeStyle = '#e5e5e5';
             function f0(canvas) {canvas.closePath().stroke().fill(colors[0]);}
             function f1(canvas) {canvas.closePath().stroke().fill(colors[1]);}
             function f2(canvas) {canvas.closePath().stroke().fill(colors[2]);}
-            new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[100,0,50,100,150,100],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[50,100,150,100,100,200],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[50,100,0,200,100,200],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[0,200,100,200,50,300],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,300,100,200,50,300],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,300,100,400,50,300],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,300,100,200,200,200],'callback':f0}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,100,100,200,200,200],'callback':f0}).run();
+            canvas
+				.triangle({'strokeStyle':strokeStyle,'position':[100,0,50,100,150,100],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[50,100,150,100,100,200],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[50,100,0,200,100,200],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[0,200,100,200,50,300],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,300,100,200,50,300],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,300,100,400,50,300],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,300,100,200,200,200],'callback':f0})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,100,100,200,200,200],'callback':f0})
 
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[200,200,150,300,250,300],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[200,200,300,200,250,300],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[300,200,250,300,350,300],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[300,200,350,300,400,200],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,300,100,400,200,400],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,300,200,400,250,300],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[250,300,200,400,300,400],'callback':f1}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[250,300,300,400,350,300],'callback':f1}).run();
+				.triangle({'strokeStyle':strokeStyle,'position':[200,200,150,300,250,300],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[200,200,300,200,250,300],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[300,200,250,300,350,300],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[300,200,350,300,400,200],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,300,100,400,200,400],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,300,200,400,250,300],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[250,300,200,400,300,400],'callback':f1})
+				.triangle({'strokeStyle':strokeStyle,'position':[250,300,300,400,350,300],'callback':f1})
 
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[100,0,150,100,200,0],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[200,0,150,100,250,100],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[200,0,250,100,300,0],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[300,0,250,100,350,100],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[150,100,250,100,200,200],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[250,100,200,200,300,200],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[250,100,300,200,350,100],'callback':f2}).run();
-			new System.Html5.Triangle(canvas,{'strokeStyle':strokeStyle,'position':[350,100,300,200,400,200],'callback':f2}).run();
+				.triangle({'strokeStyle':strokeStyle,'position':[100,0,150,100,200,0],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[200,0,150,100,250,100],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[200,0,250,100,300,0],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[300,0,250,100,350,100],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[150,100,250,100,200,200],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[250,100,200,200,300,200],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[250,100,300,200,350,100],'callback':f2})
+				.triangle({'strokeStyle':strokeStyle,'position':[350,100,300,200,400,200],'callback':f2})
+			;
 
 
 
