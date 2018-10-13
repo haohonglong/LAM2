@@ -13,8 +13,10 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-	var __this__=null;
+    System.import(['/View.class'],System.classPath+'/base');
+    if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
 
+	var __this__=null;
 	var Router = System.Browser.extend({
 		constructor: function () {
 			this.base();
@@ -39,31 +41,22 @@
 		 */
 		'destructor':function(){}
 	});
-	Router.once = true;
-    Router.init=function () {
-    	if(Router.once){
-            if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
-            var r = System.get('r').split('/');
-            var str = r[0];
-            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-            var ControllerName = Controller+'Controller';
-            var action = r[1];
-            action = action+'Action';
-            System
-                .import(['/'+ControllerName],System.CONTROLLERS)
-                .import(['/View.class'],System.classPath+'/base');
 
-            try{
-            	(new System[ControllerName]())[action]();
-			}catch(e){
-                System.View.ERROR_404();
-			}
+	(function () {
+        var r = System.get('r').split('/');
+        var str = r[0];
+        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+        var ControllerName = Controller+'Controller';
+        System.import(['/'+ControllerName],System.CONTROLLERS);
 
-            Router.once = false;
-		}
-
-    };
-    Router.init();
+        var action = r[1];
+        action = action+'Action';
+        try{
+            (new System[ControllerName]())[action]();
+        }catch(e){
+            System.View.ERROR_404();
+        }
+    })();
 
 	return Router;
 });
