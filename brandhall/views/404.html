@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>error</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="config.js"></script>
+	<script type="text/javascript">
+        LAM.run(function(){
+            'use strict';
+            var System = this;
+
+            System.Loader
+                .load({
+                    'baseUrl':System.COMMON,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/css/bootstrap'
+                        ,'/css/global'
+                    ]
+                })
+                .load({
+                    'baseUrl':System.CSS,
+                    'suffix':'.css',
+                    'rel':'stylesheet',
+                    'css':[
+                        '/lib'
+                    ]
+                })
+                .print();
+
+        });
+	</script>
+
+
+</head>
+
+<body class="sectionContainer-A1">
+
+<div class="container-fluid">
+	<div class="sectionError-A1 w-page">
+		<div class="text">
+			<img data-var="tpl" src="{{LAM.IMAGE}}/imgs_LHH/error_1.png" width="70%" height="" alt=""/>
+	                <h4 class="mb30">非常抱歉，未能找到您所请求的页面。（错误404）</h4>
+			<p><a href="###" class="mr5">回退</a> 或者 <a href="###" class="mr5 ml5">让我们知道</a> 如果这个问题仍然存在的话。</p>
+		</div>
+	</div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    LAM.run([jQuery],function($) {
+            'use strict';
+            var System = this;
+            System.use();
+            System.Html.analysisTpl();
+
+        });
+</script>
+</html>

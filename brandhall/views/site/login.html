@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录页</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript">
+    LAM.run(function(){
+        'use strict';
+        var System = this;
+        System
+            .import(['/common'],System.MYCOMMON);
+        System.Loader
+            .load({
+                'baseUrl':System.CSS,
+                'suffix':'.css',
+                'rel':'stylesheet',
+                'css':[
+                    ,'/login'
+                ]
+            })
+            .print();
+
+        System
+            .import([
+             '/PopupLayer.class'
+            ,'/Validation.class'
+        ],System.classPath);
+    });
+</script>
+
+
+
+
+<style type="text/css">
+    
+</style>
+
+
+</head>
+
+<body class="l-sectionContainer-A1" id="sectionWrap">
+    <!--img src="images/imgs_LHH/login_bg.jpg" class="" width="100%" height="" alt="" id="js_secionImg"/-->
+    <div class="" id="sectionLogin">
+        <form class="form-horizontal">
+        <div class="l-sectionLogin">
+            <div class="login-head auto"></div>
+            <div class="l-sectionWrap-A1 mb15">
+            	<div class="p25 pb0 sectionForm-A1 sectionForm-A1-5 sectionBorder-A5 sectionText-A1">
+            	    
+                    <div class="mb10 js_helpWrap">
+                        <input type="text" name="e-addres" id="e-addres" class="form-control mb5" placeholder="手机号码或邮件地址">
+                        <span class="help-block none">手机号码格式不正确，请重新输入。</span>
+                    </div>
+                    <div class="mb5 js_helpWrap">
+                        <div class="clear">
+                        	<input type="password" name="e-password" id="e-password" class="form-control w-200 L mr10" placeholder="密码">
+                        	<button type="submit" class="sectionButton-LoginImg"></button>
+                        </div>
+                        <span class="help-block none">请输入密码</span>
+                        
+                    </div>
+                    <div class="mb10">
+                        <input class="v-negative3 mr10" type="checkbox">
+                        <label for="">记住我-</label>
+                        <a href="###" class="linkBlue">忘记密码？</a>
+                    </div>
+                      
+                     
+                    
+            	</div>
+                <div class="p25 sectionForm-A1 p-rel">
+                    <p class="sectionText-A1 mb15">通过社交网路账号关联 或者<strong class="linkBlue hand js_seeMoreLogin">查看更多社交登录</strong></p>
+                    <div class="sectionBox-L1 sectionBorder-radius sectionShadow-A3 sectionIcon-B2 none js_sectionBoxL1">
+                        <ul class="p10">
+                            <li><i class="I1 a-1"></i><a href="###">豆瓣网</a></li>
+                            <li><i class="I1 a-2"></i><a href="###">百度账号</a></li>
+                            <li><i class="I1 a-3"></i><a href="###">花瓣网</a></li>
+                            <li><i class="I1 a-4"></i><a href="###">支付宝账号</a></li>
+                        </ul>
+                    </div>
+                    <div class="sectionWrap-A2 mb10">
+                        <a href="###" class="sectionBtn-A1 sectionBtn-A1-1 mr5">新浪微博</a>
+                        <a href="###" class="sectionBtn-A1 sectionBtn-A1-2">腾讯QQ</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="l-sectionText-A1">还不是会员？ <a href="index.html?r=site/reg"><strong>点击这里注册</strong></a></div>
+        </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+
+
+        LAM.run(function(){
+            'use strict';
+            var System = this;
+            var login=null;
+
+
+            function show_error($v){
+                $v.addClass('error');
+                $v.parents('.js_helpWrap').find('.help-block').show();
+            }
+
+
+
+
+            $(function(){
+
+                login=new System.PopupLayer({
+                    '$popLayout':$('#sectionLogin')
+                });
+                login.setCenter();
+
+
+
+
+                $("form").each(function(){
+                    $(this).submit(function(){
+                        var flag=true;
+
+                        var $email=$(this).find("#e-addres");
+                        var $e_password=$(this).find('#e-password');
+                        if ($email && !System.Validation.reg.email.test($email.val())) {
+                            show_error($email);
+                            flag=false;
+                        }
+                        if ($e_password && ''==$e_password.val()) {
+                            show_error($e_password);
+                            flag=false;
+                        }
+
+
+
+
+                        return flag;
+                    });
+                });
+
+
+
+
+
+                var DATE={
+                    '$wrap':$('#sectionWrap'),
+                    '$bg_img':$('#js_secionImg'),
+                    '$moreLogin':$('.js_seeMoreLogin'),
+                    '$moreList':$('.js_sectionBoxL1')
+                };
+
+                var isshow=false;
+                DATE.$moreLogin.bind('click',function(event){
+                    if(isshow){
+                        DATE.$moreList.hide();
+                        isshow = false;
+                    }else{
+                        DATE.$moreList.show();
+                        isshow = true;
+                    }
+                    event.stopPropagation();
+                });
+                $(window).bind('click',function(){DATE.$moreList.hide();isshow = false;});
+
+
+                $(window).resize(function() {
+                    login.resize().scroll();
+                });
+                $(window).scroll(function() {
+                    login.scroll();
+
+
+                });
+
+            });
+        });
+
+
+
+
+
+    </script>
+</body>
+</html>

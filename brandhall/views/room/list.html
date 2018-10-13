@@ -1,0 +1,162 @@
+<div class="sectionCrumb-A1 mb20">
+    <ul class="clear">
+        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
+        <li><a title="" href="" class="linkBlue">商品管理</a>&nbsp;&gt;&nbsp;</li>
+        <li><strong>仓库中的商品</strong></li>
+    </ul>
+</div>
+
+<div class="clear mb10 sectionForm-A1 sectionForm-A1-1-2 sectionForm-A2 mb15">
+    <button type="submit" class="btn save L mr15">+&nbsp;&nbsp;添加新案例</button>
+</div>
+
+<form class="form-horizontal">
+    <div class="sectionBorder-A3 mb15">
+        <div class="sectionTable-B1 sectionTable-B1-5">
+            <div class="sectionTitle-A4 sectionTitle-A4-2 sectionTitle-A4-3 sectionFloat-A1 sectionBg-A2">
+                <ul class="clear">
+                    <li class="first col-1">案例封面图片</li>
+                    <li class="col-2">案例信息</li>
+                    <li class="col-3">排序</li>
+                    <li class="col-7">最后编辑时间</li>
+                    <li class="col-8">操作</li>
+                </ul>
+            </div>
+            <div class="sectionBox-A10 sectionBox-A10-2 sectionFloat-A1">
+                <ul class="p10 clear">
+                    <li class="col-1">
+                        <img class="ml5" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_07.jpg" width="100%" height="100%" alt="">
+                    </li>
+                    <li class="col-2">
+                        <div class="sectionBox-A30 sectionBox-A30-1 ml20">
+                            <div class="sectionTitle-A6 mb10">
+                                <h2>拥有浓厚复古色彩的以色列家居</h2>
+                            </div>
+                            <div class="sectionText-A3">
+                                <p class="grey">类型： 家装设计</p>
+                                <p class="grey">风格：新古典  地中海-田园  北欧  其他  简约</p>
+                                <p class="grey">图片数量：<strong class="linkRed">0</strong></p>
+                                <p class="grey">设计师：1</p>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col-3 pt20">
+                        <div class="sectionBox-A13 sectionBox-A13-1 auto js_sectionBoxA13">
+                            <a href="###" class="i-1"></a>
+                            <a href="###" class="i-2"></a>
+                            <a href="###" class="i-3"></a>
+                            <a href="###" class="i-4"></a>
+                        </div>
+                    </li>
+                    <li class="col-7 pt20">2014-07-21<br>15:30</li>
+                    <li class="col-8 pt20">
+                        <div class="sectionBox-A14 linkBlue">
+                            <a href="###">编辑</a>
+                            <a href="###">删除</a>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="sectionBox-A10 sectionBox-A10-2 sectionFloat-A1">
+                <ul class="p10 clear">
+                    <li class="col-1">
+                        <img class="ml5" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_07.jpg" width="100%" height="100%" alt="">
+                    </li>
+                    <li class="col-2">
+                        <div class="sectionBox-A30 sectionBox-A30-1 ml20">
+                            <div class="sectionTitle-A6 mb10">
+                                <h2>拥有浓厚复古色彩的以色列家居</h2>
+                            </div>
+                            <div class="sectionText-A3">
+                                <p class="grey">类型： 家装设计</p>
+                                <p class="grey">风格：新古典  地中海-田园  北欧  其他  简约</p>
+                                <p class="grey">图片数量：<strong class="linkRed">0</strong></p>
+                                <p class="grey">设计师：2</p>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col-3 pt20">
+                        <div class="sectionBox-A13 sectionBox-A13-1 auto js_sectionBoxA13">
+                            <a href="###" class="i-1"></a>
+                            <a href="###" class="i-2"></a>
+                            <a href="###" class="i-3"></a>
+                            <a href="###" class="i-4"></a>
+                        </div>
+                    </li>
+                    <li class="col-7 pt20">2014-07-21<br>15:30</li>
+                    <li class="col-8 pt20">
+                        <div class="sectionBox-A14 linkBlue">
+                            <a href="###">编辑</a>
+                            <a href="###">删除</a>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <div class="sectionPageing-A2 clear">
+        <div class="R">
+            <span class="mr10">共1页</span>到第<span class="sectionForm-A2 mr5 ml5"><input type="text" class="text w-38"></span>页
+            <span class="sectionForm-A3 ml5"><input class="" type="submit" value="确定"></span>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    LAM.TITLE= "案例列表";
+    LAM.wait(function() {
+        'use strict';
+        var System = this;
+        var tools = new System.Tools();
+
+        $(function(){
+
+            $('.js_sectionBoxA13 a').bind('click',function(event){
+                switch($(event.target).attr('class')){
+                    case 'i-1'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'first'
+                        });
+                        break;
+                    case 'i-2'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'prev'
+                        });
+                        break;
+                    case 'i-3':
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'next'
+                        });
+                        break;
+                    case 'i-4'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'last'
+                        });
+                        break;
+
+                    default:
+                        alert("Error");
+                }
+            });
+        });
+    });
+
+</script>

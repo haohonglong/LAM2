@@ -1,0 +1,42 @@
+
+<div id="app"></div>
+<script type="text/javascript">
+
+    LAM.run(function(){
+        'use strict';
+        var System = this;
+        System.TITLE= "react";
+        System.Loader
+            .load({
+                'baseUrl':false,
+                'suffix':' ',
+                'rel':'stylesheet',
+                'css':[
+                    'https://fonts.googleapis.com/css?family=Roboto:300,400,500'
+                ]
+            })
+            .print();
+        System.import(['https://unpkg.com/babel-standalone@6/babel.min.js'],false,null,{});
+        System
+            .import([
+                {
+                    crossorigin:'',
+                    src:'https://unpkg.com/react@16/umd/react.production.min.js'
+                },
+                {
+                    crossorigin:'',
+                    src:'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js'
+                },
+                {
+                    src:'https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js',
+                    crossorigin:"anonymous"
+                }
+            ],false,null,{xhr:false});
+    });
+    
+
+</script>
+
+<script type="text/babel">
+
+</script>

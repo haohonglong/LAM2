@@ -1,0 +1,154 @@
+<div class="sectionCrumb-A1 mb20">
+    <ul class="clear">
+        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
+        <li><a title="" href="" class="linkBlue">样板间管理 </a>&nbsp;&gt;&nbsp;</li>
+        <li><a title="" href="" class="linkBlue">楼盘户型管理</a>&nbsp;&gt;&nbsp;</li>
+        <li><strong>大华锦绣华城-香鸢美颂</strong></li>
+    </ul>
+</div>
+
+<div class="sectionWrap-A14 mb10">
+    <div class="sectionBorder-A4 p10 clear">
+        <div class="sectionWrap-A16 L size1of3">
+            <div class="border">
+                <div class="sectionSearch-A3 sectionForm-A2">
+                    <input type="text" class="text" placeholder="输入名称/拼音首字母">
+                    <i class=""></i>
+                </div>
+
+                <div class="sectionList-L2 js_sectionListL1">
+                    <ul class="p2">
+                        <li><i>G</i><span>家居饰品</span></li>
+                        <li><span>家装主材</span></li>
+                        <li><span>家居饰品</span></li>
+                        <li><i>Z</i><span>住宅家具</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="sectionWrap-A16 L size1of3">
+            <div class="border border-L0">
+                <div class="sectionSearch-A3 sectionForm-A2">
+                    <input type="text" class="text" placeholder="输入名称/拼音首字母">
+                    <i class=""></i>
+                </div>
+
+                <div class="sectionList-L2 js_sectionListL2">
+                    <ul class="p2">
+                        <li><i>G</i><span>橱柜</span></li>
+                        <li><i>Z</i><span>卫浴洁具</span></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="sectionWrap-A16 L size1of3">
+            <div class="border border-L0">
+                <div class="sectionSearch-A3 sectionForm-A2">
+                    <input type="text" class="text" placeholder="输入名称/拼音首字母">
+                    <i class=""></i>
+                </div>
+
+                <div class="sectionList-L2 js_sectionListL3">
+                    <ul class="p2">
+                        <li><i>G</i><span>柜门</span></li>
+                        <li><i>Z</i><span>整体橱柜</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="sectionMessage-A1 sectionMessage-A1-2 mb10">
+    <div class="sectionArrow-A1 sectionArrow-double-A2"><i class="A"></i><i class="B"></i></div>
+    <p class="border">
+        <strong>您当前选择的是：</strong><span id="first_name">橱柜</span> > <span id="two_name">柜体</span> > <span id="three_name">奥哲</span>
+    </p>
+</div>
+<div class="sectionForm-A1 w-270 auto mb30">
+    <button type="submit" class="btn save">我已阅读一下规则，现在发布商品</button>
+</div>
+
+<div class="sectionBox-A29 mb10">
+    <div class="border p10">
+        <p class="note mb10">
+            <strong>发布须知：</strong> 禁止发布侵犯他人知识产权的商品，请确认商品符合知识产权的规定
+        </p>
+        <div class="title mb5">
+            <strong>商品规则</strong><br />
+            <strong>第一章 概述</strong>
+        </div>
+
+        <section class="mb5">
+            <h3>第一条</h3>
+            为促进开发、透明、分享、责任的新商业文明，为促进开放、透明分享、责任的新商业文明 为促进开发、透明、分享、责任的新商业文明，为促进开放、透明分享、责任的新商业文明
+        </section>
+        <section class="mb5">
+            <h3>第一条</h3>
+            为促进开发、透明、分享、责任的新商业文明，为促进开放、透明分享、责任的新商业文明 为促进开发、透明、分享、责任的新商业文明，为促进开放、透明分享、责任的新商业文明
+        </section>
+
+    </div>
+</div>
+
+<p><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/icon3.png" class="top2" width="16" height="15" alt=""/> 对类目选择有意见或建议，<a href="###" class="linkBlue">我要说两句</a></p>
+
+<script type="text/javascript">
+    LAM.TITLE= "发布";
+    LAM.wait([jQuery],function($) {
+        'use strict';
+        var System = this;
+
+
+        $(function(){
+            var myData={
+                '$first_name':$('#first_name'),
+                '$two_name':$('#two_name'),
+                '$three_name':$('#three_name')
+            };
+
+            new System.Tab({
+                'list':$('.js_sectionListL1 li'),
+                'event':'click',
+                'or':true,
+                '$block':myData.$list2,
+                'class':'cur',
+                'fn':function(obj){
+                    myData.$first_name.text(obj.cur_even_this.find('span').text());
+                }
+            }).run();
+
+            new System.Tab({
+                'list':$('.js_sectionListL2 li'),
+                'event':'click',
+                'or':true,
+                'class':'cur',
+                'fn':function(obj){
+                    myData.$two_name.text(obj.cur_even_this.find('span').text());
+                }
+            }).run();
+            new System.Tab({
+                'list':$('.js_sectionListL3 li'),
+                'event':'click',
+                'or':true,
+                'class':'cur',
+                'fn':function(obj){
+                    myData.$three_name.text(obj.cur_even_this.find('span').text());
+                }
+            }).run();
+
+
+
+
+
+
+
+        });
+    });
+</script>
+

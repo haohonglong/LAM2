@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>拖拽实例</title>
+
+
+
+	<script type="text/javascript">
+		LAMJS.run(function() {
+			'use strict';
+			var System = this;
+			System.use();
+
+			System.import([
+				'/base/Drag.class'
+				, '/shapes/Rect.class'
+			], System.classPath);
+
+
+		});
+
+	</script>
+
+
+
+
+
+
+<style type="text/css">
+.abs{position:absolute;top:0;left:0;}
+.box{width:50px;height:50px;background:red;}
+#box3{background:#fff;}
+.top{top:300px;}
+.left{left:300px;}
+</style>
+</head>
+
+<body>
+<canvas id="box1" class="box" width="300" height="200">box3</canvas>
+<script type="text/javascript">
+
+	LAMJS.run(function(){
+		'use strict';
+		var System=this;
+
+		$(function(){
+            var canvas=new System.Html5.Canvas(document.getElementById("box1"));
+            new System.Html5.Rect(canvas,{'fill':false}).run();
+
+		});
+	});
+</script>
+</body>
+</html>
