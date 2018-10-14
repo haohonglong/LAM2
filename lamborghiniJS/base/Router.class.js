@@ -50,9 +50,11 @@
         System.import(['/'+ControllerName],System.CONTROLLERS);
 
         var action = r[1];
+        var id = r[2];
         action = action+'Action';
+        id = System.eval(id);
         try{
-            (new System[ControllerName]())[action]();
+            (new System[ControllerName]())[action](id);
         }catch(e){
             System.View.ERROR_404();
         }
