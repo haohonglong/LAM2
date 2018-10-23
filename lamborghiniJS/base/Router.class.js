@@ -13,8 +13,8 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-    System.import(['/View.class'],System.classPath+'/base');
     if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
+    System.import(['/View.class'],System.classPath+'/base');
 
 	var __this__=null;
 	var Router = System.Browser.extend({
@@ -42,7 +42,10 @@
 		'destructor':function(){}
 	});
 
-	(function () {
+    /**
+	 * perform controller and action by url
+     */
+	Router.run=function () {
         var r = System.get('r').split('/');
         var str = r[0];
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
@@ -51,15 +54,24 @@
 
         var action = r[1];
         var id = r[2];
-        action = action+'Action';
         id = System.eval(id);
         try{
-            (new System[ControllerName]())[action](id);
+            var controller = new System[ControllerName]();
+            if(controller instanceof System.Controller){
+                if(action && System.isFunction(controller[action])){
+                    controller[action](id);
+				}else if((action = action+'Action') && System.isFunction(controller[action])){
+                    controller[action](id);
+				}
+
+            }
         }catch(e){
             System.View.ERROR_404();
         }
-    })();
+    };
 
+
+	Router.run();
 	return Router;
 });
 
