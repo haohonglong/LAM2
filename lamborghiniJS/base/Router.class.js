@@ -56,15 +56,18 @@
         var id = r[2];
         id = System.eval(id);
         try{
-            var controller = new System[ControllerName]();
-            if(controller instanceof System.Controller){
-                if(action && System.isFunction(controller[action])){
-                    controller[action](id);
-				}else if((action = action+'Action') && System.isFunction(controller[action])){
-                    controller[action](id);
-				}
+        	if(System.isset(System[ControllerName]) && System.isFunction(System[ControllerName])){
+                var controller = new System[ControllerName]();
+                if(controller instanceof System.Controller){
+                    if(action && System.isFunction(controller[action])){
+                        controller[action](id);
+                    }else if((action = action+'Action') && System.isFunction(controller[action])){
+                        controller[action](id);
+                    }
 
-            }
+                }
+			}
+
         }catch(e){
             System.View.ERROR_404();
         }
