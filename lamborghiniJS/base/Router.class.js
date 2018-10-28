@@ -46,7 +46,8 @@
 	 * perform controller and action by url
      */
 	Router.run=function () {
-        var r = System.get('r').split('/');
+		var r = System.routeName || 'r';
+			r = System.get(r).split('/');
         var str = r[0];
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
         var ControllerName = Controller+'Controller';

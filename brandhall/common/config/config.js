@@ -67,6 +67,7 @@
                 };
             })(),
             'components':{
+                'routeName':'r',
                 't':function (System) {
                     var id =0;
                     System.Moudle = System.createDict();

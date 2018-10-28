@@ -65,6 +65,9 @@
                     ,'JS':ROOT+'/js'
                 };
             })(),
+            'components':{
+                'routeName':'r',
+            },
             //hashcode 随机种子
             'random':10000,
             //定义模版标签
