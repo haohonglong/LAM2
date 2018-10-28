@@ -59,6 +59,9 @@
                 ,'CSS':_ROOT_+'/documentation/css'
                 ,'JS':_ROOT_+'/documentation/js'
             },
+            'components':{
+                'routeName':'r',
+            },
             //hashcode 随机种子
             'random':10000,
             //定义模版标签
