@@ -243,6 +243,7 @@
 		'Object': {},
 		'Loader': {},
 		'Component': {},
+		'HttpRequest': {},
 		'Cache': {},
 		'Dropdown': {},
 		'Helper': {},
