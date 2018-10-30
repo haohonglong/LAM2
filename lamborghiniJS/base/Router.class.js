@@ -71,6 +71,7 @@
 
         }catch(e){
             System.View.ERROR_404();
+            throw new Error(e);
         }
     };
 
