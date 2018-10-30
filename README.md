@@ -1,5 +1,8 @@
 # LAM2
 继承用 <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a>
+template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
+
+
 
 
 	name    ：LamborghiniJS(OO JS)
