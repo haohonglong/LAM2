@@ -13,11 +13,11 @@
 })(this,function(System){
     'use strict';
     var __this__=null;
-    System.is(System,'SuperController','RoomController',System.CONTROLLERS);
+    System.is(System,'Controller','RoomController',System.classPath+'/base');
     var ROOT  = System.BACKEND;
     var views = System.VIEWS+'/room';
     var E = {file_404:System.ERROR_404};
-    var RoomController = System.SuperController.extend({
+    var RoomController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
             __this__=this;
@@ -37,7 +37,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             },E);
         },
         'detailAction':function(){
@@ -51,7 +51,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             },E);
         },
         'releaseAction':function(){
@@ -65,7 +65,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             },E);
         },
 

@@ -7,15 +7,15 @@
     }else{
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
             typeof define === 'function' && define.amd ? define(factory(System)) :
-                (System['SuperController'] = factory(System));
+                (System['LayoutController'] = factory(System));
     }
 
 })(this,function(System){
     'use strict';
     var __this__=null;
-    System.is(System,'Controller','SuperController',System.classPath+'/base');
+    System.is(System,'Controller','LayoutController',System.classPath+'/base');
     var ROOT  = System.BACKEND;
-    var SuperController = System.Controller.extend({
+    var LayoutController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
             __this__=this;
@@ -31,7 +31,7 @@
             });
 
         },
-        '_className':'SuperController',
+        '_className':'LayoutController',
 
         /**
          *
@@ -40,7 +40,7 @@
          * 创建日期：2015-4-2
          * 修改日期：2015-4-2
          * 名称：destructor
-         * 功能：在注销SuperController对象时调用此方法
+         * 功能：在注销LayoutController对象时调用此方法
          * 说明：
          * 注意：
          * @return  ()
@@ -48,7 +48,7 @@
          */
         'destructor':function(){}
     });
-    return SuperController;
+    return LayoutController;
 });
 
 
