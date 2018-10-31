@@ -54,6 +54,7 @@
                  'ROOT':_ROOT_+'/documentation'
                 ,'COMMON':_ROOT_+'/common'
                 ,'PLUGINS':_ROOT_+'/common/plugins'
+                ,'CONTROLLERS':_ROOT_+'/documentation/controllers'
                 ,'VIEWS':_ROOT_+'/documentation/views'
                 ,'ERROR_404':_ROOT_+'/documentation/views/404.html'
                 ,'CSS':_ROOT_+'/documentation/css'
@@ -95,6 +96,8 @@
                     // ,classPath+'/base/Template.class.js'
                     // ,classPath+'/base/Html.class.js'
                     // ,classPath+'/base/Loader.class.js'
+                    ,classPath+'/base/Controller.class.js'
+                    ,classPath+'/base/Router.class.js'
                     ,PLUGINS+'/vue/vue.js'
                 ];
             },
