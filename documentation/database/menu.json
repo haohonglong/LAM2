@@ -98,7 +98,6 @@
           "url": "{{LAM.ROOT}}/index.html?r=content/dom",
           "title": "Dom"
         },
-
         {
           "url": "{{LAM.ROOT}}/index.html?r=content/html",
           "title": "Html"

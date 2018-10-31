@@ -13,8 +13,10 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-	var __this__=null;
+    if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
+    System.import(['/View.class'],System.classPath+'/base');
 
+	var __this__=null;
 	var Router = System.Browser.extend({
 		constructor: function () {
 			this.base();
@@ -39,32 +41,42 @@
 		 */
 		'destructor':function(){}
 	});
-	Router.once = true;
-    Router.init=function () {
-    	if(Router.once){
-            if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
-            var r = System.get('r').split('/');
-            var str = r[0];
-            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-            var ControllerName = Controller+'Controller';
-            var action = r[1];
-            action = action+'Action';
-            System
-                .import(['/'+ControllerName],System.CONTROLLERS)
-                .import(['/View.class'],System.classPath+'/base');
 
-            try{
-            	(new System[ControllerName]())[action]();
-			}catch(e){
-                System.View.ERROR_404();
+    /**
+	 * perform controller and action by url
+     */
+	Router.run=function () {
+		var r = System.routeName || 'r';
+			r = System.get(r).split('/');
+        var str = r[0];
+        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+        var ControllerName = Controller+'Controller';
+        System.import(['/'+ControllerName],System.CONTROLLERS);
+
+        var action = r[1];
+        var id = r[2];
+        id = System.eval(id);
+        try{
+        	if(System.isset(System[ControllerName]) && System.isFunction(System[ControllerName])){
+                var controller = new System[ControllerName]();
+                if(controller instanceof System.Controller){
+                    if(action && System.isFunction(controller[action])){
+                        controller[action](id);
+                    }else if((action = action+'Action') && System.isFunction(controller[action])){
+                        controller[action](id);
+                    }
+
+                }
 			}
 
-            Router.once = false;
-		}
-
+        }catch(e){
+            System.View.ERROR_404();
+            throw new Error(e);
+        }
     };
-    Router.init();
 
+
+	Router.run();
 	return Router;
 });
 

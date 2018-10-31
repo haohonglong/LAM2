@@ -1,9 +1,12 @@
 # LAM2
 继承用 <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a>
+template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
+
+
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.0.9
+	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
 	修改日期 ：2018-8-12

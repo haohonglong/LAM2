@@ -123,6 +123,26 @@
 
 		}
 	});
+    /**
+     * @author lhh
+     * 产品介绍：
+     * 创建日期：2018-10-13
+     * 修改日期：2018-10-13
+     * 名称：Cookie.get
+     * 功能：cookie获取
+     * 说明：
+     * 注意：
+	 * 获取cookie
+     * @param name
+     * @returns {*}
+     */
+	Cookie.get=function(name){
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)){
+            return unescape(arr[2]);
+        }
+        return null;
+    };
 
 	return Cookie;
 });

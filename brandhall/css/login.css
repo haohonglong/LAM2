@@ -1,0 +1,23 @@
+@charset "utf-8";
+/*wrapper*/
+html,body{height: 100%;overflow: hidden;}
+.l-sectionContainer-A1{background: url(../images/imgs_LHH/login_bg.jpg) no-repeat 0 0;background-size:cover;_background-repeat: repeat; }
+
+.l-sectionLogin{margin-top: -100px;}
+.l-sectionLogin .login-head{width: 317px;height: 114px; background: url(../images/imgs_LHH/login_h1.png) no-repeat 0 0;}
+
+.l-sectionWrap-A1{width: 100%;width: 480px\9; border-radius: 3px;border: 1px solid #e1e8ed;background: #fff;margin-top: -15px;}
+.l-sectionWrap-A1 .p25{padding: 15px;}
+.l-sectionWrap-A1 .pb0{padding-bottom: 0;}
+
+.sectionText-A1{position: static;}
+
+.l-sectionText-A1{color: #fff;text-align: center;}
+.l-sectionText-A1 a{color: #fff;text-decoration: underline;}
+
+@media (min-width: 960px) {/*computer*/
+    .l-sectionWrap-A1{width: 330px;}
+
+    /*商品职责*/
+
+}

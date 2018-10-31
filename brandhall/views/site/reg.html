@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>注册</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+    <script type="text/javascript">
+        LAM.run(function(){
+            'use strict';
+            var System = this;
+            System
+                .import(['/common'],System.MYCOMMON)
+                .import([
+                 '/Tab.class'
+                ,'/PopupLayer.class'
+                ,'/Validation.class'
+            ],System.classPath);
+        });
+    </script>
+
+
+
+
+</head>
+
+<body class="sectionContainer-A1">
+ 
+<div class="sectionBg-A1"></div>
+<div class="container-fluid">
+    <div class="sectionTop-A1 z1">您是商家么？ <a href="###">了解更多</a></div>
+    <div class="sectionWrap-A1">
+        <div class="p25">
+            <div class="sectionTitle-A1 mb15 mt10">
+                <h2 class="mb10">现在就加入<em>Gezlife</em></h2>
+                <p>发现惊喜，搜集所爱，收入囊中只在这里。现在就注册加入欢喜开始搭建您自己的目录吧！</p>
+            </div>
+            
+            <div class="sectionWrap-A2 mb10">
+                <a href="###" class="sectionBtn-A1 sectionBtn-A1-1 mr5">新浪微博</a>
+                <a href="###" class="sectionBtn-A1 sectionBtn-A1-2 mr5">腾讯QQ</a>
+                <a href="###" class="sectionBtn-A1 sectionBtn-A1-3">人人</a>
+            </div>
+            
+        </div>
+        <div class="sectionTitle-B1 sectionFloat-A1 mb10">
+            <ul class="clear" data-tab="select">
+              <li class="cur" data-id="emmail">邮件地址注册</li>
+              <li class="" data-id="pone">手机号码注册</li>
+            </ul>
+        </div>
+        <div class="p25 sectionForm-A1">
+            <div class="sectionBlock-A1" data-tab="section" data-id="emmail">
+                <form class="form-horizontal">
+                  <div class="mb20">
+                    <input type="text" name="e-addres" id="e-addres" class="form-control mb5" placeholder="邮件地址">
+                    <span class="help-block none">邮件地址不正确，请重新输入。</span>
+                  </div>
+                  
+                  
+                  <div class="mb20">
+                    <input type="password" name="e-password" id="e-password" class="form-control mb5" placeholder="设置密码">
+                    <span class="help-block none">请输入密码</span>
+                  </div>
+                  
+                 <div class="sectionWrap-A3 clear mb10">
+                      <button type="submit" class="btn L">注册</button>
+                      <p class="sectionText-A1 R">已经有了账号？<a href="index.html?r=site/login">点击这里登录</a></p>
+                  </div>
+                </form>
+            </div>
+            
+            <div class="sectionBlock-A1 none" data-tab="section" data-id="pone">
+                <form class="form-horizontal">
+                  <div class="mb20">
+                    <input type="text" class="form-control mb5" id="phone" placeholder="手机号码">
+                    <span class="help-block none">手机号码格式不正确，请重新输入。</span>
+                  </div>
+                  
+                  <div class="mb20">
+                    <div class="clear yzm mb5">
+                        <input type="text" class="form-control L text" id="checkCode" placeholder="填写验证码">
+                        <a href="###" class="linkBlue L ml20 p-rel top8">重新获取验证码</a>
+                    </div>
+                    <span class="help-block none">请输入验证码</span>
+                  </div>
+                  
+                  <div class="mb20">
+                    <input type="password" class="form-control mb5" id="phone-password" placeholder="设置密码">
+                    <span class="help-block none">请输入密码</span>
+                  </div>
+                  
+                  <div class="sectionWrap-A3 clear mb10">
+                      <button type="submit" class="btn L">注册</button>
+                      <p class="sectionText-A1 R">已经有了账号？<a href="index.html?r=site/login">点击这里登录</a></p>
+                  </div>
+                </form>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    LAM.run(function() {
+        'use strict';
+        var System = this;
+        var reg = null;
+        function show_error($v){
+            $v.addClass('error');
+            $v.parents('.mb20').find('.help-block').show();
+        }
+
+        $(function () {
+            $(document).on('click', '[data-tab="select"] li', function () {
+                System.Tab.tab.call(this,{
+                    "active":'cur'
+                });
+
+            });
+
+            reg=new System.PopupLayer({
+                '$popLayout':$('.sectionWrap-A1')
+            });
+            reg.$popLayout.appendTo($('bdoy'));
+            reg.setCenter();
+
+            $("form").each(function(){
+                $(this).submit(function(){
+                    var flag=true;
+
+                    var $email=$(this).find("#e-addres");
+                    var $e_password=$(this).find('#e-password');
+                    var $phone=$(this).find('#phone');
+                    var $checkCode=$(this).find('#checkCode');
+                    var $phone_password=$(this).find('#phone-password');
+
+
+
+
+                    if ($email && !System.Validation.reg.email.test($email.val())) {
+                        show_error($email);
+                        flag=false;
+                    }
+                    if ($e_password && ''==$e_password.val()) {
+                        show_error($e_password);
+                        flag=false;
+                    }
+
+                    if ($phone && !System.Validation.reg.phone.test($phone.val())) {
+                        show_error($phone);
+                        flag=false;
+                    }
+                    if ($checkCode && ''==$checkCode.val()) {
+                        show_error($checkCode);
+                        flag=false;
+                    }
+
+                    if ($phone_password && ''==$phone_password.val()) {
+                        show_error($phone_password);
+                        flag=false;
+                    }
+
+
+                    return flag;
+                });
+            });
+
+
+
+            $(window).resize(function() {
+                reg.resize().scroll();
+            });
+            $(window).scroll(function() {
+                reg.scroll();
+
+
+            });
+        });
+
+
+
+    });
+
+
+</script>
+</body>
+</html>
