@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-9-12
+ * 修改日期:2018-10-31
  * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -37,17 +37,26 @@
             this.suffix = '.html';
             this.view = '/layouts/'+this.layout;
             this.viewpath = System.VIEWS;
-
         },
         '_className':'Controller',
         'init':function (data) {
-            this.render(this.view,data);
+            this.viewpath = System.VIEWS;
+            this.render('/layouts/'+this.layout,data);
+        },
+        'renderLayout':function(content){
+            this.init({
+                'VIEWS':System.VIEWS,
+                'IMAGE':System.IMAGE,
+                'LAM':System,
+                'content':content
+
+            });
         },
         /**
          * @author lhh
          * 产品介绍：渲染视图
          * 创建日期：2018-9-12
-         * 修改日期：2018-9-12
+         * 修改日期：2018-10-31
          * 名称：render
          * 功能：render the page
          * 说明：
@@ -67,14 +76,7 @@
             }]);
             if('/' !== name.trim().substring(0,1)){name = '/'+name;}
 
-            new System.Template().render(this.viewpath+name+this.suffix,data,function(content){
-                if(System.isFunction(print)){
-                    print(content);
-                }else {
-                    System.print(content);
-                }
-
-            },D);
+            new System.Template().render(this.viewpath+name+this.suffix,data,print,D);
         },
 
         /**
