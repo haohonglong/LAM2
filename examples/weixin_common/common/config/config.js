@@ -55,7 +55,9 @@
                 ,'COMMON':_ROOT_+'/common'
                 ,'PLUGINS':_ROOT_+'/common/plugins'
             },
-            'components':{},
+            'components':{
+                'routeName':'r',
+            },
             //hashcode 随机种子
             'random':999,
             //定义模版标签

@@ -23,7 +23,7 @@
      * 产品介绍：
      * 创建日期：2018-9-17
      * 修改日期：2018-9-17
-	 * 名称： triangle
+	 * 名称： Triangle
      * 功能：绘制三角形
      * 说明：
      * 注意：最后要 canvas.closePath().stroke().fill();
@@ -32,11 +32,10 @@
      * @param 	(Number)D.width           NO NULL : 线的粗细
      * @param 	(String)D.strokeStyle     NO NULL : 属性设置或返回用于笔触的颜色、渐变或模式。
      * @param 	(Function)D.callback      	 NULL :
-     * @returns {Shape}
      * Example：
 
      */
-	var Triangle = System.Html5.Canvas.extend({
+	var Triangle = System.Html5.Shape.extend({
 		constructor: function(canvas,D){
 			__this__=this;
             var defaults={
@@ -63,6 +62,7 @@
             if(System.isFunction(D.callback)){
                 D.callback(canvas);
             }
+            return this;
         },
 		/**
 		 *

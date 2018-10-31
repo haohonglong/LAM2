@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-1-11
+ * 修改日期:2018-10-28
  * 名称：组件类
  * 功能：服务于应用层类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -227,23 +227,7 @@
 		 * Example：
 		 */
 		'checkout': function() {},
-		/**
-		 * @author lhh
-		 * 产品介绍：
-		 * 创建日期：2015-6-25
-		 * 修改日期：2018-4-18
-		 * 名称：get
-		 * 功能：根据指定的url参数获取相对应的参数值
-		 * 说明：
-		 * 注意：
-		 * @param   (String)name            NO NULL :参数名称
-		 * @return  {String}
-		 *
-		 */
-		'get':function(name){
-            return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(name).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1")) || null;
 
-		},
         /**
          * @author jQuery
          * 产品介绍：
