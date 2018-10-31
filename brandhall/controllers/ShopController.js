@@ -13,10 +13,10 @@
 })(this,function(System){
     'use strict';
     var __this__=null;
-    System.is(System,'SuperController','ShopController',System.CONTROLLERS);
+    System.is(System,'Controller','ShopController',System.classPath+'/base');
     var ROOT  = System.BACKEND;
     var views = System.VIEWS+'/shop';
-    var ShopController = System.SuperController.extend({
+    var ShopController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
             __this__=this;
@@ -35,7 +35,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             });
         },
         'empowerAction':function(){
@@ -49,7 +49,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             });
         },
         'loftAction':function(){
@@ -63,7 +63,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             });
         },
         'newRoomAction':function(){
@@ -77,7 +77,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             });
         },
         'shopListAction':function(){
@@ -91,7 +91,7 @@
                 }
 
             },function(content){
-                $('#app').after(content).remove();
+                __this__.renderLayout(content);
             });
         },
 
