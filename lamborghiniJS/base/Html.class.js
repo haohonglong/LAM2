@@ -13,15 +13,6 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Template','Html',System.classPath+'/base');
-    System.listen(function(){
-        if(System.isFunction(System.import)){
-            System.import([
-                '/base/Base64.class',
-                '/base/Cache.class'
-            ],System.classPath);
-            return true;
-        }
-    },1);
     var sAttribute   = System.Config.render.default.script.Attribute,
         cAttribute = System.Config.render.default.css.Attribute,
         Cache = null;
