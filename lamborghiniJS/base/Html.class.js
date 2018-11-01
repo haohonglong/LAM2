@@ -13,11 +13,49 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Template','Html',System.classPath+'/base');
-	var sAttribute   = System.Config.render.default.script.Attribute;
-	var cAttribute   = System.Config.render.default.css.Attribute;
+    System.listen(function(){
+        if(System.isFunction(System.import)){
+            System.import([
+                '/base/Base64.class',
+                '/base/Cache.class'
+            ],System.classPath);
+            return true;
+        }
+    },1);
+    var sAttribute   = System.Config.render.default.script.Attribute,
+        cAttribute = System.Config.render.default.css.Attribute,
+        Cache = null;
+    function getCache(name){
+        if(!Cache){
+            Cache = new System.Cache(name || 'include');
+        }
+        return Cache;
+    }
 
+    function setCache(url,data){
+        getCache().find('id',System.Base64.encode(url), function (index, id) {
+            if (-1 === index) {
+                this.add({
+                    "id":id,
+                    "content":data
+                });
+            }
+        });
+    }
 
-
+    function ajax_success_callback(data,textStatus,jqXHR){
+        var _this = this;
+        if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
+        if(System.isFunction(_this.capture)){data = _this.capture(data);}
+        if(_this.$dom && System.isString(data)){data = _this.loop(data);}
+        if(_this.success && System.isFunction(_this.success)){
+            _this.success(data,textStatus,jqXHR);
+        }else{
+            if(_this.$dom){
+                _this.$dom.after(data).remove();
+            }
+        }
+    }
 
 	System.merge(null,[{
 		'isHTMLDocument'	: System.type("HTMLDocument"),
@@ -159,14 +197,32 @@
             return this;
         },
         'compile':function (S) {
-            return this.base(S,this.tpData);
+            if(System.isArray(this.tpData)){
+                return System.Template.foreach(S,this.tpData,this.delimiters);
+            }else{
+                return this.base(S,this.tpData);
+            }
         },
         'loop':function (S) {
             var s = '',total = this.repeat >= 1 ? this.repeat : 1;
             while((total--) > 0){s+=S;}
             return s;
         },
-		'html':function(obj){},
+        'get':function(){
+            var _this = this;
+            if(this.file.search(/\.html/) != -1 && System.isFunction(System.Cache) && System.isset(_this.file)) {
+                getCache().find('id', System.Base64.encode(_this.file), function (index) {
+                    if (-1 === index) {
+                        _this.ajax();
+                    } else {
+                        ajax_success_callback.call(_this,this.get(index).content,null,null);
+                    }
+                });
+            }else{
+                _this.ajax();
+            }
+        },
+        'html':function(obj){},
         'ajax':function () {
 		    var _this = this;
             if(System.isset(_this.file)){
@@ -207,19 +263,10 @@
 								_this.error(XMLHttpRequest, textStatus, errorThrown);
 							}
 						},
-						success: function(data,textStatus,jqXHR){
-							if(System.isString(data) && System.isPlainObject(_this.tpData)){data = _this.compile(data);}
-                            if(System.isFunction(_this.capture)){data = _this.capture(data);}
-                            if(_this.$dom && System.isString(data)){data = _this.loop(data);}
-
-							if(_this.success && System.isFunction(_this.success)){
-								_this.success(data,textStatus,jqXHR);
-							}else{
-                                if(_this.$dom){
-                                    _this.$dom.after(data).remove();
-                                }
-                            }
-						}
+                        success: function(data,textStatus,jqXHR){
+                            setCache(_this.file,data);
+                            ajax_success_callback.call(_this,data,textStatus,jqXHR);
+                        }
 					})
 					.done(_this.done);
             }
@@ -244,7 +291,7 @@
 		}
 	});
 
-	var getFile=function($dom,D){(new Html($dom,D)).init().ajax();};
+	var getFile=function($dom,D){(new Html($dom,D)).init().get();};
 
 	/**
 	 *
