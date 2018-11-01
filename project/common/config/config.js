@@ -90,6 +90,9 @@
                 return [
                     classPath+'/jQuery/jquery.js'
                     ,classPath+'/build/base.min.js'
+
+                    ,classPath+'/base/Base64.class.js'
+                    ,classPath+'/base/Cache.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     // ,classPath+'/base/System.js'

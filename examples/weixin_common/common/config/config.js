@@ -90,6 +90,9 @@
                     //,classPath+'/base/Template.class.js'
                     //,classPath+'/base/Html.class.js'
                     //,classPath+'/base/Loader.class.js'
+
+                    ,classPath+'/base/Base64.class.js'
+                    ,classPath+'/base/Cache.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Css.class.js'
                 ];

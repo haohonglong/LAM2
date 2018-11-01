@@ -120,10 +120,12 @@
                     // ,classPath+'/base/Html.class.js'
                     // ,classPath+'/base/Loader.class.js'
 
+                    ,classPath+'/base/Base64.class.js'
+                    ,classPath+'/base/Cache.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     // ,PLUGINS+'/layer-v3.1.1/layer/layer.js'
-                    ,'http://127.0.0.1/lamborghiniJS/LAM2/common/plugins/vue/vue.js'
+                    ,PLUGINS+'/vue/vue.js'
                 ];
             },
 
