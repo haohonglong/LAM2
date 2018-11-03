@@ -9,122 +9,78 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-8-12
+	修改日期 ：2018-11-3
 
 
 # 产品介绍：
-
-	LamborghiniJS 不是插件，是一种javascript OO思想实现的类库，它可以为生产应用框架做更好的基础服务。
-	LamborghiniJS 的诞生初衷是自2013年起,为解决自己工作方便写的小工具,发展到现在的一个类库思想实现.
-	LamborghiniJS 的目的:继承、覆写、重用！ 少写重复性的代码,封装已通过测试功能的成熟代码,便于以后开发中复用.
-	LamborghiniJS 里有命名空间的概念,每一个类都要通过命名空间去调用.(参考 二、开发约定 类结构)
-	LamborghiniJS 里有文件加载器机制,可以在.js文件里直接加载其它.js文件(参考 五、文件加载器)
-	LamborghiniJS 里有沙箱机制(参考 十四、沙箱)
-	LamborghiniJS 里有Base64概念
-	LamborghiniJS 里有hashcode概念（参考 十五、hashcode）
-	LamborghiniJS 里有模版标签概念（参考 十八、模版标签）
-	LamborghiniJS 里有MVC概念（参考 十九、MVC）
-	LamborghiniJS 里有缓存概念（参考 二十一、缓存机制）
-
-	现有的实例：
-		选项卡、拖拽、常用工具、弹出层、幻灯、棋盘、缩略图、自适应布局、html5绘图基础类
-	如要根据项目需求要修改或扩展现有的这些实例，要这样做：
-		1.创建一个子类继承父类(现有的实例的类)
-		2.覆写父类里的成员(属性和方法)
-	(继承参考 六、继承)
+	LAM2 是一个单文件应用，面向对象，与UI无关，不做任何UI操作，它是一个构建的底层类库工具。
 
 
 # 文件说明：
 		
-#### 文件夹结构：
-		|-LAM      		 #项目根目录
-			|-documentation  #手册文档
-			|-demo 		 #
-				|-views	 #html文件
-					|-index	 #html文件
-						|-config.js	 #当前配置文件
-			|-composer  #脚手架工具
-			|-common  #公共文件
-				|-css  
-				|-js  
-				|-data #json数据  
-				|-plugins #插件  
-				|-config  #配置文件存放位置
-					|-config.js  #主配置文件
-					|-init.js  #每个页面公用的.js文件
-			|-lamborghiniJS  #lamborghiniJS 核心类库文件
-			|-project  	 #项目demo文件
-				|-controllers #控制器渲染对应的页面
-				|-views   #项目中所有页面
-				|-doc #文档说明
-				|-css #只关联当前项目
-				|-js  #只关联当前项目
-				|-images #只关联当前项目
+#### 项目结构：
+		brandhall  #后台管理demo
+            |-commmon       项目公共文件目录
+                |-config       
+                    |-config.js       项目配置文件(3)
+            |-controllers   项目控制器文件存放位置(4)
+            |-public        项目资源文件存放位置(7)
+                |-css
+                |-images
+                |-js
+            |-views         项目视图文件存放位置
+                |—layouts  
+                     |-main.html(6)
+                |-site
+                    |-index.html(5)
+            |-config.js     项目配置文件(2)
+            |-index.html    项目入口文件(1)
 
-	类成员属性：
-		 class:
-			 |-Basis.class
-				|-
-			 |-BiObject.class
-				|-
-			 |-Component.class
-				|-
-         
-            
-         
-
+            上面数字意思是过程加载的顺序
+	
 
 # 类库声明：
 	
 # 类库说明：
-	
-### 使用：
-		1.给全局变量_ROOT_ 分配路径（这一步可以省略，可以在当前配置文件里配置）
-			<script type="text/javascript">var _ROOT_ = '../..'</script>
-		2.引入当前配置文件或主配置文件,文件的位置可以随便放，也可放在项目根目录（具体配置参考 一、配置）
-			<script type="text/javascript" src="./config.js"></script>
-		3.可以使用LAMJS对象了。
-			<script type="text/javascript">
-				LAMJS.run(function() {
-					'use strict';
-					var System=this;
-					// doing here coded ....
-				});
-			</script>
-		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-		tip:
-			
-			config.js 分为两个，一个是当前配置文件(对应当前的视图或控制器的位置)，一个是主配置文件。
-			当前配置文件是跟视图文件或者控制器文件在同级目录里，
-			当前配置文件的作用：
-				1.配置项目主目录路径（修改factory函数参数的值）
-				2.检测类库文件是否已被加载过
-				3.引入主配置文件
-			内容如下：
-			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-					(function(window){
-						'use strict';
-						if(window.GRN_LHH && window[window.GRN_LHH]){return;}
-						(function(factory){
-							'use strict';
-							factory("../..","/common/config/config.js");
-						})(function(ROOT,url){
-							'use strict';
-							if(!window._ROOT_){
-								window._ROOT_ = ROOT;
-							}else{
-								ROOT = window._ROOT_;
-							}
-							var tag = "script",attrs=[];
-							attrs.push('type="text/javascript"');
-							url=ROOT+url;
-							document.write('<',tag,' ',attrs.join(' '),'src=','"',url,'"','>','<','/',tag,'>');
-						});
-					})(typeof window !== "undefined" ? window : this);
-                
+        |----index.html(入口文件)
+        |       |
+        |       |
+        |    config.js
+        |       |\定义项目ROOT路径 ;引入项目配置文件
+        |       |
+        |    common/config/config.js  
+        |        \
+        |         \
+        |           1.配置相关信息
+        |           2.加载LAM2类库文件,或别的第三方文件
+        |           3.检查类库是否加载成功
+        |           
+        |           
+        |—————————— URL----->HttpRequest.get()
+                                            |
+                                            |
+                    路由器 Router.class<-----  
+                            |
+                            |
+                    控制器 Controller.class---(render)--->view 视图
+                                                            |
+                       —————————————————————————————————————|
+                       |                                    |视图作为模版嵌入布局中
+                       |——————————————————————————————————layout 布局
+                       |
+                       |                                                                     
+                    include (外部html文件占位符标签)
 
+                                                    
+                                                     
+            
+                  
+                  
+                  
+                  
+        
 
-			<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		
 		
 
 ## 一、主配置文件配置 参考 二、开发约定
@@ -188,6 +144,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         		'Loader'   		    :{},
         		'BiObject'   		:function(){},
         		'Component'      	:function(){},
+        		'HttpRequest'       :function(){},
         		'Cache'				:function(){},
         		'Helper'     		:function(){},
         		'Controller'     	:function(){},
@@ -1085,48 +1042,44 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 			(function(IT,factory){
                 'use strict';
                 var System = IT['LAM_20150910123700_'];
-
+            
                 if(!System){
                     return;
                 }else{
                     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
                         typeof define === 'function' && define.amd ? define(factory(System)) :
-                            (System['SiteController'] = factory(System));
+                            (System['ShopController'] = factory(System));
                 }
-
+            
             })(this,function(System){
                 'use strict';
                 var __this__=null;
-                System.is(System,'Controller','SiteController',System.classPath+'/base');
-                var ROOT  = System.ROOT;
-                var views = System.ROOT+'/views/site';
-                var SiteController = System.Controller.extend({
+                System.is(System,'Controller','ShopController',System.classPath+'/base');
+                var ROOT  = System.BACKEND;
+                var ShopController = System.Controller.extend({
                     constructor: function (init){
                         this.base(init || {});
                         __this__=this;
-
+                        this.viewpath = System.VIEWS+'/shop';
+            
                     },
-                    '_className':'SiteController',
-                    'indexAction':function(){
-                        new System.Template().render(views+'/index.html',{
-                            'COMMON':System.COMMON,
+                    '_className':'ShopController',
+                    'choiceTemplateAction':function(){
+                        this.render('choiceTemplate',{
+                            'VIEWS':System.VIEWS,
+                            'IMAGE':System.IMAGE,
                             'ROOT':ROOT,
                             'D':{
                                 'title':'你好，世界！',
                                 'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                             }
-
+            
                         },function(content){
-                            System.print(content);
-                        },{
-                            beforeSend:function(a,b){
-                                this.async=true;
-                            }
+                            __this__.renderLayout(content);
                         });
                     },
-
-
-
+            
+            
                     /**
                      *
                      * @author lhh
@@ -1134,7 +1087,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                      * 创建日期：2015-4-2
                      * 修改日期：2015-4-2
                      * 名称：destructor
-                     * 功能：在注销SiteController对象时调用此方法
+                     * 功能：在注销ShopController对象时调用此方法
                      * 说明：
                      * 注意：
                      * @return  ()
@@ -1142,8 +1095,11 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                      */
                     'destructor':function(){}
                 });
-                return SiteController;
+                return ShopController;
             });
+            
+            
+
 
 
 
@@ -1176,11 +1132,26 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
                 </head>
                 <body>
-                <div class="container">
-                    <div class="jumbotron">
-                        <h1>{{D.title}}</h1>
-                        <p>{{D.content}}</p>
-                        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2 sectionSidebar-A1">
+                            <include file="{{VIEWS}}/inc_menu.html"></include>
+                        </div>
+                        <div class="col-md-10 sectionWrap-A4">
+                            <div class="p20">
+                                <div class="sectionPhoneTop-A1 clear none mb20">
+                                    <img class="L logo" src="{{IMAGE}}/imgs_LHH/logo.png" width="130" height="54" alt="">
+                                    <div class="sectionBtn-A2 R mt20 mr15">
+                                        <span class="mb3"></span>
+                                        <span class="mb3"></span>
+                                        <span></span>
+                                    </div>
+                                    <img class="R img" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
+                                </div>
+                                <include repeat="0" tp-data="{'name':'小安子33'}" delimiters="{#,#}"  file="{{VIEWS}}/inc_header.html"></include>
+                                {{content}} 
+                            </div>
+                        </div>
                     </div>
                 </div>
                 </body>
@@ -1193,7 +1164,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                 			controllerName:控制器文件名称（对应视图文件的文件夹，如：index）
                 			action：调用对应控制器中的方法（对应着视图文件名）
 
-
+                注意：{{content}} 在layout 里会被视图文件里的内容替换
                 
                
                 
