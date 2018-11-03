@@ -15,7 +15,6 @@
     var __this__=null;
     System.is(System,'Controller','ShopController',System.classPath+'/base');
     var ROOT  = System.BACKEND;
-    var views = System.VIEWS+'/shop';
     var ShopController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
