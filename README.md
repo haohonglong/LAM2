@@ -13,7 +13,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 
 # 产品介绍：
-	LAM2 是一个单文件应用，面向对象，与UI无关，不做任何UI操作，它是一个构建的底层类库工具。
+	LAM2 是一个单文件应用，面向对象，不做任何与UI有关的事，它是一个构建的底层类库工具。
 
 
 # 文件说明：
@@ -44,50 +44,80 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 # 类库说明：
 
 # 单文件应用运行的过程：
-        |----index.html(入口文件)
-        |       |
-        |       |
-        |    config.js
-        |       |\定义项目ROOT路径 ;引入项目配置文件
-        |       |
-        |    common/config/config.js  
-        |        \
-        |         \
-        |           1.配置相关信息
-        |           2.加载LAM2类库文件,或别的第三方插件
-        |           3.检查类库是否加载成功
-        |                     ^
-        |                    /-------NO----->  throw Error
-        |                   / \
-        |                  /   \YES
-        |                 /     \ 
-        |—————————— URL----->HttpRequest.get()
+    URL(1)-->index.html(入口文件)(2)
+                |
+                |
+             config.js(3)
+                |\定义项目ROOT路径 ;引入项目配置文件
+                |
+             common/config/config.js(4)  
+                 \
+                  \
+                    1.配置相关信息
+                    2.加载LAM2类库文件
+                                     \-|
+                                       |-jQuery/jquery.js
+                                       |_base/System.js
+                                       |_base/Base.class.js
+                                       |_base/Object.class.js
+                                       |_base/Component.class.js
+                                       |_base/HttpRequest.class.js
+                                       |_base/Helper.class.js
+                                       |_base/Browser.class.js
+                                       |_base/Event.class.js
+                                       |_base/Dom.class.js
+                                       |_base/Template.class.js
+                                       |_base/Html.class.js
+                                       |_base/Loader.class.js
+                                       |_base/Base64.class.js
+                                       |_base/Cache.class.js
+                                       |_base/Controller.class.js
+                                       |_base/Router.class.js
+                                                                
+                    3.检查类库是否加载成功
+                              ^
+                             /-------NO----->  throw Error
+                             \
+                              \YES
+                               \ 
+                             路由器 Router.class(5)
                                             |
                                             |
-                    路由器 Router.class<-----  
+                        HttpRequest.get()<--  
                             \
                             _\|
-                    控制器 Controller.class---\
+                    控制器 Controller.class(7)\
                                              _\|
-                                               Template.class--(render)
-                                                                      \
-                                                          没有         _\|        
-                                                  ————————————————————有layout时：
-                                                 |                              \
-                                                 |                              _\|
-                                                 |                    视图作为模版嵌入layout里 
-                                                 |                       /
-                                                  ----layout 布局-------/
-                                        render   |
-                                           ______|                                                                     
-                                           /
-                                        显示视图文件
-                                        /
-                                 include (引入外部html文件替换掉占位符标签位置)
-
-                                                    
-                                                     
-            
+                                               Template.class(6)
+                                                             \
+                                                     没有     _\|        
+                                                 |————————有layout时：
+                                                 |                 \
+                                                 |                 _\|
+                                                 |              视图作为模版嵌入layout里 
+                                                 |              /
+                                                  ----layout 布局
+                          |-------------render(8)|
+                          |                ______|                                                                     
+                          |               /
+                          |             显示视图文件
+                          |              /
+                          |       include (引入外部html文件替换掉占位符标签位置)(11)
+                          |         \                                                      
+                          |         _\|
+                          |------->Html.class(9)                 |-----------|                          
+                                             /                   |           |   
+                                         get cache<------------- |   cache   |                       
+                                          /                      |___________|
+                                         /                              ^
+                                      has cache and if .html            |            LAM.import()
+                                  YES   /\ NO                           |            /
+                 get data<-------------/  \         ____________________|___________/ 
+                       \                  _\|       /                   |
+                        \<--------------jQuery.ajax()--------->add to cache
+                                                                                          
+                          
+                                       
                   
                   
                   
