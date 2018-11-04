@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-3
+	修改日期 ：2018-11-4
 
 
 # 产品介绍：
@@ -42,6 +42,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 # 类库声明：
 	
 # 类库说明：
+
+# 单文件应用运行的过程：
         |----index.html(入口文件)
         |       |
         |       |
@@ -52,24 +54,36 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         |        \
         |         \
         |           1.配置相关信息
-        |           2.加载LAM2类库文件,或别的第三方文件
+        |           2.加载LAM2类库文件,或别的第三方插件
         |           3.检查类库是否加载成功
-        |           
-        |           
+        |                     ^
+        |                    /-------NO----->  throw Error
+        |                   / \
+        |                  /   \YES
+        |                 /     \ 
         |—————————— URL----->HttpRequest.get()
                                             |
                                             |
                     路由器 Router.class<-----  
-                            |
-                            |
-                    控制器 Controller.class---(render)--->view 视图
-                                                            |
-                       —————————————————————————————————————|
-                       |                                    |视图作为模版嵌入布局中
-                       |——————————————————————————————————layout 布局
-                       |
-                       |                                                                     
-                    include (外部html文件占位符标签)
+                            \
+                            _\|
+                    控制器 Controller.class---\
+                                             _\|
+                                               Template.class--(render)
+                                                                      \
+                                                          没有         _\|        
+                                                  ————————————————————有layout时：
+                                                 |                              \
+                                                 |                              _\|
+                                                 |                    视图作为模版嵌入layout里 
+                                                 |                       /
+                                                  ----layout 布局-------/
+                                        render   |
+                                           ______|                                                                     
+                                           /
+                                        显示视图文件
+                                        /
+                                 include (引入外部html文件替换掉占位符标签位置)
 
                                                     
                                                      
