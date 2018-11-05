@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-4
+	修改日期 ：2018-11-5
 
 
 # 产品介绍：
@@ -42,15 +42,6 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 # 类库声明：
 	
 # 类库说明：
-# nginx 配置：
-        server {
-            listen          8001;
-            server_name     lam2;
-            index           index.html;
-            root  /Users/long/sites/LamborghiniJS/LAM2;
-            #解决html 405 (Not Allowed)
-            error_page 405 =200 $request_uri;
-        }
 
 # 单文件应用运行的过程：
     URL(1)-->index.html(入口文件)(2)
@@ -132,6 +123,15 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                   
                   
         
+# nginx 配置：
+        server {
+            listen          8001;
+            server_name     lam2;
+            index           index.html;
+            root  /Users/long/sites/LamborghiniJS/LAM2;
+            #解决html 405 (Not Allowed)
+            error_page 405 =200 $request_uri;
+        }
 
 		
 		
