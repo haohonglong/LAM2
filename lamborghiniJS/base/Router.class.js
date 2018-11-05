@@ -64,9 +64,17 @@
                         controller[action](id);
                     }else if((action = action+'Action') && System.isFunction(controller[action])){
                         controller[action](id);
-                    }
-
-                }
+                    }else{
+                        System.View.ERROR_404();
+                        throw new Error('action Error');
+					}
+                }else{
+                    System.View.ERROR_404();
+                    throw new Error('Controller Error');
+				}
+			}else {
+                System.View.ERROR_404();
+                throw new Error('Controller Error');
 			}
 
         }catch(e){

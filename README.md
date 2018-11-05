@@ -42,6 +42,15 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 # 类库声明：
 	
 # 类库说明：
+# nginx 配置：
+        server {
+            listen          8001;
+            server_name     lam2;
+            index           index.html;
+            root  /Users/long/sites/LamborghiniJS/LAM2;
+            #解决html 405 (Not Allowed)
+            error_page 405 =200 $request_uri;
+        }
 
 # 单文件应用运行的过程：
     URL(1)-->index.html(入口文件)(2)
