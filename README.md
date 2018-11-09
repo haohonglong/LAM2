@@ -136,7 +136,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 		
 		
 
-# 地址栏访问例子：http://lam2:8080/brandhall/index.html?r=room/list
+## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
 
 ## 一、主配置文件配置 参考 二、开发约定
 		tip:
