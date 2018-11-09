@@ -56,31 +56,20 @@
         var action = r[1];
         var id = r[2];
         id = System.eval(id);
-        try{
-        	if(System.isset(System[ControllerName]) && System.isFunction(System[ControllerName])){
-                var controller = new System[ControllerName]();
-                if(controller instanceof System.Controller){
-                    if(action && System.isFunction(controller[action])){
-                        controller[action](id);
-                    }else if((action = action+'Action') && System.isFunction(controller[action])){
-                        controller[action](id);
-                    }else{
-                        System.View.ERROR_404();
-                        throw new Error('action Error');
-					}
-                }else{
-                    System.View.ERROR_404();
-                    throw new Error('Controller Error');
-				}
-			}else {
-                System.View.ERROR_404();
-                throw new Error('Controller Error');
-			}
-
-        }catch(e){
-            System.View.ERROR_404();
-            throw new Error(e);
-        }
+        try{ 
+        	var controller = new System[ControllerName](); 
+        	if(controller instanceof System.Controller){ 
+        		if(action && System.isFunction(controller[action])){ 
+        			controller[action](id); 
+        		}else if((action = action+'Action') && System.isFunction(controller[action])){ 
+        			controller[action](id); 
+        		}else{ 
+        			throw new Error('of action'); 
+        		} 
+        	} 
+        }catch(e){ 
+        	System.View.ERROR_404(e); 
+        	throw new Error(e); }
     };
 
 

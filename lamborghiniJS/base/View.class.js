@@ -39,29 +39,40 @@
 		 */
 		'destructor':function(){}
 	});
-    /**
-     * @author lhh
-     * 产品介绍：
-     * 创建日期：2019-9-12
-     * 修改日期：2019-9-12
-     * 名称：View.ERROR_404
-     * 功能：not found of page then display the page of error_404
-     * 说明：
-     * 注意：
-     * @return  (void)						:
-     * Example：
-     *
-     */
-	View.ERROR_404 = function () {
-        new System.Template().render(System.ERROR_404,{},function(content){
-            System.print(content);
-        },{
-            beforeSend:function(a,b){
-                this.async=false;
+    /** 
+	 *
+	 *  @author lhh 
+	 *  产品介绍： 
+	 *  创建日期：2018-9-12 
+	 *  修改日期：2018-11-9 
+	 *  名称：View.ERROR_404 
+	 *  功能：when the page was not found then display the 404 page 
+	 *  说明： 
+	 *  注意： 
+	 *  @param (String)message     NO NULL    message of error 
+	 *  @param (String)url            NULL    page of 404 
+	 *  @param (jQuery)$dom           NULL    element of include 
+	 *  @return  (void)                        : 
+	 *  Example： 
+	 */
+    View.ERROR_404 = function (message, url, $dom) {
+        message = message || '404 Not Found';
+        url = url || System.ERROR_404;
+        new System.Template().render(url, {'message': message}, function (content) {
+            if ($dom && System.is_instanceof_jQuery($dom)) {
+                $dom.after(content).remove();
+            } else {
+                System.print(content);
+            }
+            throw message;
+        }, {
+            beforeSend: function (a, b) {
+                this.async = false;
             }
         });
     };
-	return View;
+
+    return View;
 });
 
 

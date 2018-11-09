@@ -118,7 +118,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-8-22
+         * 修改日期：2018-11-9
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -153,7 +153,7 @@
 			var _this = this;
 			this.symbol=[];
             //如果第一个是对象且不是jQuery对象
-            if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !$dom.each) {
+            if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
                 D = $dom;
                 $dom = null;
             }
@@ -161,14 +161,14 @@
             this.$dom = $dom;
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
-            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
+            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
+            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
             this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
-            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
+            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
             this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
@@ -234,21 +234,17 @@
 							try{
 								switch(XMLHttpRequest.status) {
 									case 404:
-										if(System.isset(_this.file_404)){
-											_this.file = _this.file_404;
-											if(_this.jump){
-												location.href = _this.file;
-											}else{
-												_this.ajax();
-											}
-										}
-										break;
+                                        var $dom = _this.jump ? null : _this.$dom; 
+                                        System.View.ERROR_404('the path Error '+_this.file 
+											,_this.file_404 
+											,$dom);
+                                        break;
 									default:
 
 								}
 
 							}catch(e){
-								throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
+								throw new Error(e);
 							}
 							if(_this.error && System.isFunction(_this.error)){
 								_this.error(XMLHttpRequest, textStatus, errorThrown);
