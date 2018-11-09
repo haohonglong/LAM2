@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-10-13
+ * 修改日期:2018-11-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -110,7 +110,15 @@
 		return (null != obj && obj == obj.window);
 	}
 
-	/**
+    function is_instanceof_jQuery(obj){ 
+		if(obj instanceof jQuery) 
+			return true;
+		 else 
+			return false; 
+	}
+
+
+    /**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014-12-23
@@ -1350,6 +1358,7 @@
 	System.isBlob 			= isBlob;
 
 	System.isWindow 			= isWindow;
+	System.is_instanceof_jQuery = is_instanceof_jQuery;
 
 	System.arr_Object_key = arr_Object_key;
 	System.arr_Object_key_has = arr_Object_key_has;
