@@ -69,7 +69,8 @@
         	} 
         }catch(e){ 
         	System.View.ERROR_404(e); 
-        	throw new Error(e); }
+        	throw new Error(e); 
+        }
     };
 
 
