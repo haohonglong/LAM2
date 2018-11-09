@@ -72,7 +72,7 @@
 						arr.push(this);
 					}else{//如果每个里有模版标签
 						v=this.split(delimiterRight);
-						$1=v[0];
+						$1=v[0].trim();
 						$2=v[1].trim();
 						arr.push([self.analysis($1,D),self.compile($2,D)].join('').trim());
 					}
@@ -362,7 +362,7 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += Template.compiler(template,data[i],delimiters);
+			fragment += Template.compile(template,data[i],delimiters);
 		}
 		return fragment;
 	};
@@ -381,7 +381,7 @@
         delimiters = delimiters || System.Config.templat.delimiters;
         var L = delimiters[0],R = delimiters[1],t, key, reg;
         for(key in data){
-            reg = new RegExp(L + key + R, 'ig');
+            reg = new RegExp(L + key + R, 'g');
             t = (t || template).replace(reg, data[key]);
         }
         return t || template;
