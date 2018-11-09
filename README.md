@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-5
+	修改日期 ：2018-11-9
 
 
 # 产品介绍：
@@ -125,7 +125,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         
 # nginx 配置：
         server {
-            listen          8001;
+            listen          8080;
             server_name     lam2;
             index           index.html;
             root  /Users/long/sites/LamborghiniJS/LAM2;
@@ -135,6 +135,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 		
 		
+
+# 地址栏访问例子：http://lam2:8080/brandhall/index.html?r=room/list
 
 ## 一、主配置文件配置 参考 二、开发约定
 		tip:

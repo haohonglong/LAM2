@@ -23,12 +23,12 @@
                 </ul>
             </div>
             <include repeat="0" tp-data="[
-            {'designer':'1','IMAGE':LAM.IMAGE},
-            {'designer':'2','IMAGE':LAM.IMAGE},
-            {'designer':'3','IMAGE':LAM.IMAGE},
-            {'designer':'4','IMAGE':LAM.IMAGE},
-            {'designer':'5','IMAGE':LAM.IMAGE},
-            {'designer':'6','IMAGE':LAM.IMAGE}
+            {'name':'李晨','style':'新古典  其他  简约'},
+            {'name':'刘军','style':'地中海-田园  北欧  其他  简约'},
+            {'name':'王磊','style':'新古典  地中海-田园  '},
+            {'name':'萧红','style':'新古典  地中海-田园  其他  简约'},
+            {'name':'马良','style':'新古典  地中海-田园  北欧  简约'},
+            {'name':'赵明','style':'新古典  地中海-田园  北欧  其他'}
             ]"  file="{{LAM.COMPONENTS}}/list.html"></include>
 
 
@@ -41,8 +41,7 @@
 
     <div class="sectionPageing-A2 clear">
         <div class="R">
-            <span class="mr10">共1页</span>到第<span class="sectionForm-A2 mr5 ml5"><input type="text" class="text w-38"></span>页
-            <span class="sectionForm-A3 ml5"><input class="" type="submit" value="确定"></span>
+            <include repeat="0" tp-data=""  file="{{LAM.COMPONENTS}}/paging.html"></include>
         </div>
     </div>
 </form>
