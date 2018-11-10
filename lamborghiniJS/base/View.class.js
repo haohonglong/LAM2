@@ -41,19 +41,19 @@
 	});
     /** 
 	 *
-	 *  @author lhh 
-	 *  产品介绍： 
-	 *  创建日期：2018-9-12 
-	 *  修改日期：2018-11-9 
-	 *  名称：View.ERROR_404 
-	 *  功能：when the page was not found then display the 404 page 
-	 *  说明： 
-	 *  注意： 
-	 *  @param (String)message     NO NULL    message of error 
-	 *  @param (String)url            NULL    page of 404 
-	 *  @param (jQuery)$dom           NULL    element of include 
-	 *  @return  (void)                        : 
-	 *  Example： 
+	 *  @author lh 
+	 *  产品介绍：
+	 *  创建日期：2018-9-12
+	 *  修改日期：2018-11-9
+	 *  名称：View.ERROR_404
+	 *  功能：when the page was not found then display the 404 page
+	 *  说明：
+	 *  注意：
+	 *  @param (String)message     NO NULL    message of error
+	 *  @param (String)url            NULL    page of 404
+	 *  @param (jQuery)$dom           NULL    element of include
+	 *  @return  (void) 
+	 *  Example:
 	 */
     View.ERROR_404 = function (message, url, $dom) {
         message = message || '404 Not Found';
