@@ -24,7 +24,7 @@
     }
 
     function setCache(url,data){
-        getCache().find('id',System.Base64.encode(url), function (index, id) {
+        getCache().find('id',System.Base64.encode(url.trim()), function (index, id) {
             if (-1 === index) {
                 this.add({
                     "id":id,
@@ -201,8 +201,8 @@
         },
         'get':function(){
             var _this = this;
-            if(this.file.search(/\.html/) != -1 && System.isFunction(System.Cache) && System.isset(_this.file)) {
-                getCache().find('id', System.Base64.encode(_this.file), function (index) {
+            if(-1 === this.file.search(/\.js/) && System.isFunction(System.Cache) && System.isset(_this.file)) {
+                getCache().find('id', System.Base64.encode(_this.file.trim()), function (index) {
                     if (-1 === index) {
                         _this.ajax();
                     } else {
@@ -417,7 +417,7 @@
                           success){
         success = D && D.callBack || 0;
 		//如果第一个是对象且不是jQuery对象
-		if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !$dom.each) {
+		if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
 			D = $dom;
 			$dom = null;
 			getFile(D);
