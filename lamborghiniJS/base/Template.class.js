@@ -48,7 +48,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-9
-		 * 修改日期：2018-8-22
+		 * 修改日期：2018-11-10
 		 * 名称：compile
 		 * 功能：编译模版标签
 		 * 说明：
@@ -60,14 +60,13 @@
 		 */
 		'compile':function(S,D,delimiters){
 			var self=this;
-			var ss=[],arr=[],v=[],$1,$2;
+			var arr=[],v=[],$1,$2;
             delimiters = delimiters || this.delimiters;
 			var delimiterLeft  = delimiters[0];
 			var delimiterRight = delimiters[1];
 			//没找到模版分隔符就返回传入的字符串
 			if(S.indexOf(delimiterLeft) !== -1){
-				ss=S.split(delimiterLeft);
-				ss.each(function(){
+				S.split(delimiterLeft).each(function(){
 					if(-1 === this.indexOf(delimiterRight)){
 						arr.push(this);
 					}else{//如果每个里有模版标签
@@ -192,7 +191,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-03-8
-	 * 修改日期：2017-2-23
+	 * 修改日期：2018-11-10
 	 * 名称：Template.templat
 	 * 功能：替换模版中的变量
 	 * 说明：变量式：__root__ ; 对象式：System.__root__
@@ -219,8 +218,8 @@
 				v=this.split(delimiterLeft);
 				$1=v[0] ? v[0] : '';
 				v2=v[1].split(delimiterLeft)[0].trim().split(delimiterRight);
-				$2=v2[0];
-				$3=v2[1] ? v2[1] :'';
+				$2=v2[0].trim();
+				$3=v2[1] ? v2[1].trim() :'';
 				arr.push([$1,Template.analysisVar($2),$3].join('').trim());
 
 			}
