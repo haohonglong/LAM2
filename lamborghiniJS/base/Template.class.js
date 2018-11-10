@@ -362,14 +362,14 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += Template.compile(template,data[i],delimiters);
+			fragment += Template.compiler(template,data[i],delimiters);
 		}
 		return fragment;
 	};
     /**
      * 产品介绍：
      * 创建日期：2016-10-22
-     * 修改日期：2018-08-28
+     * 修改日期：2018-11-10
      * 名称：Template.compiler
      * 功能：模版变量解析器
      * @param {String}template
@@ -381,8 +381,8 @@
         delimiters = delimiters || System.Config.templat.delimiters;
         var L = delimiters[0],R = delimiters[1],t, key, reg;
         for(key in data){
-            reg = new RegExp(L + key + R, 'g');
-            t = (t || template).replace(reg, data[key]);
+            reg = new RegExp(L+'\\s*' + key + '\\s*'+R, 'g');
+            t = (t || template).replace(reg, data[key]).trim();
         }
         return t || template;
     };
