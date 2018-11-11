@@ -13,25 +13,43 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Template','Html',System.classPath+'/base');
+	System.listen(function () {
+		if(System.isFunction(System.import)){
+            if(System.LAM_ENV_DEV){
+                System.import(['/Cache.class'],System.classPath+'/base');
+			}else{
+                System.import(['/Cache.class','/Storage.class'],System.classPath+'/base');
+			}
+			return true;
+		}
+    },1);
+
     var sAttribute   = System.Config.render.default.script.Attribute,
         cAttribute = System.Config.render.default.css.Attribute,
         Cache = null;
     function getCache(name){
         if(!Cache){
-            Cache = new System.Cache(name || 'include');
+        	if(System.LAM_ENV_DEV){
+                Cache = new System.Cache(name || 'template');
+			}else{
+                Cache = new System.Storage(name || 'template',sessionStorage);
+			}
+
         }
         return Cache;
     }
 
     function setCache(url,data){
-        getCache().find('id',System.Base64.encode(url.trim()), function (index, id) {
-            if (-1 === index) {
-                this.add({
-                    "id":id,
-                    "content":data
-                });
-            }
-        });
+    	if(!System.isJsFile(url)){
+            getCache().find('id',System.Base64.encode(url.trim()), function (index, id) {
+                if (-1 === index) {
+                    this.add({
+                        "id":id,
+                        "content":data
+                    });
+                }
+            });
+		}
     }
 
     function ajax_success_callback(data,textStatus,jqXHR){
@@ -201,7 +219,7 @@
         },
         'get':function(){
             var _this = this;
-            if(-1 === this.file.search(/\.js/) && System.isFunction(System.Cache) && System.isset(_this.file)) {
+            if(!System.isJsFile(_this.file) && System.isFunction(System.Cache) && System.isset(_this.file)) {
                 getCache().find('id', System.Base64.encode(_this.file.trim()), function (index) {
                     if (-1 === index) {
                         _this.ajax();
