@@ -1164,7 +1164,7 @@
          * @returns {boolean}
          */
 		"isJsFile":function (url) {
-            if(-1 === url.search(/\.js/))//这个类文件没有加载过
+            if(-1 === url.search(/\.js/))
                 return false;
             return true;
         },
