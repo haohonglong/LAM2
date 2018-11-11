@@ -29,11 +29,16 @@
         Cache = null;
     function getCache(name){
         if(!Cache){
-        	if(System.LAM_ENV_DEV){
-                Cache = new System.Cache(name || 'template');
-			}else{
-                Cache = new System.Storage(name || 'template',sessionStorage);
-			}
+        	try{
+                if(System.LAM_ENV_DEV){
+                    Cache = new System.Cache(name || 'template');
+                }else{
+                    Cache = new System.Storage(name || 'template',sessionStorage);
+                }
+			}catch (e){
+                throw new Error(e);
+            }
+
 
         }
         return Cache;
