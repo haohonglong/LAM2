@@ -58,7 +58,7 @@
      */
     function setCache(url,data){
         var n = url.indexOf('?'),_url = url;
-        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n) : url), function (index) {
+        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {
             if (-1 === index) {
                 this.add({
                     "path":_url.trim(),
@@ -237,7 +237,7 @@
         'get':function(){
             var _this = this,url = this.file,n = url.indexOf('?'),content='';
             if(System.isFunction(System.Cache) && System.isset(this.file)) {
-                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n) : url), function (index) {//路径一定要抛弃?带的参数,才可以base64 
+                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64 
                     if (-1 === index) {
                         _this.ajax();
                     }else{
