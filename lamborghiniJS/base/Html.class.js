@@ -44,17 +44,29 @@
         return Cache;
     }
 
+    /** 
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-11-13
+     * 修改日期：2018-11-13
+     * 名称： setCache
+     * 功能：数据存储到缓存中，
+     * 说明：路径一定要抛弃?带的参数 
+     *
+     * @param url 
+     * @param data 
+     */
     function setCache(url,data){
-    	if(!System.isJsFile(url)){
-            getCache().find('id',System.Base64.encode(url.trim()), function (index, id) {
-                if (-1 === index) {
-                    this.add({
-                        "id":id,
-                        "content":data
-                    });
-                }
-            });
-		}
+        var n = url.indexOf('?'),_url = url;
+        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n) : url), function (index) {
+            if (-1 === index) {
+                this.add({
+                    "path":_url.trim(),
+                    "type":System.isJsFile(url) ? 'js' : '',
+                    "content":data
+                });
+            }
+        });
     }
 
     function ajax_success_callback(data,textStatus,jqXHR){
@@ -223,13 +235,18 @@
             return s;
         },
         'get':function(){
-            var _this = this;
-            if(!System.isJsFile(_this.file) && System.isFunction(System.Cache) && System.isset(_this.file)) {
-                getCache().find('id', System.Base64.encode(_this.file.trim()), function (index) {
+            var _this = this,url = this.file,n = url.indexOf('?'),content='';
+            if(System.isFunction(System.Cache) && System.isset(this.file)) {
+                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n) : url), function (index) {//路径一定要抛弃?带的参数,才可以base64 
                     if (-1 === index) {
                         _this.ajax();
-                    } else {
-                        ajax_success_callback.call(_this,this.get(index).content,null,null);
+                    }else{
+                        content = this.get(index).content;
+                        if('js' === this.get(index).type){//脚本文件就直接执行 
+                            System.globalEval(content);
+                        }else{
+                            ajax_success_callback.call(_this,content,null,null);
+						 }
                     }
                 });
             }else{
