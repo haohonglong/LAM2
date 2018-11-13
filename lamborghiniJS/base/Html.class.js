@@ -13,21 +13,56 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Template','Html',System.classPath+'/base');
+	System.listen(function () {
+		if(System.isFunction(System.import)){
+            if(System.LAM_ENV_DEV){
+                System.import(['/Cache.class'],System.classPath+'/base');
+			}else{
+                System.import(['/Cache.class','/Storage.class'],System.classPath+'/base');
+			}
+			return true;
+		}
+    },1);
+
     var sAttribute   = System.Config.render.default.script.Attribute,
         cAttribute = System.Config.render.default.css.Attribute,
         Cache = null;
     function getCache(name){
         if(!Cache){
-            Cache = new System.Cache(name || 'include');
+        	try{
+                if(System.LAM_ENV_DEV){
+                    Cache = new System.Cache(name || 'template');
+                }else{
+                    Cache = new System.Storage(name || 'template',sessionStorage);
+                }
+			}catch (e){
+                throw new Error(e);
+            }
+
+
         }
         return Cache;
     }
 
+    /** 
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-11-13
+     * 修改日期：2018-11-13
+     * 名称： setCache
+     * 功能：数据存储到缓存中，
+     * 说明：路径一定要抛弃?带的参数 
+     *
+     * @param url 
+     * @param data 
+     */
     function setCache(url,data){
-        getCache().find('id',System.Base64.encode(url), function (index, id) {
+        var n = url.indexOf('?'),_url = url;
+        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {
             if (-1 === index) {
                 this.add({
-                    "id":id,
+                    "path":_url.trim(),
+                    "type":System.isJsFile(url) ? 'js' : '',
                     "content":data
                 });
             }
@@ -118,7 +153,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-8-22
+         * 修改日期：2018-11-9
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -153,7 +188,7 @@
 			var _this = this;
 			this.symbol=[];
             //如果第一个是对象且不是jQuery对象
-            if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !$dom.each) {
+            if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
                 D = $dom;
                 $dom = null;
             }
@@ -161,14 +196,14 @@
             this.$dom = $dom;
             this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         || null;
-            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    || null;
+            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
+            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
             this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
             this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
-            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        || null;
+            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
             this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
             this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
@@ -200,13 +235,18 @@
             return s;
         },
         'get':function(){
-            var _this = this;
-            if(this.file.search(/\.html/) != -1 && System.isFunction(System.Cache) && System.isset(_this.file)) {
-                getCache().find('id', System.Base64.encode(_this.file), function (index) {
+            var _this = this,url = this.file,n = url.indexOf('?'),content='';
+            if(System.isFunction(System.Cache) && System.isset(this.file)) {
+                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64 
                     if (-1 === index) {
                         _this.ajax();
-                    } else {
-                        ajax_success_callback.call(_this,this.get(index).content,null,null);
+                    }else{
+                        content = this.get(index).content;
+                        if('js' === this.get(index).type){//脚本文件就直接执行 
+                            System.globalEval(content);
+                        }else{
+                            ajax_success_callback.call(_this,content,null,null);
+						 }
                     }
                 });
             }else{
@@ -234,21 +274,17 @@
 							try{
 								switch(XMLHttpRequest.status) {
 									case 404:
-										if(System.isset(_this.file_404)){
-											_this.file = _this.file_404;
-											if(_this.jump){
-												location.href = _this.file;
-											}else{
-												_this.ajax();
-											}
-										}
-										break;
+                                        var $dom = _this.jump ? null : _this.$dom; 
+                                        System.View.ERROR_404('the path Error '+_this.file 
+											,_this.file_404 
+											,$dom);
+                                        break;
 									default:
 
 								}
 
 							}catch(e){
-								throw new Error("Warning :getFile 时没有取到数据！！！note:也许是file属性的参数错了哦...");
+								throw new Error(e);
 							}
 							if(_this.error && System.isFunction(_this.error)){
 								_this.error(XMLHttpRequest, textStatus, errorThrown);
@@ -421,7 +457,7 @@
                           success){
         success = D && D.callBack || 0;
 		//如果第一个是对象且不是jQuery对象
-		if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !$dom.each) {
+		if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
 			D = $dom;
 			$dom = null;
 			getFile(D);

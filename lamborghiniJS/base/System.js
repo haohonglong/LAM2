@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-10-13
+ * 修改日期:2018-11-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -110,7 +110,15 @@
 		return (null != obj && obj == obj.window);
 	}
 
-	/**
+    function is_instanceof_jQuery(obj){ 
+		if(obj instanceof jQuery) 
+			return true;
+		 else 
+			return false; 
+	}
+
+
+    /**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014-12-23
@@ -1124,7 +1132,6 @@
 		},
 
 		/**
-		 *
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-8-02
@@ -1139,28 +1146,28 @@
 		 *
 		 */
 		"isClassFile":function(path) {
-			var arr,className;
 			//查找是否有.class这个关键字
-			if(path.search(/\.class\.js/) != -1){
-				return true;
-				// if(path.indexOf("/") != -1){
-				// 	arr=path.split("/");
-				// 	path =arr[arr.length-1];
-                //
-				// }
-				//
-				// if(path.indexOf(".") != -1){
-				// 	arr=path.split(".");
-                 //    className=arr[0].firstToUpperCase();
-				// 	// 这个类文件已经加载过了
-				// 	if(System.isFunction(System[className])){
-				// 	return true;
-				// 	}
-				// }
-			}
-			//这个类文件没有加载过
-			return false;
+			if(-1 === path.search(/\.class\.js/))//这个类文件没有加载过
+				return false;
+			return true;
 		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018-11-11
+         * 修改日期：2018-11-11
+         * 名称：System.isJsFile
+         * 功能：检查是js文件
+         * 说明：
+         * 注意：
+         * @param   (String)url 			NO NULL :路径名称
+         * @returns {boolean}
+         */
+		"isJsFile":function (url) {
+            if(-1 === url.search(/\.js/))
+                return false;
+            return true;
+        },
 
 		/**
 		 *
@@ -1350,6 +1357,7 @@
 	System.isBlob 			= isBlob;
 
 	System.isWindow 			= isWindow;
+	System.is_instanceof_jQuery = is_instanceof_jQuery;
 
 	System.arr_Object_key = arr_Object_key;
 	System.arr_Object_key_has = arr_Object_key_has;

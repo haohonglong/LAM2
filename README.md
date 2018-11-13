@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-5
+	修改日期 ：2018-11-9
 
 
 # 产品介绍：
@@ -29,7 +29,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                 |-images
                 |-js
             |-views         项目视图文件存放位置
-                |—layouts  
+                |—layouts   布局文件存放的位置
                      |-main.html(6)
                 |-site
                     |-index.html(5)
@@ -66,6 +66,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                        |_base/Browser.class.js
                                        |_base/Event.class.js
                                        |_base/Dom.class.js
+                                       |_base/View.class.js
                                        |_base/Template.class.js
                                        |_base/Html.class.js
                                        |_base/Loader.class.js
@@ -75,11 +76,11 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                        |_base/Router.class.js
                                                                 
                     3.检查类库是否加载成功
-                              ^
-                             /-------NO----->  throw Error
-                             \
-                              \YES
-                               \ 
+                               /
+                              /
+                             /----NO---->  throw Error
+                             \YES
+                             _\| 
                              路由器 Router.class(5)
                                             |
                                             |
@@ -110,7 +111,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                          get cache<------------- |   cache   |                       
                                           /                      |___________|
                                          /                              ^
-                                      has cache and if .html            |            LAM.import()
+                                      has cache and has .html           |            LAM.import()
                                   YES   /\ NO                           |            /
                  get data<-------------/  \         ____________________|___________/ 
                        \                  _\|       /                   |
@@ -125,7 +126,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         
 # nginx 配置：
         server {
-            listen          8001;
+            listen          8080;
             server_name     lam2;
             index           index.html;
             root  /Users/long/sites/LamborghiniJS/LAM2;
@@ -135,6 +136,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 		
 		
+
+## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
 
 ## 一、主配置文件配置 参考 二、开发约定
 		tip:
