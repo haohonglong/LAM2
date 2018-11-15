@@ -58,6 +58,10 @@
             'components':{
                 'routeName':'r',
             },
+            'configure_cache':{
+                'type':sessionStorage,
+                'expires':0
+            },
             //hashcode 随机种子
             'random':999,
             //定义模版标签

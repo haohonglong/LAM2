@@ -31,9 +31,14 @@
         if(!Cache){
         	try{
                 if(System.LAM_ENV_DEV){
-                    Cache = new System.Cache(name || 'template');
+                    Cache = new System.Cache(
+                    	 name || 'template'
+                        ,System.configure_cache.expires || 0);
                 }else{
-                    Cache = new System.Storage(name || 'template',sessionStorage);
+                    Cache = new System.Storage(
+                    	 name || 'template'
+                        ,System.configure_cache.type || sessionStorage 
+						,System.configure_cache.expires || 0);
                 }
 			}catch (e){
                 throw new Error(e);

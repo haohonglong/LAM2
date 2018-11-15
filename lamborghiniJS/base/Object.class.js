@@ -29,7 +29,8 @@
 	System.is(System,'Base','Object',System.classPath+'/base');
 
 	System.classPath  = System.Config.getClassPath();
-	System.Public 	  = System.Config.Public || System.createDict();
+    System.configure_cache = System.Config.configure_cache || System.createDict();
+    System.Public 	  = System.Config.Public || System.createDict();
 	System.params 	  = System.Config.params || System.createDict();
 	System.components = System.merge({},[System.Config.components]) || System.createDict();
 	System.each(System.merge({},[System.components,System.Public]),function(name){

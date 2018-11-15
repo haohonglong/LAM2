@@ -49,7 +49,7 @@
         System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
-            'LAM_ENV':'dev',
+            'LAM_ENV':'pro',
             'Public':(function(){
                 var ROOT = _ROOT_+'/brandhall';
                 return {
@@ -83,6 +83,10 @@
                     },1);
                     return System.timestamp();
                 }
+            },
+            'configure_cache':{
+                'type':localStorage,
+                'expires':0
             },
             //hashcode 随机种子
             'random':10000,
@@ -124,6 +128,7 @@
 
                     ,classPath+'/base/Base64.class.js'
                     ,classPath+'/base/Cache.class.js'
+                    ,classPath+'/base/Storage.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     // ,PLUGINS+'/layer-v3.1.1/layer/layer.js'

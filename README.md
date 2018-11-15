@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.0
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-9
+	修改日期 ：2018-11-15
 
 
 # 产品介绍：
@@ -111,7 +111,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                          get cache<------------- |   cache   |                       
                                           /                      |___________|
                                          /                              ^
-                                      has cache and has .html           |            LAM.import()
+                                      has cache                         |            LAM.import()
                                   YES   /\ NO                           |            /
                  get data<-------------/  \         ____________________|___________/ 
                        \                  _\|       /                   |
