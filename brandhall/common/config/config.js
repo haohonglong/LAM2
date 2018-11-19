@@ -49,7 +49,7 @@
         System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
-            'LAM_ENV':'pro',
+            'LAM_ENV':'dev',
             'Public':(function(){
                 var ROOT = _ROOT_+'/brandhall';
                 return {
@@ -85,7 +85,7 @@
                 }
             },
             'configure_cache':{
-                'type':localStorage,
+                'type':sessionStorage,
                 'expires':0
             },
             //hashcode 随机种子
