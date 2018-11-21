@@ -23,7 +23,7 @@
 
         },
         '_className':'IntroduceController',
-        'index':function(){
+        'indexAction':function(){
             this.render('index',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
@@ -32,7 +32,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'about':function(){
+        'aboutAction':function(){
             this.render('about',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
@@ -41,7 +41,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'configuration':function(){
+        'configurationAction':function(){
             this.render('configuration',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
