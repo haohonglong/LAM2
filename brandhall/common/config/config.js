@@ -112,7 +112,6 @@
                     classPath+'/jQuery/jquery.js'
                     // ,classPath+'/build/base.min.js'
 
-                    // ,classPath+'/base/System.js'
                     ,classPath+'/base/Base.class.js'
                     ,classPath+'/base/Object.class.js'
                     ,classPath+'/base/Component.class.js'
