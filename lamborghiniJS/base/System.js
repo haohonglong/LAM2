@@ -45,11 +45,10 @@
 		(global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = factory(global,namespace));
 	}
 
-
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.1.0",
+	var VERSION="2.1.1",
 		Interface={},
 		System={},
 		once=true,
@@ -413,6 +412,46 @@
             }
             return runtime.apply(this,[args,callback]);
 
+		},
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018.11.22
+         * 修改日期：2018.11.22
+         * 名称：bootstrap
+         * 功能：加载初始化文件
+         * 说明：
+         * 注意：
+         * 调用方式：
+		 * @param Config
+         * Example：
+         */
+        'bootstrap':function (Config){
+			Config = Config || System.Config;
+			Config.files = Config.files || [];
+			var tag = "script"
+				,k,scriptAttribute = Config.render.default.script.Attribute,
+				i = 0,len,data = scriptAttribute,files=[],srcs =Config.autoLoadFile();
+			//加载基础类
+			//确保每个文件只加载一次
+			var attrs=[];
+			for(k in scriptAttribute){
+				attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
+			}
+			if(srcs.length){
+				for(i=0,len = srcs.length;i < len; i++){
+					if(Config.files.indexOf(srcs[i]) !== -1){continue;}
+					Config.files.push(srcs[i]);
+					if(Config.render.create){
+						data.src = srcs[i];
+						Config.render.bulid(tag,data)
+					}else{
+						files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
+					}
+				}
+				System.print(files.join(''));
+			}
 		},
         /**
          * @author: lhh
@@ -1266,7 +1305,60 @@
 				};
 			}
 			return Date.now();
-		}
+		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.open
+         * 功能：打开一个新文档，并擦除当前文档的内容
+         * 说明：
+         * 注意：
+         * @return  {Document}
+         */
+        'open':function(mimetype,replace){
+            mimetype = mimetype || "text/html";
+            replace = replace 	|| "replace";
+            return document.open(mimetype,replace)
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-16
+         * 修改日期：2016-9-30
+         * 名称：System.print
+         * 功能：输出
+         * 说明：
+         * 注意：
+         * @param   (Object)D 			NO NULL :传入的参数
+         * @return  (voide)						:
+         * Example：
+         * 		System.print('s'[,1,'a',...])
+         */
+        'print':function(){
+            // var document=System.open();
+            var arr=System.printf.apply(Array,arguments);
+            document.write(arr.join(' '));
+            // System.close(document);
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.close
+         * 功能：关闭输出文档流
+         * 说明：
+         * 注意：
+         * @return  (voide)
+         */
+        'close':function(document){
+            document = document || global.document;
+            document.close();
+        }
 	};
 
 
@@ -2095,7 +2187,8 @@
 		}
 		return arr;
 	}
-	System.wait(function(){
+
+    System.wait(function(){
 		if(System.LAM_DEBUG){
 			var arr = [];
 			arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
@@ -2113,6 +2206,6 @@
 			arr.push('===========================================================================================');
 			console.log(arr.join('\n'));
 		}
-	},10);
+	},300);
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });

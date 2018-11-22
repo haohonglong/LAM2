@@ -12,7 +12,6 @@ gulp.task('clean', function () {
 });
 gulp.task('js', function(){
     return gulp.src([
-         classPath+'/base/System.js'
         ,classPath+'/base/Base.class.js'
         ,classPath+'/base/Object.class.js'
         ,classPath+'/base/Component.class.js'

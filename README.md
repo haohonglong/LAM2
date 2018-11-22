@@ -6,10 +6,10 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.1.0
+	version ：2.1.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-15
+	修改日期 ：2018-11-22
 
 
 # 产品介绍：
@@ -137,12 +137,19 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 		
 		
 
+## 入口文件(index.html)：
+        <meta charset="UTF-8">
+        <script type="text/javascript">window._ROOT_ = "..";</script>
+        <script type="text/javascript" src="../brandhall/common/config/config.js"></script>
+        <script type="text/javascript" src="../lamborghiniJS/base/System.js"></script>
+        <script type="text/javascript">LAM.bootstrap();</script>
+
 ## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
 
-## 一、主配置文件配置 参考 二、开发约定
+## 一、配置文件配置 参考 二、开发约定
 		tip:
-			只有主配置文件和当前配置文件跟项目绑定的,类库文件可以在开发过程中任何时候，更改到其它地方（多个项目公用一个类库文件夹，此时类库文件夹就可移动项目文件夹外面）,移动后只要重新修改主配置文件 vendorPath 的值即可。
-	    主配置文件详细内容见 common/config/config.js
+			只有配置文件跟项目绑定的,类库文件可以在开发过程中任何时候，更改到其它地方（多个项目公用一个类库文件夹，此时类库文件夹就可移动项目文件夹外面）,移动后只要重新修改主配置文件 vendorPath 的值即可。
+	    配置文件详细内容见 common/config/config.js
 		
 		
         根据下面三条修改主配置文件对应的参数
@@ -158,10 +165,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 			1.配置类库文件的路径信息及别的相关信息
 			2.加载基础类文件
 			3.加载加载器工具
-			4.加载初始化文件(或是init.js)
-			5.检测框架文件路径加载是否正确
 
-		'init.js'文件里做的事情是：加载每个页面通用的js文件
 		 (参考 五、文件加载器)
 
 
@@ -256,8 +260,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 				return;
 			}else{
 				typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-							typeof define === 'function' && define.amd ? define(factory(System)) :
-								(System['View'] = factory(System));
+				typeof define === 'function' && define.amd ? define(factory(System)) :
+				(System['View'] = factory(System));
 			}
 		
 		})(this,function(System){

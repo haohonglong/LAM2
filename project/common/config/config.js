@@ -99,7 +99,6 @@
                     ,classPath+'/base/Cache.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
-                    // ,classPath+'/base/System.js'
                     // ,classPath+'/base/Base.class.js'
                     // ,classPath+'/base/Object.class.js'
                     // ,classPath+'/base/Component.class.js'
@@ -195,146 +194,9 @@
                 return this.vendorPath;
             }
         };
-
-        System.wait=function(callback,time){
-            time = time || 15000;
-            window.setTimeout(function(){
-                callback.call(System);
-            }, time);
-        };
-
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2016-9-30
-         * 修改日期：2016-9-30
-         * 名称：System.open
-         * 功能：打开一个新文档，并擦除当前文档的内容
-         * 说明：
-         * 注意：
-         * @return  {Document}
-         */
-        System.open=function(mimetype,replace){
-            mimetype = mimetype || "text/html";
-            replace = replace 	|| "replace";
-            return document.open(mimetype,replace)
-        };
-
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2015-9-16
-         * 修改日期：2016-9-30
-         * 名称：System.print
-         * 功能：输出
-         * 说明：
-         * 注意：
-         * @param   (String)S 			NO NULL :
-         * @return  (voide)						:
-         * Example：
-         */
-        System.print=function(S){
-            if(Config.render.create){
-                Config.render.H().body.appendChild(Config.render.fragment);
-            }else{
-                // var document=System.open();
-                document.write(S);
-                // System.close(document);
-            }
-        };
-        /**
-         *
-         * @param s
-         * @returns {boolean}
-         */
-        System.isset=function(s){
-            return (typeof s !== "undefined" &&  s !== null);
-        };
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2016-9-30
-         * 修改日期：2016-9-30
-         * 名称：System.close
-         * 功能：关闭输出文档流
-         * 说明：
-         * 注意：
-         * @return  (voide)
-         */
-        System.close=function(document){
-            document = document || window.document;
-            document.close();
-        };
         return System;
     });
 
-
-    //加载初始化文件
-    //=============================================================================================================
-    (function(System){
-        Config.files = Config.files || [];
-        var tag = "script";
-        var scriptAttribute = Config.render.default.script.Attribute;
-        var i = 0,body;
-        var len;
-        var data = scriptAttribute;
-        var classPath=Config.getClassPath();
-        var files=[];
-        //加载基础类
-        var srcs =Config.autoLoadFile();
-        body = Config.render.H().body;
-        if(typeof requirejs != 'undefined'){
-            requirejs.config({
-                baseUrl: ''
-                ,waitSeconds:0
-            });
-            requirejs(srcs,function(){});
-
-        }else{
-            //确保每个文件只加载一次
-            var attrs=[];
-            for(var k in scriptAttribute){
-                attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
-            }
-            if(srcs.length){
-                for(i=0,len = srcs.length;i < len; i++){
-                    if(Config.files.indexOf(srcs[i]) != -1){continue;}
-                    Config.files.push(srcs[i]);
-                    if(Config.render.create){
-                        data.src = srcs[i];
-                        Config.render.bulid(tag,data)
-                    }else{
-                        files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
-                    }
-                }
-                System.print(files.join(''));
-            }
-            //=================================================================================================================================
-            //检测lamborghiniJS基础类文件是否加载成功
-            //=================================================================================================================================
-            i =0;
-            var timer = setInterval(function(){
-                i++;
-                body = Config.render.H().body;
-                console.log(i);
-                if(body){
-                    console.log(body);
-                    if(!LAMJS){
-                        throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
-                    }else{
-                        LAMJS.main=function() {
-                            'use strict';
-                            var System=this;
-                        };
-
-
-                    }
-                    clearInterval(timer);
-                }
-            },1);
-            //=================================================================================================================================
-        }
-    })(System);
 })(this);
 
 
