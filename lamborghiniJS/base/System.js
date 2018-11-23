@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-11-9
+ * 修改日期:2018-11-23
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -2188,24 +2188,50 @@
 		return arr;
 	}
 
-    System.wait(function(){
-		if(System.LAM_DEBUG){
-			var arr = [];
-			arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-			arr.push('===========================================================================================');
-			arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-			arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-			arr.push("*     *        *       *");
-			arr.push("*    *  *     * *     *  *");
-			arr.push("*   *    *   *   *   *    *");
-			arr.push("*  * **** * *     * *      *");
-			arr.push("* *        *       *        *");
-			arr.push('**********************************');
-			arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-			arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-			arr.push('===========================================================================================');
-			console.log(arr.join('\n'));
-		}
-	},300);
-	return System.merge(null,[Interface,global[namespace] || {}]);
+    System = System.merge(null,[Interface,global[namespace] || {}]);
+    System.classPath  = System.Config.getClassPath();
+    System.configure_cache = System.Config.configure_cache || System.createDict();
+    System.components = System.merge({},[System.Config.components]) || System.createDict();
+    System.each(System.merge({},[System.Config]),function(name){System[name] = this;});
+    System.each(System.merge({},[System.components,System.Public]),function(name){
+        if(!(name in System)){System[name] = this;}
+    });
+    System.LAM_DEBUG = System.Config.LAM_DEBUG;
+    System.LAM_ENV = System.Config.LAM_ENV;
+    System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
+    System.LAM_ENV_DEV  = 'dev'  === System.LAM_ENV;
+    System.LAM_ENV_TEST = 'test' === System.LAM_ENV;
+    //hashcode 随机种子
+    System.random 	 = System.Config.random || 10000;
+
+    //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
+    //Object.freeze(System.Config);
+    //Object.freeze(System.Config.Public);
+    if(System.Config.files){
+        //把加载的基础文件放在加载器里
+        System.each(System.files = System.Config.files,function(){
+            if(System.isClassFile(this)){
+                System.classes.push(this);
+            }
+        });
+    }
+
+    if(System.LAM_DEBUG){
+        var arr = [];
+        arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+        arr.push('===========================================================================================');
+        arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+        arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+        arr.push("*     *        *       *");
+        arr.push("*    *  *     * *     *  *");
+        arr.push("*   *    *   *   *   *    *");
+        arr.push("*  * **** * *     * *      *");
+        arr.push("* *        *       *        *");
+        arr.push('**********************************');
+        arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+        arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+        arr.push('===========================================================================================');
+        console.log(arr.join('\n'));
+    }
+	return System;
 });
