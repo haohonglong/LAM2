@@ -413,6 +413,34 @@
             return runtime.apply(this,[args,callback]);
 
 		},
+		'init':function () {
+            System.Config.files = System.Config.files || [];
+            System.classPath  = System.Config.getClassPath();
+            System.configure_cache = System.Config.configure_cache || System.createDict();
+            System.components = System.merge({},[System.Config.components]) || System.createDict();
+            System.each(System.merge({},[System.Config]),function(name){System[name] = this;});
+            System.each(System.merge({},[System.components,System.Public]),function(name){
+                if(!(name in System)){System[name] = this;}
+            });
+            System.LAM_DEBUG = System.Config.LAM_DEBUG;
+            System.LAM_ENV = System.Config.LAM_ENV;
+            System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
+            System.LAM_ENV_DEV  = 'dev'  === System.LAM_ENV;
+            System.LAM_ENV_TEST = 'test' === System.LAM_ENV;
+            //hashcode 随机种子
+            System.random 	 = System.Config.random || 10000;
+            //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
+            //Object.freeze(System.Config);
+            //Object.freeze(System.Config.Public);
+            if(System.Config.files){
+                //把加载的基础文件放在加载器里
+                System.each(System.files = System.Config.files,function(){
+                    if(System.isClassFile(this)){
+                        System.classes.push(this);
+                    }
+                });
+            }
+        },
 
         /**
          * @author: lhh
@@ -428,11 +456,11 @@
          * Example：
          */
         'bootstrap':function (Config){
-			Config = Config || System.Config;
-			Config.files = Config.files || [];
+			System.Config = Config || System.Config;
+			this.init();
 			var tag = "script"
-				,k,scriptAttribute = Config.render.default.script.Attribute,
-				i = 0,len,data = scriptAttribute,files=[],srcs =Config.autoLoadFile();
+				,k,scriptAttribute = System.Config.render.default.script.Attribute,
+				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
 			//加载基础类
 			//确保每个文件只加载一次
 			var attrs=[];
@@ -441,11 +469,11 @@
 			}
 			if(srcs.length){
 				for(i=0,len = srcs.length;i < len; i++){
-					if(Config.files.indexOf(srcs[i]) !== -1){continue;}
-					Config.files.push(srcs[i]);
-					if(Config.render.create){
+					if(System.Config.files.indexOf(srcs[i]) !== -1){continue;}
+					System.Config.files.push(srcs[i]);
+					if(System.Config.render.create){
 						data.src = srcs[i];
-						Config.render.bulid(tag,data)
+						System.Config.render.bulid(tag,data)
 					}else{
 						files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
 					}
@@ -2188,35 +2216,8 @@
 		return arr;
 	}
 
-    System = System.merge(null,[Interface,global[namespace] || {}]);
-    System.classPath  = System.Config.getClassPath();
-    System.configure_cache = System.Config.configure_cache || System.createDict();
-    System.components = System.merge({},[System.Config.components]) || System.createDict();
-    System.each(System.merge({},[System.Config]),function(name){System[name] = this;});
-    System.each(System.merge({},[System.components,System.Public]),function(name){
-        if(!(name in System)){System[name] = this;}
-    });
-    System.LAM_DEBUG = System.Config.LAM_DEBUG;
-    System.LAM_ENV = System.Config.LAM_ENV;
-    System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
-    System.LAM_ENV_DEV  = 'dev'  === System.LAM_ENV;
-    System.LAM_ENV_TEST = 'test' === System.LAM_ENV;
-    //hashcode 随机种子
-    System.random 	 = System.Config.random || 10000;
 
-    //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
-    //Object.freeze(System.Config);
-    //Object.freeze(System.Config.Public);
-    if(System.Config.files){
-        //把加载的基础文件放在加载器里
-        System.each(System.files = System.Config.files,function(){
-            if(System.isClassFile(this)){
-                System.classes.push(this);
-            }
-        });
-    }
-
-    if(System.LAM_DEBUG){
+	(function () {
         var arr = [];
         arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
         arr.push('===========================================================================================');
@@ -2232,6 +2233,6 @@
         arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
         arr.push('===========================================================================================');
         console.log(arr.join('\n'));
-    }
-	return System;
+    })();
+	return System.merge(null,[Interface,global[namespace] || {}]);
 });
