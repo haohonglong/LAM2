@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-22
+	修改日期 ：2018-11-25
 
 
 # 产品介绍：
@@ -45,43 +45,37 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 # 单文件应用运行的过程：
     URL(1)-->index.html(入口文件)(2)
-                |
-                |
-             config.js(3)
-                |\定义项目ROOT路径 ;引入项目配置文件
-                |
-             common/config/config.js(4)  
-                 \
+               \-|
+                 |-common/config/config.js(3)  
+                 |-lamborghiniJS/base/System.js(4)  
+                 |-LAB.bootstrap();(5)
                   \
-                    1.配置相关信息
-                    2.加载LAM2类库文件
-                                     \-|
-                                       |-jQuery/jquery.js
-                                       |_base/System.js
-                                       |_base/Base.class.js
-                                       |_base/Object.class.js
-                                       |_base/Component.class.js
-                                       |_base/HttpRequest.class.js
-                                       |_base/Helper.class.js
-                                       |_base/Browser.class.js
-                                       |_base/Event.class.js
-                                       |_base/Dom.class.js
-                                       |_base/View.class.js
-                                       |_base/Template.class.js
-                                       |_base/Html.class.js
-                                       |_base/Loader.class.js
-                                       |_base/Base64.class.js
-                                       |_base/Cache.class.js
-                                       |_base/Controller.class.js
-                                       |_base/Router.class.js
-                                                                
-                    3.检查类库是否加载成功
-                               /
-                              /
-                             /----NO---->  throw Error
-                             \YES
-                             _\| 
-                             路由器 Router.class(5)
+                    1.应用配置文件
+                    2.加载LAM2基础类库
+                             \-|
+                               |-jQuery/jquery.js
+                               |_base/Base.class.js
+                               |_base/Object.class.js
+                               |_base/Component.class.js
+                               |_base/HttpRequest.class.js
+                               |_base/Helper.class.js
+                               |_base/Browser.class.js
+                               |_base/Event.class.js
+                               |_base/Dom.class.js
+                               |_base/View.class.js
+                               |_base/Template.class.js
+                               |_base/Html.class.js
+                               |_base/Loader.class.js
+                               |_base/Base64.class.js
+                               |_base/Cache.class.js
+                               |_base/Controller.class.js
+                               |_base/Router.class.js
+                                   /                             
+                                  /
+                                 /
+                                 \
+                                 _\| 
+                                 路由器 Router.class(5)
                                             |
                                             |
                         HttpRequest.get()<--  
