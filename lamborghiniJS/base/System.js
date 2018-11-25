@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-11-9
+ * 修改日期:2018-11-23
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -45,11 +45,10 @@
 		(global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = factory(global,namespace));
 	}
 
-
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.1.0",
+	var VERSION="2.1.1",
 		Interface={},
 		System={},
 		once=true,
@@ -413,6 +412,74 @@
             }
             return runtime.apply(this,[args,callback]);
 
+		},
+		'init':function () {
+            System.Config.files = System.Config.files || [];
+            System.classPath  = System.Config.getClassPath();
+            System.configure_cache = System.Config.configure_cache || System.createDict();
+            System.components = System.merge({},[System.Config.components]) || System.createDict();
+            System.each(System.merge({},[System.Config]),function(name){System[name] = this;});
+            System.each(System.merge({},[System.components,System.Public]),function(name){
+                if(!(name in System)){System[name] = this;}
+            });
+            System.LAM_DEBUG = System.Config.LAM_DEBUG;
+            System.LAM_ENV = System.Config.LAM_ENV;
+            System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
+            System.LAM_ENV_DEV  = 'dev'  === System.LAM_ENV;
+            System.LAM_ENV_TEST = 'test' === System.LAM_ENV;
+            //hashcode 随机种子
+            System.random 	 = System.Config.random || 10000;
+            //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
+            //Object.freeze(System.Config);
+            //Object.freeze(System.Config.Public);
+            if(System.Config.files){
+                //把加载的基础文件放在加载器里
+                System.each(System.files = System.Config.files,function(){
+                    if(System.isClassFile(this)){
+                        System.classes.push(this);
+                    }
+                });
+            }
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2018.11.22
+         * 修改日期：2018.11.22
+         * 名称：bootstrap
+         * 功能：加载初始化文件
+         * 说明：
+         * 注意：
+         * 调用方式：
+		 * @param Config
+         * Example：
+         */
+        'bootstrap':function (Config){
+			System.Config = Config || System.Config;
+			this.init();
+			var tag = "script"
+				,k,scriptAttribute = System.Config.render.default.script.Attribute,
+				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
+			//加载基础类
+			//确保每个文件只加载一次
+			var attrs=[];
+			for(k in scriptAttribute){
+				attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
+			}
+			if(srcs.length){
+				for(i=0,len = srcs.length;i < len; i++){
+					if(System.Config.files.indexOf(srcs[i]) !== -1){continue;}
+					System.Config.files.push(srcs[i]);
+					if(System.Config.render.create){
+						data.src = srcs[i];
+						System.Config.render.bulid(tag,data)
+					}else{
+						files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
+					}
+				}
+				System.print(files.join(''));
+			}
 		},
         /**
          * @author: lhh
@@ -1266,7 +1333,60 @@
 				};
 			}
 			return Date.now();
-		}
+		},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.open
+         * 功能：打开一个新文档，并擦除当前文档的内容
+         * 说明：
+         * 注意：
+         * @return  {Document}
+         */
+        'open':function(mimetype,replace){
+            mimetype = mimetype || "text/html";
+            replace = replace 	|| "replace";
+            return document.open(mimetype,replace)
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-9-16
+         * 修改日期：2016-9-30
+         * 名称：System.print
+         * 功能：输出
+         * 说明：
+         * 注意：
+         * @param   (Object)D 			NO NULL :传入的参数
+         * @return  (voide)						:
+         * Example：
+         * 		System.print('s'[,1,'a',...])
+         */
+        'print':function(){
+            // var document=System.open();
+            var arr=System.printf.apply(Array,arguments);
+            document.write(arr.join(' '));
+            // System.close(document);
+        },
+
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-30
+         * 修改日期：2016-9-30
+         * 名称：System.close
+         * 功能：关闭输出文档流
+         * 说明：
+         * 注意：
+         * @return  (voide)
+         */
+        'close':function(document){
+            document = document || global.document;
+            document.close();
+        }
 	};
 
 
@@ -2095,24 +2215,24 @@
 		}
 		return arr;
 	}
-	System.wait(function(){
-		if(System.LAM_DEBUG){
-			var arr = [];
-			arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
-			arr.push('===========================================================================================');
-			arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-			arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
-			arr.push("*     *        *       *");
-			arr.push("*    *  *     * *     *  *");
-			arr.push("*   *    *   *   *   *    *");
-			arr.push("*  * **** * *     * *      *");
-			arr.push("* *        *       *        *");
-			arr.push('**********************************');
-			arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
-			arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
-			arr.push('===========================================================================================');
-			console.log(arr.join('\n'));
-		}
-	},10);
+
+
+	(function () {
+        var arr = [];
+        arr.push('LamborghiniJS(OO JS) VERSION : '+VERSION);
+        arr.push('===========================================================================================');
+        arr.push('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+        arr.push('///////////////////////////////////////////////////////////////////////////////////////////');
+        arr.push("*     *        *       *");
+        arr.push("*    *  *     * *     *  *");
+        arr.push("*   *    *   *   *   *    *");
+        arr.push("*  * **** * *     * *      *");
+        arr.push("* *        *       *        *");
+        arr.push('**********************************');
+        arr.push('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+        arr.push('//////////////////////////////////////////////////////////////////////////////////////////');
+        arr.push('===========================================================================================');
+        console.log(arr.join('\n'));
+    })();
 	return System.merge(null,[Interface,global[namespace] || {}]);
 });

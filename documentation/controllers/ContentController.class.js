@@ -23,7 +23,7 @@
 
         },
         '_className':'ContentController',
-        'html':function(){
+        'htmlAction':function(){
             this.render('html',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -33,7 +33,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'biObject':function(){
+        'biObjectAction':function(){
             this.render('biObject',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -43,7 +43,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'browser':function(){
+        'browserAction':function(){
             this.render('browser',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -53,7 +53,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'cache':function(){
+        'cacheAction':function(){
             this.render('cache',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -63,7 +63,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'controller':function(){
+        'controllerAction':function(){
             this.render('controller',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -73,7 +73,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'cookie':function(){
+        'cookieAction':function(){
             this.render('cookie',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -93,7 +93,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'node':function(){
+        'nodeAction':function(){
             this.render('node',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -103,7 +103,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'powerCookie':function(){
+        'powerCookieAction':function(){
             this.render('powerCookie',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -113,7 +113,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'running':function(){
+        'runningAction':function(){
             this.render('running',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -123,7 +123,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'storage':function(){
+        'storageAction':function(){
             this.render('storage',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -133,7 +133,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'system':function(){
+        'systemAction':function(){
             this.render('system',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -143,7 +143,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'template':function(){
+        'templateAction':function(){
             this.render('template',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -153,7 +153,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'vnode':function(){
+        'vnodeAction':function(){
             this.render('vnode',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
@@ -163,7 +163,7 @@
                 __this__.renderLayout(content);
             },E);
         },
-        'xhr':function(){
+        'xhrAction':function(){
             this.render('xhr',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,

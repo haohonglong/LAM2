@@ -1,3 +1,5 @@
+
+<% for(var i=0,len=list.length;i < len;i++){%>
 <div class="sectionBox-A10 sectionBox-A10-2 sectionFloat-A1">
     <ul class="p10 clear">
         <li class="col-1">
@@ -10,9 +12,15 @@
                 </div>
                 <div class="sectionText-A3">
                     <p class="grey">类型： 家装设计</p>
-                    <p class="grey">风格：{{ style }}</p>
+                    <p class="grey">风格：
+                    <% var style = list[i]['style'].trim().split(',');%>
+                        <% for(var j =0,len2=style.length;j < len2;j++){%>
+                        <% if(j>0){%>|<%}%>
+                        <%=style[j]%>
+                        <% }%>
+                    </p>
                     <p class="grey">图片数量：<strong class="linkRed">0</strong></p>
-                    <p class="grey">设计师：{{ name }}</p>
+                    <p class="grey">设计师：<%=list[i]['name']%></p>
 
                 </div>
             </div>
@@ -35,3 +43,4 @@
         </li>
     </ul>
 </div>
+<% }%>

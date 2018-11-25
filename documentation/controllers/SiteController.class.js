@@ -23,7 +23,7 @@
 
         },
         '_className':'SiteController',
-        'index':function(){
+        'indexAction':function(){
             this.render('index',{
                 'COMMON':System.COMMON,
                 'ROOT':ROOT,

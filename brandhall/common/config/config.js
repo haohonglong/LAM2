@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-3-6
+ * 修改日期:2018-11-25
  * 功能：配置文件
  * 说明 : 这个文件要copy到项目里面可以修改 System.Config里的属性 和 GRN_LHH; 的值；
  *
@@ -84,6 +84,10 @@
                     return System.timestamp();
                 }
             },
+            'configure_cache':{
+                'type':sessionStorage,
+                'expires':0
+            },
             //hashcode 随机种子
             'random':10000,
             //定义模版标签
@@ -108,7 +112,6 @@
                     classPath+'/jQuery/jquery.js'
                     // ,classPath+'/build/base.min.js'
 
-                    ,classPath+'/base/System.js'
                     ,classPath+'/base/Base.class.js'
                     ,classPath+'/base/Object.class.js'
                     ,classPath+'/base/Component.class.js'
@@ -124,6 +127,7 @@
 
                     ,classPath+'/base/Base64.class.js'
                     ,classPath+'/base/Cache.class.js'
+                    ,classPath+'/base/Storage.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     // ,PLUGINS+'/layer-v3.1.1/layer/layer.js'
@@ -175,10 +179,8 @@
                     var k;
                     var fragment;
                     node=document.createElement(tag);
-
-                    for(k in D){
+                    for(k in D)
                         node[k] = D[k];
-                    }
 
                     if(!Config.render.fragment){
                         Config.render.fragment = document.createDocumentFragment();
@@ -206,152 +208,14 @@
                     this.default.script.Attribute.defer='';
                 }
             },
-            'init':{},
             'params':{},
             'getClassPath':function(){
                 return this.vendorPath;
             }
         };
-
-        System.wait=function(callback,time){
-            time = time || 15000;
-            window.setTimeout(function(){
-                callback.call(System);
-            }, time);
-        };
-
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2016-9-30
-         * 修改日期：2016-9-30
-         * 名称：System.open
-         * 功能：打开一个新文档，并擦除当前文档的内容
-         * 说明：
-         * 注意：
-         * @return  {Document}
-         */
-        System.open=function(mimetype,replace){
-            mimetype = mimetype || "text/html";
-            replace = replace 	|| "replace";
-            return document.open(mimetype,replace)
-        };
-
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2015-9-16
-         * 修改日期：2016-9-30
-         * 名称：System.print
-         * 功能：输出
-         * 说明：
-         * 注意：
-         * @param   (String)S 			NO NULL :
-         * @return  (voide)						:
-         * Example：
-         */
-        System.print=function(S){
-            if(Config.render.create){
-                Config.render.H().body.appendChild(Config.render.fragment);
-            }else{
-                // var document=System.open();
-                document.write(S);
-                System.close(document);
-            }
-        };
-        /**
-         *
-         * @param s
-         * @returns {boolean}
-         */
-        System.isset=function(s){
-            return (typeof s !== "undefined" &&  s !== null);
-        };
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2016-9-30
-         * 修改日期：2016-9-30
-         * 名称：System.close
-         * 功能：关闭输出文档流
-         * 说明：
-         * 注意：
-         * @return  (voide)
-         */
-        System.close=function(document){
-            document = document || window.document;
-            document.close();
-        };
         return System;
     });
 
-
-    //加载初始化文件
-    //=============================================================================================================
-    (function(System){
-        Config.files = Config.files || [];
-        var tag = "script";
-        var scriptAttribute = Config.render.default.script.Attribute;
-        var i = 0,body;
-        var len;
-        var data = scriptAttribute;
-        var classPath=Config.getClassPath();
-        var files=[];
-        //加载基础类
-        var srcs =Config.autoLoadFile();
-        body = Config.render.H().body;
-        if(typeof requirejs != 'undefined'){
-            requirejs.config({
-                baseUrl: ''
-                ,waitSeconds:0
-            });
-            requirejs(srcs,function(){});
-
-        }else{
-            //确保每个文件只加载一次
-            var attrs=[];
-            for(var k in scriptAttribute){
-                attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
-            }
-            if(srcs.length){
-                for(i=0,len = srcs.length;i < len; i++){
-                    if(Config.files.indexOf(srcs[i]) != -1){continue;}
-                    Config.files.push(srcs[i]);
-                    if(Config.render.create){
-                        data.src = srcs[i];
-                        Config.render.bulid(tag,data)
-                    }else{
-                        files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
-                    }
-                }
-                System.print(files.join(''));
-            }
-            //=================================================================================================================================
-            //检测lamborghiniJS基础类文件是否加载成功
-            //=================================================================================================================================
-            i =0;
-            var timer = setInterval(function(){
-                i++;
-                body = Config.render.H().body;
-                console.log(i);
-                if(body){
-                    console.log(body);
-                    if(!LAMJS){
-                        throw new Error("does't find the lamborghiniJS's path of  Basis classes , now the path is :{"+classPath+"}");
-                    }else{
-                        LAMJS.main=function() {
-                            'use strict';
-                            var System=this;
-                        };
-
-
-                    }
-                    clearInterval(timer);
-                }
-            },1);
-            //=================================================================================================================================
-        }
-    })(System);
 })(this);
 
 
