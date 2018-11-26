@@ -43,6 +43,7 @@
 		},
 		'_className':'Template',
 		'create':function(){},
+
 		/**
 		 *
 		 * @author: lhh
@@ -62,6 +63,7 @@
 			var self=this;
 			var arr=[],v=[],$1,$2;
             delimiters = delimiters || this.delimiters;
+            // S = Template.include(S);
 			var delimiterLeft  = delimiters[0];
 			var delimiterRight = delimiters[1];
 			//没找到模版分隔符就返回传入的字符串
@@ -427,6 +429,25 @@
                 + "');}return p.join('');");
         return D ? fn( D ) : fn;
 
+    };
+	Template.include=function (S) {
+        var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
+        if (re.test(S)) {
+            S.match(re).each(function(){
+                var data ={},arr = this.split(' ');
+                arr.removeAt(0);
+                arr.removeAt(arr.length-1);
+                arr.each(function(){
+                    var arr = this.split('=');
+                    data[arr[0]] = System.eval(arr[1]);
+                });
+                System.Html.getFile(data.file,function(content){
+                    S = S.replace(re,content);
+				},data);
+
+            });
+        }
+        return S;
     };
 
 
