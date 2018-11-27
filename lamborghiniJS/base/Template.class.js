@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-8-22
+ * 修改日期:2018-8-27
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -63,7 +63,6 @@
 			var self=this;
 			var arr=[],v=[],$1,$2;
             delimiters = delimiters || this.delimiters;
-            // S = Template.include(S);
 			var delimiterLeft  = delimiters[0];
 			var delimiterRight = delimiters[1];
 			//没找到模版分隔符就返回传入的字符串
@@ -410,6 +409,18 @@
 	};
 
     var cache={};
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-21
+     * 修改日期：2018-08-21
+     * 名称：Template.include
+     * 功能：预处理 引入外面的文件
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
 	Template.jQCompile=function (S,D) {
         var fn = !/\W/.test(S) ?
             cache[S] = cache[S] ||
@@ -430,19 +441,32 @@
         return D ? fn( D ) : fn;
 
     };
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-26
+     * 修改日期：2018-08-27
+     * 名称：Template.include
+     * 功能：预处理 引入外面的文件
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
 	Template.include=function (S) {
         var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
         if (re.test(S)) {
             S.match(re).each(function(){
+            	var _this = this;
                 var data ={},arr = this.split(' ');
                 arr.removeAt(0);
                 arr.removeAt(arr.length-1);
                 arr.each(function(){
                     var arr = this.split('=');
-                    data[arr[0]] = System.eval(arr[1]);
+                    data[System.camelCase(arr[0].trim())] = System.eval(arr[1].trim());
                 });
                 System.Html.getFile(data.file,function(content){
-                    S = S.replace(re,content);
+                    S = S.replace(_this,content);
 				},data);
 
             });
