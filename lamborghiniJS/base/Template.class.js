@@ -460,7 +460,7 @@
             S.match(re).each(function(){
             	var _this = this;
                 var data ={},arr = this.split('" ');
-                var first =arr[0].split(' ')[1];//保存被丢失的第一个参数
+                var first =arr[0].split('<#include ')[1];//保存被丢失的第一个参数
                 arr.removeAt(0);//remove <#include
                 arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
                 arr.removeAt(arr.length-1);
