@@ -466,8 +466,8 @@
                 arr.removeAt(arr.length-1);
                 arr.each(function(){
                     var arr = this.split('=');
-                    arr[0] = arr[0].replace(/^"/,'').replace('"$','');
-                    arr[1] = arr[1].replace(/^"/,'').replace('"$','');
+                    arr[0] = arr[0].replace(/^"/,'').replace(/"$/,'');
+                    arr[1] = arr[1].replace(/^"/,'').replace(/"$/,'');
                     k = System.camelCase(arr[0].trim());
                     v = arr[1];
                     switch(k){
