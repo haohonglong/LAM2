@@ -481,7 +481,14 @@
 						case 'delimiters':
 						case 'repeat':
 						case 'error':
-							v = System.eval(v);
+						    try{
+						        if(!System.empty(v)){
+                                    v = System.eval(v);
+                                }
+                            }catch (e){
+                                throw new Error(e);
+                            }
+
 					}
                     data[k] =  v;
                 });
