@@ -478,6 +478,9 @@
 						case 'done':
 						case 'data':
 						case 'tpData':
+						case 'delimiters':
+						case 'repeat':
+						case 'error':
 							v = System.eval(v);
 					}
                     data[k] =  v;
