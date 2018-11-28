@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-25
+	修改日期 ：2018-11-28
 
 
 # 产品介绍：
@@ -1021,18 +1021,23 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 			2.根据占位符里file参数请求另一个页面，然后替换掉当前占位符
 		警告:有些浏览器要支持跨域才可以!!!，解决方法：在服务器环境里运行
 		步骤：
-			1.自定义标签:<include file="{{LAMJS.ROOT}}/views/include/header.html" 
-								  beforeSend="function(a,b){
-		                              this.dataType='html';
-                                      this.async=true;
-                         }"></include>
+			1.自定义标签:<include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" capture="function(s){return LAM.Template.jQCompile(s,
+                                {'list':[
+                                {'name':'李晨','style':'新古典,其他,简约'},
+                                {'name':'刘军','style':'地中海-田园,北欧,其他,简约'},
+                                {'name':'王磊','style':'新古典,地中海-田园'},
+                                {'name':'萧红','style':'新古典,地中海-田园,其他,简约'},
+                                {'name':'马良','style':'新古典,地中海-田园,北欧,简约'},
+                                {'name':'赵明','style':'新古典,地中海-田园,北欧,其他'}
+                                ]})}"></include>
                  note:beforeSend 属性是可选的，这里的this就是jQuery Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数，
                                      这里就可以设置一个beforeSend回调函数，其余的参数都可以在这个函数里设置,
                                      在beforeSend回调函数里设置file 参数 要换成 url 参数。
                                      函数里的两个参数请参考jQuery Ajax API。
+                 LAM.Template.jQCompile 是一个模版解析器，可解析模版里的javascript 语句
                  {{LAMJS.ROOT}}（ 参考 十八、模版标签 3）
-                  
-                
+                 
+   
 			2.先要加载Html.class 类文件
 				//run方法可以修改创建tag方式 
 				LAMJS.run(function(){
@@ -1046,6 +1051,15 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 						
 
 				 });
+				 
+## 十七-1、预处理加载引入其他任何文本文件（跟上面一个最大不同是：delimiters 格式一定要是数组，像下面例子这样个格式。除repeat（重复内容显示的次数，一般在测试用，只是方便不用重复复制几行，输入个数字就可实行重复多行的效果，但无实际意义） 无效，功能上个跟上面的方式一样）如没有特别需求建议首用下面方式
+            上面的方式要等dom节点加载后才可用且还要在当前面里加入 System.Html.include($('include')); 这一句话。  
+            下面的方式跟dom节点无关，一旦get请求后返回字符时，就在这个时候，预处理执行且下面的占位符被替换成file路径里的文件内容    
+            <#include tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="{{VIEWS}}/inc_header.html" />
+         
+         注意：结束符 '/>' 前至少要有一个空格！
+                  
+              
 				 
 ## 十八、模版标签
 	 查找解析指定元素属性里的模板标签
