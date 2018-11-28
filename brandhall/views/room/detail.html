@@ -307,7 +307,7 @@
 
                         <div class="sectionPageing-A2 clear mt10">
                             <div class="R">
-                                <include repeat="" tp-data=""  file="{{LAM.COMPONENTS}}/paging.html"></include>
+                                <#include repeat="" tp-data=""  file="{{LAM.COMPONENTS}}/paging.html" />
                             </div>
                         </div>
                     </div>
@@ -316,15 +316,14 @@
         </div>
     </div>
 </div>
-<include repeat="" tp-data=""  file="{{ VIEWS }}/room/_popupLayer.html"></include>
+<#include repeat="" tp-data=""  file="{{ LAM.VIEWS }}/room/_popupLayer.html" />
 <script type="text/javascript">
     LAM.TITLE = '楼盘详细';
 
 
-    LAM.wait(function(){
+    LAM.run(function(){
         'use strict';
         var System = this;
-        System.Html.include($('include'));
         $(function () {
             new System.Tab({
                 'list':$('.j_sectionMenuA1 dd'),

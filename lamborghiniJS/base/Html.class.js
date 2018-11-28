@@ -76,6 +76,7 @@
 
     function ajax_success_callback(data,textStatus,jqXHR){
         var _this = this;
+        data = System.Template.include(data);
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
         if(System.isFunction(_this.capture)){data = _this.capture(data);}
         if(_this.$dom && System.isString(data)){data = _this.loop(data);}
@@ -146,7 +147,7 @@
             }
 
             this.$dom = $dom;
-            this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"html";
+            this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"text";
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;

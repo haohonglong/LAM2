@@ -51,7 +51,7 @@
 </head>
 <body>
 <div id="container" class="">
-    <div class="sidbar"><include file="{{LAM.VIEWS}}/test.html" dataType="html"></include></div>
+    <div class="sidbar"><#include file="{{LAM.VIEWS}}/test.html" dataType="html" /></div>
 
     <div class="content" id="content">
         <ul id="ul1" class="ul sectionFloat clearfix">
@@ -80,7 +80,6 @@
 <script type="text/javascript">
     LAMJS.run(function(){
         var System=this;
-        System.Html.include($('include'));
         var content,ul1,ul2;
         function layout(){
             $('#content').width($(window).width()-($('.sidbar').width()+$('.sidbar2').width()+30));

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-8-22
+ * 修改日期:2018-8-27
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -43,6 +43,7 @@
 		},
 		'_className':'Template',
 		'create':function(){},
+
 		/**
 		 *
 		 * @author: lhh
@@ -408,6 +409,18 @@
 	};
 
     var cache={};
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-21
+     * 修改日期：2018-08-21
+     * 名称：Template.include
+     * 功能：预处理 引入外面的文件
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
 	Template.jQCompile=function (S,D) {
         var fn = !/\W/.test(S) ?
             cache[S] = cache[S] ||
@@ -427,6 +440,65 @@
                 + "');}return p.join('');");
         return D ? fn( D ) : fn;
 
+    };
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-26
+     * 修改日期：2018-08-28
+     * 名称：Template.include
+     * 功能：预处理 引入外面的文件
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
+	Template.include=function (S) {
+        var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
+        var k,v;
+        if (re.test(S)) {
+            S.match(re).each(function(){
+            	var _this = this;
+                var data ={},arr = this.split('" ');
+                var first =arr[0].split('<#include ')[1];//保存被丢失的第一个参数
+                arr.removeAt(0);//remove <#include
+                arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
+                arr.removeAt(arr.length-1);
+                arr.each(function(){
+                    var arr = this.split('=');
+                    arr[0] = arr[0].replace(/^"/,'').replace(/"$/,'');
+                    arr[1] = arr[1].replace(/^"/,'').replace(/"$/,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    switch(k){
+						case 'capture':
+						case 'preform':
+						case 'beforeSend':
+						case 'success':
+						case 'done':
+						case 'data':
+						case 'tpData':
+						case 'delimiters':
+						case 'repeat':
+						case 'error':
+						    try{
+						        if(!System.empty(v)){
+                                    v = System.eval(v);
+                                }
+                            }catch (e){
+                                throw new Error(e);
+                            }
+
+					}
+                    data[k] =  v;
+                });
+                System.Html.getFile(data.file,function(content){
+                    S = S.replace(_this,content);
+				},data);
+
+            });
+        }
+        return S;
     };
 
 

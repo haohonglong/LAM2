@@ -49,7 +49,7 @@
         System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
-            'LAM_ENV':'dev',
+            'LAM_ENV':'pro',
             'Public':(function(){
                 var ROOT = _ROOT_+'/demo';
                 return {
@@ -110,6 +110,7 @@
 
                     ,classPath+'/base/Base64.class.js'
                     ,classPath+'/base/Cache.class.js'
+                    ,classPath+'/base/Storage.class.js'
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     ,PLUGINS+'/vue/vue.js'
@@ -191,7 +192,6 @@
                     this.default.script.Attribute.defer='';
                 }
             },
-            'init':{},
             'params':{},
             'getClassPath':function(){
                 return this.vendorPath;

@@ -37,7 +37,7 @@
         <p> 这个效果效果在工作中经常会遇到，这篇文章主要介绍了当内容超过一屏时如何做到多浏览器的兼容性。 下面我们通过一个简单的例子看看如何实现，高手请绕道。 </p>
         <p>html代码很简单 < d i v class="mask opacity">< / d i v > </p>
         <p> 1 、半透明效果可以使用 css3 中的 opacity 属性，在低版本的IE浏览器中使用IE的alpha 滤镜。代码:
-            <include tp-data="{'content':'this is include'}" file="{{VIEWS}}/include/test.html" dataType="html"></include>
+            <#include tp-data="{'content':'this is include'}" file="{{LAM.VIEWS}}/include/test.html" dataType="html" />
             <code>.opacity{ opacity:0.3; filter: alpha(opacity=30); background-color:#000; }</code> </p>
         <p> 2 、要覆盖整个可视区域通常的做法是: <br/>
             <code> html,body{ height:100%} </code> <br/>
@@ -60,7 +60,6 @@
         'use strict';
         var System=this;
         var pop;
-        System.Html.include($('include'));
 
         $(function(){
 

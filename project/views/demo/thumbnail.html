@@ -46,7 +46,7 @@
 <!--嵌套三层 每一层是一个对象-->
 <div id="container" class="">
     <div class="sidbar">
-        <include tp-data="{'content':'this is include'}" file="{{VIEWS}}/include/test.html" dataType="html"></include>
+        <#include tp-data="{'content':'this is include'}" file="{{LAM.VIEWS}}/include/test.html" dataType="html" />
     </div>
 
     <div class="content over-h" id="content">
@@ -72,7 +72,6 @@
     LAMJS.run(function(){
         'use strict';
         var System=this;
-        System.Html.include($('include'));
 
         var ul1;
         function layout(){

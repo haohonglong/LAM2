@@ -54,7 +54,7 @@
             <% }%>
         </ul>
     </div>
-    <include tp-data="{'content':'this is include'}" file="{{VIEWS}}/include/test.html" dataType="html"></include>
+    <#include tp-data="{'content':'this is include'}" file="{{LAM.VIEWS}}/include/test.html" dataType="html" />
 
     <br>
     <br>
@@ -73,7 +73,6 @@
     LAMJS.run(function(){
         'use strict';
         var System=this;
-        System.Html.include($('include'));
         var slider;
 
         function slider_f(){
