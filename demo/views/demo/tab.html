@@ -23,7 +23,6 @@
 			System.import([
 				'/Tab.class'
 			],System.classPath);
-			System.Html.include($('include'));
 
 		};
 
@@ -56,17 +55,17 @@
 	</div>
 	<div class="col-md-8">
 		<div class="block" data-tab="section" data-id="sentence_detail">
-			<include file="{{LAM.VIEWS}}/demo/sentence_detail.html" dataType="html"></include>
+			<#include file="{{LAM.VIEWS}}/demo/sentence_detail.html" dataType="html" />
 		</div>
 
 		<div class="block none" data-tab="section" data-id="drag">
-			<include file="{{LAM.VIEWS}}/demo/drag.html" dataType="html"></include>
+			<#include file="{{LAM.VIEWS}}/demo/drag.html" dataType="html" />
 		</div>
 		<div class="block none" data-tab="section" data-id="dropdown">
-			<include file="{{LAM.VIEWS}}/demo/dropdown.html" dataType="html"></include>
+			<#include file="{{LAM.VIEWS}}/demo/dropdown.html" dataType="html" />
 		</div>
 		<div class="block none" data-tab="section" data-id="popLayer">
-			<include file="{{LAM.VIEWS}}/demo/popLayer.html" dataType="html"></include>
+			<#include file="{{LAM.VIEWS}}/demo/popLayer.html" dataType="html" />
 		</div>
 	</div>
 </div>
