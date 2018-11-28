@@ -455,16 +455,31 @@
      */
 	Template.include=function (S) {
         var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
+        var k,v;
         if (re.test(S)) {
             S.match(re).each(function(){
             	var _this = this;
-                var data ={},arr = this.split(' ');
-                arr.removeAt(0);
+                var data ={},arr = this.split('" ');
+                var first =arr[0].split(' ')[1];//保存被丢失的第一个参数
+                arr.removeAt(0);//remove <#include
+                arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
                 arr.removeAt(arr.length-1);
                 arr.each(function(){
                     var arr = this.split('=');
-                    data[System.camelCase(arr[0].trim())] = System.eval(arr[1].trim());
+                    arr[1] = arr[1].replace(/^"/,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    switch(k){
+						case 'capture':
+						case 'beforeSend':
+						case 'tpData':
+							v = System.eval(v);
+
+					}
+
+                    data[k] =  v;
                 });
+
                 System.Html.getFile(data.file,function(content){
                     S = S.replace(_this,content);
 				},data);
