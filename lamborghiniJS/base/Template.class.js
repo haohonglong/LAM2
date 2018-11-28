@@ -466,20 +466,22 @@
                 arr.removeAt(arr.length-1);
                 arr.each(function(){
                     var arr = this.split('=');
-                    arr[1] = arr[1].replace(/^"/,'');
+                    arr[0] = arr[0].replace(/^"/,'').replace('"$','');
+                    arr[1] = arr[1].replace(/^"/,'').replace('"$','');
                     k = System.camelCase(arr[0].trim());
                     v = arr[1];
                     switch(k){
 						case 'capture':
+						case 'preform':
 						case 'beforeSend':
+						case 'success':
+						case 'done':
+						case 'data':
 						case 'tpData':
 							v = System.eval(v);
-
 					}
-
                     data[k] =  v;
                 });
-
                 System.Html.getFile(data.file,function(content){
                     S = S.replace(_this,content);
 				},data);
