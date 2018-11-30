@@ -454,8 +454,7 @@
 	Html.load=function($dom){
 		$dom.each(function(){
 			var $this =$(this);
-			var path = $this.attr('file');
-            Html.getFile(path,function(content){
+            Html.getFile($this.attr('file'),function(content){
                 $this.html(content);
             });
 
