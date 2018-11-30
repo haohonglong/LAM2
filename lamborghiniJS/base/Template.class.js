@@ -493,7 +493,9 @@
                     data[k] =  v;
                 });
                 System.Html.getFile(data.file,function(content){
-                    S = S.replace(_this,content);
+                    S = S.replace(_this,function () {
+						return content;
+                    });
 				},data);
 
             });
