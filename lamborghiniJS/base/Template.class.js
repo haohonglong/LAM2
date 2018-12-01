@@ -415,7 +415,7 @@
      * 创建日期：2018-08-21
      * 修改日期：2018-08-21
      * 名称：Template.include
-     * 功能：预处理 引入外面的文件
+     * 功能：模版解析引擎
      * 说明：
      * 注意：
      * @param S
@@ -444,10 +444,10 @@
     /**
      * @author: lhh
      * 产品介绍：
-     * 创建日期：2018-08-26
-     * 修改日期：2018-08-28
+     * 创建日期：2018-11-27
+     * 修改日期：2018-12-1
      * 名称：Template.include
-     * 功能：预处理 引入外面的文件
+     * 功能：预处理 递归查找include外面指定的文件
      * 说明：
      * 注意：
      * @param S
@@ -460,10 +460,10 @@
             S.match(re).each(function(){
             	var _this = this;
                 var data ={},arr = this.split('" ');
-                var first =arr[0].split('<#include ')[1];//保存被丢失的第一个参数
-                arr.removeAt(0);//remove <#include
+                var first =arr[0].split('<#include ').pop();//保存被丢失的第一个参数
+                arr.shift();//remove <#include
                 arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
-                arr.removeAt(arr.length-1);
+                arr.pop();// remove the  />
                 arr.each(function(){
                     var arr = this.split('=');
                     arr[0] = arr[0].replace(/^"/,'').replace(/"$/,'');
