@@ -1583,8 +1583,19 @@
 
 	String
 		.method('trim',function(){
-			return System.isFunction(this.trim) ? this.trim() : this.replace(/(^\s*)|(\s*$)/g, "");
+			return this.replace(/(^\s*)|(\s*$)/g, "");
 		})
+        /**
+		 * trim 指定的字符
+         */
+        .method('trim_str',function(str){
+        	if(str){
+                return this.replace((new RegExp(str,'g')), "");
+			}else{
+        		return this.trim();
+			}
+
+        })
 
 	/**
 	 *
