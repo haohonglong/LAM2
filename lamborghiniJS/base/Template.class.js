@@ -409,19 +409,14 @@
 	};
 
     var cache={};
+
     /**
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2018-08-21
-     * 修改日期：2018-08-21
-     * 名称：Template.jQCompile
-     * 功能：jQuery模版解析引擎
-     * 说明：
-     * 注意：
+	 *jQuery模版解析引擎
      * @param S
-     * @returns {String}
+     * @param D
+     * @returns {*}
      */
-	Template.jQCompile=function (S,D) {
+    function jQCompile(S,D) {
         var fn = !/\W/.test(S) ?
             cache[S] = cache[S] ||
                 Template.jQCompile(document.getElementById(S).innerHTML) :
@@ -439,8 +434,49 @@
                     .split("\r").join("\\'")
                 + "');}return p.join('');");
         return D ? fn( D ) : fn;
-
+    }
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-21
+     * 修改日期：2018-12-1
+     * 名称：Template.jQCompile
+     * 功能：jQuery模版解析引擎
+     * 说明：防止内容里出现script部分代码，致使解析模版异常，所以现在要把所有script标签及里面内容提取出来，等解析完毕再添加回去
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
+	Template.jQCompile=function (S,D) {
+        var obj = Template.extract_script_tag(S);
+        return jQCompile(obj.content,D)+obj.scripts.join('');
     };
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2018-08-21
+     * 修改日期：2018-12-1
+     * 名称：Template.extract_script_tag
+     * 功能：提取所有script标签及里面内容
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {Object}
+     */
+	Template.extract_script_tag=function(S){
+		var re = new RegExp('(<script(.*?)>)(.|\\n)*?(</script>)','gim');
+        var scripts = [];
+        if (re.test(S)) {
+            S.match(re).each(function(){
+            	scripts.push(this);
+                S = S.replace(this,function () {
+                    return '';
+                });
+			});
+
+        }
+        return {'content':S,'scripts':scripts};
+	};
     /**
      * @author: lhh
      * 产品介绍：
