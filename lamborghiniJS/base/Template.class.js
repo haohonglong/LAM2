@@ -412,8 +412,8 @@
 
     /**
 	 *jQuery模版解析引擎
-     * @param S
-     * @param D
+     * @param S{String} NOT NULL 内容
+     * @param D{Object} NOT NULL 分配的数据
      * @returns {*}
      */
     function jQCompile(S,D) {
@@ -444,11 +444,12 @@
      * 功能：jQuery模版解析引擎
      * 说明：防止内容里出现script部分代码，致使解析模版异常，所以现在要把所有script标签及里面内容提取出来，等解析完毕再添加回去
      * 注意：
-     * @param S
+     * @param S{String} NOT NULL 内容
+     * @param D{Object} NOT NULL 分配的数据
      * @returns {String}
      */
 	Template.jQCompile=function (S,D) {
-        var obj = Template.extract_script_tag(S);
+        var obj = Template.extract_by_tag('script',S);
         return jQCompile(obj.content,D)+obj.scripts.join('');
     };
     /**
@@ -457,25 +458,26 @@
      * 创建日期：2018-08-21
      * 修改日期：2018-12-1
      * 名称：Template.extract_script_tag
-     * 功能：提取所有script标签及里面内容
+     * 功能：根据标签提取它及里面的内容
      * 说明：
      * 注意：
-     * @param S
+     * @param tag{String}   NOT NULL标签名称
+     * @param S{String}     NOT NULL内容
      * @returns {Object}
      */
-	Template.extract_script_tag=function(S){
-		var re = new RegExp('(<script(.*?)>)(.|\\n)*?(</script>)','gim');
-        var scripts = [];
+	Template.extract_by_tag=function(tag,S){
+		var re = new RegExp('(<'+tag+'(.*?)>)(.|\\n)*?(</'+tag+'>)','gim');
+        var tags = [];
         if (re.test(S)) {
             S.match(re).each(function(){
-            	scripts.push(this);
+                tags.push(this);
                 S = S.replace(this,function () {
                     return '';
                 });
 			});
 
         }
-        return {'content':S,'scripts':scripts};
+        return {'content':S,'scripts':tags};
 	};
     /**
      * @author: lhh
