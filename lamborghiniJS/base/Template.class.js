@@ -450,7 +450,7 @@
      */
 	Template.jQCompile=function (S,D) {
         var obj = Template.extract_by_tag('script',S);
-        return jQCompile(obj.content,D)+obj.scripts.join('');
+        return jQCompile(obj.content,D)+obj.tags.join('');
     };
     /**
      * @author: lhh
@@ -477,7 +477,7 @@
 			});
 
         }
-        return {'content':S,'scripts':tags};
+        return {'content':S,'tags':tags};
 	};
     /**
      * @author: lhh
