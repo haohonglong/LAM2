@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-11-28
+	修改日期 ：2018-12-1
 
 
 # 产品介绍：
@@ -22,7 +22,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 		brandhall  #后台管理demo
             |-commmon       项目公共文件目录
                 |-config       
-                    |-config.js       项目配置文件(3)
+                    |-config.js       项目配置文件(2)
             |-controllers   项目控制器文件存放位置(4)
             |-public        项目资源文件存放位置(7)
                 |-css
@@ -33,9 +33,11 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                      |-main.html(6)
                 |-site
                     |-index.html(5)
-            |-config.js     项目配置文件(2)
             |-index.html    项目入口文件(1)
-
+        
+        lamborghiniJS #类库核心文件存放位置
+            |-base
+                |-System.js(3)
             上面数字意思是过程加载的顺序
 	
 
@@ -132,11 +134,16 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 		
 
 ## 入口文件(index.html)：
-        <meta charset="UTF-8">
-        <script type="text/javascript">window._ROOT_ = "..";</script>
-        <script type="text/javascript" src="../brandhall/common/config/config.js"></script>
-        <script type="text/javascript" src="../lamborghiniJS/base/System.js"></script>
-        <script type="text/javascript">LAM.bootstrap();</script>
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <script type="text/javascript">window._ROOT_ = "..";</script>
+            <script type="text/javascript" src="../brandhall/common/config/config.js"></script>
+            <script type="text/javascript" src="../lamborghiniJS/base/System.js"></script>
+            <script type="text/javascript">LAM.bootstrap();</script>
+        </head>
+        </html>
 
 ## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
 
@@ -1030,10 +1037,13 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                 {'name':'马良','style':'新古典,地中海-田园,北欧,简约'},
                                 {'name':'赵明','style':'新古典,地中海-田园,北欧,其他'}
                                 ]})}"></include>
-                 note:beforeSend 属性是可选的，这里的this就是jQuery Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数，
+                 note:
+                        beforeSend 属性是可选的，这里的this就是jQuery Ajax的settings,数据被发送之前设置jQuery Ajax提供的所有参数，
                                      这里就可以设置一个beforeSend回调函数，其余的参数都可以在这个函数里设置,
                                      在beforeSend回调函数里设置file 参数 要换成 url 参数。
                                      函数里的两个参数请参考jQuery Ajax API。
+                                     
+                        capture 属性是可选的,对捕获success 返回的数据处理后返回，注意一定要返回回去！
                  LAM.Template.jQCompile 是一个模版解析器，可解析模版里的javascript 语句
                  {{LAMJS.ROOT}}（ 参考 十八、模版标签 3）
                  
@@ -1052,9 +1062,20 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 				 });
 				 
-## 十七-1、预处理加载引入其他任何文本文件（跟上面一个最大不同是：delimiters 格式一定要是数组，像下面例子这样个格式。除repeat（重复内容显示的次数，一般在测试用，只是方便不用重复复制几行，输入个数字就可实行重复多行的效果，但无实际意义） 无效，功能上个跟上面的方式一样）如没有特别需求建议首用下面方式
-            上面的方式要等dom节点加载后才可用且还要在当前面里加入 System.Html.include($('include')); 这一句话。  
-            下面的方式跟dom节点无关，一旦get请求后返回字符时，就在这个时候，预处理执行且下面的占位符被替换成file路径里的文件内容    
+## 十七-1、预处理加载引入其他任何文本文件
+            跟上面一个最大不同是不依赖dom节点查找！上面的方式要等dom节点加载后才可用且还要在当前面里加入 System.Html.include($('include')); 这一句话。
+            
+            优点：
+                优先级高，递归查找占位符并替换为的file属性路径里的文件内容，继续查找被加载的文件内容是否有占位符，直到没有为止！
+                每个包含占位符的页面里不用添加额外 System.Html.include() 方法
+            
+            缺点：
+                因为占位符被替换后，dom还没有加载所以指令方法里无法对dom操作，success 指令无效
+            注意：
+                delimiters 格式一定要是数组，像下面例子这样个格式。
+                repeat属性无效（重复内容显示的次数，一般在测试用，只是方便不用重复复制几行，输入个数字就可实行重复多行的效果，但无实际意义） 
+              
+            一旦get请求后返回字符时，就在这个时候，预处理执行且下面的占位符被替换成file路径里的文件内容 ,最适合在子组件里使用这种方式   
             <#include tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="{{VIEWS}}/inc_header.html" />
          
          注意：结束符 '/>' 前至少要有一个空格！

@@ -414,8 +414,8 @@
      * 产品介绍：
      * 创建日期：2018-08-21
      * 修改日期：2018-08-21
-     * 名称：Template.include
-     * 功能：模版解析引擎
+     * 名称：Template.jQCompile
+     * 功能：jQuery模版解析引擎
      * 说明：
      * 注意：
      * @param S
