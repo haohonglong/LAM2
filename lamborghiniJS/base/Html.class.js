@@ -106,7 +106,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-11-9
+         * 修改日期：2018-12-2
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -157,8 +157,8 @@
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
             this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
             this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
-            this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async ;
-            this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache ;
+            this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async 		||  false;
+            this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache 		||	false;
             this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
             this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
             this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
