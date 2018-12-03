@@ -441,10 +441,10 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2016-4-7
-	 * 修改日期：2016-4-7
+	 * 修改日期：2018-11-30
 	 * 名称： Html.load
-	 * 功能：html文件里包含另一个文件,扩充jQuery load方法
-	 * 说明：跟Html.include方法不一样的地方是 这里调用的是jQuery load方法
+	 * 功能：html文件里包含另一个文件
+	 * 说明：跟Html.include方法不一样的地方是 这里是包裹include的内容
 	 * 注意：
 	 * @param 	(jQuery)$dom             NO NULL :
 	 * @return ()
@@ -453,12 +453,12 @@
 	 */
 	Html.load=function($dom){
 		$dom.each(function(){
-			var dom =this;
-			var $dom =$(this);
-			$dom.load(System.template($dom.attr('file')));
-		});
+			var $this =$(this);
+            Html.getFile($this.attr('file'),function(content){
+                $this.html(content);
+            });
 
-
+        });
 	};
 	/**
 	 *
