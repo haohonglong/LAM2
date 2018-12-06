@@ -15,6 +15,8 @@ gulp.task('js', function(){
         ,classPath+'/base/Base.class.js'
         ,classPath+'/base/Object.class.js'
         ,classPath+'/base/Component.class.js'
+        ,classPath+'/base/Base64.class.js'
+        ,classPath+'/base/Cache.class.js'
         ,classPath+'/base/HttpRequest.class.js'
         ,classPath+'/base/Helper.class.js'
         ,classPath+'/base/Browser.class.js'
@@ -22,8 +24,6 @@ gulp.task('js', function(){
         ,classPath+'/base/Dom.class.js'
         ,classPath+'/base/View.class.js'
         ,classPath+'/base/Template.class.js'
-        ,classPath+'/base/Base64.class.js'
-        ,classPath+'/base/Cache.class.js'
         ,classPath+'/base/Html.class.js'
         ,classPath+'/base/Loader.class.js'
     ])

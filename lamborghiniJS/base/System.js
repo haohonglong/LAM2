@@ -249,8 +249,9 @@
 		'Object': {},
 		'Loader': {},
 		'Component': {},
-		'HttpRequest': {},
+        'Base64':{},
 		'Cache': {},
+		'HttpRequest': {},
 		'Dropdown': {},
 		'Helper': {},
 		'Controller': {},
@@ -297,7 +298,6 @@
 		},
 		'View': {},
 		'Validation':{},
-		'Base64':{},
 		'Widget': {}
 	};
 

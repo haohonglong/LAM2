@@ -59,6 +59,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                |_base/Base.class.js
                                |_base/Object.class.js
                                |_base/Component.class.js
+                               |_base/Base64.class.js
+                               |_base/Cache.class.js
                                |_base/HttpRequest.class.js
                                |_base/Helper.class.js
                                |_base/Browser.class.js
@@ -68,8 +70,6 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                |_base/Template.class.js
                                |_base/Html.class.js
                                |_base/Loader.class.js
-                               |_base/Base64.class.js
-                               |_base/Cache.class.js
                                |_base/Controller.class.js
                                |_base/Router.class.js
                                    /                             

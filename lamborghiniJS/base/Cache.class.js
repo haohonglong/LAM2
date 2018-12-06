@@ -48,10 +48,10 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Browser','Cache',System.classPath+'/base');
+	System.is(System,'Component','Cache',System.classPath+'/base');
 	var __this__=null;
 
-	var Cache = System.Browser.extend({
+	var Cache = System.Component.extend({
         /**
          * @author lhh
          * 产品介绍：
