@@ -83,18 +83,23 @@
                 return [
                     classPath+'/jQuery/jquery.js'
                     ,classPath+'/build/base.min.js'
-                    //,classPath+'/base/Base.class.js'
-                    //,classPath+'/base/Object.class.js'
-                    //,classPath+'/base/Component.class.js'
-                    //,classPath+'/base/Helper.class.js'
-                    //,classPath+'/base/Browser.class.js'
-                    //,classPath+'/base/Event.class.js'
-                    //,classPath+'/base/Dom.class.js'
-                    //,classPath+'/base/Template.class.js'
-                    //,classPath+'/base/Html.class.js'
-                    //,classPath+'/base/Loader.class.js'
+
+                    // ,classPath+'/base/Base.class.js'
+                    // ,classPath+'/base/Object.class.js'
+                    // ,classPath+'/base/Component.class.js'
+                    // ,classPath+'/base/Compiler.class.js'
                     // ,classPath+'/base/Base64.class.js'
                     // ,classPath+'/base/Cache.class.js'
+                    // ,classPath+'/base/HttpRequest.class.js'
+                    // ,classPath+'/base/Helper.class.js'
+                    // ,classPath+'/base/Browser.class.js'
+                    // ,classPath+'/base/Event.class.js'
+                    // ,classPath+'/base/Dom.class.js'
+                    // ,classPath+'/base/View.class.js'
+                    // ,classPath+'/base/Template.class.js'
+                    // ,classPath+'/base/Html.class.js'
+                    // ,classPath+'/base/Loader.class.js'
+
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Css.class.js'
                 ];
@@ -164,7 +169,6 @@
                     this.default.script.Attribute.defer='';
                 }
             },
-            'init':{},
             'params':{},
             'getClassPath':function(){
                 return this.vendorPath;

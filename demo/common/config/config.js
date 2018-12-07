@@ -98,6 +98,7 @@
                     ,classPath+'/base/Base.class.js'
                     ,classPath+'/base/Object.class.js'
                     ,classPath+'/base/Component.class.js'
+                    ,classPath+'/base/Compiler.class.js'
                     ,classPath+'/base/Base64.class.js'
                     ,classPath+'/base/Cache.class.js'
                     ,classPath+'/base/HttpRequest.class.js'

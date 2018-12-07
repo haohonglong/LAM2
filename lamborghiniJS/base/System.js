@@ -237,7 +237,7 @@
 	 * @author: lhh
 	 * 产品介绍：所有类的接口
 	 * 创建日期：2015-9-6
-	 * 修改日期：2018-4-23
+	 * 修改日期：2018-12-7
 	 * 名称：Interface
 	 * 功能：
 
@@ -249,6 +249,7 @@
 		'Object': {},
 		'Loader': {},
 		'Component': {},
+		'Compiler': {},
         'Base64':{},
 		'Cache': {},
 		'HttpRequest': {},
