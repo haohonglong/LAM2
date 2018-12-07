@@ -26,86 +26,20 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Dom','Template',System.classPath+'/base');
+	System.is(System,'Compiler','Template',System.classPath+'/base');
 
 	var __this__=null;
 	var guid=0;
-	var Template = System.Dom.extend({
+	var Template = System.Compiler.extend({
 		constructor: function(Config) {
-			this.base();
+			this.base(Config);
 			__this__=this;
 			this.guid=0;
 			guid++;
 			this.html=[];
-			this.Config = Config || System.Config;
-			//模板分隔符
-			this.delimiters  = this.Config.templat.delimiters;
 		},
 		'_className':'Template',
 		'create':function(){},
-
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-03-9
-		 * 修改日期：2018-11-10
-		 * 名称：compile
-		 * 功能：编译模版标签
-		 * 说明：
-		 * 注意：
-		 * @param (String)S 			NO NULL:要查找的字符串
-		 * @param (Object)D 			NO NULL:对象模板中的数据
-		 * @param (Array)delimiters     NULL:模板分隔符
-		 * @returns {String}
-		 */
-		'compile':function(S,D,delimiters){
-			var self=this;
-			var arr=[],v=[],$1,$2;
-            delimiters = delimiters || this.delimiters;
-			var delimiterLeft  = delimiters[0];
-			var delimiterRight = delimiters[1];
-			//没找到模版分隔符就返回传入的字符串
-			if(S.indexOf(delimiterLeft) !== -1){
-				S.split(delimiterLeft).each(function(){
-					if(-1 === this.indexOf(delimiterRight)){
-						arr.push(this);
-					}else{//如果每个里有模版标签
-						v=this.split(delimiterRight);
-						$1=v[0].trim();
-						$2=v[1].trim();
-						arr.push([self.analysis($1,D),self.compile($2,D)].join('').trim());
-					}
-				});
-			}else{
-				return S ||'';
-			}
-			return arr.join('');
-		},
-		'replace':function(){},
-		'analysis':function(vars,D,
-							k,
-							v,
-							root){
-			if(-1 !== vars.indexOf('.')){
-				v=vars.split('.');
-				if((k=v[0]) in D ){
-					root=D[k];
-					v.each(function(i){
-						if(i!=0){
-							root=root[this];
-						}
-					});
-					return root;
-				}
-                if(v = System.eval(vars)){return v;}
-			}else{
-				if((k=vars) in D){
-					return D[k];
-				}
-			}
-			throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' '));
-		},
 		/**
 		 *
 		 * @author: lhh
@@ -362,30 +296,11 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += Template.compiler(template,data[i],delimiters);
+			fragment += System.Compiler.compile(template,data[i],delimiters);
 		}
 		return fragment;
 	};
-    /**
-     * 产品介绍：
-     * 创建日期：2016-10-22
-     * 修改日期：2018-11-10
-     * 名称：Template.compiler
-     * 功能：模版变量解析器
-     * @param {String}template
-     * @param {JSON}data
-     * @param {Array}delimiters
-     * @returns {String}
-     */
-	Template.compiler=function (template, data,delimiters) {
-        delimiters = delimiters || System.Config.templat.delimiters;
-        var L = delimiters[0],R = delimiters[1],t, key, reg;
-        for(key in data){
-            reg = new RegExp(L+'\\s*' + key + '\\s*'+R, 'g');
-            t = (t || template).replace(reg, data[key]).trim();
-        }
-        return t || template;
-    };
+
 	Template.getGuid=function(){
 		return guid;
 	};
@@ -408,33 +323,7 @@
         return T.compile(S,D,delimiters);
 	};
 
-    var cache={};
 
-    /**
-	 *jQuery模版解析引擎
-     * @param S{String} NOT NULL 内容
-     * @param D{Object} NOT NULL 分配的数据
-     * @returns {*}
-     */
-    function jQCompile(S,D) {
-        var fn = !/\W/.test(S) ?
-            cache[S] = cache[S] ||
-                Template.jQCompile(document.getElementById(S).innerHTML) :
-
-            new Function("obj",
-                "var p=[],print=function(){p.push.apply(p,arguments);};" +
-                "with(obj){p.push('" +
-                S
-                    .replace(/[\r\t\n]/g, " ")
-                    .split("<%").join("\t")
-                    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                    .replace(/\t=(.*?)%>/g, "',$1,'")
-                    .split("\t").join("');")
-                    .split("%>").join("p.push('")
-                    .split("\r").join("\\'")
-                + "');}return p.join('');");
-        return D ? fn( D ) : fn;
-    }
     /**
      * @author: lhh
      * 产品介绍：
@@ -450,7 +339,7 @@
      */
 	Template.jQCompile=function (S,D) {
         var obj = Template.extract_by_tag('script',S);
-        return jQCompile(obj.content,D)+obj.tags.join('');
+        return System.Compiler.jQCompile(obj.content,D)+obj.tags.join('');
     };
     /**
      * @author: lhh
@@ -545,7 +434,6 @@
 
 	System.merge(null,[{
 		'analysisVar':Template.analysisVar,
-		'compiler':Template.compiler,
 		'template':Template.template,
 		'findTpl':Template.findTpl,
 		'replaceTpl':Template.replaceTpl
