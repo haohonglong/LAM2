@@ -296,7 +296,7 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += System.Compiler.compile(template,data[i],delimiters);
+			fragment += System.Compiler.compiler(template,data[i],delimiters);
 		}
 		return fragment;
 	};
