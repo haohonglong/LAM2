@@ -1339,7 +1339,7 @@
          * 说明：
          * 注意：length 是关键字 属性里禁止使用
          * @param 	(Object)Attr             	NO NULL : 标签的属性
-         * @return (Array) 返回属性符串
+         * @return (Array) 返回属性数组
          * Example：
          *
          */
@@ -1367,7 +1367,7 @@
          * @param 	(String)name            NO NULL : 标签名称
          * @param 	(Object)Attr               NULL : 标签的属性
          * @param 	(String|Array)content      NULL : 内容
-         * @return (Array) 返回标签字符串
+         * @return (Array) 返回标签数组
          * Example：
          *
          */
