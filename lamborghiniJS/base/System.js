@@ -457,15 +457,10 @@
         'bootstrap':function (Config){
 			System.Config = Config || System.Config;
 			this.init();
-			var tag = "script"
-				,k,scriptAttribute = System.Config.render.default.script.Attribute,
+			var tag='script',scriptAttribute = System.Config.render.default.script.Attribute,
 				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
 			//加载基础类
-			//确保每个文件只加载一次
-			var attrs=[];
-			for(k in scriptAttribute){
-				attrs.push(k,'=','"',scriptAttribute[k],'"',' ');
-			}
+
 			if(srcs.length){
 				for(i=0,len = srcs.length;i < len; i++){
 					if(System.Config.files.indexOf(srcs[i]) !== -1){continue;}
@@ -474,7 +469,7 @@
 						data.src = srcs[i];
 						System.Config.render.bulid(tag,data)
 					}else{
-						files.push('<',tag,' ',attrs.join(''),'src=','"',srcs[i],'"','>','<','/',tag,'>');
+						files.push(System.script(srcs[i],scriptAttribute));
 					}
 				}
 				System.print(files.join(''));
@@ -1333,6 +1328,121 @@
 			}
 			return Date.now();
 		},
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-4
+         * 修改日期：2018-12-7
+         * 名称： Html.renderTagAttributes
+         * 功能：
+         * 说明：
+         * 注意：length 是关键字 属性里禁止使用
+         * @param 	(Object)Attr             	NO NULL : 标签的属性
+         * @return (Array) 返回属性符串
+         * Example：
+         *
+         */
+		'renderTagAttributes':function(Attr){
+            Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
+            if(System.isEmptyObject(Attr)){return '';}
+            var attrs=[];
+            System.each(Attr,function(k,v){
+                attrs.push(' ',k,'="',v,'"');
+            });
+
+            return attrs;
+        },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2015-8-25
+         * 修改日期：2018-12-7
+         * 名称： tag
+         * 功能：动态返回指定的标签
+         * 说明：
+         * 注意：length 是关键字 属性里禁止使用
+         * @param 	(Boolean)single            NULL : 成对标签还是单一标签，false 是成对标签
+         * @param 	(String)name            NO NULL : 标签名称
+         * @param 	(Object)Attr               NULL : 标签的属性
+         * @param 	(String|Array)content      NULL : 内容
+         * @return (Array) 返回标签字符串
+         * Example：
+         *
+         */
+		'tag':function(single,name,Attr,content){
+            var args = arguments;
+            var len = args.length;
+            if(0 === len || len > 4){throw new Error('Warning :参数至少有一个，且参数个数不能超过4个');}
+            if(!System.isBoolean(single)){
+                name	 = args[0];
+                Attr	 = args[1] || {};
+                content	 = args[2] || '';
+                single	 = false;
+            }else{
+                if(!System.isString(args[1])){throw new Error('Warning :缺少标签名称');}
+                single	 = args[0];
+                name	 = args[1] || null;
+                Attr	 = args[2] || {};
+                content	 = args[3] || '';
+            }
+            if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
+                content = Attr;
+                Attr = {};
+            }
+
+            content = System.isNumeric(content) ? String(content) : content;
+
+            //check
+            if(System.empty(name) || !System.isString(name)){throw new Error('Warning :标签名称不能为空，只能是字符串！');}
+            if(Attr && !System.isPlainObject(Attr)){throw new Error('Warning :<'+name+'>标签的属性,{Attr}参数必须是一个对象！');}
+            if(content && !(System.isString(content) || System.isArray(content))){throw new Error('Warning :<'+name+'>标签内容必须是字符串或者是数组');}
+
+            var tag=[];
+            tag.push('<',name);
+            //拼接属性
+            if(Attr && System.isObject(Attr)){
+                Attr = System.toDict(Attr);
+                tag.push(System.renderTagAttributes(Attr).join(''));
+            }
+
+            if(single){
+                tag.push(' />');
+            }else{
+                tag.push('>');
+                if(!System.empty(content)){
+                    if(System.isArray(content)){
+                        tag.push(content.join(''));
+                    }else{
+                        tag.push(content);
+                    }
+                }
+                tag.push('</',name,'>');
+            }
+            return tag;
+        },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2016-9-4
+         * 修改日期：2018-12-7
+         * 名称： scriptFile
+         * 功能：
+         * 说明：
+         * 注意：length 是关键字 属性里禁止使用
+         * @param 	(String)src      NO NULL : 路径
+         * @param 	(Object)Attr        NULL : 标签的属性
+         * @return (String)
+         * Example：
+         */
+		'script':function (src,Attr) {
+            if(!System.isString(src)){throw new Error('Warning: script 标签src参数必须是字符串！');}
+            Attr.src = src;
+            Attr.type = Attr.type || 'text/javascript';
+            return System.tag('script',Attr).join('');
+        },
         /**
          * @author: lhh
          * 产品介绍：

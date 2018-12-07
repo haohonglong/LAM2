@@ -460,38 +460,14 @@
 
         });
 	};
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2016-9-4
-	 * 修改日期：2018-4-22
-	 * 名称： Html.renderTagAttributes
-	 * 功能：
-	 * 说明：
-	 * 注意：length 是关键字 属性里禁止使用
-	 * @param 	(Object)Attr             	NO NULL : 标签的属性
-	 * @return (String) 返回属性符串
-	 * Example：
-	 *
-	 */
-	Html.renderTagAttributes = function(Attr){
-		Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
-		if(System.isEmptyObject(Attr)){return '';}
-		var attrs=[];
-		System.each(Attr,function(k,v){
-			attrs.push(' ',k,'="',v,'"');
-		});
 
-		return attrs.join('');
-	};
 
 	/**
 	 *
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-8-25
-	 * 修改日期：2018-4-22
+	 * 修改日期：2018-12-7
 	 * 名称： tag
 	 * 功能：动态返回指定的标签
 	 * 说明：
@@ -505,55 +481,7 @@
 	 *
 	 */
 	Html.tag = function(single,name,Attr,content){
-		var args = arguments;
-		var len = args.length;
-		if(0 === len || len > 4){throw new Error('Warning :参数至少有一个，且参数个数不能超过4个');}
-		if(!System.isBoolean(single)){
-			name	 = args[0];
-			Attr	 = args[1] || {};
-			content	 = args[2] || '';
-			single	 = false;
-		}else{
-			if(!System.isString(args[1])){throw new Error('Warning :缺少标签名称');}
-			single	 = args[0];
-			name	 = args[1] || null;
-			Attr	 = args[2] || {};
-			content	 = args[3] || '';
-		}
-		if(System.isString(Attr) || System.isArray(Attr)){//属性可以省略
-			content = Attr;
-			Attr = {};
-		}
-
-		content = System.isNumeric(content) ? String(content) : content;
-
-		//check
-		if(System.empty(name) || !System.isString(name)){throw new Error('Warning :标签名称不能为空，只能是字符串！');}
-		if(Attr && !System.isPlainObject(Attr)){throw new Error('Warning :<'+name+'>标签的属性,{Attr}参数必须是一个对象！');}
-		if(content && !(System.isString(content) || System.isArray(content))){throw new Error('Warning :<'+name+'>标签内容必须是字符串或者是数组');}
-
-		var tag=[];
-		tag.push('<',name);
-		//拼接属性
-		if(Attr && System.isObject(Attr)){
-			Attr = System.toDict(Attr);
-			tag.push(Html.renderTagAttributes(Attr));
-		}
-
-		if(single){
-			tag.push(' />');
-		}else{
-			tag.push('>');
-			if(!System.empty(content)){
-				if(System.isArray(content)){
-					tag.push(content.join(''));
-				}else{
-					tag.push(content);
-				}
-			}
-			tag.push('</',name,'>');
-		}
-		return tag.join('');
+		return System.tag(single,name,Attr,content).join('');
 	};
 
 	/**
@@ -573,11 +501,8 @@
 	 *
 	 */
 	Html.scriptFile=function(src,Attr){
-		if(!System.isString(src)){throw new Error('Warning: script 标签src参数必须是字符串！');}
 		Attr = Attr || System.clone(sAttribute);
-		Attr.src = src;
-		Attr.type = Attr.type || 'text/javascript';
-		return Html.tag('script',Attr);
+		return System.script(src,Attr);
 	};
 
 	/**
