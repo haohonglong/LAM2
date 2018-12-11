@@ -44,3 +44,52 @@
     </ul>
 </div>
 <% }%>
+
+
+<script type="text/javascript">
+
+    LAM.run(function() {
+        'use strict';
+        var System = this;
+        var tools = new System.Tools();
+        $(function(){
+
+            $('.js_sectionBoxA13 a').bind('click',function(event){
+                switch($(event.target).attr('class')){
+                    case 'i-1'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'first'
+                        });
+                        break;
+                    case 'i-2'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'prev'
+                        });
+                        break;
+                    case 'i-3':
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'next'
+                        });
+                        break;
+                    case 'i-4'	:
+                        tools.move_next_prev_first_last({
+                            '$event'  :$(event.target),
+                            'parent': '.sectionBox-A10',
+                            'chose':  'last'
+                        });
+                        break;
+
+                    default:
+                        alert("Error");
+                }
+            });
+        });
+    });
+
+</script>
