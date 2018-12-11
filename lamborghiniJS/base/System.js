@@ -48,7 +48,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.1.1",
+	var VERSION="2.1.2",
 		Interface={},
 		System={},
 		once=true,
