@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-12-7
+ * 修改日期:2018-12-11
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -26,16 +26,26 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Compiler','Template',System.classPath+'/base');
+	System.is(System,'Component','Template',System.classPath+'/base');
+    System.listen(function () {
+        if(System.isFunction(System.import)){
+            System.import(['/Compiler.class'],System.classPath+'/base');
+            System.import(['/Html.class'],System.classPath+'/base');
+            return true;
+        }
+    },1);
+
 
 	var __this__=null;
 	var guid=0;
-	var Template = System.Compiler.extend({
-		constructor: function(Config) {
-			this.base(Config);
+	var Compiler = new System.Compiler();
+	var Template = System.Component.extend({
+		constructor: function(compiler) {
+			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;
+			this.compiler = compiler || Compiler;
 			this.html=[];
 		},
 		'_className':'Template',
@@ -59,7 +69,7 @@
 		'render':function(view,D,callBack,Cajax){
 			var self=this,S;
 			System.Html.getFile(view,function(content){
-				S=self.compile(content,D);
+				S=self.compiler.compile(content,D);
 
 				if(System.isFunction(callBack)){
 					callBack(S);
@@ -254,7 +264,7 @@
 	 * @author: lhh
 	 * 产品介绍：获取容器里带模板标签的html 字符串 ，然后迭代解析后输出到指定标签里
 	 * 创建日期：2016-10-22
-	 * 修改日期：2018-8-22
+	 * 修改日期：2018-12-12
 	 * 名称：Template.foreach
 	 * @param {String}template NO NULL:容器里带模板标签的html 字符串
 	 * @param {Array}data		NO NUll:解析模板标签的数据
@@ -296,7 +306,7 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += System.Compiler.compiler(template,data[i],delimiters);
+			fragment += System.compiler(template,data[i],delimiters);
 		}
 		return fragment;
 	};
@@ -308,7 +318,7 @@
     /**
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-08-21
+     * 修改日期：2018-12-12
      * 名称：Template.compile
      * 功能：解析模版标签
      * 说明：
@@ -319,7 +329,7 @@
      * @returns {*|String}
      */
 	Template.compile=function(S,D,delimiters){
-		if(!T){T = new Template();}
+		if(!T){T = new System.Compiler();}
         return T.compile(S,D,delimiters);
 	};
 
