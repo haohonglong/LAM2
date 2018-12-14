@@ -38,14 +38,13 @@
 
 	var __this__=null;
 	var guid=0;
-	var Compiler = new System.Compiler();
 	var Template = System.Component.extend({
 		constructor: function(compiler) {
 			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;
-			this.compiler = compiler || Compiler;
+			this.compiler = compiler || System.Compiler.getInstance();
 			this.html=[];
 		},
 		'_className':'Template',
@@ -314,11 +313,10 @@
 	Template.getGuid=function(){
 		return guid;
 	};
-	var T = null;
     /**
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-12-12
+     * 修改日期：2018-12-14
      * 名称：Template.compile
      * 功能：解析模版标签
      * 说明：
@@ -329,8 +327,7 @@
      * @returns {*|String}
      */
 	Template.compile=function(S,D,delimiters){
-		if(!T){T = new System.Compiler();}
-        return T.compile(S,D,delimiters);
+        return System.Compiler.getInstance().compile(S,D,delimiters);
 	};
 
 

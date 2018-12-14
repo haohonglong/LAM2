@@ -152,6 +152,13 @@
                 + "');}return p.join('');");
         return D ? fn( D ) : fn;
     };
+    var compiler = null;
+    Compiler.getInstance=function () {
+        if(!compiler){
+            compiler = new Compiler();
+        }
+        return compiler;
+    };
 
     System.merge(null,[{
         'compiler':Compiler.compiler
