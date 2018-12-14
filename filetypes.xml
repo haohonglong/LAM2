@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping ext="php" type="PHP" />
       <mapping ext="tpl" type="PLAIN_TEXT" />
+      <mapping ext="test" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
