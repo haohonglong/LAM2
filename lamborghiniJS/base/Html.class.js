@@ -80,7 +80,7 @@
         data = System.Template.include(data);
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
         if(System.isFunction(_this.capture)){data = _this.capture(data);}
-        if(System.isString(data)){data = _this.loop(data);}
+        if(parseInt(_this.repeat) > 1 && System.isString(data)){data = _this.loop(data);}
         if(_this.success && System.isFunction(_this.success)){
             _this.success(data,textStatus,jqXHR);
         }else{
