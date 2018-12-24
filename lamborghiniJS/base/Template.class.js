@@ -335,18 +335,25 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-12-1
+     * 修改日期：2018-12-24
      * 名称：Template.jQCompile
      * 功能：jQuery模版解析引擎
-     * 说明：防止内容里出现script部分代码，致使解析模版异常，所以现在要把所有script标签及里面内容提取出来，等解析完毕再添加回去
+     * 说明：<script type="text/template" compiler="jQuery">
      * 注意：
      * @param S{String} NOT NULL 内容
      * @param D{Object} NOT NULL 分配的数据
      * @returns {String}
      */
 	Template.jQCompile=function (S,D) {
-        var obj = Template.extract_by_tag('script',S);
-        return System.Compiler.jQCompile(obj.content,D)+obj.tags.join('');
+        var re = new RegExp('(<script type="text/template" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
+        var arr = [];
+        if((arr = re.exec(S)) !== null){
+            S = S.replace(arr[0],function () {
+                return System.Compiler.jQCompile(arr[2],D);
+            });
+		}
+        return S;
+
     };
     /**
      * @author: lhh
@@ -388,7 +395,7 @@
      * @returns {String}
      */
 	Template.include=function (S) {
-        var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
+        var re = new RegExp('<#include (([\\s\\S])*?) />','gm');
         var k,v;
         if (re.test(S)) {
             S.match(re).each(function(){
