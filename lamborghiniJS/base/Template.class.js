@@ -386,7 +386,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-11-27
-     * 修改日期：2018-12-1
+     * 修改日期：2018-12-24
      * 名称：Template.include
      * 功能：预处理 递归查找include外面指定的文件
      * 说明：
@@ -395,51 +395,46 @@
      * @returns {String}
      */
 	Template.include=function (S) {
-        var re = new RegExp('<#include (([\\s\\S])*?) />','gm');
+        var re = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
         var k,v;
-        if (re.test(S)) {
-            S.match(re).each(function(){
-            	var _this = this;
-                var data ={},arr = this.split('" ');
-                var first =arr[0].split('<#include ').pop();//保存被丢失的第一个参数
-                arr.shift();//remove <#include
-                arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
-                arr.pop();// remove the  />
-                arr.each(function(){
-                    var arr = this.split('=');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    switch(k){
-						case 'capture':
-						case 'preform':
-						case 'beforeSend':
-						case 'success':
-						case 'done':
-						case 'data':
-						case 'tpData':
-						case 'delimiters':
-						case 'repeat':
-						case 'error':
-						    try{
-						        if(!System.empty(v)){
-                                    v = System.eval(v);
-                                }
-                            }catch (e){
-                                throw new Error(e);
+        var arr_inc = [];
+        while((arr_inc = re.exec(S)) !== null){
+            var _this = arr_inc[0];
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('=');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                switch(k){
+                    case 'capture':
+                    case 'preform':
+                    case 'beforeSend':
+                    case 'success':
+                    case 'done':
+                    case 'data':
+                    case 'tpData':
+                    case 'delimiters':
+                    case 'repeat':
+                    case 'error':
+                        try{
+                            if(!System.empty(v)){
+                                v = System.eval(v);
                             }
+                        }catch (e){
+                            throw new Error(e);
+                        }
 
-					}
-                    data[k] =  v;
-                });
-                System.Html.getFile(data.file,function(content){
-                    S = S.replace(_this,function () {
-						return content;
-                    });
-				},data);
-
+                }
+                data[k] =  v;
             });
+            System.Html.getFile(data.file,function(content){
+                S = S.replace(_this,function () {
+                    return content;
+                });
+            },data);
+            re.lastIndex = 0;
         }
         return S;
     };
