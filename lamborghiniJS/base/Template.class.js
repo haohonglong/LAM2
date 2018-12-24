@@ -347,7 +347,7 @@
 	Template.jQCompile=function (S,D) {
         var re = new RegExp('(<script type="text/template" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
         var arr = [];
-        if(arr = re.exec(S)){
+        if((arr = re.exec(S)) && System.isArray(arr)){
             S = S.replace(arr[0],function () {
                 return System.Compiler.jQCompile(arr[2],D);
             });
@@ -395,11 +395,10 @@
      * @returns {String}
      */
 	Template.include=function (S) {
-        var re = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
+        var reg_inc = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
         var k,v;
         var arr_inc = [];
-        while(arr_inc = re.exec(S)){
-            var _this = arr_inc[0];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             var data ={},arr = arr_inc[2].split('" ');
             arr.each(function(){
                 var arr = this.split('=');
@@ -430,11 +429,11 @@
                 data[k] =  v;
             });
             System.Html.getFile(data.file,function(content){
-                S = S.replace(_this,function () {
+                S = S.replace(arr_inc[0],function () {
                     return content;
                 });
             },data);
-            re.lastIndex = 0;
+            reg_inc.lastIndex = 0;
         }
         return S;
     };
