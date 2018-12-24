@@ -347,7 +347,7 @@
 	Template.jQCompile=function (S,D) {
         var re = new RegExp('(<script type="text/template" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
         var arr = [];
-        if((arr = re.exec(S)) !== null){
+        if(arr = re.exec(S)){
             S = S.replace(arr[0],function () {
                 return System.Compiler.jQCompile(arr[2],D);
             });
@@ -398,7 +398,7 @@
         var re = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
         var k,v;
         var arr_inc = [];
-        while((arr_inc = re.exec(S)) !== null){
+        while(arr_inc = re.exec(S)){
             var _this = arr_inc[0];
             var data ={},arr = arr_inc[2].split('" ');
             arr.each(function(){
