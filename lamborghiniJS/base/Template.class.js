@@ -386,7 +386,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-11-27
-     * 修改日期：2018-12-24
+     * 修改日期：2018-1-3
      * 名称：Template.include
      * 功能：预处理 递归查找include外面指定的文件
      * 说明：
@@ -401,7 +401,7 @@
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             var data ={},arr = arr_inc[2].split('" ');
             arr.each(function(){
-                var arr = this.split('=');
+                var arr = this.split('="');
                 arr[0] = arr[0].replace(/(^")|("$)/g,'');
                 arr[1] = arr[1].replace(/(^")|("$)/g,'');
                 k = System.camelCase(arr[0].trim());
