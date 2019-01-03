@@ -120,7 +120,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014-12-23
-	 * 修改日期：2018-07-21
+	 * 修改日期：2019-1-3
 	 * 名称：runtime
 	 * 功能：run 时执行的方法
 	 * 说明：可传多个参数第一个必须是数组，在回调里接收的参数跟传来的参数一一对应
@@ -132,18 +132,12 @@
 	 * Example：
 	 */
 	function runtime(args,callback){
-		if (!arguments.length) {
-			throw new Error('Warning: 至少要有一个参数');
-			return this;
-		}
+		if (!arguments.length) {throw new Error('Warning: 至少要有一个参数');}
 		if(System.isFunction(args)) {
 			callback = args;
 			args = null;
 		}
-		if (!System.isFunction(callback) ) {
-			throw new Error('Warning: 参数必须要有一个 Function 类型');
-			return this;
-		}
+		if (!System.isFunction(callback) ) {throw new Error('Warning: 参数必须要有一个 Function 类型');}
 
         var _this = this.clone(true,this);
         if(args){
@@ -390,7 +384,18 @@
 		 * Example：
 		 */
 		'main':null,
-		'exit':function () {},
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2014-12-23
+         * 修改日期：2019-1-3
+         * 名称：System.exit
+         * 功能：中断退出程序，且报错
+         * 说明：
+         * 注意：
+         * @param   (String)message 			   NULL :错误信息
+         */
+		'exit':function (message) {throw new Error(message || 1);},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -997,25 +1002,15 @@
 				args   = arguments[2];
 				override   = arguments[3];
 			}
-			if(!System.isArray(args)){
-				throw new Error('Warning: args 不是一个数组');
-				return false;
-			}
+			if(!System.isArray(args)){throw new Error('Warning: args 不是一个数组');}
 			var len  = args.length;
-			if(arguments.length < 2){
-				throw new Error('Warning: 最少要传2个参数');
-				return false;
-			}
+			if(arguments.length < 2){throw new Error('Warning: 最少要传2个参数');}
 
 			override = override || false;
 			target   = target   || this;
 			var key;
 			var i=0;
-			if(!len){
-				throw new Error('Warning: args不能为空');
-				return false;
-			}
-
+			if(!len){throw new Error('Warning: args不能为空');}
 
 			for(;i<len; i++){
 				for(key in args[i]){
@@ -1155,11 +1150,9 @@
 					namespace = null;
 					if(!System.isFunction (System.eval(useClassName))){
 						throw new Error(["Warning: cannot find the class file ","'/",useClassName,".class'"].join(''));
-						return false;
 					}
 					if(!System.empty(System.eval(className)) && System.isFunction (System.eval(className))) {
 						throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
-						return false;
 					}
 				}else if(1 === arg_len){//只有一个参数时 功能：检测函数或方法是否之前已定义过了
 					className 	 = namespace;
@@ -1167,13 +1160,11 @@
 					namespace = null;
 					if(!System.empty(System.eval(className)) && System.isFunction (System.eval(className))) {
 						throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
-						return false;
 					}
 				}
 			}else{
 				if(!(useClassName in namespace)){
 					throw new Error(["Warning: ",namespace," is not a legitimate object or ","'",useClassName,"'"," is not a legitimate"].join(''));
-					return false;
 				}
 				className = className || null;
 				if(!System.isFunction (namespace[useClassName])){
@@ -1181,13 +1172,11 @@
 						System.import(['/'+useClassName+'.class'],path);
 					}catch(e){
 						throw new Error(e+[" --- Warning: cannot find the class file ","'/",useClassName,".class'"].join(''));
-						return false;
 					}
 
 				}
 				if(!System.empty(className) && System.isFunction (namespace[className])) {
 					throw new Error(["Warning: the Class name ","'",className,"'"," has been defined"].join(''));
-					return false;
 				}
 			}
 			return true;
@@ -2010,7 +1999,6 @@
 
 			if(!isArray(arr)){
 				throw new Error(['Warning:',arr,'不是数组'].join(' '));
-				return;
 			}
 			if(!override && this.concat){
 				return this.concat(arr);
