@@ -388,14 +388,14 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2014-12-23
-         * 修改日期：2019-1-3
+         * 修改日期：2019-1-13
          * 名称：System.exit
          * 功能：中断退出程序，且报错
          * 说明：
          * 注意：
          * @param   (String)message 			   NULL :错误信息
          */
-		'exit':function (message) {throw new Error(message || 1);},
+		'exit':function (message) {throw new Error(message || 0);},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
