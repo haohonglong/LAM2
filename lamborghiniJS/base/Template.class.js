@@ -335,17 +335,17 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-12-24
+     * 修改日期：2019-1-28
      * 名称：Template.jQCompile
      * 功能：jQuery模版解析引擎
-     * 说明：<script type="text/template" compiler="jQuery">
+     * 说明：<script type="text/html" compiler="jQuery">
      * 注意：
      * @param S{String} NOT NULL 内容
      * @param D{Object} NOT NULL 分配的数据
      * @returns {String}
      */
 	Template.jQCompile=function (S,D) {
-        var re = new RegExp('(<script type="text/template" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
+        var re = new RegExp('(<script type="text/html" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
         var arr = [];
         if((arr = re.exec(S)) && System.isArray(arr)){
             S = S.replace(arr[0],function () {
