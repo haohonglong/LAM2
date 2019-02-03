@@ -72,7 +72,6 @@
          */
         'render':function (name,data,ajaxConfig) {
             var self  = this;
-            ajaxConfig = this.ajaxConfig;
             this.renderPartial(name,data,function (content) {
                 self.viewpath = System.VIEWS;
                 self.renderPartial('/layouts/'+self.layout,{
