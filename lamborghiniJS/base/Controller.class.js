@@ -72,11 +72,8 @@
          */
         'render':function (name,data,ajaxConfig) {
             var self  = this;
-            this.init(name,data,ajaxConfig);
-            name = this.name;
-            data = this.data;
             ajaxConfig = this.ajaxConfig;
-            new System.Template().render(name,data,function (content) {
+            this.renderPartial(name,data,function (content) {
                 self.viewpath = System.VIEWS;
                 self.renderPartial('/layouts/'+self.layout,{
                     'VIEWS':System.VIEWS,
