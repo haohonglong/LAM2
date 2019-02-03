@@ -66,9 +66,9 @@
          * 功能：render the page
          * 说明：
          * 注意：
-         * @param name{String}      name of view
-         * @param data{Object}      assign data to page
-         * @param ajaxConfig{Object}         for ajax configure
+         * @param name{String}              NO NULL:name of view
+         * @param data{Object}              NULL:assigning data for page
+         * @param ajaxConfig{Object}        NULL:init ajax configure
          */
         'render':function (name,data,ajaxConfig) {
             var self  = this;
@@ -83,7 +83,6 @@
                     'IMAGE':System.IMAGE,
                     'LAM':System,
                     'content':content
-
                 });
             },ajaxConfig);
         },
@@ -96,16 +95,21 @@
          * 功能：render the page
          * 说明：
          * 注意：
-         * @param name{String}      name of view
-         * @param data{Object}      assigning data for page
-         * @param ajaxConfig{Object}         init ajax configure
+         * @param name{String}              NO NULL:name of view
+         * @param data{Object}              NULL:assigning data for page
+         * @param callback{Function}        NULL:callback
+         * @param ajaxConfig{Object}        NULL:init ajax configure
          */
-        'renderPartial':function (name,data,ajaxConfig) {
+        'renderPartial':function (name,data,callback,ajaxConfig) {
+            if(!System.isFunction(callback)) {
+                ajaxConfig = callback;
+                callback = null;
+            }
             this.init(name,data,ajaxConfig);
             name = this.name;
             data = this.data;
             ajaxConfig = this.ajaxConfig;
-            new System.Template().render(name,data,ajaxConfig);
+            new System.Template().render(name,data,callback,ajaxConfig);
         },
 
 
