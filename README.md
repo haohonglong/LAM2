@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-12-12
+	修改日期 ：2019-02-3
 
 
 # 产品介绍：
@@ -1163,8 +1163,6 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                 'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                             }
             
-                        },function(content){
-                            __this__.renderLayout(content);
                         });
                     },
             
@@ -1194,16 +1192,18 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 			
 			render参数：
-				参数1：请求视图的路径
+				参数1：请求视图名
 				参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
-				参数3：视图路径请求成功后返回视图文件(String) 
-				参数4：设置请求Ajax 的参数(必须是json类型)
+				参数3：设置请求Ajax 的参数(必须是json类型)
+				
+			render 方法渲染视图默认是带layout ,如不带layout，改成 renderPartial 这个方法！ 
 			  
 			note:
+			    
 		
 				不要忘了方法名称后缀Action
 				注：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
-												render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
+												render方法参数3就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
 												函数里的两个参数请参考jQuery Ajax API。
 			//views/index/index.html
 				<!doctype html>

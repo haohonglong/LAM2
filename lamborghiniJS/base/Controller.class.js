@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-10-31
+ * 修改日期:2019-02-3
  * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -37,47 +37,77 @@
             this.suffix = '.html';
             this.view = '/layouts/'+this.layout;
             this.viewpath = System.VIEWS;
+            this.name = '';
+            this.data = {};
+            this.ajaxConfig = {};
         },
         '_className':'Controller',
-        'init':function (data) {
-            this.viewpath = System.VIEWS;
-            this.render('/layouts/'+this.layout,data);
-        },
-        'renderLayout':function(content){
-            this.init({
-                'VIEWS':System.VIEWS,
-                'IMAGE':System.IMAGE,
-                'LAM':System,
-                'content':content
-
-            });
+        'init':function (name,data,ajaxConfig) {
+            this.data = data || {};
+            this.ajaxConfig = System.merge({},[ajaxConfig,{
+                file_404:System.ERROR_404,
+                beforeSend:function(a,b){
+                    this.async=false;
+                }
+            }]);
+            if('/' !== name.trim().substring(0,1)){
+                this.name = '/'+name;
+            }else{
+                this.name = name;
+            }
+            this.name = this.viewpath+this.name+this.suffix;
         },
         /**
          * @author lhh
-         * 产品介绍：渲染视图
+         * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2018-10-31
+         * 修改日期：2019-02-3
          * 名称：render
          * 功能：render the page
          * 说明：
          * 注意：
          * @param name{String}      name of view
          * @param data{Object}      assign data to page
-         * @param print{Function}
-         * @param D{Object}         for ajax configure
+         * @param ajaxConfig{Object}         for ajax configure
          */
-        'render':function (name,data,print,D) {
-            data = data || {};
-            D = System.merge({},[D,{
-                file_404:System.ERROR_404,
-                beforeSend:function(a,b){
-                    this.async=false;
-                }
-            }]);
-            if('/' !== name.trim().substring(0,1)){name = '/'+name;}
+        'render':function (name,data,ajaxConfig) {
+            var self  = this;
+            this.init(name,data,ajaxConfig);
+            name = this.name;
+            data = this.data;
+            ajaxConfig = this.ajaxConfig;
+            new System.Template().render(name,data,function (content) {
+                self.viewpath = System.VIEWS;
+                self.renderPartial('/layouts/'+self.layout,{
+                    'VIEWS':System.VIEWS,
+                    'IMAGE':System.IMAGE,
+                    'LAM':System,
+                    'content':content
 
-            new System.Template().render(this.viewpath+name+this.suffix,data,print,D);
+                });
+            },ajaxConfig);
         },
+        /**
+         * @author lhh
+         * 产品介绍：渲染视图,没有layout
+         * 创建日期：2019-02-3
+         * 修改日期：2019-02-3
+         * 名称：renderPartial
+         * 功能：render the page
+         * 说明：
+         * 注意：
+         * @param name{String}      name of view
+         * @param data{Object}      assigning data for page
+         * @param ajaxConfig{Object}         init ajax configure
+         */
+        'renderPartial':function (name,data,ajaxConfig) {
+            this.init(name,data,ajaxConfig);
+            name = this.name;
+            data = this.data;
+            ajaxConfig = this.ajaxConfig;
+            new System.Template().render(name,data,ajaxConfig);
+        },
+
 
         /**
          *
