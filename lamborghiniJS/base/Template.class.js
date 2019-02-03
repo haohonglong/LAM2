@@ -335,7 +335,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2019-1-28
+     * 修改日期：2019-2-3
      * 名称：Template.jQCompile
      * 功能：jQuery模版解析引擎
      * 说明：<script type="text/html" compiler="jQuery">
@@ -347,10 +347,11 @@
 	Template.jQCompile=function (S,D) {
         var re = new RegExp('(<script type="text/html" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
         var arr = [];
-        if((arr = re.exec(S)) && System.isArray(arr)){
+        while((arr = re.exec(S)) && System.isArray(arr)){
             S = S.replace(arr[0],function () {
                 return System.Compiler.jQCompile(arr[2],D);
             });
+            re.lastIndex = 0;
 		}
         return S;
 

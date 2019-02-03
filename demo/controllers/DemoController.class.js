@@ -25,43 +25,43 @@
         },
         '_className':'DemoController',
         'layoutAction':function(){
-            this.render('layout');
+            this.renderPartial('layout');
         },
         'sliderAction':function(){
-            this.render('slider');
+            this.renderPartial('slider');
         },
         'dragAction':function(){
-            this.render('drag');
+            this.renderPartial('drag');
         },
         'drag_1Action':function(){
-            this.render('drag_1');
+            this.renderPartial('drag_1');
         },
         'brokenLineAction':function(){
-            this.render('brokenLine');
+            this.renderPartial('brokenLine');
         },
         'dropdownAction':function(){
-            this.render('dropdown');
+            this.renderPartial('dropdown');
         },
         'editTablesAction':function(){
-            this.render('editTables');
+            this.renderPartial('editTables');
         },
         'popLayerAction':function(){
-            this.render('popLayer');
+            this.renderPartial('popLayer');
         },
         'sentence_detailAction':function(){
-            this.render('sentence_detail');
+            this.renderPartial('sentence_detail');
         },
         'template_deomAction':function(){
-            this.render('template_deom');
+            this.renderPartial('template_deom');
         },
         'tabAction':function(){
-            this.render('tab');
+            this.renderPartial('tab');
         },
         'rectAction':function(){
-            this.render('rect');
+            this.renderPartial('rect');
         },
         'cubeAction':function(){
-            this.render('cube');
+            this.renderPartial('cube');
         },
 
 

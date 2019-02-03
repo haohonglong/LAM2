@@ -24,7 +24,7 @@
         },
         '_className':'SiteController',
         'indexAction':function(){
-            this.render('index',{
+            this.renderPartial('index',{
                 'COMMON':System.COMMON,
                 'ROOT':ROOT,
                 'D':{

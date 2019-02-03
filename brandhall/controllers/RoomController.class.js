@@ -36,8 +36,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'detailAction':function(){
@@ -50,8 +48,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'releaseAction':function(){
@@ -64,8 +60,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
 

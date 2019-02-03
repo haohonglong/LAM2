@@ -29,8 +29,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'biObjectAction':function(){
@@ -39,8 +37,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'browserAction':function(){
@@ -49,8 +45,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'cacheAction':function(){
@@ -59,8 +53,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'controllerAction':function(){
@@ -69,8 +61,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'cookieAction':function(){
@@ -79,8 +69,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'loader':function(){
@@ -89,8 +77,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'nodeAction':function(){
@@ -99,8 +85,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'powerCookieAction':function(){
@@ -109,8 +93,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'runningAction':function(){
@@ -119,8 +101,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'storageAction':function(){
@@ -129,8 +109,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'systemAction':function(){
@@ -139,8 +117,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'templateAction':function(){
@@ -149,8 +125,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'vnodeAction':function(){
@@ -159,8 +133,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'xhrAction':function(){
@@ -169,8 +141,6 @@
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
 

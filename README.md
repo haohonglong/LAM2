@@ -1196,7 +1196,12 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 				参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
 				参数3：设置请求Ajax 的参数(必须是json类型)
 				
-			render 方法渲染视图默认是带layout ,如不带layout，改成 renderPartial 这个方法！ 
+			render 方法渲染视图是带layout ,如不带layout，改用 renderPartial 方法。
+			renderPartial参数：
+                参数1：请求视图名
+                参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
+                参数3：callback 
+                参数4：设置请求Ajax 的参数(必须是json类型)
 			  
 			note:
 			    
