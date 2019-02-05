@@ -37,26 +37,10 @@
             this.suffix = '.html';
             this.view = '/layouts/'+this.layout;
             this.viewpath = System.VIEWS;
-            this.name = '';
-            this.data = {};
             this.ajaxConfig = {};
         },
         '_className':'Controller',
-        'init':function (name,data,ajaxConfig) {
-            this.data = data || {};
-            this.ajaxConfig = System.merge({},[ajaxConfig,{
-                file_404:System.ERROR_404,
-                beforeSend:function(a,b){
-                    this.async=false;
-                }
-            }]);
-            if('/' !== name.trim().substring(0,1)){
-                this.name = '/'+name;
-            }else{
-                this.name = name;
-            }
-            this.name = this.viewpath+this.name+this.suffix;
-        },
+        'init':function () {},
         /**
          * @author lhh
          * 产品介绍：渲染视图与layout
@@ -86,7 +70,7 @@
          * @author lhh
          * 产品介绍：渲染视图,没有layout
          * 创建日期：2019-02-3
-         * 修改日期：2019-02-3
+         * 修改日期：2019-02-5
          * 名称：renderPartial
          * 功能：render the page
          * 说明：
@@ -101,10 +85,17 @@
                 ajaxConfig = callback;
                 callback = null;
             }
-            this.init(name,data,ajaxConfig);
-            name = this.name;
-            data = this.data;
-            ajaxConfig = this.ajaxConfig;
+            data = data || {};
+            ajaxConfig = System.merge({},[ajaxConfig,{
+                file_404:System.ERROR_404,
+                beforeSend:function(a,b){
+                    this.async=false;
+                }
+            }]);
+            if('/' !== name.trim().substring(0,1)){
+                name = '/'+name;
+            }
+            name = this.viewpath+name+this.suffix;
             new System.Template().render(name,data,callback,ajaxConfig);
         },
 
