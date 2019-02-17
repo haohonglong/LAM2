@@ -35,9 +35,9 @@
             init = init || {};
             this.layout = 'main';
             this.suffix = '.html';
-            this.view = '/layouts/'+this.layout;
+            this.layoutPath = 'layouts';
             this.viewpath = System.VIEWS;
-            this.ajaxConfig = {};
+            this.ajaxConfig = null;
         },
         '_className':'Controller',
         'init':function () {},
@@ -45,7 +45,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-02-3
+         * 修改日期：2019-02-17
          * 名称：render
          * 功能：render the page
          * 说明：
@@ -58,12 +58,12 @@
             var self  = this;
             this.renderPartial(name,data,function (content) {
                 self.viewpath = System.VIEWS;
-                self.renderPartial('/layouts/'+self.layout,{
+                self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
                     'VIEWS':System.VIEWS,
                     'IMAGE':System.IMAGE,
                     'LAM':System,
                     'content':content
-                });
+                },self.ajaxConfig);
             },ajaxConfig);
         },
         /**
