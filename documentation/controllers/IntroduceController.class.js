@@ -28,8 +28,6 @@
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'aboutAction':function(){
@@ -37,8 +35,6 @@
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
         'configurationAction':function(){
@@ -46,8 +42,6 @@
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 
-            },function(content){
-                __this__.renderLayout(content);
             },E);
         },
 

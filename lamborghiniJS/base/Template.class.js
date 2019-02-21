@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-12-7
+ * 修改日期:2018-12-24
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -26,16 +26,25 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Compiler','Template',System.classPath+'/base');
+	System.is(System,'Component','Template',System.classPath+'/base');
+    System.listen(function () {
+        if(System.isFunction(System.import)){
+            System.import(['/Compiler.class'],System.classPath+'/base');
+            System.import(['/Html.class'],System.classPath+'/base');
+            return true;
+        }
+    },1);
+
 
 	var __this__=null;
 	var guid=0;
-	var Template = System.Compiler.extend({
-		constructor: function(Config) {
-			this.base(Config);
+	var Template = System.Component.extend({
+		constructor: function(compiler) {
+			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;
+			this.compiler = compiler || System.Compiler.getInstance();
 			this.html=[];
 		},
 		'_className':'Template',
@@ -59,7 +68,7 @@
 		'render':function(view,D,callBack,Cajax){
 			var self=this,S;
 			System.Html.getFile(view,function(content){
-				S=self.compile(content,D);
+				S=self.compiler.compile(content,D);
 
 				if(System.isFunction(callBack)){
 					callBack(S);
@@ -254,7 +263,7 @@
 	 * @author: lhh
 	 * 产品介绍：获取容器里带模板标签的html 字符串 ，然后迭代解析后输出到指定标签里
 	 * 创建日期：2016-10-22
-	 * 修改日期：2018-8-22
+	 * 修改日期：2018-12-12
 	 * 名称：Template.foreach
 	 * @param {String}template NO NULL:容器里带模板标签的html 字符串
 	 * @param {Array}data		NO NUll:解析模板标签的数据
@@ -296,7 +305,7 @@
 			len = data.length,
 			fragment = '';
 		for(; i < len; i++){
-			fragment += System.Compiler.compiler(template,data[i],delimiters);
+			fragment += System.compiler(template,data[i],delimiters);
 		}
 		return fragment;
 	};
@@ -304,11 +313,10 @@
 	Template.getGuid=function(){
 		return guid;
 	};
-	var T = null;
     /**
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-08-21
+     * 修改日期：2018-12-14
      * 名称：Template.compile
      * 功能：解析模版标签
      * 说明：
@@ -319,8 +327,7 @@
      * @returns {*|String}
      */
 	Template.compile=function(S,D,delimiters){
-		if(!T){T = new Template();}
-        return T.compile(S,D,delimiters);
+        return System.Compiler.getInstance().compile(S,D,delimiters);
 	};
 
 
@@ -328,18 +335,26 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-08-21
-     * 修改日期：2018-12-1
+     * 修改日期：2019-2-3
      * 名称：Template.jQCompile
      * 功能：jQuery模版解析引擎
-     * 说明：防止内容里出现script部分代码，致使解析模版异常，所以现在要把所有script标签及里面内容提取出来，等解析完毕再添加回去
+     * 说明：<script type="text/html" compiler="jQuery">
      * 注意：
      * @param S{String} NOT NULL 内容
      * @param D{Object} NOT NULL 分配的数据
      * @returns {String}
      */
 	Template.jQCompile=function (S,D) {
-        var obj = Template.extract_by_tag('script',S);
-        return System.Compiler.jQCompile(obj.content,D)+obj.tags.join('');
+        var re = new RegExp('(<script type="text/html" compiler="jQuery">)([\\s\\S]*?)(</script>)','gim');
+        var arr = [];
+        while((arr = re.exec(S)) && System.isArray(arr)){
+            S = S.replace(arr[0],function () {
+                return System.Compiler.jQCompile(arr[2],D);
+            });
+            re.lastIndex = 0;
+		}
+        return S;
+
     };
     /**
      * @author: lhh
@@ -372,7 +387,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-11-27
-     * 修改日期：2018-12-1
+     * 修改日期：2019-1-3
      * 名称：Template.include
      * 功能：预处理 递归查找include外面指定的文件
      * 说明：
@@ -381,51 +396,45 @@
      * @returns {String}
      */
 	Template.include=function (S) {
-        var re = new RegExp('<#include (([\\s\\S])*?)/>','gm');
+        var reg_inc = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
         var k,v;
-        if (re.test(S)) {
-            S.match(re).each(function(){
-            	var _this = this;
-                var data ={},arr = this.split('" ');
-                var first =arr[0].split('<#include ').pop();//保存被丢失的第一个参数
-                arr.shift();//remove <#include
-                arr.unshift(first);//被丢失的第一个参数，添加到数组里第一个位置
-                arr.pop();// remove the  />
-                arr.each(function(){
-                    var arr = this.split('=');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    switch(k){
-						case 'capture':
-						case 'preform':
-						case 'beforeSend':
-						case 'success':
-						case 'done':
-						case 'data':
-						case 'tpData':
-						case 'delimiters':
-						case 'repeat':
-						case 'error':
-						    try{
-						        if(!System.empty(v)){
-                                    v = System.eval(v);
-                                }
-                            }catch (e){
-                                throw new Error(e);
+        var arr_inc = [];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('="');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                switch(k){
+                    case 'capture':
+                    case 'preform':
+                    case 'beforeSend':
+                    case 'success':
+                    case 'done':
+                    case 'data':
+                    case 'tpData':
+                    case 'delimiters':
+                    case 'repeat':
+                    case 'error':
+                        try{
+                            if(!System.empty(v)){
+                                v = System.eval(v);
                             }
+                        }catch (e){
+                            throw new Error(e);
+                        }
 
-					}
-                    data[k] =  v;
-                });
-                System.Html.getFile(data.file,function(content){
-                    S = S.replace(_this,function () {
-						return content;
-                    });
-				},data);
-
+                }
+                data[k] =  v;
             });
+            System.Html.getFile(data.file,function(content){
+                S = S.replace(arr_inc[0],function () {
+                    return content;
+                });
+            },data);
+            reg_inc.lastIndex = 0;
         }
         return S;
     };

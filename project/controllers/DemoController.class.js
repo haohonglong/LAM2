@@ -25,7 +25,7 @@
 
         },
         'layoutAction':function(){
-            this.render('layout',{
+            this.renderPartial('layout',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'布局demo',
@@ -34,7 +34,7 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },null,{
+            },{
                 file_404:System.ERROR_404,
                 beforeSend:function(a,b){
                     // this.async=true;
@@ -42,7 +42,7 @@
             });
         },
         'thumbnailAction':function(){
-            this.render('thumbnail',{
+            this.renderPartial('thumbnail',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'缩略图 适应不同的分辨率显示',
@@ -52,8 +52,8 @@
                 }
 
             },function(content){
-                var render = template.compile(content);
-                var html = render({
+                var renderPartial = template.compile(content);
+                var html = renderPartial({
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 });
                 System.print(html);
@@ -62,7 +62,7 @@
         },
 
         'popLayerAction':function(){
-            this.render('popLayer',{
+            this.renderPartial('popLayer',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'弹出层',
@@ -71,7 +71,7 @@
             });
         },
         'sliderAction':function(){
-            this.render('slider',{
+            this.renderPartial('slider',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'背景半透明覆盖整个可视区域',
@@ -79,8 +79,8 @@
                 'D':{}
 
             },function(content){
-                var render = template.compile(content);
-                var html = render({
+                var renderPartial = template.compile(content);
+                var html = renderPartial({
                     list: [
                         {"src":"http://img0.bdstatic.com/img/image/shouye/mingxing0923.jpg"}
                         ,{"src":"http://img0.bdstatic.com/img/image/shouye/chongwu0923.jpg"}
@@ -94,7 +94,7 @@
             });
         },
         'dragAction':function(){
-            this.render('drag',{
+            this.renderPartial('drag',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'拖拽实例',
@@ -104,7 +104,7 @@
             });
         },
         'chessAction':function(){
-            this.render('chess',{
+            this.renderPartial('chess',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'五子棋',

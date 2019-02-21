@@ -12,9 +12,10 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Template','Html',System.classPath+'/base');
+	System.is(System,'Dom','Html',System.classPath+'/base');
 	System.listen(function () {
 		if(System.isFunction(System.import)){
+            System.import(['/Template.class'],System.classPath+'/base');
             if(System.LAM_ENV_DEV){
                 System.import(['/Cache.class'],System.classPath+'/base');
 			}else{
@@ -79,7 +80,7 @@
         data = System.Template.include(data);
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
         if(System.isFunction(_this.capture)){data = _this.capture(data);}
-        if(_this.$dom && System.isString(data)){data = _this.loop(data);}
+        if(parseInt(_this.repeat) > 1 && System.isString(data)){data = _this.loop(data);}
         if(_this.success && System.isFunction(_this.success)){
             _this.success(data,textStatus,jqXHR);
         }else{
@@ -100,13 +101,13 @@
 	}],true);
 
 	var __this__=null;
-	var Html = System.Template.extend({
+	var Html = System.Dom.extend({
         /**
          *
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-12-2
+         * 修改日期：2018-12-12
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -122,7 +123,7 @@
          * @param 	(String|{}) D.data             	  NULL :请求地址的参数
          * @param 	(JSON) 		D.tpData               NULL :分配模版里的数据
          * @param 	(Array) 	D.delimiters          NULL :模版分隔符
-         * @param 	(Number) 	D.repeat          	  NULL :模版循环次数
+         * @param 	(Number) 	D.repeat          	  NULL :模版循环次数(测试用)
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
          * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
@@ -130,7 +131,7 @@
          * @param 	(Function)	D.success       	  NULL :
          * @param 	(Function)	D.error       	  	  NULL :
          * @param 	(Function)	D.done       	  	  NULL :
-         * @param 	(Function)	D.preform       	  NULL :参数：Html 对象
+         * @param 	(Function)	D.preform       	  NULL :
          * @return (void)
          * Example：
          *
@@ -179,7 +180,7 @@
             if(System.isArray(this.tpData)){
                 return System.Template.foreach(S,this.tpData,this.delimiters);
             }else{
-                return this.base(S,this.tpData);
+                return System.Template.compile(S,this.tpData,this.delimiters);
             }
         },
         'loop':function (S) {

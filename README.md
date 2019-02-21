@@ -6,10 +6,10 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.1.1
+	version ：2.1.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2018-12-1
+	修改日期 ：2019-02-3
 
 
 # 产品介绍：
@@ -1063,7 +1063,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 				 });
 				 
 ## 十七-1、预处理加载引入其他任何文本文件
-            跟上面一个最大不同是不依赖dom节点查找！上面的方式要等dom节点加载后才可用且还要在当前面里加入 System.Html.include($('include')); 这一句话。
+            跟上面一个最大不同是不依赖dom节点查找！它会递归查找替换每个子页面里的占位符！
+            main页面推荐用上面的方式
             
             优点：
                 优先级高，递归查找占位符并替换为的file属性路径里的文件内容，继续查找被加载的文件内容是否有占位符，直到没有为止！
@@ -1072,10 +1073,9 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
             缺点：
                 因为占位符被替换后，dom还没有加载所以指令方法里无法对dom操作，success 指令无效
             注意：
-                delimiters 格式一定要是数组，像下面例子这样个格式。
-                repeat属性无效（重复内容显示的次数，一般在测试用，只是方便不用重复复制几行，输入个数字就可实行重复多行的效果，但无实际意义） 
+                delimiters 格式一定要是数组，像下面例子这样个格式。 
               
-            一旦get请求后返回字符时，就在这个时候，预处理执行且下面的占位符被替换成file路径里的文件内容 ,最适合在子组件里使用这种方式   
+            一旦get请求后返回字符时，就在这个时候，预处理执行且下面的占位符被替换成file路径里的文件内容 ,适合在子页面里使用这种方式   
             <#include tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="{{VIEWS}}/inc_header.html" />
          
          注意：结束符 '/>' 前至少要有一个空格！
@@ -1163,8 +1163,6 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                 'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                             }
             
-                        },function(content){
-                            __this__.renderLayout(content);
                         });
                     },
             
@@ -1194,16 +1192,23 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 			
 			render参数：
-				参数1：请求视图的路径
+				参数1：请求视图名
 				参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
-				参数3：视图路径请求成功后返回视图文件(String) 
-				参数4：设置请求Ajax 的参数(必须是json类型)
+				参数3：设置请求Ajax 的参数(必须是json类型)
+				
+			render 方法渲染视图是带layout ,如不带layout，改用 renderPartial 方法。
+			renderPartial参数：
+                参数1：请求视图名
+                参数2：替换视图中模板标签的数据（这里就是MVC中的M ）
+                参数3：callback 
+                参数4：设置请求Ajax 的参数(必须是json类型)
 			  
 			note:
+			    
 		
 				不要忘了方法名称后缀Action
 				注：beforeSend函数里的this就是Ajax的settings,在发送之前设置jQuery Ajax提供的所有参数。
-												render方法参数4就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
+												render方法参数3就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
 												函数里的两个参数请参考jQuery Ajax API。
 			//views/index/index.html
 				<!doctype html>

@@ -33,8 +33,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             });
         },
         'empowerAction':function(){
@@ -47,8 +45,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             });
         },
         'loftAction':function(){
@@ -61,8 +57,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             });
         },
         'newRoomAction':function(){
@@ -75,8 +69,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             });
         },
         'shopListAction':function(){
@@ -89,8 +81,6 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                __this__.renderLayout(content);
             });
         },
 

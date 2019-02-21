@@ -80,7 +80,7 @@
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2018-5-18
+		 * 修改日期:2018-12-12
 		 * 名称：find
 		 * 功能：
 		 * 说明：入口处,所有set,get,update,search,del 都在 callback 里操作;callback里this指的是Cache 实例化当前对象
@@ -88,16 +88,18 @@
 		 * @param {String}key  		存储数据的标示符key
 		 * @param {String}value		存储数据的标示符value
 		 * @param {Function}callback
-		 * @returns {Cache}
+		 * @returns {Cache|Object}
 		 */
 		'find':function(key,value,callback){
 			this.key   = key.toString().trim();
 			this.value = value.toString().trim();
+			var index = this.getItem().exists(this.key,this.value);
 			if(System.isFunction(callback)){
-				var index = this.getItem().exists(this.key,this.value);
 				callback.call(this,index,this.value);
+				return this;
+			}else{
+				return {'index':index,'value':this.value};
 			}
-			return this;
 		},
 		/**
 		 *
