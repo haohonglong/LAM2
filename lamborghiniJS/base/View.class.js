@@ -58,7 +58,7 @@
 	 */
     View.ERROR_404 = function (code,message, url, $dom) {
     	var arg = arguments;
-    	if(!System.isNumber(arg[0])){
+    	if(!System.isNumber(code)){
     		code = 404;
     		message = arg[0];
     		url = arg[1];

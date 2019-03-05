@@ -62,7 +62,7 @@
         		if(action && System.isFunction(controller[action])){ 
         			controller[action](id); 
         		}else{ 
-        			throw new Error('of action'); 
+        			throw new Error("the action that '"+action+"' was not found"); 
         		} 
         	} 
         }catch(e){ 
