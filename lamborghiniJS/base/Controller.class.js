@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2019-02-3
+ * 修改日期:2019-02-21
  * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -38,6 +38,8 @@
             this.layoutPath = 'layouts';
             this.viewpath = System.VIEWS;
             this.ajaxConfig = null;
+            this.title = 'title';
+            this.content = {};
         },
         '_className':'Controller',
         'init':function () {},
@@ -45,7 +47,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-02-17
+         * 修改日期：2019-02-21
          * 名称：render
          * 功能：render the page
          * 说明：
@@ -62,6 +64,8 @@
                     'VIEWS':System.VIEWS,
                     'IMAGE':System.IMAGE,
                     'LAM':System,
+                    'title':self.title,
+                    'D':self.content,
                     'content':content
                 },self.ajaxConfig);
             },ajaxConfig);
