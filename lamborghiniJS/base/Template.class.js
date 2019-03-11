@@ -386,6 +386,29 @@
     /**
      * @author: lhh
      * 产品介绍：
+     * 创建日期：2019-3-11
+     * 修改日期：2019-3-11
+     * 名称：Template.layout
+     * 功能：可方便在视图页面里指定layout 模版
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
+    Template.layout=function(S){
+        var reg = new RegExp('(<#layout) name="([\\S]+)" (/>)','gm');
+        var arr = [];
+        while((arr = reg.exec(S)) && System.isArray(arr)){
+            S = S.replace(arr[0],function () {
+                return '';
+            });
+            return {'content':S,'layout':arr[2]};
+        }
+        return null;
+    },
+    /**
+     * @author: lhh
+     * 产品介绍：
      * 创建日期：2018-11-27
      * 修改日期：2019-1-3
      * 名称：Template.include
