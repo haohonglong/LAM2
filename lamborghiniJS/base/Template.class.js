@@ -389,20 +389,31 @@
      * 创建日期：2019-3-11
      * 修改日期：2019-3-11
      * 名称：Template.layout
-     * 功能：可方便在视图页面里指定layout 模版
+     * 功能：可方便在视图页面里指定layout模版和title
      * 说明：
      * 注意：
      * @param S
      * @returns {String}
      */
-    Template.layout=function(S){
-        var reg = new RegExp('(<#layout) name="([\\S]+)" (/>)','gm');
-        var arr = [];
-        while((arr = reg.exec(S)) && System.isArray(arr)){
-            S = S.replace(arr[0],function () {
+    Template.layout=function(S){var reg = new RegExp('(<#layout) (([\\s\\S])*?) (/>)','gm');
+        var k,v;
+        var arr_inc = [];
+        if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('="');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                data[k] =  v;
+
+            });
+            S = S.replace(arr_inc[0],function () {
                 return '';
             });
-            return {'content':S,'layout':arr[2]};
+            data.content = S;
+            return data;
         }
         return null;
     },

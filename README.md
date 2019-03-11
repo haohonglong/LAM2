@@ -1280,7 +1280,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 ## 二十二、指令标签
         #include：
             根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-        #layout：<#layout name="layoutName" />
+        #layout：<#layout title="title" layout="layoutName" />
             方便在view里 切换layout 模版
     
 ## 二十三、参考附录

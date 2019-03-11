@@ -63,6 +63,7 @@
                 var obj = System.Template.layout(content);
                 if(System.isPlainObject(obj)){
                     content = obj.content;
+                    self.title  = obj.title  || self.title;
                     self.layout = obj.layout || self.layout;
                 }
                 self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
