@@ -389,7 +389,7 @@
      * 创建日期：2019-3-11
      * 修改日期：2019-3-11
      * 名称：Template.layout
-     * 功能：可方便在视图页面里指定layout模版和title
+     * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
      * 说明：
      * 注意：
      * @param S
@@ -406,6 +406,17 @@
                 arr[1] = arr[1].replace(/(^")|("$)/g,'');
                 k = System.camelCase(arr[0].trim());
                 v = arr[1];
+                switch(k){
+                    case 'data':
+                        try{
+                            if(!System.empty(v)){
+                                v = System.eval(v);
+                            }
+                        }catch (e){
+                            throw new Error(e);
+                        }
+
+                }
                 data[k] =  v;
 
             });

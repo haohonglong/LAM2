@@ -1280,8 +1280,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 ## 二十二、指令标签
         #include：
             根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-        #layout：<#layout title="title" layout="layoutName" />
-            方便在view里 切换layout 模版
+        #layout：<#layout title="title" layout="layoutName" data="{}" />
+            方便在view里切换layout模版,设置title,可向layout模版里传递数据
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
