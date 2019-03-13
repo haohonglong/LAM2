@@ -447,7 +447,7 @@
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
             v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
-            S = S.replace(new RegExp(k,'g'),v).replace(arr_inc[0],'');
+            S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
             reg_inc.lastIndex = 0;
         }
         return S;
