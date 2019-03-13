@@ -386,6 +386,51 @@
     /**
      * @author: lhh
      * 产品介绍：
+     * 创建日期：2019-3-11
+     * 修改日期：2019-3-11
+     * 名称：Template.layout
+     * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
+     * 说明：
+     * 注意：
+     * @param S
+     * @returns {String}
+     */
+    Template.layout=function(S){var reg = new RegExp('(<#layout) (([\\s\\S])*?) (/>)','gm');
+        var k,v;
+        var arr_inc = [];
+        if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('="');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                switch(k){
+                    case 'data':
+                        try{
+                            if(!System.empty(v)){
+                                v = System.eval(v);
+                            }
+                        }catch (e){
+                            throw new Error(e);
+                        }
+
+                }
+                data[k] =  v;
+
+            });
+            S = S.replace(arr_inc[0],function () {
+                return '';
+            });
+            data.content = S;
+            return data;
+        }
+        return null;
+    },
+    /**
+     * @author: lhh
+     * 产品介绍：
      * 创建日期：2018-11-27
      * 修改日期：2019-1-3
      * 名称：Template.include

@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-02-3
+	修改日期 ：2019-03-11
 
 
 # 产品介绍：
@@ -1062,7 +1062,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 				 });
 				 
-## 十七-1、预处理加载引入其他任何文本文件
+## 十七-1、include指令标签 预处理加载引入其他任何文本文件
             跟上面一个最大不同是不依赖dom节点查找！它会递归查找替换每个子页面里的占位符！
             main页面推荐用上面的方式
             
@@ -1260,6 +1260,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
                 注意：{{content}} 在layout 里会被视图文件里的内容替换
                 
+                
+                
                
                 
 ## 二十、配置参数
@@ -1274,8 +1276,14 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                      
 
 ## 二十一、缓存机制
+
+## 二十二、指令标签
+        #include：
+            根据占位符里file参数请求另一个页面，然后替换掉当前占位符
+        #layout：<#layout title="title" layout="layoutName" data="{}" />
+            方便在view里切换layout模版,设置title,可向layout模版里传递数据
     
-## 二十二、参考附录
+## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
 			  AB俩函数，A包裹B并返回B的原型后被A外的变量c引用，此时B就是闭包。闭包在外面可以访问到A里面的变量。
 			  闭包的作用就是在A执行完并返回后，闭包使得Javascript的垃圾回收机制GC不会收回A所占用的资源，因为A的内部函数B的执行需要依赖A中的变量。
