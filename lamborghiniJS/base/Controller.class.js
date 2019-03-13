@@ -47,7 +47,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-03-11
+         * 修改日期：2019-03-13
          * 名称：render
          * 功能：render the page
          * 说明：
@@ -64,8 +64,9 @@
                 if(System.isPlainObject(obj)){
                     content = obj.content;
                     self.title   = obj.title  || self.title;
-                    self.layout  = obj.layout || self.layout;
+                    self.layout  = obj.name   || self.layout;
                     self.content = obj.data   || self.content;
+                    self.layoutPath = (obj.path && self.layoutPath+'/'+obj.path) || self.layoutPath;
                 }
                 self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
                     'VIEWS':System.VIEWS,

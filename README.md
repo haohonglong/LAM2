@@ -1278,6 +1278,8 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 ## 二十一、缓存机制
 
 ## 二十二、指令标签
+        #define：
+            可在模版里定义常量
         #include：
             根据占位符里file参数请求另一个页面，然后替换掉当前占位符
         #layout：<#layout title="title" layout="layoutName" data="{}" />
