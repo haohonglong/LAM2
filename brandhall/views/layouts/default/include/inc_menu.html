@@ -38,10 +38,10 @@
             </div>
             <div class="sectionList-A1 sectionList-A1-3 none">
                 <ul>
-                    <li><a href="index.html?r=room/list">案例列表</a></li>
-                    <li><a href="index.html?r=room/detail">楼盘户型管理</a></li>
-                    <li><a href="index.html?r=room/release">发布</a></li>
-                    <li><a href="index.html?r=room/aa">aa</a></li>
+                    <li><a href="{{LAM.INDEX}}room/list">案例列表</a></li>
+                    <li><a href="{{LAM.INDEX}}room/detail">楼盘户型管理</a></li>
+                    <li><a href="{{LAM.INDEX}}room/release">发布</a></li>
+                    <li><a href="{{LAM.INDEX}}room/aa">aa</a></li>
                 </ul>
             </div>
         </dd>
@@ -51,11 +51,11 @@
             </div>
             <div class="sectionList-A1 sectionList-A1-3 none">
                 <ul>
-                    <li><a href="index.html?r=shop/choiceTemplate">选择模版</a></li>
-                    <li><a href="index.html?r=shop/empower">商品授权</a></li>
-                    <li><a href="index.html?r=shop/newRoom">新建房间</a></li>
-                    <li><a href="index.html?r=shop/shopList">商品列表</a></li>
-                    <li><a href="index.html?r=shop/loft">楼盘</a></li>
+                    <li><a href="{{LAM.INDEX}}shop/choiceTemplate">选择模版</a></li>
+                    <li><a href="{{LAM.INDEX}}shop/empower">商品授权</a></li>
+                    <li><a href="{{LAM.INDEX}}shop/newRoom">新建房间</a></li>
+                    <li><a href="{{LAM.INDEX}}shop/shopList">商品列表</a></li>
+                    <li><a href="{{LAM.INDEX}}shop/loft">楼盘</a></li>
                 </ul>
             </div>
         </dd>
@@ -152,6 +152,6 @@
                 .closest('dd').addClass('hover');
         };
 
-        System.setMenuSelectedStatus(LAM.VNAME);
+        System.setMenuSelectedStatus(System.get('r'));
     });
 </script>

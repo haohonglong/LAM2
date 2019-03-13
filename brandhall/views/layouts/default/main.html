@@ -6,7 +6,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
 
-    <title>main</title>
+    <title>{{title}}</title>
     <script type="text/javascript">
         LAM.run([LAM],function(LAM){
             'use strict';
@@ -25,7 +25,7 @@
 
 
 </head>
-
+<#define _LAYOUTS_="{{LAM.LAYOUTS}}/default/include" />
 <body class="h-percent-of100">
 <div id="hidden_bnt" class="sectionBtn-A2 sectionFixed-A1">
     <span class="mb3"></span>
@@ -35,7 +35,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 sectionSidebar-A1">
-            <include file="{{VIEWS}}/inc_menu.html"></include>
+            <include tp-data="{}" file="_LAYOUTS_/inc_menu.html"></include>
         </div>
         <div class="col-md-10 sectionWrap-A4">
             <div class="p20">
@@ -48,7 +48,7 @@
                     </div>
                     <img class="R img" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
                 </div>
-                <#include repeat="0" tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="{{LAM.VIEWS}}/inc_header.html" />
+                <#include repeat="0" tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="_LAYOUTS_/inc_header.html" />
                 {{content}}
             </div>
         </div>
@@ -59,9 +59,7 @@
         'use strict';
         var System = this;
         LAM.use();
-        LAM.VNAME = System.get('r') || 'shop';
         System.Html.include($('include'));
-        System.Html.analysisTpl();
 
 
 
@@ -91,8 +89,6 @@
 
 
 
-
-            $('title').text(System.TITLE || 'main');
 
             $('.sectionList-A2 dd').on('click',function(){
                 $(this).find('.sectionList-A1').toggle();

@@ -1,3 +1,4 @@
+<#layout title="楼盘详细" />
 <script type="text/javascript">
     LAM.run([jQuery],function($){
         'use strict';
@@ -18,16 +19,17 @@
 
     });
 </script>
+
 <div class="row">
     <div class="col-md-12">
-        <div class="sectionCrumb-A1 mb20">
-            <ul class="clear">
-                <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
-                <li><a title="" href="" class="linkBlue">样板间管理 </a>&nbsp;&gt;&nbsp;</li>
-                <li><a title="" href="" class="linkBlue">楼盘户型管理</a>&nbsp;&gt;&nbsp;</li>
-                <li><strong>大华锦绣华城-香鸢美颂</strong></li>
-            </ul>
-        </div>
+        <#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
+        {'list':[
+        {'name':'喜鹊筑家旗舰店','href':'###','title':''},
+        {'name':'样板间管理','href':'###','title':''},
+        {'name':'楼盘户型管理','href':'###','title':''},
+        {'name':'大华锦绣华城-香鸢美颂'}
+        ]})}" />
+
     </div>
 </div>
 <div class="row mb15">
@@ -318,7 +320,6 @@
 </div>
 <#include repeat="" tp-data=""  file="{{ LAM.VIEWS }}/room/_popupLayer.html" />
 <script type="text/javascript">
-    LAM.TITLE = '楼盘详细';
 
 
     LAM.run(function(){

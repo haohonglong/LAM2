@@ -1,11 +1,13 @@
-<div class="sectionCrumb-A1 mb20">
-    <ul class="clear">
-        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">店铺管理</a>&nbsp;&gt;&nbsp;</li>
-        <li><strong>商品列表</strong></li>
-    </ul>
-</div>
 
+<#define _PICS_="{{IMAGE}}/imgs_LHH/pics" />
+<#define _TITLE_="商品列表" />
+<#layout title="_TITLE_" />
+<#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
+{'list':[
+{'name':'喜鹊筑家旗舰店','href':'###','title':''},
+{'name':'店铺管理','href':'###','title':''},
+{'name':'_TITLE_'}
+]})}" />
 
 <div class="clear mb15">
     <div class="sectionTitle-B2 sectionFloat-A1 L">
@@ -122,7 +124,7 @@
                     <li class="col-1">
                         <span class="L ml15 mr10"><input class="v-negative3" type="checkbox"></span>
                         <div class="clear sectionBox-A3 L">
-                            <img class="L mr15" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.jpg" width="80" height="80" alt="">
+                            <img class="L mr15" data-var="tpl" src="_PICS_/img_01.jpg" width="80" height="80" alt="">
                             <div class="sectionBox-A2 sectionBox-A2-1 L linkBlue">
                                 <a href="###">极鼎家具</a><br>
                                 <a href="###">法式雕花烤漆地柜 2米多抽田园电视柜</a>
@@ -142,7 +144,7 @@
                     <li class="col-1">
                         <span class="L ml15 mr10"><input class="v-negative3" type="checkbox"></span>
                         <div class="clear sectionBox-A3 L">
-                            <img class="L mr15" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.jpg" width="80" height="80" alt="">
+                            <img class="L mr15" data-var="tpl" src="_PICS_/img_01.jpg" width="80" height="80" alt="">
                             <div class="sectionBox-A2 sectionBox-A2-1 L linkBlue">
                                 <a href="###">极鼎家具</a><br>
                                 <a href="###">法式雕花烤漆地柜 2米多抽田园电视柜</a>
@@ -180,11 +182,9 @@
 </form>
 
 <script type="text/javascript">
-    LAM.TITLE= "商品列表";
-    LAM.wait([jQuery],function($) {
+    LAM.run([jQuery],function($) {
         'use strict';
         var System = this;
-        System.Html.include($('include'));
         $(function(){
 
             new System.Tab({

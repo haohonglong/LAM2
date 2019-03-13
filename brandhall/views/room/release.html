@@ -1,11 +1,11 @@
-<div class="sectionCrumb-A1 mb20">
-    <ul class="clear">
-        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">样板间管理 </a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">楼盘户型管理</a>&nbsp;&gt;&nbsp;</li>
-        <li><strong>大华锦绣华城-香鸢美颂</strong></li>
-    </ul>
-</div>
+<#layout title="发布" />
+<#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
+{'list':[
+{'name':'喜鹊筑家旗舰店','href':'###','title':''},
+{'name':'样板间管理','href':'###','title':''},
+{'name':'楼盘户型管理','href':'###','title':''},
+{'name':'大华锦绣华城-香鸢美颂'}
+]})}" />
 
 <div class="sectionWrap-A14 mb10">
     <div class="sectionBorder-A4 p10 clear">
@@ -99,8 +99,7 @@
 <p><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/icon3.png" class="top2" width="16" height="15" alt=""/> 对类目选择有意见或建议，<a href="###" class="linkBlue">我要说两句</a></p>
 
 <script type="text/javascript">
-    LAM.TITLE= "发布";
-    LAM.wait([jQuery],function($) {
+    LAM.run([jQuery],function($) {
         'use strict';
         var System = this;
 

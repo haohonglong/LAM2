@@ -1,11 +1,13 @@
-<div class="sectionCrumb-A1 mb20">
-    <ul class="clear">
-        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">店铺管理</a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">店铺职责</a>&nbsp;&gt;&nbsp;</li>
-        <li><strong>设置店铺职责权限</strong></li>
-    </ul>
-</div>
+<#define _PICS_="{{IMAGE}}/imgs_LHH/pics" />
+<#layout title="商品授权" />
+<#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
+{'list':[
+{'name':'喜鹊筑家旗舰店','href':'###','title':''},
+{'name':'店铺管理','href':'###','title':''},
+{'name':'店铺职责','href':'###','title':''},
+{'name':'设置店铺职责权限'}
+]})}" />
+
 
 <div class="sectionWrap-A7 p-rel">
     <div class="sectionMenu-A1 sectionMenu-A1-3 j_sectionMenuA1">
@@ -56,7 +58,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -71,7 +73,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -86,7 +88,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -101,7 +103,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -116,7 +118,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -131,7 +133,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -146,7 +148,7 @@
                             <div class="sectionBox sectionBox-A32 sectionText-A3 mr35">
                                 <div class="p10">
                                     <div class="img mb10">
-                                        <a href="###"><img data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_09.jpg" width="100%" height="100%" alt=""></a>
+                                        <a href="###"><img data-var="tpl" src="_PICS_/img_09.jpg" width="100%" height="100%" alt=""></a>
                                     </div>
                                     <p class="desc mb5">沙发垫防滑坐垫套装</p>
                                     <div class="clear">
@@ -165,7 +167,7 @@
 
                 <div class="sectionPageing-A2 clear mb20">
                     <div class="R">
-                        <include repeat="0" tp-data=""  file="{{LAM.COMPONENTS}}/paging.html"></include>
+                        <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/paging.html" />
                     </div>
                 </div>
 
@@ -184,7 +186,6 @@
 </div>
 
 <script type="text/javascript">
-    LAM.TITLE= "商品授权";
     LAM.run([jQuery],function($){
         'use strict';
         var System = this;
@@ -199,10 +200,9 @@
             })
             .print();
     });
-    LAM.wait([jQuery],function($) {
+    LAM.run([jQuery],function($) {
         'use strict';
         var System = this;
-        System.Html.include($('include'));
         var tools =new System.Tools();
         $(function(){
             $('.sectionTitle-A5 [type="checkbox"]').on('click',function () {

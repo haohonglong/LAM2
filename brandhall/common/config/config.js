@@ -63,8 +63,10 @@
                     ,'IMAGE':ROOT+'/public/images'
                     ,'CONTROLLERS':ROOT+'/controllers'
                     ,'VIEWS':ROOT+'/views'
+                    ,'LAYOUTS':ROOT+'/views/layouts'
                     ,'COMPONENTS':ROOT+'/views/components'
                     ,'ERROR_404':ROOT+'/views/_404.html'
+                    ,'INDEX':'index.html?r='
                 };
             })(),
             'components':{
@@ -97,7 +99,7 @@
             },
             'files':[],
             'XHR':{//配置加载xhr 的公共参数
-                'type': 'GET'
+                'type': 'POST'
                 ,'async':false
                 ,'cache':true
                 ,'beforeSend':function(){}
