@@ -20,6 +20,7 @@
             this.base(init || {});
             __this__=this;
             this.viewpath = System.VIEWS+'/shop';
+            this.layoutPath = this.layoutPath+'/default';
 
         },
         '_className':'ShopController',

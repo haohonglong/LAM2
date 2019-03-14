@@ -9,7 +9,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 	version ：2.1.2
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-03-11
+	修改日期 ：2019-03-13
 
 
 # 产品介绍：
@@ -1278,9 +1278,12 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 ## 二十一、缓存机制
 
 ## 二十二、指令标签
+        #define：
+            <#define NAME="value" />
+            可在模版里定义常量
         #include：
             根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-        #layout：<#layout title="title" layout="layoutName" data="{}" />
+        #layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
             方便在view里切换layout模版,设置title,可向layout模版里传递数据
     
 ## 二十三、参考附录

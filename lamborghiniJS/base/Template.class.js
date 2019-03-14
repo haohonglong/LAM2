@@ -428,6 +428,30 @@
         }
         return null;
     },
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2019-3-13
+	 * 修改日期：2019-3-13
+	 * 名称：Template.define
+	 * 功能：预处理 在模版里定义常量
+	 * 说明：
+	 * 注意：
+	 * @param S
+	 * @returns {String}
+	 */
+	Template.define=function (S) {
+        var reg_inc = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','gm');
+        var k,v;
+        var arr_inc = [];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
+            v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
+            S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+            reg_inc.lastIndex = 0;
+        }
+        return S;
+    },
     /**
      * @author: lhh
      * 产品介绍：

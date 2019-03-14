@@ -1,10 +1,11 @@
-<div class="sectionCrumb-A1 mb20">
-    <ul class="clear">
-        <li><a title="" href="" class="linkBlue">喜鹊筑家旗舰店</a>&nbsp;&gt;&nbsp;</li>
-        <li><a title="" href="" class="linkBlue">商品管理</a>&nbsp;&gt;&nbsp;</li>
-        <li><strong>仓库中的商品</strong></li>
-    </ul>
-</div>
+
+<#layout title="商品列表" />
+<#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
+{'list':[
+{'name':'喜鹊筑家旗舰店','href':'###','title':''},
+{'name':'商品管理','href':'###','title':''},
+{'name':'仓库中的商品'}
+]})}" />
 
 <div class="clear mb10 sectionForm-A1 sectionForm-A1-1-2 sectionForm-A2 mb15">
     <button type="submit" class="btn save L mr15">+&nbsp;&nbsp;添加新案例</button>
@@ -47,12 +48,3 @@
     </div>
 </form>
 
-<script type="text/javascript">
-    LAM.TITLE= "案例列表";
-    LAM.run(function() {
-        'use strict';
-        var System = this;
-
-    });
-
-</script>

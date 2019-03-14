@@ -22,6 +22,7 @@
             this.base(init || {});
             __this__=this;
             this.viewpath = System.VIEWS+'/room';
+            this.layoutPath = this.layoutPath+'/default';
 
 
         },

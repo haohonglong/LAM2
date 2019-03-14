@@ -77,7 +77,7 @@
 
     function ajax_success_callback(data,textStatus,jqXHR){
         var _this = this;
-        data = System.Template.include(data);
+        data = System.Template.include(System.Template.define(data));
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
         if(System.isFunction(_this.capture)){data = _this.capture(data);}
         if(parseInt(_this.repeat) > 1 && System.isString(data)){data = _this.loop(data);}
