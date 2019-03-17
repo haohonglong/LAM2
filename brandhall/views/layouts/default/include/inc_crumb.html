@@ -3,14 +3,13 @@
         <ul class="clear">
             <% var len=list.length;%>
             <%if(len){%>
-                <%for(var i=0;i < len;i++){%>
-                    <%var data = list[i];%>
-                    <%if(data.href){%>
-                        <li><a title="<%=data.title%>" href="<%=data.href%>" class="linkBlue"><%=data.name%></a>&nbsp;&gt;&nbsp;</li>
+                <%LAM.each(list,function(i){%>
+                    <%if(this.href){%>
+                        <li><a title="<%=this.title%>" href="<%=this.href%>" class="linkBlue"><%=this.name%></a>&nbsp;&gt;&nbsp;</li>
                     <%}else{%>
-                        <li><strong><%=data.name%></strong></li>
+                        <li><strong><%=this.name%></strong></li>
                     <%}%>
-                <%}%>
+                <%});%>
             <%}%>
         </ul>
     </div>

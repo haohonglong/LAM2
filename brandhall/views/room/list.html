@@ -1,11 +1,10 @@
 
-<#layout title="商品列表" />
-<#include repeat="0" tp-data="{}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.html" capture="function(s){return LAM.Template.jQCompile(s,
-{'list':[
+<#layout title="商品列表" data="{'user':{'name':'李明'} }" />
+<#include repeat="0" tp-data="{'list':[
 {'name':'喜鹊筑家旗舰店','href':'###','title':''},
 {'name':'商品管理','href':'###','title':''},
 {'name':'仓库中的商品'}
-]})}" />
+]}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.vue.html" />
 
 <div class="clear mb10 sectionForm-A1 sectionForm-A1-1-2 sectionForm-A2 mb15">
     <button type="submit" class="btn save L mr15">+&nbsp;&nbsp;添加新案例</button>

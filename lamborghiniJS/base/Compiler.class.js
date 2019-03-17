@@ -57,8 +57,8 @@
                         $2=v[1].trim();
                         $1 = self.analysis($1,D);
                         $2 = self.compile($2,D);
-                        $1 = System.isArray($1) ? $1.toSource() : $1;
-                        $2 = System.isArray($2) ? $2.toSource() : $2;
+                        $1 = System.isPlainObject($1) || System.isArray($1) ? JSON.stringify($1) : $1;
+                        $2 = System.isPlainObject($2) || System.isArray($2) ? JSON.stringify($2) : $2;
                         arr.push([$1,$2].join('').trim());
                     }
                 });

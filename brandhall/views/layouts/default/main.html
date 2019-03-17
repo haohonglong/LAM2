@@ -48,7 +48,8 @@
                     </div>
                     <img class="R img" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
                 </div>
-                <#include repeat="0" tp-data="{'name':'小安子33'}" delimiters="['{#','#}']"  file="_LAYOUTS_/inc_header.html" />
+
+                <#include repeat="0" tp-data="{'name':'{{D.user.name}}','age':'{{D.user.age}}'}" delimiters="['{#','#}']"  file="_LAYOUTS_/inc_header.html" />
                 {{content}}
             </div>
         </div>

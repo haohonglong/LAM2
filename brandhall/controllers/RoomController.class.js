@@ -23,6 +23,13 @@
             __this__=this;
             this.viewpath = System.VIEWS+'/room';
             this.layoutPath = this.layoutPath+'/default';
+            this.content = {
+                'user':{
+                    'name':'name',
+                    'age':28
+                }
+
+            };
 
 
         },
