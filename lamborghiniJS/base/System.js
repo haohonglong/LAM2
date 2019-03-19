@@ -285,6 +285,7 @@
 		'Tree': {},
 		'Sort': {},
 		'EditTables': {},
+		'Json':{},
 		'Html5': {
 			'Svg': {},
 			'Canvas': {},
@@ -1470,6 +1471,41 @@
             document.write(arr.join(' '));
             // System.close(document);
         },
+		'Json':{
+            /**
+             * @author: lhh
+             * 产品介绍：
+             * 创建日期：2019-3-19
+             * 修改日期：2019-3-19
+             * 名称：System.stringify
+             * 功能：JSON对象转字符串
+             * 说明：
+             * 注意：
+             * @param   (Object|Array)D 			NO NULL :
+             * @return  (String)						:
+             * Example：
+             */
+            'stringify':function(D){
+                return JSON.stringify(D);
+            },
+
+            /**
+             * @author: lhh
+             * 产品介绍：
+             * 创建日期：2019-3-19
+             * 修改日期：2019-3-19
+             * 名称：System.parse
+             * 功能：字符串转JSON对象
+             * 说明：
+             * 注意：
+             * @param   (String)str 			NO NULL :
+             * @return  (JSON)						:
+             * Example：
+             */
+            'parse':function(str){
+                return JSON.parse(str);
+            }
+		},
 
         /**
          * @author: lhh
