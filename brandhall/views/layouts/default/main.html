@@ -48,8 +48,8 @@
                     </div>
                     <img class="R img" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
                 </div>
-
                 <#include repeat="0" tp-data="{'name':'{{D.user.name}}','age':'{{D.user.age}}'}" delimiters="['{#','#}']"  file="_LAYOUTS_/inc_header.html" />
+                <#include repeat="0" tp-data="{'list':'{{D.list}}'}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.vue.html" />
                 {{content}}
             </div>
         </div>
