@@ -47,7 +47,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-03-13
+         * 修改日期：2019-03-20
          * 名称：render
          * 功能：render the page
          * 说明：
@@ -55,17 +55,20 @@
          * @param name{String}              NO NULL:name of view
          * @param data{Object}              NULL:assigning data for page
          * @param ajaxConfig{Object}        NULL:init ajax configure
+         * @param callback{Function}        NULL:
          */
-        'render':function (name,data,ajaxConfig) {
+        'render':function (name,data,ajaxConfig,callback) {
             var self  = this;
             this.renderPartial(name,data,function (content) {
                 self.viewpath = System.VIEWS;
+                callback = callback || null;
                 var obj = System.Template.layout(content);
                 if(System.isPlainObject(obj)){
                     content = obj.content;
-                    self.title   = obj.title  || self.title;
+                    self.title   = obj.title   || self.title;
+                    self.suffix  = obj.suffix  || self.suffix;
                     self.layout  = obj.name   || self.layout;
-                    self.content = obj.data   || self.content;
+                    System.isPlainObject(obj.data) && System.merge(true,self.content,[obj.data],true);
                     self.layoutPath = (obj.path && self.layoutPath+'/'+obj.path) || self.layoutPath;
                 }
                 self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
@@ -75,7 +78,7 @@
                     'title':self.title,
                     'D':self.content,
                     'content':content
-                },self.ajaxConfig);
+                },callback,self.ajaxConfig);
             },ajaxConfig);
         },
         /**

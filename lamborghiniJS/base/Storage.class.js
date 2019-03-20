@@ -78,7 +78,7 @@
 		'setItem':function(){
 			if(this.isStorage()){
 				try{
-					this.Storage.setItem(this.name,JSON.stringify(this.caches));
+					this.Storage.setItem(this.name,System.Json.stringify(this.caches));
 				}catch (e){
                     if ('QUOTA_EXCEEDED_ERR' === e.name || 'NS_ERROR_DOM_QUOTA_REACHED' === e.name) {
                         throw new Error(['Warning: ',this.name,' 存储已满'].join(''));
@@ -92,7 +92,7 @@
 		},
 		'getItem':function(){
 			if(this.isStorage()){
-				this.caches = (JSON.parse(this.Storage.getItem(this.name))) || this.caches;
+				this.caches = (System.Json.parse(this.Storage.getItem(this.name))) || this.caches;
 			}
 			return this;
 		},

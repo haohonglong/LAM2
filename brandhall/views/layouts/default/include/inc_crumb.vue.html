@@ -1,0 +1,24 @@
+<div id="app" class="sectionCrumb-A1 mb20">
+    <ul class="clear">
+        <li v-for="item in list" v-if="item.href"><a :title="item.title" :href="item.href" class="linkBlue">{#item.name#}</a>&nbsp;&gt;&nbsp;</li>
+        <li v-else><strong>{#item.name#}</strong></li>
+
+    </ul>
+</div>
+
+<script type="text/javascript">
+    LAM.run([jQuery],function($) {
+        'use strict';
+        var System = this;
+        $(function(){
+            new Vue({
+                delimiters: ['{#', '#}'],
+                el: '#app',
+                data: {
+                    list: {{ list }}
+                }
+            });
+        });
+
+    });
+</script>

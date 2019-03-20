@@ -21,6 +21,13 @@
             __this__=this;
             this.viewpath = System.VIEWS+'/shop';
             this.layoutPath = this.layoutPath+'/default';
+            this.content = {
+                'user':{
+                    'name':'name',
+                    'age':28
+                }
+
+            };
 
         },
         '_className':'ShopController',
