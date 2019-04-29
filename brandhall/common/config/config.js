@@ -99,7 +99,7 @@
             },
             'files':[],
             'XHR':{//配置加载xhr 的公共参数
-                'type': 'POST'
+                'type': 'GET'
                 ,'async':false
                 ,'cache':true
                 ,'beforeSend':function(){}

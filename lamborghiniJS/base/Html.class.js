@@ -152,7 +152,7 @@
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
-            this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"POST";
+            this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"GET";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
             this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
