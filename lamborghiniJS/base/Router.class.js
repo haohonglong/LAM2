@@ -41,14 +41,32 @@
 		 */
 		'destructor':function(){}
 	});
+	Router.init=function(r){
+		r = r || 'r';
+		if(System.get(r)){
+			r = System.get(r);
+	    }else{
+	    	r = System.defaultRoute || 'site/index';
+	    }
+	    var routeRules = System.routeRules;
+	    if(routeRules){
+	    	System.each(routeRules,function(k,v){
+		    	if(k === r){
+		    		r = v;
+		    		return false;
+		    	}
+		    });
+	    }
+	    
+	    return r;
+	};
 
     /**
 	 * perform controller and action by url
      */
-	Router.run=function () {
-		var r = System.routeName || 'r';
-			r = System.get(r).split('/');
-        var str = r[0];
+	Router.run=function (r) {
+		r = Router.init(r).split('/');
+	    var str = r[0];
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
         var ControllerName = Controller+'Controller';
         System.import(['/'+ControllerName+'.class'],System.CONTROLLERS);
@@ -72,7 +90,7 @@
     };
 
 
-	Router.run();
+	Router.run(System.routeName);
 	return Router;
 });
 

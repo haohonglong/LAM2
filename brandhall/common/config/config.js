@@ -71,6 +71,12 @@
             })(),
             'components':{
                 'routeName':'r',
+                'defaultRoute':'room/list',
+                'routeRules':{
+                    'login':'site/login',
+                    'list':'room/list',
+                    'detail':'room/detail'
+                },
                 't':function (System) {
                     var id =0;
                     System.Moudle = System.createDict();
