@@ -67,6 +67,8 @@
             })(),
             'components':{
                 'routeName':'r',
+                'defaultRoute':'demo/cube',
+                'routeRules':{}
             },
             'configure_cache':{
                 'type':sessionStorage,

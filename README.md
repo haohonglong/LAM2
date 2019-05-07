@@ -6,7 +6,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：2.1.2
+	version ：v2.1.2
 	author  ：lhh
 	创建日期 ：2017-8-27
 	修改日期 ：2019-03-13

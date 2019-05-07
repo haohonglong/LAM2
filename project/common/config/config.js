@@ -67,6 +67,8 @@
             })(),
             'components':{
                 'routeName':'r',
+                'defaultRoute':'site/index',
+                'routeRules':{}
             },
             'configure_cache':{
                 'type':sessionStorage,
