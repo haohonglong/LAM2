@@ -387,7 +387,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2019-3-11
-     * 修改日期：2019-3-11
+     * 修改日期：2019-5-25
      * 名称：Template.layout
      * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
      * 说明：
@@ -395,7 +395,7 @@
      * @param S
      * @returns {String}
      */
-    Template.layout=function(S){var reg = new RegExp('(<#layout) (([\\s\\S])*?) (/>)','gm');
+    Template.layout=function(S){var reg = new RegExp('(<#layout|<#extends) (([\\s\\S])*?) (/>)','gm');
         var k,v;
         var arr_inc = [];
         if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
