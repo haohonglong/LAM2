@@ -15,7 +15,7 @@
 
     var __this__=null;
     System.is(System,'Controller','DemoController',System.classPath+'/base');
-    System.import(['/artTemplate/artTemplate'],System.PLUGINS);
+
 
     var DemoController = System.Controller.extend({
         constructor: function (init){
@@ -25,7 +25,7 @@
 
         },
         'layoutAction':function(){
-            this.renderPartial('layout',{
+            return this.renderPartial('layout',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'布局demo',
@@ -42,7 +42,7 @@
             });
         },
         'thumbnailAction':function(){
-            this.renderPartial('thumbnail',{
+            return this.renderPartial('thumbnail',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'缩略图 适应不同的分辨率显示',
@@ -51,18 +51,11 @@
                     'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
                 }
 
-            },function(content){
-                var renderPartial = template.compile(content);
-                var html = renderPartial({
-                    'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
-                });
-                System.print(html);
-
             });
         },
 
         'popLayerAction':function(){
-            this.renderPartial('popLayer',{
+            return this.renderPartial('popLayer',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'弹出层',
@@ -71,30 +64,17 @@
             });
         },
         'sliderAction':function(){
-            this.renderPartial('slider',{
+            return this.renderPartial('slider',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'背景半透明覆盖整个可视区域',
                 'LAMJS':System.classPath,
                 'D':{}
 
-            },function(content){
-                var renderPartial = template.compile(content);
-                var html = renderPartial({
-                    list: [
-                        {"src":"http://img0.bdstatic.com/img/image/shouye/mingxing0923.jpg"}
-                        ,{"src":"http://img0.bdstatic.com/img/image/shouye/chongwu0923.jpg"}
-                        ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
-                        ,{"src":"http://img0.bdstatic.com/img/image/shouye/touxiang0923.jpg"}
-                        ,{"src":"http://img0.bdstatic.com/img/image/shouye/xiaoqingxin0923.jpg"}
-                        ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
-                    ]
-                });
-                System.print(html);
             });
         },
         'dragAction':function(){
-            this.renderPartial('drag',{
+            return this.renderPartial('drag',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'拖拽实例',
@@ -104,7 +84,7 @@
             });
         },
         'chessAction':function(){
-            this.renderPartial('chess',{
+            return this.renderPartial('chess',{
                 'VIEWS':System.VIEWS,
                 'ROOT':System.ROOT,
                 'title':'五子棋',

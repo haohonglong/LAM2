@@ -54,30 +54,29 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-10
-		 * 修改日期：2016-4-7
+		 * 修改日期：2019-6-18
 		 * 名称：render
 		 * 功能：
 		 * 说明：
 		 * 注意：
-		 * @param {String}view 			NO NULL	:指定渲染的页面路径
+		 * @param {String}path 			NO NULL	:指定渲染视图页面路径
 		 * @param {Object}D	    		NO NULL	:渲染到模版中的数据
 		 * @param {Function}callBack 	   NULL :参数：(解析后模板字符串)
 		 * @param {Object}Cajax	    	NO NULL	:设置Ajax参数
-		 * @returns {void}
+		 * @returns {String}
 		 */
-		'render':function(view,D,callBack,Cajax){
-			var self=this,S;
-			System.Html.getFile(view,function(content){
-				S=self.compiler.compile(content,D);
-
+		'render':function(path,D,callBack,Cajax){
+			var self=this,view="";
+			System.Html.getFile(path,function(content){
+                view = self.compiler.compile(content,D);
 				if(System.isFunction(callBack)){
-					callBack(S);
-				}else{
-					System.print(S);
+					callBack(view);
+					view = null;
 				}
 
 			},Cajax);
 			this.guid++;
+			return view;
 		},
 
 		/**

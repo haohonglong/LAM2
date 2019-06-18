@@ -46,17 +46,30 @@
         window[namespace] = System = factory(System);
     })(function(System){
         'use strict';
+        var ROOT = _ROOT_ +'/examples/weixin_common';
         System.Config = Config = {
             'vendorPath':_ROOT_+'/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
             'Public':{
-                'ROOT':_ROOT_ +'/examples/weixin_common'
+                'ROOT':ROOT
                 ,'COMMON':_ROOT_+'/common'
                 ,'PLUGINS':_ROOT_+'/common/plugins'
+                ,'MYCOMMON':ROOT+'/common'
+                ,'CSS':ROOT+'/public/css'
+                ,'SCRIPT':ROOT+'/public/js'
+                ,'IMAGE':ROOT+'/public/images'
+                ,'CONTROLLERS':ROOT+'/controllers'
+                ,'VIEWS':ROOT+'/views'
+                ,'LAYOUTS':ROOT+'/views/layouts'
+                ,'COMPONENTS':ROOT+'/views/components'
+                ,'ERROR_404':ROOT+'/views/_404.html'
+                ,'INDEX':'index.html?r='
             },
             'components':{
                 'routeName':'r',
+                'defaultRoute':'site/index',
+                'routeRules':{},
             },
             'configure_cache':{
                 'type':sessionStorage,
@@ -82,25 +95,28 @@
                 var classPath=this.getClassPath();
                 return [
                     classPath+'/jQuery/jquery.js'
-                    ,classPath+'/build/base.min.js'
+                    // ,classPath+'/build/base.min.js'
 
-                    // ,classPath+'/base/Base.class.js'
-                    // ,classPath+'/base/Object.class.js'
-                    // ,classPath+'/base/Component.class.js'
-                    // ,classPath+'/base/Compiler.class.js'
-                    // ,classPath+'/base/Base64.class.js'
-                    // ,classPath+'/base/Cache.class.js'
-                    // ,classPath+'/base/HttpRequest.class.js'
-                    // ,classPath+'/base/Helper.class.js'
-                    // ,classPath+'/base/Browser.class.js'
-                    // ,classPath+'/base/Event.class.js'
-                    // ,classPath+'/base/Dom.class.js'
-                    // ,classPath+'/base/View.class.js'
-                    // ,classPath+'/base/Template.class.js'
-                    // ,classPath+'/base/Html.class.js'
-                    // ,classPath+'/base/Loader.class.js'
+                    ,classPath+'/base/Base.class.js'
+                    ,classPath+'/base/Object.class.js'
+                    ,classPath+'/base/Component.class.js'
+                    ,classPath+'/base/Compiler.class.js'
+                    ,classPath+'/base/Base64.class.js'
+                    ,classPath+'/base/Cache.class.js'
+                    ,classPath+'/base/HttpRequest.class.js'
+                    ,classPath+'/base/Helper.class.js'
+                    ,classPath+'/base/Browser.class.js'
+                    ,classPath+'/base/Event.class.js'
+                    ,classPath+'/base/Dom.class.js'
+                    ,classPath+'/base/View.class.js'
+                    ,classPath+'/base/Template.class.js'
+                    ,classPath+'/base/Html.class.js'
 
+                    ,classPath+'/base/Loader.class.js'
+                    ,classPath+'/base/Storage.class.js'
                     ,classPath+'/base/Controller.class.js'
+                    ,classPath+'/base/Router.class.js'
+
                     ,classPath+'/base/Css.class.js'
                 ];
             },

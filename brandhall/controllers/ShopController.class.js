@@ -32,7 +32,7 @@
         },
         '_className':'ShopController',
         'choiceTemplateAction':function(){
-            this.render('choiceTemplate',{
+            return this.render('choiceTemplate',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -44,7 +44,7 @@
             });
         },
         'empowerAction':function(){
-            this.render('empower',{
+            return this.render('empower',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -56,7 +56,7 @@
             });
         },
         'loftAction':function(){
-            this.render('loft',{
+            return this.render('loft',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -68,7 +68,7 @@
             });
         },
         'newRoomAction':function(){
-            this.render('newRoom',{
+            return this.render('newRoom',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -80,7 +80,7 @@
             });
         },
         'shopListAction':function(){
-            this.render('shopList',{
+            return this.render('shopList',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,

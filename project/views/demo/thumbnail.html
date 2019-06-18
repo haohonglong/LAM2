@@ -21,7 +21,8 @@
             System.import([
                 '/Sport.class'
                 ,'/Thumbnail.class'
-            ],System.classPath);
+            ],System.classPath)
+                .import(['/artTemplate/artTemplate'],System.PLUGINS);
         });
     </script>
     <style type="text/css">
@@ -51,9 +52,7 @@
 
     <div class="content over-h" id="content">
         <ul id="ul1" class="sectionFloat clearfix P10">
-            <% for(var i=0;i<10;i++){%>
-            <li><div class="H100 M10 P10" style="background: #fff;"><%=content%></div></li>
-            <% }%>
+
         </ul>
 
 
@@ -64,7 +63,11 @@
 
 </body>
 </html>
-
+<script type="text/html" id="list_tml">
+    <% for(var i=0;i<10;i++){%>
+    <li><div class="H100 M10 P10" style="background: #fff;"><%=content%></div></li>
+    <% }%>
+</script>
 
 
 
@@ -78,6 +81,12 @@
             ul1=new System.Thumbnail({'$view':$('#ul1'),'baseWidth':200,'baseHeight':150,'$li':$('#ul1 > li')}).run();
         }
         $(function(){
+            var renderPartial = template.compile($('#list_tml').html());
+            var html = renderPartial({
+                'content':'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+            });
+            $('#ul1').html(html);
+
 
             layout();
 

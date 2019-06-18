@@ -24,7 +24,7 @@
         },
         '_className':'SiteController',
         'loginAction':function(){
-            this.renderPartial('login',{
+            return this.renderPartial('login',{
                 'COMMON':System.COMMON,
                 'ROOT':ROOT,
                 'D':{
@@ -36,7 +36,7 @@
         },
 
         'regAction':function(){
-            this.renderPartial('reg',{
+            return this.renderPartial('reg',{
                 'COMMON':System.COMMON,
                 'ROOT':ROOT,
                 'D':{

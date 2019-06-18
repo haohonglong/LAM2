@@ -73,12 +73,14 @@
 
         var action = r[1]+'Action';
         var id = r[2];
+        var view="";
         id = System.eval(id);
         try{ 
         	var controller = new System[ControllerName](); 
         	if(controller instanceof System.Controller){ 
-        		if(action && System.isFunction(controller[action])){ 
-        			controller[action](id); 
+        		if(action && System.isFunction(controller[action])){
+                    view = controller[action](id);
+                    if(System.isset(view) && System.isString(view)) System.print(view); 
         		}else{ 
         			throw new Error("the action that '"+action+"' was not found"); 
         		} 

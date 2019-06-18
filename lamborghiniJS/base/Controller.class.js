@@ -47,45 +47,47 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-03-20
+         * 修改日期：2019-06-18
          * 名称：render
          * 功能：render the page
-         * 说明：
+         * 说明：返回视图
          * 注意：
          * @param name{String}              NO NULL:name of view
          * @param data{Object}              NULL:assigning data for page
          * @param ajaxConfig{Object}        NULL:init ajax configure
          * @param callback{Function}        NULL:
+         * @returns {string}
          */
         'render':function (name,data,ajaxConfig,callback) {
             var self  = this;
-            this.renderPartial(name,data,function (content) {
-                self.viewpath = System.VIEWS;
-                callback = callback || null;
-                var obj = System.Template.layout(content);
-                if(System.isPlainObject(obj)){
-                    content = obj.content;
-                    self.title   = obj.title   || self.title;
-                    self.suffix  = obj.suffix  || self.suffix;
-                    self.layout  = obj.name   || self.layout;
-                    System.isPlainObject(obj.data) && System.merge(true,self.content,[obj.data],true);
-                    self.layoutPath = (obj.path && self.layoutPath+'/'+obj.path) || self.layoutPath;
-                }
-                self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
-                    'VIEWS':System.VIEWS,
-                    'IMAGE':System.IMAGE,
-                    'LAM':System,
-                    'title':self.title,
-                    'D':self.content,
-                    'content':content
-                },callback,self.ajaxConfig);
-            },ajaxConfig);
+            var view = "";
+            var content = this.renderPartial(name,data,ajaxConfig);
+            self.viewpath = System.VIEWS;
+            callback = callback || null;
+            var obj = System.Template.layout(content);
+            if(System.isPlainObject(obj)){
+                content = obj.content;
+                self.title   = obj.title   || self.title;
+                self.suffix  = obj.suffix  || self.suffix;
+                self.layout  = obj.name    || self.layout;
+                System.isPlainObject(obj.data) && System.merge(true,self.content,[obj.data],true);
+                self.layoutPath = (obj.path && self.layoutPath+'/'+obj.path) || self.layoutPath;
+            }
+            view = self.renderPartial('/'+self.layoutPath+'/'+self.layout,{
+                'VIEWS':System.VIEWS,
+                'IMAGE':System.IMAGE,
+                'LAM':System,
+                'title':self.title,
+                'D':self.content,
+                'content':content
+            },callback,self.ajaxConfig);
+            return view;
         },
         /**
          * @author lhh
          * 产品介绍：渲染视图,没有layout
          * 创建日期：2019-02-3
-         * 修改日期：2019-02-5
+         * 修改日期：2019-06-18
          * 名称：renderPartial
          * 功能：render the page
          * 说明：
@@ -94,8 +96,12 @@
          * @param data{Object}              NULL:assigning data for page
          * @param callback{Function}        NULL:callback
          * @param ajaxConfig{Object}        NULL:init ajax configure
+         * @returns {string}
          */
         'renderPartial':function (name,data,callback,ajaxConfig) {
+            var view = "";
+            data = data || System.createDict();
+            data.title = data.title || this.title;
             if(!System.isFunction(callback)) {
                 ajaxConfig = callback;
                 callback = null;
@@ -111,7 +117,8 @@
                 name = '/'+name;
             }
             name = this.viewpath+name+this.suffix;
-            new System.Template().render(name,data,callback,ajaxConfig);
+            view = new System.Template().render(name,data,callback,ajaxConfig);
+            return view;
         },
 
 
