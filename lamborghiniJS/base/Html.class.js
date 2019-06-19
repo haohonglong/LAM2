@@ -207,10 +207,59 @@
                 _this.ajax();
             }
         },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-06-19
+         * 修改日期：2019-06-19
+         * 名称： success_callback
+         * 功能：
+         * 说明：
+         * 注意：
+         * @param data			NO NULL:返回的数据
+         * @param textStatus
+         * @param jqXHR
+         */
+		'success_callback':function (data,textStatus,jqXHR) {
+            setCache(this.file,data);
+            ajax_success_callback.call(this,data,textStatus,jqXHR);
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-06-19
+         * 修改日期：2019-06-19
+         * 名称： error_callback
+         * 功能：
+         * 说明：
+         * 注意：
+         * @param XMLHttpRequest
+         * @param textStatus
+         * @param errorThrown
+         */
+		'error_callback':function (XMLHttpRequest, textStatus, errorThrown) {
+            try{
+                switch(XMLHttpRequest.status) {
+					case 404:
+                        System.View.ERROR_404('the path Error '+this.file
+                            ,this.file_404
+                            ,this.jump ? null : this.$dom);
+                        break;
+                    default:
+
+                }
+
+            }catch(e){
+                throw new Error(e);
+            }
+            if(this.error && System.isFunction(this.error)){
+                this.error(XMLHttpRequest, textStatus, errorThrown);
+            }
+        },
         'html':function(obj){},
         'ajax':function () {
 		    var _this = this;
-            if(System.isset(_this.file)){
+            if(System.isset(this.file)){
                 jQuery
 					.ajax(_this.file,{
 						type : 	  _this.type,
@@ -225,28 +274,10 @@
 							}
 						},
 						error:function(XMLHttpRequest, textStatus, errorThrown){
-							try{
-								switch(XMLHttpRequest.status) {
-									case 404:
-                                        var $dom = _this.jump ? null : _this.$dom; 
-                                        System.View.ERROR_404('the path Error '+_this.file 
-											,_this.file_404 
-											,$dom);
-                                        break;
-									default:
-
-								}
-
-							}catch(e){
-								throw new Error(e);
-							}
-							if(_this.error && System.isFunction(_this.error)){
-								_this.error(XMLHttpRequest, textStatus, errorThrown);
-							}
+                            _this.error_callback(XMLHttpRequest, textStatus, errorThrown);
 						},
                         success: function(data,textStatus,jqXHR){
-                            setCache(_this.file,data);
-                            ajax_success_callback.call(_this,data,textStatus,jqXHR);
+                            _this.success_callback(data,textStatus,jqXHR);
                         }
 					})
 					.done(_this.done);
@@ -272,7 +303,20 @@
 		}
 	});
 
-	var getFile=function($dom,D){(new Html($dom,D)).init().get();};
+	var getFile=function($dom,D){Html.init($dom,D);};
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2019-06-19
+     * 修改日期：2019-06-19
+     * 名称： Html.init
+     * 功能：实例化Html 的派生类时重定义此方法，可使override方法生效，否则一直被实例化的是Html类
+     * 说明：
+     * 注意：
+     * @param $dom
+     * @param D
+     */
+	Html.init=function ($dom,D) {(new Html($dom,D)).init().get();};
 
 	/**
 	 *
