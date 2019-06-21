@@ -7,7 +7,7 @@
 
 
 # 产品介绍：
-	LAM2 用的是单文件入口加载方式，面向对象，MVC模式，由路由根据浏览器地址栏解析加载指定的controller并执行action然后再渲染view(controller里指定的)。在view里面可以做你想做的，如用vue,angularjs 等别的第三方框架对视图里的dom节点进行操作。LAM2不做任何与UI有关的事，（例子里的demo只是为了演示怎么用）它是一个构建的底层类库工具。它有点像webpack 但远没有webpack强大，LAM2没有依赖任何node，npm ，它依赖于jQuery的ajax来引入文件，所以必须要在服务器环境里运行如：apache,nginx 等，这样的目的为解决浏览器跨域访问的问题。
+	LAM2 用的是单文件入口加载方式，面向对象，MVC模式，由路由根据浏览器地址栏解析加载指定的controller并执行action然后再渲染view(controller里指定的)。在view里面可以做你想做的，如用vue,angularjs 等别的第三方框架对视图里的dom节点进行操作。LAM2不做任何与UI有关的事，（例子里的demo只是为了演示怎么用）它是一个构建的底层类库工具。它有点像webpack 但远没有webpack强大，LAM2没有依赖任何node，npm ，它依赖于jQuery的ajax来引入文件，所以必须要在服务器环境里运行,如：apache,nginx 等，这样的目的为解决浏览器跨域访问的问题。
 
 #### 文件结构：
 		brandhall  #后台管理demo
@@ -37,7 +37,7 @@
 	
 
 # 单文件应用运行的过程：
-    index.html(入口文件)(1)
+             index.html(入口文件)(1)
                \-|
                  |-common/config/config.js(2)  
                  |-lamborghiniJS/base/System.js(3)  
@@ -93,13 +93,13 @@
                   
                   
                   
-#usage
+ ## usage
 ###### ==========================================================================================================================================
     git clone https://github.com/haohonglong/LAM2.git
     cd LAM2
-##node:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
+### node:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
-###例如 nginx 配置（：
+### 例如 nginx 配置（：
         server {
             listen          8080;
             server_name     lam2;
@@ -1280,15 +1280,14 @@
 ## 二十一、缓存机制
 
 ## 二十二、指令标签
-  #### define：
-    <#define NAME="value" />
+  #### define：<#define NAME="value" />
+    
     可在模版里定义常量
-  #### include：
+  #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-  #### layout：
-    <#layout title="title" name="layoutName" path="layoutPath" data="{}" />
-        方便在view里切换layout模版,设置title,可向layout模版里传递数据
-  #### extends ：
+  #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
+    方便在view里切换layout模版,设置title,可向layout模版里传递数据
+  #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
     
 ## 二十三、参考附录
