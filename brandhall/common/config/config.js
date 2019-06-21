@@ -70,6 +70,7 @@
                 };
             })(),
             'components':{
+                'moduleID':'m',
                 'routeName':'r',
                 'defaultRoute':'room/list',
                 'routeRules':{

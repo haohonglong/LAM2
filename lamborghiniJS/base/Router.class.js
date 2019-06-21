@@ -41,13 +41,27 @@
 		 */
 		'destructor':function(){}
 	});
-	Router.init=function(r){
+    /**
+     *
+     * @author lhh
+     * 产品介绍：Router.init
+     * 创建日期：2015-4-2
+     * 修改日期：2015-4-2
+     * 名称：destructor
+     * 功能：
+     * 说明：
+     * 注意：
+     * @param r
+     * @param m
+     * @returns {*}
+     */
+	Router.init=function(r,m){
 		r = r || 'r';
-		if(System.get(r)){
-			r = System.get(r);
-	    }else{
-	    	r = System.defaultRoute || 'site/index';
-	    }
+		m = m || 'm';
+
+		m = System.get(m) ? System.get(m) : null;
+		r = System.get(r) ? System.get(r) : System.defaultRoute || 'site/index';
+
 	    var routeRules = System.routeRules;
 	    if(routeRules){
 	    	System.each(routeRules,function(k,v){
@@ -57,19 +71,29 @@
 		    	}
 		    });
 	    }
-	    
-	    return r;
+        if(System.isset(m) && !System.empty(m)){//分模块
+			return {'r':r,'m':m};
+        }else{
+            return {'r':r,'m':false};
+		}
+
 	};
 
     /**
 	 * perform controller and action by url
      */
-	Router.run=function (r) {
-		r = Router.init(r).split('/');
+	Router.run=function (r,m) {
+        var R = Router.init(r,m);
+		r = R.r.split('/');
 	    var str = r[0];
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
         var ControllerName = Controller+'Controller';
-        System.import(['/'+ControllerName+'.class'],System.CONTROLLERS);
+        if(System.isString(R.m)){
+            System.import(['/'+R.m+'/'+ControllerName+'.class'],System.CONTROLLERS);
+		}else{
+            System.import(['/'+ControllerName+'.class'],System.CONTROLLERS);
+		}
+
 
         var action = r[1]+'Action';
         var id = r[2];
@@ -92,7 +116,7 @@
     };
 
 
-	Router.run(System.routeName);
+	Router.run(System.routeName,System.moduleID);
 	return Router;
 });
 

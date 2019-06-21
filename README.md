@@ -6,10 +6,10 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 
 	name    ：LamborghiniJS(OO JS)
-	version ：v2.1.2
+	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-03-13
+	修改日期 ：2019-06-21
 
 
 # 产品介绍：
@@ -18,26 +18,30 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 
 # 文件说明：
 		
-#### 项目结构：
+#### 文件结构：
 		brandhall  #后台管理demo
             |-commmon       项目公共文件目录
                 |-config       
                     |-config.js       项目配置文件(2)
-            |-controllers   项目控制器文件存放位置(4)
-            |-public        项目资源文件存放位置(7)
+            |-controllers   项目控制器文件存放位置(5)
+                |-RoomController.class.js  对应views文件夹下的room文件夹
+            |-public        项目资源文件存放位置(9)
                 |-css
                 |-images
                 |-js
             |-views         项目视图文件存放位置
                 |—layouts   布局文件存放的位置
-                     |-main.html(6)
-                |-site
-                    |-index.html(5)
+                     |-main.html(8)
+                |-room
+                    |-list.html(7)
             |-index.html    项目入口文件(1)
         
         lamborghiniJS #类库核心文件存放位置
             |-base
                 |-System.js(3)
+                |-View.class.js(6)
+                |-Router.class.js(4)
+                |-...
             上面数字意思是过程加载的顺序
 	
 
@@ -46,32 +50,14 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 # 类库说明：
 
 # 单文件应用运行的过程：
-    URL(1)-->index.html(入口文件)(2)
+    index.html(入口文件)(1)
                \-|
-                 |-common/config/config.js(3)  
-                 |-lamborghiniJS/base/System.js(4)  
-                 |-LAB.bootstrap();(5)
+                 |-common/config/config.js(2)  
+                 |-lamborghiniJS/base/System.js(3)  
+                 |-LAB.bootstrap();(4)
                   \
                     1.应用配置文件
                     2.加载LAM2基础类库
-                             \-|
-                               |-jQuery/jquery.js
-                               |_base/Base.class.js
-                               |_base/Object.class.js
-                               |_base/Component.class.js
-                               |_base/Base64.class.js
-                               |_base/Cache.class.js
-                               |_base/HttpRequest.class.js
-                               |_base/Helper.class.js
-                               |_base/Browser.class.js
-                               |_base/Event.class.js
-                               |_base/Dom.class.js
-                               |_base/View.class.js
-                               |_base/Template.class.js
-                               |_base/Html.class.js
-                               |_base/Loader.class.js
-                               |_base/Controller.class.js
-                               |_base/Router.class.js
                                    /                             
                                   /
                                  /
@@ -83,9 +69,11 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                         HttpRequest.get()<--  
                             \
                             _\|
-                    控制器 Controller.class(7)\
+                    控制器 Controller.class(6)\
+                              _\|
+                            视图 View.class(7)\
                                              _\|
-                                               Template.class(6)
+                                               Template.class(8)
                                                              \
                                                      没有     _\|        
                                                  |————————有layout时：
@@ -94,7 +82,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                                  |              视图作为模版嵌入layout里 
                                                  |              /
                                                   ----layout 布局
-                          |-------------render(8)|
+                          |-------------render(9)|
                           |                ______|                                                                     
                           |               /
                           |             显示视图文件
@@ -102,7 +90,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                           |       include (引入外部html文件替换掉占位符标签位置)(11)
                           |         \                                                      
                           |         _\|
-                          |------->Html.class(9)                 |-----------|                          
+                          |------->Html.class(10)                 |-----------|                          
                                              /                   |           |   
                                          get cache<------------- |   cache   |                       
                                           /                      |___________|
@@ -126,7 +114,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
             server_name     lam2;
             index           index.html;
             root  /Users/long/sites/LamborghiniJS/LAM2;
-            #解决html 405 (Not Allowed)
+            #解决html 405 Not Allowed (nginx默认静态页面不允许POST方式访问，允许GET方式)
             error_page 405 =200 $request_uri;
         }
 
@@ -146,6 +134,10 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         </html>
 
 ## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
+        room ：控制器名
+        list ：控制器里面的方法名
+### 有模块方式：http://lam2:8080/brandhall/index.html?r=room/list&m=xx
+        &m=xx  (m 可以在config.js 文件里修改components.moduleID的值) xx代表模块文件夹名称，多层级文件夹用/号分割
 
 ## 一、配置文件配置 参考 二、开发约定
 		tip:
@@ -1284,7 +1276,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         #include：
             根据占位符里file参数请求另一个页面，然后替换掉当前占位符
         #layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
-            方便在view里切换layout模版,设置title,可向layout模版里传递数据
+            方便在view里切换layout模版,设置title,可向layout模版里传递数据,也可用extends 
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
