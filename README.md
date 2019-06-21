@@ -93,8 +93,7 @@
                   
                   
                   
- ## usage
-###### ==========================================================================================
+ # usage
     git clone https://github.com/haohonglong/LAM2.git
     cd LAM2
 ### node:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
@@ -112,7 +111,7 @@
 		
 ### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
 
-### 一、入口文件(index.html)：
+### 1.入口文件(index.html)：
         <!doctype html>
         <html lang="en">
         <head>
@@ -124,13 +123,12 @@
         </head>
         </html>
 
-### 二、访问地址：http://lam2:8080/brandhall/index.html?r=room/list
+### 2.浏览器上访问：http://lam2:8080/brandhall/index.html?r=room/list
     room ：控制器名
     list ：控制器里面的方法名
 ##### 有模块的方式：http://lam2:8080/brandhall/index.html?r=room/list&m=xx
     &m=xx  (m 可以在config.js 文件里修改components.moduleID的值) xx代表模块文件夹名称，多层级文件夹用/号分割
 
-###### ==========================================================================================
 
 #### 一、配置文件配置 参考 二、开发约定
 		tip:
