@@ -100,7 +100,7 @@
         	var controller = new System[ControllerName](); 
         	if(controller instanceof System.Controller){ 
         		if(action && System.isFunction(controller[action])){
-                    controller.viewpath = System.VIEWS+'/'+M+Controller;
+                    controller.viewpath = System.VIEWS+'/'+M+Controller.toLowerCase();
                     controller.init();
                     view = controller[action](id);
                     if(System.isset(view) && System.isString(view)) System.print(view); 
