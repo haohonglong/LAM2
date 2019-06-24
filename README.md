@@ -37,20 +37,15 @@
 	
 
 # 单文件应用运行的过程：
-             index.html(入口文件)(1)
-               \-|
-                 |-common/config/config.js(2)  
+             index.html(入口文件,参考: brandhall/index.html)(1)
+               \-|-common/config/config.js(2)  应用配置文件
                  |-lamborghiniJS/base/System.js(3)  
-                 |-LAB.bootstrap();(4)
+                 |-LAM.bootstrap();(4) 加载LAM2基础类库
                   \
-                    1.应用配置文件
-                    2.加载LAM2基础类库
-                                   /                             
-                                  /
-                                 /
+                   -------------\
                                  \
                                  _\| 
-                                 路由器 Router.class(5)
+                                 路由器 Router.class(5) 获取浏览地址栏里的参数并解析对应的controller,action 
                                             |
                                             |
                         HttpRequest.get()<--  
@@ -96,9 +91,9 @@
  # usage
     git clone https://github.com/haohonglong/LAM2.git
     cd LAM2
-### node:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
+#### note:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
-### 例如 nginx 配置
+#### 例如 nginx 配置
         server {
             listen          8080;
             server_name     lam2;
@@ -109,9 +104,9 @@
         }
 
 		
-### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
+#### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
 
-### 1.入口文件(index.html)：
+#### 1.入口文件(index.html)：
         <!doctype html>
         <html lang="en">
         <head>
@@ -123,7 +118,7 @@
         </head>
         </html>
 
-### 2.浏览器上访问：http://lam2:8080/brandhall/index.html?r=room/list
+#### 2.浏览器上访问：http://lam2:8080/brandhall/index.html?r=room/list
     room ：控制器名
     list ：控制器里面的方法名
 ##### 有模块的方式：http://lam2:8080/brandhall/index.html?r=room/list&m=xx
