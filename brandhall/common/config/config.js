@@ -97,8 +97,7 @@
                 'type':sessionStorage,
                 'expires':0
             },
-            //hashcode 随机种子
-            'random':10000,
+            'hashLength':16,
             //定义模版标签
             'templat':{
                 'custom_attr':'[data-var=tpl]',

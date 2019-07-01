@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-12-1
+ * 修改日期:2019-7-1
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -1372,6 +1372,23 @@
             'parse':function(str){
                 return JSON.parse(str);
             }
+		},
+        /**
+		 *
+         * @param hashLength
+         * @returns {string}
+         */
+		'createHash':function(hashLength) {
+			if (!hashLength || typeof(Number(hashLength)) != 'number') {return;}
+			var ar = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+			var hs = [];
+			var hl = Number(hashLength);
+			var al = ar.length;
+			for (var i = 0; i < hl; i ++) {
+				hs.push(ar[Math.floor(Math.random() * al)]);
+			}
+
+			return hs.join('');
 		},
 
         /**
