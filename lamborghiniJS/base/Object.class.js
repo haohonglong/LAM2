@@ -119,7 +119,7 @@
 	Object._hashCodeCounter=0;
 	Object._hashCodePrefix='hc';
 	Object.generate=function(n){
-		return Object._hashCodePrefix+System.createHash(n || System.hashLength || 16)+System.timestamp()+Object._hashCodeCounter++;
+		return Object._hashCodePrefix+System.hash(n || System.hashLength || 16)+System.timestamp()+Object._hashCodeCounter++;
 	};
 	Object.toHashCode=function(o){
 		if(o._hashCode!=null)
