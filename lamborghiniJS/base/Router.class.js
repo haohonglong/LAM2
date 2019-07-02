@@ -61,6 +61,7 @@
 
 		m = System.get(m) ? System.get(m) : null;
 		r = System.get(r) ? System.get(r) : System.defaultRoute || 'site/index';
+        System.defaultRoute = r;
 
 	    var routeRules = System.routeRules;
 	    if(routeRules){
