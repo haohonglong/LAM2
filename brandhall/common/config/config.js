@@ -70,8 +70,8 @@
                 };
             })(),
             'components':{
-                'moduleID':'m',
-                'routeName':'r',
+                'moduleId':'m',
+                'routerId':'r',
                 'defaultRoute':'room/list',
                 'routeRules':{
                     'login':'site/login',

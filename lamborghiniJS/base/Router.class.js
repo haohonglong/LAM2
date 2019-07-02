@@ -115,7 +115,7 @@
     };
 
 
-	Router.run(System.routeName,System.moduleID);
+	Router.run(System.routerId,System.moduleId);
 	return Router;
 });
 
