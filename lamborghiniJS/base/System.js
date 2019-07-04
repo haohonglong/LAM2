@@ -938,6 +938,7 @@
          * @returns {boolean}
          */
         'isclone': function(obj) {
+        	if(!obj._hashCode) return false;
             if(-1 === obj._hashCode.indexOf('_')){
                 return false;
             }else{
@@ -945,6 +946,58 @@
             }
 
         },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-7-4
+         * 修改日期：2019-7-4
+         * 名称：isRelClone
+         * 功能：检查俩对象是否是克隆关系
+         * 说明：
+         * 注意：
+         * @param {Object}obj1
+         * @param {Object}obj2
+         * @param {Number}n
+         * @returns {boolean}
+         */
+        'isRelClone': function(obj1,obj2,n) {
+        	n = n || 0;
+        	if(obj1._hashCode && obj2._hashCode) {
+        		var arr1 = obj1._hashCode.split('_');
+        		var arr2 = obj2._hashCode.split('_');
+
+                var hash1 = 1 === arr1.length ? arr1[0].toString() : arr1[n].toString();
+                var hash2 = 1 === arr2.length ? arr2[0].toString() : arr2[n].toString();
+                return hash1 === hash2;
+			}
+			return false;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-7-4
+         * 修改日期：2019-7-4
+         * 名称：isDirectClone
+         * 功能：检查俩对象是否是直接克隆关系
+         * 说明：
+         * 注意：
+         * @param obj1
+         * @param obj2
+         * @returns {boolean}
+         */
+		'isDirectClone':function(origin,cloned){
+        	if(System.isRelClone(origin,cloned)){
+                var ori_arr = origin._hashCode.split('_');
+                var clo_arr = cloned._hashCode.split('_');
+                var len = clo_arr.length;
+        		if(1 === (clo_arr.length - ori_arr.length)){
+        			if(clo_arr[len-2] === ori_arr[len-2]) return true;
+				}
+
+			}
+        	return false;
+		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
