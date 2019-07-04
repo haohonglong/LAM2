@@ -141,7 +141,7 @@
 </div>
 
 <script type="text/javascript">
-    LAM.wait([LAM,jQuery],function(LAM,$) {
+    LAM.run([LAM,jQuery],function(LAM,$) {
         'use strict';
         var System = this;
 
@@ -152,6 +152,10 @@
                 .closest('dd').addClass('hover');
         };
 
-        System.setMenuSelectedStatus(System.defaultRoute);
-    },10);
+        $(function(){
+            System.setMenuSelectedStatus(System.defaultRoute);
+        });
+
+
+    });
 </script>
