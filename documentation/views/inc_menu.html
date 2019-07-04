@@ -16,30 +16,37 @@
                 .addClass('active').closest('.submenu').show().prev('.list-group-item').addClass('p-active');
         };
 
-        new Vue({
-            el:'#menu',
-            data: {
-                list: []
-            },
-            created: function () {
-                var _this = this;
-                System.Html.getFile(System.ROOT+'/database/menu.json',function(data){
-                    _this.list = data.menu;
-                    System.each(data.menu,function(){
-                        System.each(this.submenu,function(){
-                            this.url = System.template(this.url,['{{','}}']);
 
+
+        $(function () {
+
+            new Vue({
+                el:'#menu',
+                data: {
+                    list: []
+                },
+                created: function () {
+                    var _this = this;
+                    System.Html.getFile(System.ROOT+'/database/menu.json',function(data){
+                        _this.list = data.menu;
+                        System.each(data.menu,function(){
+                            System.each(this.submenu,function(){
+                                this.url = System.template(this.url,['{{','}}']);
+
+                            });
                         });
-                    });
 
-                },{
-                    'dataType':'json',
-                    'type':'GET'
-                });
-            }
+                    },{
+                        'dataType':'json',
+                        'type':'GET'
+                    });
+                }
+            });
+
+            System.setMenuSelectedStatus(System.defaultRoute);
         });
 
-        System.setMenuSelectedStatus(System.get('r'));
+
 
 
     });

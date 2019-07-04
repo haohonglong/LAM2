@@ -67,7 +67,7 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <include file="{#VIEWS#}/inc_menu.html"></include>
+            <#include file="{#LAM.VIEWS#}/inc_menu.html" />
         </div>
         <div id="content" class="col-md-9">
             {#content#}
@@ -81,10 +81,9 @@
 
 
 <script type="text/javascript">
-   LAMJS.wait([LAM,jQuery],function(LAM,$){
+   LAMJS.run([LAM,jQuery],function(LAM,$){
         'use strict';
         var System=this;
-       System.Html.include($('include'));
 
 
        $(function(){
@@ -110,6 +109,6 @@
        })
 
 
-    },200);
+    });
 </script>
 </html> 
