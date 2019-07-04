@@ -141,7 +141,7 @@
 </div>
 
 <script type="text/javascript">
-    LAM.run([LAM,jQuery],function(LAM,$) {
+    LAM.wait([LAM,jQuery],function(LAM,$) {
         'use strict';
         var System = this;
 
@@ -153,5 +153,5 @@
         };
 
         System.setMenuSelectedStatus(System.defaultRoute);
-    });
+    },10);
 </script>
