@@ -97,7 +97,7 @@
                 'type':sessionStorage,
                 'expires':0
             },
-            'hashLength':16,
+            'hashLength':32,
             //定义模版标签
             'templat':{
                 'custom_attr':'[data-var=tpl]',

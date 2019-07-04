@@ -117,9 +117,11 @@
 
 
 	Object._hashCodeCounter=0;
-	Object._hashCodePrefix='hc';
+	Object._hashCodePrefix='';
 	Object.generate=function(n){
-		return Object._hashCodePrefix+System.hash(n || System.hashLength || 16)+System.timestamp()+Object._hashCodeCounter++;
+		var code = Object._hashCodePrefix+System.hash(System.timestamp().toString(),n || System.hashLength || 32);
+        Object._hashCodeCounter++;
+        return code;
 	};
 	Object.toHashCode=function(o){
 		if(o._hashCode!=null)

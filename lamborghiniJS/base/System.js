@@ -1378,14 +1378,17 @@
          * @param hashLength
          * @returns {string}
          */
-		'hash':function(hashLength) {
+		'hash':function(code,hashLength) {
+            code = code || null;
             hashLength = Number(hashLength);
-			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {return '0';}
+			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {hashLength =  32;}
 			var ar = [];
 			ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-			ar[1] =[ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-			ar[2] =['!','@','#','$','%','+','-','=='];
-			ar = ar[0].merge(ar[1]).merge(ar[2]);
+			ar[1] = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+			ar[2] = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+			ar[3] = code && System.isString(code) && code.split('') || [];
+			// ar[3] = ['!','@','#','$','%','+','-','=='];
+			ar = ar[0].merge(ar[1]).merge(ar[2]).merge(ar[3]);
 			var hs = [];
 			var hl = hashLength;
 			var al = ar.length;
