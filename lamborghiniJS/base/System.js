@@ -1256,8 +1256,8 @@
          */
 		'renderTagAttributes':function(Attr){
             Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
-            if(System.isEmptyObject(Attr)){return '';}
             var attrs=[];
+            if(System.isEmptyObject(Attr)){return attrs;}
             System.each(Attr,function(k,v){
                 attrs.push(' ',k,'="',v,'"');
             });
