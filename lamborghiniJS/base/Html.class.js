@@ -507,27 +507,8 @@
 	};
 
 
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2015-8-25
-	 * 修改日期：2018-12-7
-	 * 名称： tag
-	 * 功能：动态返回指定的标签
-	 * 说明：
-	 * 注意：length 是关键字 属性里禁止使用
-	 * @param 	(Boolean)single            NULL : 成对标签还是单一标签，false 是成对标签
-	 * @param 	(String)name            NO NULL : 标签名称
-	 * @param 	(Object)Attr               NULL : 标签的属性
-	 * @param 	(String|Array)content      NULL : 内容
-	 * @return (String) 返回标签字符串
-	 * Example：
-	 *
-	 */
-	Html.tag = function(single,name,Attr,content){
-		return System.tag(single,name,Attr,content).join('');
-	};
+
+	Html.tag = System.tag;
 
 	/**
 	 *

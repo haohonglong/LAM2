@@ -1269,7 +1269,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-8-25
-         * 修改日期：2018-12-7
+         * 修改日期：2019-7-6
          * 名称： tag
          * 功能：动态返回指定的标签
          * 说明：
@@ -1278,7 +1278,7 @@
          * @param 	(String)name            NO NULL : 标签名称
          * @param 	(Object)Attr               NULL : 标签的属性
          * @param 	(String|Array)content      NULL : 内容
-         * @return (Array) 返回标签数组
+         * @return (String)
          * Example：
          *
          */
@@ -1313,7 +1313,7 @@
             var tag=[];
             tag.push('<',name);
             //拼接属性
-            if(Attr && System.isObject(Attr)){
+            if(Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)){
                 Attr = System.toDict(Attr);
                 tag.push(System.renderTagAttributes(Attr).join(''));
             }
@@ -1331,14 +1331,14 @@
                 }
                 tag.push('</',name,'>');
             }
-            return tag;
+            return tag.join('');
         },
         /**
          *
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-9-4
-         * 修改日期：2018-12-7
+         * 修改日期：2019-7-6
          * 名称： script
          * 功能：
          * 说明：
@@ -1352,7 +1352,7 @@
             if(!System.isString(src)){throw new Error('Warning: script 标签src参数必须是字符串！');}
             Attr.src = src;
             Attr.type = Attr.type || 'text/javascript';
-            return System.tag('script',Attr).join('');
+            return System.tag('script',Attr);
         },
         /**
          * @author: lhh
