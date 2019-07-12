@@ -41,26 +41,70 @@
 		 */
 		'destructor':function(){}
 	});
+    /**
+     *
+     * @author lhh
+     * 产品介绍：Router.init
+     * 创建日期：2015-4-2
+     * 修改日期：2019-6-21
+     * 名称：destructor
+     * 功能：
+     * 说明：
+     * 注意：
+     * @param r
+     * @param m
+     * @returns {*}
+     */
+	Router.init=function(r,m){
+		r = r || 'r';
+		m = m || 'm';
+
+		m = System.get(m) ? System.get(m) : null;
+		r = System.get(r) ? System.get(r) : System.defaultRoute || 'site/index';
+        System.defaultRoute = r;
+
+	    var routeRules = System.routeRules;
+	    if(routeRules){
+	    	System.each(routeRules,function(k,v){
+		    	if(k === r){
+		    		r = v;
+		    		return false;
+		    	}
+		    });
+	    }
+        if(System.isset(m) && !System.empty(m)){//分模块
+			return {'r':r,'m':m};
+        }else{
+            return {'r':r,'m':false};
+		}
+
+	};
 
     /**
-	 * perform controller and action by url
+	 * perform controller by url and run the action
      */
-	Router.run=function () {
-		var r = System.routeName || 'r';
-			r = System.get(r).split('/');
-        var str = r[0];
+	Router.run=function (r,m) {
+        var R = Router.init(r,m);
+		r = R.r.split('/');
+		var M = '';
+	    var str = r[0];
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
         var ControllerName = Controller+'Controller';
-        System.import(['/'+ControllerName+'.class'],System.CONTROLLERS);
+        if(System.isString(R.m)) M = R.m+'/';
+        System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
 
         var action = r[1]+'Action';
         var id = r[2];
+        var view="";
         id = System.eval(id);
         try{ 
         	var controller = new System[ControllerName](); 
         	if(controller instanceof System.Controller){ 
-        		if(action && System.isFunction(controller[action])){ 
-        			controller[action](id); 
+        		if(action && System.isFunction(controller[action])){
+                    controller.viewpath = System.VIEWS+'/'+M+Controller.toLowerCase();
+                    controller.init();
+                    view = controller[action](id);
+                    if(System.isset(view) && System.isString(view)) System.print(view); 
         		}else{ 
         			throw new Error("the action that '"+action+"' was not found"); 
         		} 
@@ -72,7 +116,7 @@
     };
 
 
-	Router.run();
+	Router.run(System.routerId,System.moduleId);
 	return Router;
 });
 

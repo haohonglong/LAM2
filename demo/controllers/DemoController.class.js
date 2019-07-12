@@ -15,7 +15,6 @@
 
     var __this__=null;
     System.is(System,'Controller','DemoController',System.classPath+'/base');
-    System.import(['/artTemplate/artTemplate'],System.PLUGINS);
     var DemoController = System.Controller.extend({
         constructor: function (init){
             this.base(init || {});
@@ -25,43 +24,43 @@
         },
         '_className':'DemoController',
         'layoutAction':function(){
-            this.renderPartial('layout');
+            return this.renderPartial('layout');
         },
         'sliderAction':function(){
-            this.renderPartial('slider');
+            return this.renderPartial('slider');
         },
         'dragAction':function(){
-            this.renderPartial('drag');
+            return this.renderPartial('drag');
         },
         'drag_1Action':function(){
-            this.renderPartial('drag_1');
+            return this.renderPartial('drag_1');
         },
         'brokenLineAction':function(){
-            this.renderPartial('brokenLine');
+            return this.renderPartial('brokenLine');
         },
         'dropdownAction':function(){
-            this.renderPartial('dropdown');
+            return this.renderPartial('dropdown');
         },
         'editTablesAction':function(){
-            this.renderPartial('editTables');
+            return this.renderPartial('editTables');
         },
         'popLayerAction':function(){
-            this.renderPartial('popLayer');
+            return this.renderPartial('popLayer');
         },
         'sentence_detailAction':function(){
-            this.renderPartial('sentence_detail');
+            return this.renderPartial('sentence_detail');
         },
         'template_deomAction':function(){
-            this.renderPartial('template_deom');
+            return this.renderPartial('template_deom');
         },
         'tabAction':function(){
-            this.renderPartial('tab');
+            return this.renderPartial('tab');
         },
         'rectAction':function(){
-            this.renderPartial('rect');
+            return this.renderPartial('rect');
         },
         'cubeAction':function(){
-            this.renderPartial('cube');
+            return this.renderPartial('cube');
         },
 
 

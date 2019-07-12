@@ -2,7 +2,7 @@
     <template v-for="menu in list">
         <a href="javascript:void(0);" class="list-group-item">{{menu.title}}<span class="caret ML5"></span></a>
         <div class="none submenu">
-            <a v-for="submenu in menu.submenu" :href="submenu.url+'&title='+submenu.title" class="list-group-item">{{submenu.title}}</a>
+            <a v-for="submenu in menu.submenu" :href="submenu.url" class="list-group-item">{{submenu.title}}</a>
         </div>
     </template>
 </div>
@@ -16,30 +16,37 @@
                 .addClass('active').closest('.submenu').show().prev('.list-group-item').addClass('p-active');
         };
 
-        new Vue({
-            el:'#menu',
-            data: {
-                list: []
-            },
-            created: function () {
-                var _this = this;
-                System.Html.getFile(System.ROOT+'/database/menu.json',function(data){
-                    _this.list = data.menu;
-                    System.each(data.menu,function(){
-                        System.each(this.submenu,function(){
-                            this.url = System.template(this.url,['{{','}}']);
 
+
+        $(function () {
+
+            new Vue({
+                el:'#menu',
+                data: {
+                    list: []
+                },
+                created: function () {
+                    var _this = this;
+                    System.Html.getFile(System.ROOT+'/database/menu.json',function(data){
+                        _this.list = data.menu;
+                        System.each(data.menu,function(){
+                            System.each(this.submenu,function(){
+                                this.url = System.template(this.url,['{{','}}']);
+
+                            });
                         });
-                    });
 
-                },{
-                    'dataType':'json',
-                    'type':'POST'
-                });
-            }
+                    },{
+                        'dataType':'json',
+                        'type':'GET'
+                    });
+                }
+            });
+
+            System.setMenuSelectedStatus(System.defaultRoute);
         });
 
-        System.setMenuSelectedStatus(System.get('r'));
+
 
 
     });

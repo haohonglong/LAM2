@@ -62,6 +62,8 @@
             },
             'components':{
                 'routeName':'r',
+                'defaultRoute':'introduce/index',
+                'routeRules':{}
             },
             'configure_cache':{
                 'type':sessionStorage,

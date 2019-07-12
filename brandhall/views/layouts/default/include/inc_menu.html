@@ -152,6 +152,10 @@
                 .closest('dd').addClass('hover');
         };
 
-        System.setMenuSelectedStatus(System.get('r'));
+        $(function(){
+            System.setMenuSelectedStatus(System.defaultRoute);
+        });
+
+
     });
 </script>

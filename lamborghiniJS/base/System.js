@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-12-1
+ * 修改日期:2019-7-1
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -48,7 +48,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="2.1.2",
+	var VERSION="v2.1.3",
 		Interface={},
 		System={},
 		once=true,
@@ -182,47 +182,7 @@
 
 
 
-	/**
-	 *
-	 * @author: lhh
-	 * 产品介绍：
-	 * 创建日期：2015-7-23
-	 * 修改日期：2018-4-13
-	 * 名称：System.inherit
-	 * 功能：Extends a child object from a parent object using classical inheritance
-	 * pattern.
-	 * 说明：
-	 * 注意：
-	 * @param   (Function)subClass 			NO NULL :子类
-	 * @param   (Function)superClass 			NO NULL :父类
-	 * @return  (Function) 函数原型
-	 * Example：
 
-	 *
-	 */
-	var inherit =(function() {
-		// extend subClass from superClass
-		// proxy used to establish prototype chain
-		var F = function() {};
-		return function(subClass, superClass) {
-			try{
-                //用 ecma5 Object.create() 实现 prototype 原型继承
-                // subclass extends superclass
-                subClass.prototype = System.create(superClass.prototype);
-                subClass.prototype.constructor = subClass;
-			}catch (e){
-                F.prototype = superClass.prototype;
-                subClass.prototype = new F();
-                subClass.prototype.constructor = superClass;
-                subClass.superClass = superClass.prototype;
-
-                if(superClass.prototype.constructor === Object.prototype.constructor){
-                    superClass.prototype.constructor = superClass;
-                }
-			}
-			return subClass;
-		};
-	})();
 //interface
 //==================================================================================
 
@@ -845,27 +805,7 @@
             list(D,callback);
             return {'totalLoop':totalLoop,'loop':loop};
         },
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2018-4-13
-         * 修改日期：2018-4-13
-         * 名称：create
-         * 功能：
-         * 说明：
-         * 注意：
-         * @returns {Object}
-         */
-		'create':function (obj) {
-			if(!System.isObject(obj)){return {};}
-			if(System.isFunction(Object.create)){
-				return Object.create(obj);
-			}else{
-				var F = function () {};
-				F.prototype = obj;
-				return new F;
-			}
-        },
+
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -901,80 +841,7 @@
             }
             return dict;
 		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2017-10-9
-		 * 修改日期：2017-10-9
-		 * 名称：extend
-		 * 功能：子类继承父类
-		 * 说明：仅原型上继承
-		 * 注意：
-		 * @param {Function}subclass
-		 * @param {Function}superclass
-		 * @param {Object}definition
-		 */
-		'extend':function(subclass, superclass, definition){
-			if (Object.__proto__){
-				definition.__proto__ = superclass.prototype;
-				subclass.prototype = definition;
-			}else{
-				var tmpclass = function(){}, ret;
-				tmpclass.prototype = superclass.prototype;
-				subclass.prototype = new tmpclass();
-				subclass.prototype.constructor = superclass;
-				for (var i in definition){
-					if (definition.hasOwnProperty(i)){
-						subclass.prototype[i] = definition[i];
-					}
-				}
-			}
-		},
 
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2015-3-18
-		 * 修改日期：2017-10-10
-		 * 名称：System.extends
-		 * 功能：子类继承父类对象
-		 * 说明：System类范围内
-		 * 注意：这里的this指向的不是 System 对象
-		 * @param   (Object)this 			NO NULL :子类对象
-		 * @param   (Function)subClass 		   NULL :子类名称
-		 * @param   (Function)superClass   	NO NULL :父类名称
-		 * @param   (String)type 			NO NULL :1:原型链反射继承;2(默认):对象冒充方式继承
-		 * @param   ([])args 			   	   NULL :继承父类时传的构造参数
-		 * @return  (void)
-		 * Example：
-		 *		对象冒充方式继承:System.extends.call(this,subClass,superClass,type,[,extraParameters]);
-		 *		原型链继承:System.extends(subClass,superClass,type);
-		 */
-		'extends':function(subClass,superClass,type,args){
-			type=type || 2;
-			args = args || [];
-			switch(type){
-				case 1:
-				case 'prototype':
-					for(var key in superClass.prototype){
-						if(!subClass.prototype[key]){
-							subClass.prototype[key]=superClass.prototype[key];
-						}
-					}
-					break;
-				case 2:
-				case 'this':
-					if(args && isArray(args) && args.length > 0){//传构造参数
-						superClass.apply(this,args);
-					}else{//无构造参数
-						superClass.call(this);
-					}
-					break;
-				default:
-					throw new Error('Warning: type 非法类型');
-			}
-		},
 
 		/**
 		 *
@@ -1071,6 +938,7 @@
          * @returns {boolean}
          */
         'isclone': function(obj) {
+        	if(!obj._hashCode) return false;
             if(-1 === obj._hashCode.indexOf('_')){
                 return false;
             }else{
@@ -1078,6 +946,58 @@
             }
 
         },
+        /**
+         *
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-7-4
+         * 修改日期：2019-7-4
+         * 名称：isRelClone
+         * 功能：检查俩对象是否是克隆关系
+         * 说明：
+         * 注意：
+         * @param {Object}obj1
+         * @param {Object}obj2
+         * @param {Number}n
+         * @returns {boolean}
+         */
+        'isRelClone': function(obj1,obj2,n) {
+        	n = n || 0;
+        	if(obj1._hashCode && obj2._hashCode) {
+        		var arr1 = obj1._hashCode.split('_');
+        		var arr2 = obj2._hashCode.split('_');
+
+                var hash1 = 1 === arr1.length ? arr1[0].toString() : arr1[n].toString();
+                var hash2 = 1 === arr2.length ? arr2[0].toString() : arr2[n].toString();
+                return hash1 === hash2;
+			}
+			return false;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2019-7-4
+         * 修改日期：2019-7-4
+         * 名称：isDirectClone
+         * 功能：检查俩对象是否是直接克隆关系
+         * 说明：
+         * 注意：
+         * @param obj1
+         * @param obj2
+         * @returns {boolean}
+         */
+		'isDirectClone':function(origin,cloned){
+        	if(System.isRelClone(origin,cloned)){
+                var ori_arr = origin._hashCode.split('_');
+                var clo_arr = cloned._hashCode.split('_');
+                var len = clo_arr.length;
+        		if(1 === (clo_arr.length - ori_arr.length)){
+        			if(clo_arr[len-2] === ori_arr[len-2]) return true;
+				}
+
+			}
+        	return false;
+		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -1336,8 +1256,8 @@
          */
 		'renderTagAttributes':function(Attr){
             Attr = !Attr || !System.isPlainObject(Attr) ? System.createDict() : Attr;
-            if(System.isEmptyObject(Attr)){return '';}
             var attrs=[];
+            if(System.isEmptyObject(Attr)){return attrs;}
             System.each(Attr,function(k,v){
                 attrs.push(' ',k,'="',v,'"');
             });
@@ -1349,7 +1269,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-8-25
-         * 修改日期：2018-12-7
+         * 修改日期：2019-7-6
          * 名称： tag
          * 功能：动态返回指定的标签
          * 说明：
@@ -1358,7 +1278,7 @@
          * @param 	(String)name            NO NULL : 标签名称
          * @param 	(Object)Attr               NULL : 标签的属性
          * @param 	(String|Array)content      NULL : 内容
-         * @return (Array) 返回标签数组
+         * @return (String)
          * Example：
          *
          */
@@ -1393,7 +1313,7 @@
             var tag=[];
             tag.push('<',name);
             //拼接属性
-            if(Attr && System.isObject(Attr)){
+            if(Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)){
                 Attr = System.toDict(Attr);
                 tag.push(System.renderTagAttributes(Attr).join(''));
             }
@@ -1411,14 +1331,14 @@
                 }
                 tag.push('</',name,'>');
             }
-            return tag;
+            return tag.join('');
         },
         /**
          *
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-9-4
-         * 修改日期：2018-12-7
+         * 修改日期：2019-7-6
          * 名称： script
          * 功能：
          * 说明：
@@ -1432,7 +1352,7 @@
             if(!System.isString(src)){throw new Error('Warning: script 标签src参数必须是字符串！');}
             Attr.src = src;
             Attr.type = Attr.type || 'text/javascript';
-            return System.tag('script',Attr).join('');
+            return System.tag('script',Attr);
         },
         /**
          * @author: lhh
@@ -1505,6 +1425,31 @@
             'parse':function(str){
                 return JSON.parse(str);
             }
+		},
+        /**
+		 *
+         * @param hashLength
+         * @returns {string}
+         */
+		'hash':function(code,hashLength) {
+            code = code || null;
+            hashLength = Number(hashLength);
+			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {hashLength =  32;}
+			var ar = [];
+			ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+			ar[1] = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+			ar[2] = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+			ar[3] = code && System.isString(code) && code.split('') || [];
+			ar[4] = "~!@#$%^&*()_+{}<>?:|=";
+			ar = ar[0].merge(ar[1]).merge(ar[2]).merge(ar[3]).merge(ar[4].split(''));
+			var hs = [];
+			var hl = hashLength;
+			var al = ar.length;
+			for (var i = 0; i < hl; i ++) {
+				hs.push(ar[Math.floor(Math.random() * al)]);
+			}
+
+			return System.Base64.encode(hs.join('')).replace(/[_\s]/g,'');
 		},
 
         /**
@@ -1633,8 +1578,6 @@
 	System.String   = String.prototype   || System.createDict();
 	System.Array    = Array.prototype    || System.createDict();
 
-	//extend
-	System.inherit=inherit;
 
 	System.printf=prints;
 
@@ -2260,20 +2203,7 @@
 		return false;
 	}
 
-	(function(){
-		var READ=1;
-		var WRITE=2;
-		var READ_WRITE=3;
-		//添加属性
-		Function.method('addProperty',function(sName,nReadWrite){
-			nReadWrite=nReadWrite || READ_WRITE;
-			var capitalized=sName.charAt(0).toUpperCase()+sName.substr(1);
-			if(nReadWrite & READ)
-				this.prototype["get"+capitalized]=new Function("","return this._"+sName+";");
-			if(nReadWrite & WRITE)
-				this.prototype["set"+capitalized]=new Function(sName,"this._"+sName+" = "+sName+";");
-		});
-	})();
+
 
 
 	function contains(parentNode, childNode){}

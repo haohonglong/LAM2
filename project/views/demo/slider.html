@@ -19,7 +19,8 @@
             System.import([
                  '/Sport.class'
                 ,'/Slider.class'
-            ],System.classPath);
+            ],System.classPath)
+            .import(['/artTemplate/artTemplate'],System.PLUGINS);
         });
     </script>
 
@@ -43,15 +44,8 @@
     <div class="Area">
         <i class="pre">上一个</i>
         <i class="next">下一个</i>
-        <ul class="imgs clearfix">
-            <% for(var i=0,len=list.length; i<len; i++){%>
-            <li class="img">
-                <div class="border">
-                    <img src="<%=list[i].src%>" />
-                </div>
+        <ul class="imgs clearfix" id="sliders">
 
-            </li>
-            <% }%>
         </ul>
     </div>
     <#include tp-data="{'content':'this is include'}" file="{{LAM.VIEWS}}/include/test.html" dataType="html" />
@@ -64,8 +58,18 @@
     <br>
 
 </body>
-</html>
 
+</html>
+<script type="text/html" id="slider_tmpl">
+    <% for(var i=0,len=list.length; i<len; i++){%>
+    <li class="img">
+        <div class="border">
+            <img src="<%=list[i].src%>" />
+        </div>
+
+    </li>
+    <% }%>
+</script>
 
 
 <script type="text/javascript">
@@ -123,9 +127,26 @@
 
 
 
-        slider_f();
+
         $(window).resize(function(){
             slider.resize();
+
+        });
+
+        $(function () {
+            var renderPartial = template.compile($('#slider_tmpl').html());
+            var html = renderPartial({
+                list: [
+                    {"src":"http://img0.bdstatic.com/img/image/shouye/mingxing0923.jpg"}
+                    ,{"src":"http://img0.bdstatic.com/img/image/shouye/chongwu0923.jpg"}
+                    ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
+                    ,{"src":"http://img0.bdstatic.com/img/image/shouye/touxiang0923.jpg"}
+                    ,{"src":"http://img0.bdstatic.com/img/image/shouye/xiaoqingxin0923.jpg"}
+                    ,{"src":"http://img0.bdstatic.com/img/image/shouye/dongman0923.jpg"}
+                ]
+            });
+            $('#sliders').html(html);
+            slider_f();
 
         });
 

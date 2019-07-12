@@ -35,7 +35,7 @@
         },
         '_className':'RoomController',
         'listAction':function(){
-            this.render('list',{
+            return this.render('list',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -47,7 +47,7 @@
             },E);
         },
         'detailAction':function(){
-            this.render('detail',{
+            return this.render('detail',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,
@@ -59,7 +59,7 @@
             },E);
         },
         'releaseAction':function(){
-            this.render('release',{
+            return this.render('release',{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'ROOT':ROOT,

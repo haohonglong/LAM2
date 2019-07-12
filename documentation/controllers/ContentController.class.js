@@ -24,7 +24,7 @@
         },
         '_className':'ContentController',
         'htmlAction':function(){
-            this.render('html',{
+            return this.render('html',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -32,7 +32,7 @@
             },E);
         },
         'biObjectAction':function(){
-            this.render('biObject',{
+            return this.render('biObject',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -40,7 +40,7 @@
             },E);
         },
         'browserAction':function(){
-            this.render('browser',{
+            return this.render('browser',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -48,7 +48,7 @@
             },E);
         },
         'cacheAction':function(){
-            this.render('cache',{
+            return this.render('cache',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -56,7 +56,7 @@
             },E);
         },
         'controllerAction':function(){
-            this.render('controller',{
+            return this.render('controller',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -64,7 +64,7 @@
             },E);
         },
         'cookieAction':function(){
-            this.render('cookie',{
+            return this.render('cookie',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -72,7 +72,7 @@
             },E);
         },
         'loader':function(){
-            this.render('loader',{
+            return this.render('loader',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -80,7 +80,7 @@
             },E);
         },
         'nodeAction':function(){
-            this.render('node',{
+            return this.render('node',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -88,7 +88,7 @@
             },E);
         },
         'powerCookieAction':function(){
-            this.render('powerCookie',{
+            return this.render('powerCookie',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -96,7 +96,7 @@
             },E);
         },
         'runningAction':function(){
-            this.render('running',{
+            return this.render('running',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -104,7 +104,7 @@
             },E);
         },
         'storageAction':function(){
-            this.render('storage',{
+            return this.render('storage',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -112,7 +112,7 @@
             },E);
         },
         'systemAction':function(){
-            this.render('system',{
+            return this.render('system',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -120,7 +120,7 @@
             },E);
         },
         'templateAction':function(){
-            this.render('template',{
+            return this.render('template',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -128,7 +128,7 @@
             },E);
         },
         'vnodeAction':function(){
-            this.render('vnode',{
+            return this.render('vnode',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS
@@ -136,7 +136,7 @@
             },E);
         },
         'xhrAction':function(){
-            this.render('xhr',{
+            return this.render('xhr',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT,
                 'VIEWS':System.VIEWS

@@ -1,91 +1,61 @@
 # LAM2
-继承用 <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a>
-template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
-
-
-
-
 	name    ：LamborghiniJS(OO JS)
-	version ：2.1.2
+	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-03-13
+	修改日期 ：2019-06-21
 
 
 # 产品介绍：
-	LAM2 是一个单文件应用，面向对象，不做任何与UI有关的事，它是一个构建的底层类库工具。
+	LAM2 用的是单文件入口加载方式，面向对象，MVC模式，由路由根据浏览器地址栏解析加载指定的controller并执行action然后再渲染view(controller里指定的)。在view里面可以做你想做的，如用vue,angularjs 等别的第三方框架对视图里的dom节点进行操作。LAM2不做任何与UI有关的事，（例子里的demo只是为了演示怎么用）它是一个构建的底层类库工具。它有点像webpack 但远没有webpack强大，LAM2没有依赖任何node，npm ，它依赖于jQuery的ajax来引入文件，所以必须要在服务器环境里运行,如：apache,nginx 等，这样的目的为解决浏览器跨域访问的问题。
 
-
-# 文件说明：
-		
-#### 项目结构：
+#### 文件结构：
 		brandhall  #后台管理demo
             |-commmon       项目公共文件目录
                 |-config       
                     |-config.js       项目配置文件(2)
-            |-controllers   项目控制器文件存放位置(4)
-            |-public        项目资源文件存放位置(7)
+            |-controllers   项目控制器文件存放位置(5)
+                |-RoomController.class.js  对应views文件夹下的room文件夹
+            |-public        项目资源文件存放位置(9)
                 |-css
                 |-images
                 |-js
             |-views         项目视图文件存放位置
                 |—layouts   布局文件存放的位置
-                     |-main.html(6)
-                |-site
-                    |-index.html(5)
+                     |-main.html(8)
+                |-room
+                    |-list.html(7)
             |-index.html    项目入口文件(1)
         
         lamborghiniJS #类库核心文件存放位置
             |-base
                 |-System.js(3)
-            上面数字意思是过程加载的顺序
+                |-View.class.js(6)
+                |-Router.class.js(4)
+                |-...
+   ##### 上面数字代表的是执行的顺序
 	
-
-# 类库声明：
-	
-# 类库说明：
 
 # 单文件应用运行的过程：
-    URL(1)-->index.html(入口文件)(2)
-               \-|
-                 |-common/config/config.js(3)  
-                 |-lamborghiniJS/base/System.js(4)  
-                 |-LAB.bootstrap();(5)
+             index.html(入口文件,参考: brandhall/index.html)(1)
+               \-|-common/config/config.js(2)  应用配置文件
+                 |-lamborghiniJS/base/System.js(3)  
+                 |-LAM.bootstrap();(4) 加载LAM2基础类库
                   \
-                    1.应用配置文件
-                    2.加载LAM2基础类库
-                             \-|
-                               |-jQuery/jquery.js
-                               |_base/Base.class.js
-                               |_base/Object.class.js
-                               |_base/Component.class.js
-                               |_base/Base64.class.js
-                               |_base/Cache.class.js
-                               |_base/HttpRequest.class.js
-                               |_base/Helper.class.js
-                               |_base/Browser.class.js
-                               |_base/Event.class.js
-                               |_base/Dom.class.js
-                               |_base/View.class.js
-                               |_base/Template.class.js
-                               |_base/Html.class.js
-                               |_base/Loader.class.js
-                               |_base/Controller.class.js
-                               |_base/Router.class.js
-                                   /                             
-                                  /
-                                 /
+                   -------------\
                                  \
                                  _\| 
-                                 路由器 Router.class(5)
+                                 路由器 Router.class(5) 获取浏览地址栏里的参数并解析对应的controller,action 
                                             |
                                             |
                         HttpRequest.get()<--  
                             \
                             _\|
-                    控制器 Controller.class(7)\
+                    控制器 Controller.class(6)\
+                              _\|
+                            视图 View.class(7)\
                                              _\|
-                                               Template.class(6)
+                                               Template.class(8)
                                                              \
                                                      没有     _\|        
                                                  |————————有layout时：
@@ -94,7 +64,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                                                  |              视图作为模版嵌入layout里 
                                                  |              /
                                                   ----layout 布局
-                          |-------------render(8)|
+                          |-------------render(9)|
                           |                ______|                                                                     
                           |               /
                           |             显示视图文件
@@ -102,7 +72,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                           |       include (引入外部html文件替换掉占位符标签位置)(11)
                           |         \                                                      
                           |         _\|
-                          |------->Html.class(9)                 |-----------|                          
+                          |------->Html.class(10)                 |-----------|                          
                                              /                   |           |   
                                          get cache<------------- |   cache   |                       
                                           /                      |___________|
@@ -118,22 +88,25 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                   
                   
                   
-                  
+ # usage
+    git clone https://github.com/haohonglong/LAM2.git
+    cd LAM2
+#### note:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
-# nginx 配置：
+#### 例如 nginx 配置
         server {
             listen          8080;
             server_name     lam2;
             index           index.html;
             root  /Users/long/sites/LamborghiniJS/LAM2;
-            #解决html 405 (Not Allowed)
+            #解决html 405 Not Allowed (nginx默认静态页面不允许POST方式访问，允许GET方式)
             error_page 405 =200 $request_uri;
         }
 
 		
-		
+#### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
 
-## 入口文件(index.html)：
+#### 1.入口文件(index.html)：
         <!doctype html>
         <html lang="en">
         <head>
@@ -145,9 +118,14 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
         </head>
         </html>
 
-## 访问地址：http://lam2:8080/brandhall/index.html?r=room/list
+#### 2.浏览器上访问：http://lam2:8080/brandhall/index.html?r=room/list
+    room ：控制器名
+    list ：控制器里面的方法名
+##### 有模块的方式：http://lam2:8080/brandhall/index.html?r=room/list&m=xx
+    &m=xx  (m 可以在config.js 文件里修改components.moduleID的值) xx代表模块文件夹名称，多层级文件夹用/号分割
 
-## 一、配置文件配置 参考 二、开发约定
+
+#### 一、配置文件配置 参考 二、开发约定
 		tip:
 			只有配置文件跟项目绑定的,类库文件可以在开发过程中任何时候，更改到其它地方（多个项目公用一个类库文件夹，此时类库文件夹就可移动项目文件夹外面）,移动后只要重新修改主配置文件 vendorPath 的值即可。
 	    配置文件详细内容见 common/config/config.js
@@ -1264,27 +1242,48 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
                 
                
                 
-## 二十、配置参数
-	一、模板标签分隔符设置与修改
-		1.设置模板分隔符： 
-			 在配置文件 的templat里配置左右分隔符是个数组：delimiters
-			 也可在单独视图里定义，只匹配当前页面里的分隔符与别的页面没关系，不会改变全局配置
-		 2.修改模板分隔符：(用MVC方式：设置在控制器方法里)
-			 LAMJS.Config.templat.delimiters[0]  = '${{';
-			 LAMJS.Config.templat.delimiters[1] = '}}$';
+## 二十、Config.js 配置参数
+   ### vendorPath : lamborghiniJS文件夹的路径
+   ### LAM_DEBUG：调试模式
+   ### components
+   ### moduleID:模块自定义标识符，默认'm'
+   ### routeName:路由自定义标识符,默认'r'
+   ### autoLoadFile：类库基础文件加载时允许的文件
+   ### Public:设置公共名称
+    ROOT：项目根路径
+    CONTROLLERS：controllers文件夹的路径
+    VIEWS：views文件夹的路径
+    LAYOUTS：layouts文件夹的路径
+    ERROR_404:404文件的路径
+   ### templat：配置模版参数
+   #### delimiters：自定义模版分隔符    
+     1.设置模板分隔符： 
+         在配置文件 的templat里配置左右分隔符是个数组：delimiters
+         也可在单独视图里定义，只匹配当前页面里的分隔符与别的页面没关系，不会改变全局配置
+     2.修改模板分隔符：(用MVC方式：设置在控制器方法里)
+         LAMJS.Config.templat.delimiters[0]  = '${{';
+         LAMJS.Config.templat.delimiters[1] = '}}$';
+   ### configure_cache：配置缓存
+   ### render：视图渲染相关设置
+    remove ：加载后是否要移除添加过的script 节点
+    append ：<befor|after> script节点是添加head里还是body里
+            
+	
                      
                      
 
 ## 二十一、缓存机制
 
 ## 二十二、指令标签
-        #define：
-            <#define NAME="value" />
-            可在模版里定义常量
-        #include：
-            根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-        #layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
-            方便在view里切换layout模版,设置title,可向layout模版里传递数据
+  #### define：<#define NAME="value" />
+    
+    可在模版里定义常量
+  #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
+    根据占位符里file参数请求另一个页面，然后替换掉当前占位符
+  #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
+    方便在view里切换layout模版,设置title,可向layout模版里传递数据
+  #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
+    同layout指令一样
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
@@ -1294,7 +1293,7 @@ template用 <a href="http://handlebarsjs.com/" target="_blank">handlebars</a>
 				在Javascript中，如果一个对象不再被引用，那么这个对象就会被GC回收。如果两个对象互相引用，而不再被第3者所引用，那么这两个互相引用的对象也会被回收。
 				因为函数A被B引用，B又被A外的c引用，这就是为什么函数A执行后不会被回收的原因。
                      
-                     
+thanks <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a> （类库里的继承用到了这个工具）                     
 
                    
 

@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2018-11-23
+ * 修改日期:2019-7-1
  * 名称：Object类
  * 功能：服务于派生类生成hashCode
  * 标准 :
@@ -28,6 +28,7 @@
 	'use strict';
 	System.is(System,'Base','Object',System.classPath+'/base');
 	var __this__=null;
+
 	var Object = System.Base.extend({
 		constructor: function() {
 			__this__=this;
@@ -116,9 +117,11 @@
 
 
 	Object._hashCodeCounter=0;
-	Object._hashCodePrefix='hc'+System.timestamp();
-	Object.generate=function(){
-		return Object._hashCodePrefix+Math.round(Math.random()*System.random)+Object._hashCodeCounter++;
+	Object._hashCodePrefix='';
+	Object.generate=function(n){
+		var code = Object._hashCodePrefix+System.hash(System.timestamp().toString(),n || System.hashLength || 32);
+        Object._hashCodeCounter++;
+        return code;
 	};
 	Object.toHashCode=function(o){
 		if(o._hashCode!=null)

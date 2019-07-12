@@ -24,21 +24,21 @@
         },
         '_className':'IntroduceController',
         'indexAction':function(){
-            this.render('index',{
+            return this.render('index',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 
             },E);
         },
         'aboutAction':function(){
-            this.render('about',{
+            return this.render('about',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 
             },E);
         },
         'configurationAction':function(){
-            this.render('configuration',{
+            return this.render('configuration',{
                 'COMMON':System.COMMON,
                 'ROOT':System.ROOT
 

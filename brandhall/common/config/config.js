@@ -70,7 +70,14 @@
                 };
             })(),
             'components':{
-                'routeName':'r',
+                'moduleId':'m',
+                'routerId':'r',
+                'defaultRoute':'room/list',
+                'routeRules':{
+                    'login':'site/login',
+                    'list':'room/list',
+                    'detail':'room/detail'
+                },
                 't':function (System) {
                     var id =0;
                     System.Moudle = System.createDict();
@@ -90,8 +97,7 @@
                 'type':sessionStorage,
                 'expires':0
             },
-            //hashcode 随机种子
-            'random':10000,
+            'hashLength':32,
             //定义模版标签
             'templat':{
                 'custom_attr':'[data-var=tpl]',
@@ -99,7 +105,7 @@
             },
             'files':[],
             'XHR':{//配置加载xhr 的公共参数
-                'type': 'POST'
+                'type': 'GET'
                 ,'async':false
                 ,'cache':true
                 ,'beforeSend':function(){}

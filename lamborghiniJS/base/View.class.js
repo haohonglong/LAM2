@@ -12,16 +12,57 @@
 
 })(this,function(System){
 	'use strict';
-	System.is(System,'Dom','View',System.classPath+'/base');
+	System.is(System,'Component','View',System.classPath+'/base');
 
 	var __this__=null;
-	var View = System.Dom.extend({
+	var View = System.Component.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;
+            this.suffix = '.html';
+            this.viewpath = System.VIEWS;
+            this.ajaxConfig = null;
+            this.title = 'title';
 		},
 		'_className':'View',
 		'__constructor':function(){},
+
+        /**
+         * @author lhh
+         * 产品介绍：渲染视图
+         * 创建日期：2019-02-3
+         * 修改日期：2019-06-19
+         * 名称：render
+         * 功能：render the page
+         * 说明：
+         * 注意：
+         * @param name{String}              NO NULL:name of view
+         * @param data{Object}              NULL:assigning data for view
+         * @param callback{Function}        NULL:callback
+         * @param ajaxConfig{Object}        NULL:init ajax configure
+         * @returns {string}
+         */
+        'render':function (name,data,callback,ajaxConfig) {
+            data = data || System.createDict();
+            data.title = data.title || this.title;
+            if(!System.isFunction(callback)) {
+                ajaxConfig = callback;
+                callback = null;
+            }
+            data = data || {};
+            ajaxConfig = System.merge({},[ajaxConfig,{
+                file_404:System.ERROR_404,//the path of 404
+                beforeSend:function(a,b){
+                    this.async=false;
+                }
+            }]);
+            if('/' !== name.trim().substring(0,1)){
+                name = '/'+name;
+            }
+            name = this.viewpath+name+this.suffix;
+            return (new System.Template().render(name,data,callback,ajaxConfig));
+
+        },
 
 
 		/**
