@@ -58,9 +58,11 @@
 	Router.init=function(r,m){
 		r = r || 'r';
 		m = m || 'm';
-		var no = (null == System.get(r));
-		m = System.get(m) ? System.get(m) : null;
-		r = System.get(r) ? System.get(r) : System.defaultRoute || 'site/index';
+		r = System.get(r);
+		m = System.get(m);
+		var no = !System.isset(r);
+		m = m ? m : null;
+		r = r ? r : System.defaultRoute || 'site/index';
         System.defaultRoute = r;
         if(no) window.location.href = System.INDEX+System.defaultRoute;
 
