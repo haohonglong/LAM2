@@ -56,6 +56,7 @@
      * @returns {*}
      */
 	Router.init=function(r,m){
+        System.INDEX = System.INDEX || 'index.html?r=';
 		r = r || 'r';
 		m = m || 'm';
 		r = System.get(r);
