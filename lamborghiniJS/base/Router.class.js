@@ -65,14 +65,7 @@
 		m = m ? m : null;
 		r = r ? r : System.defaultRoute || 'site/index';
         System.defaultRoute = r;
-        if(no) {
-        	if(System.isFunction(window.history.pushState)){
-                window.history.pushState(null,null,System.INDEX+System.defaultRoute);
-			}else{
-        		window.location.href = System.INDEX+System.defaultRoute;
-			}
-        }
-
+        if(no) System.Browser.pushState(System.INDEX+System.defaultRoute);
 
 	    var routeRules = System.routeRules;
 	    if(routeRules){

@@ -529,6 +529,23 @@
 		 *
 		 */
 		Browser.scroll = function(){};
+		/**
+		 *
+		 * @author lhh
+		 * 功能：不刷新页面修改url
+		 * 名称：Browser.pushState
+		 * 创建日期：2019-7-13
+		 * 修改日期：2019-7-13
+		 * @param url
+         */
+		Browser.pushState = function(url){
+            if(System.isFunction(window.history.pushState)){
+                window.history.pushState(null,null,url);
+            }else{
+                window.location.href = url;
+            }
+		};
+
 
 
 		return Browser;
