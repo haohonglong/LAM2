@@ -46,7 +46,7 @@
      * @author lhh
      * 产品介绍：Router.init
      * 创建日期：2015-4-2
-     * 修改日期：2019-6-21
+     * 修改日期：2019-7-13
      * 名称：destructor
      * 功能：
      * 说明：
@@ -56,12 +56,16 @@
      * @returns {*}
      */
 	Router.init=function(r,m){
+        System.INDEX = System.INDEX || 'index.html?r=';
 		r = r || 'r';
 		m = m || 'm';
-
-		m = System.get(m) ? System.get(m) : null;
-		r = System.get(r) ? System.get(r) : System.defaultRoute || 'site/index';
+		r = System.get(r);
+		m = System.get(m);
+		var no = !System.isset(r);
+		m = m ? m : null;
+		r = r ? r : System.defaultRoute || 'site/index';
         System.defaultRoute = r;
+        if(no) System.Browser.pushState(System.INDEX+System.defaultRoute);
 
 	    var routeRules = System.routeRules;
 	    if(routeRules){

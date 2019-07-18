@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-11-22
+ * 修改日期:2019-7-13
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -529,6 +529,23 @@
 		 *
 		 */
 		Browser.scroll = function(){};
+		/**
+		 *
+		 * @author lhh
+		 * 功能：不刷新页面修改url
+		 * 名称：Browser.pushState
+		 * 创建日期：2019-7-13
+		 * 修改日期：2019-7-13
+		 * @param url
+         */
+		Browser.pushState = function(url){
+            if(System.isFunction(window.history.pushState)){
+                window.history.pushState(null,null,url);
+            }else{
+                window.location.href = url;
+            }
+		};
+
 
 
 		return Browser;
