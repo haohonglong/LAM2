@@ -105,7 +105,7 @@
     </div>
 </div>
 
-<div class="sectionTransparent-A1 js_sectionTransparentA1 none"></div>
+
 <!-- ============================================================================ -->
 <!--popupLayer end-->
 
@@ -170,8 +170,8 @@
 
     </div>
 </div>
-<div class="sectionTransparent-A1 js_sectionTransparentA2 none"></div>
 <!-- ============================================================================ -->
+<div class="sectionTransparent-A1 js_sectionTransparentA1 none"></div>
 <!--popupLayer end-->
 
 
@@ -220,13 +220,13 @@
             // //第二个弹出框
             var pop2=new System.PopupLayer({
                 '$popLayout':$('.js_sectionPopupLayerA2'),
-                '$mask':$('.js_sectionTransparentA2'),
+                '$mask':pop.$mask,
                 'padding':0,
                 'animate':{}
             });
             pop2.create().setCenter();
 
-            $('.js_sectionPopupLayerA1Close,.js_sectionTransparentA2').on('click',function(){
+            $('.js_sectionPopupLayerA1Close,.js_sectionTransparentA1').on('click',function(){
 
                 pop2.hide();
             });
