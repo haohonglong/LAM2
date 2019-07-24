@@ -46,7 +46,7 @@
      * @author lhh
      * 产品介绍：Router.init
      * 创建日期：2015-4-2
-     * 修改日期：2019-7-13
+     * 修改日期：2019-7-24
      * 名称：destructor
      * 功能：
      * 说明：
@@ -72,6 +72,8 @@
 	    	System.each(routeRules,function(k,v){
 		    	if(k === r){
 		    		r = v;
+                    System.defaultRoute = r;
+                    System.Browser.pushState(System.INDEX+System.defaultRoute);
 		    		return false;
 		    	}
 		    });
