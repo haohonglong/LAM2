@@ -4,7 +4,7 @@
  * 名称：弹出层 
  * 功能：可自动居中且兼容IE6
  * 创建日期：2014-12-1
- * 修改日期：2018-8-28
+ * 修改日期：2019-7-25
  * 说明：
  * 注意：妈的蛋，居中显示的时候，弹窗隐藏时滚动条发生改变，显示后就发生了居中不对齐的现象，最后终于找到了这个原因:元素display:none;的时候 offset().top 获取的永远是0,详细解释参考看 http://api.jquery.com/offset/ 解决办法：要在show()后加个scroll()的行为，要这样写 show().scroll()；
   * resize 时会y位置会跑偏，解决方法：resize().scroll()
@@ -236,6 +236,7 @@
 		 'append':function($div){},
 		 'empty':function(){this.$popLayout.empty();},
 		 'remove':function(){this.$popLayout.remove();},
+		 'is_hide':function(){return this.$popLayout.is(":hidden");},
 
 		 /**
 		  *

@@ -252,12 +252,16 @@
             // });
 
             $(window).scroll(function() {
-                pop.scroll();
-                pop2.scroll();
+                if(!pop.is_hide())
+                    pop.scroll();
+                if(!pop2.is_hide())
+                    pop2.scroll();
             });
             $(window).resize(function() {
-                pop.resize().scroll();
-                pop2.resize().scroll();
+                if(!pop.is_hide())
+                    pop.resize().scroll();
+                if(!pop2.is_hide())
+                    pop2.resize().scroll();
             });
 
             window.pop = pop;
