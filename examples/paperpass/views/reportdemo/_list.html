@@ -1,0 +1,26 @@
+<#define __DIR__="http://www.paperpass.com/reportdemo/htmls" />
+<#define __CUR__="{{LAM.VIEWS}}/reportdemo" />
+
+<script type="text/html" compiler="jQuery">
+    <% for(var i=0,len_1=list.length;i < len_1;i++){%>
+    <div class="paper-section"  tpl-section="warp">
+        <span class="label-warning" tpl-section="badge" data-id="<%=i+1%>"><%=i+1%></span>
+        <p class="MT20 text-idt25" tpl-section="text">
+            <% for(var j=0,len_2=list[i]['section']['a'].length;j < len_2;j++){%>
+            <% var data=list[i]['section']['a'][j]; %>
+            <% if(LAM.isset(data.href)){%>
+                <a href="__DIR__/<%=data.href%>" target="right" class="<%=data.class%>"><%=data.txt%></a>
+            <%}else{%>
+                <span class="<%=data.class%>"><%=data.txt%></span>
+            <%}%>
+
+            <%}%>
+        </p>
+        <div class="text-right">
+            <button type="button" tpl-section="btn" class="g-btn g-btn-default g-btn-sm MT10">段落修改</button>
+        </div>
+        <div tpl-section="box"></div>
+    </div>
+    <%}%>
+</script>
+

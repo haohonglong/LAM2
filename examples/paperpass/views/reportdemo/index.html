@@ -1,0 +1,117 @@
+<#define __DIR__="http://www.paperpass.com/reportdemo" />
+<#define __CUR__="{{LAM.VIEWS}}/reportdemo" />
+<!DOCTYPE html>
+<html class="">
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <title>PaperPass_检测报告</title>
+
+    <link rel="stylesheet" href="__DIR__/htmls/css/bootstrap.css"/>
+    <link rel="stylesheet" href="__DIR__/htmls/css/iframe.css"/>
+    <link rel="stylesheet" href="__DIR__/htmls/css/style.css"/>
+    <style type="text/css">
+        html,body{overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="__DIR__/htmls/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{LAM.SCRIPT}}/Lib.js"></script>
+    <script>Report.report_id = '59ae46e263196ow0i';</script>
+
+</head>
+<body class="">
+<div id="m-header">
+    <div class="paper-header">
+        <div class="header-nav">
+            <a href="" class="nav-logo pull-left">
+                <img src="__DIR__/htmls/images/logo.png">
+                <p class="g-font-color green text-right g-font-s16">旗舰版</p>
+            </a>
+            <div class="nav-tit pull-left">
+                <h4>我国高等学校教材升级变革方法研究</h4>
+                论文作者：<span class="MR10">演示</span>
+                提交时间：<span class="submitTime">2017-9-5 14:40:34</span></li>
+            </div>
+            <div class="nav-detail pull-right">
+                <ul class="nav-detail-info pull-left">
+                    <li>论文字数：<span class="paperNum">7456</span></li>
+                    <li>段落个数：<span class="sectionNum">30</span></li>
+                    <li>句子个数：<span class="sentenceNum">214</span></li>
+                </ul>
+                <div class="nav-detail-similar pull-left">
+                    总体相似度
+                    <p class="text-right">
+                        <span class="similarNum">94%</span>
+                    </p>
+                    <span class="progress"><span class="progress-bar red" style="width: 94%;"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nav clearfix" id="m-nav">
+    <ul class="tab pull-left clearfix" tab-a="ul">
+        <li class="active">
+            <a href="htmls/detail_report.html" target="main">详细报告</a>
+            <span class="grey-spacer"></span>
+        </li>
+        <li>
+            <a href="htmls/comprehensive_assessment.html" target="main">综合评估</a>
+            <span class="grey-spacer"></span>
+        </li>
+        <li>
+            <a href="htmls/view_original_edit.html" target="main">修改文档</a>
+            <span class="grey-spacer"></span>
+        </li>
+        <li>
+            <a href="htmls/view_original.html" target="main">查看原文</a>
+            <span class="grey-spacer"></span>
+        </li>
+        <li>
+            <a href="reportpdf.pdf" target="_blank">打印PDF</a>
+            <span class="grey-spacer"></span>
+        </li>
+        <li>
+            <a href="htmls/help.html" target="main">使用帮助</a>
+            <span class="grey-spacer"></span>
+        </li>
+
+    </ul>
+    <div class="pull-right">
+        <p class="g-font-color green">
+            检测报告编号：
+            <span>59AE46E263196OW0I</span>
+            <a type="button" class="g-btn g-btn-default g-btn-sm transparent ML15" href="http://www.paperpass.com/check" target="_blank">查询真伪</a>
+        </p>
+    </div>
+</div>
+<div id="m-content" class="clearfix over-h MT10">
+    <div id="m-primary" class="pull-left" style="overflow:auto;">
+        <#include file="__CUR__/_report.html" />
+    </div>
+    <div id="m-secondary" class="pull-left">
+        <iframe src="__DIR__/htmls/right.html" name="right" scrolling="no" frameborder="0"></iframe>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    (function(System,$){
+        'use strict';
+        var tab = System.Paper.tab();
+        var run = System.Paper.setMainIframeHeight();
+        $(function(){
+            $(document).on('click','[tab-a="ul"] li',function(){
+                tab.call(this);
+            });
+            $(window).resize(function(){
+                run();
+            }).trigger('resize');
+        });
+    })(Report,jQuery);
+
+
+
+
+</script>
+</html>
