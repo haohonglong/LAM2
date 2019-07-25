@@ -56,6 +56,7 @@
                 ,'PLUGINS':_ROOT_+'/common/plugins'
                 ,'CONTROLLERS':_ROOT_+'/documentation/controllers'
                 ,'VIEWS':_ROOT_+'/documentation/views'
+                ,'DATA':_ROOT_+'/documentation/database'
                 ,'ERROR_404':_ROOT_+'/documentation/views/404.html'
                 ,'CSS':_ROOT_+'/documentation/css'
                 ,'JS':_ROOT_+'/documentation/js'
