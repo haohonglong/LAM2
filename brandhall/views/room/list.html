@@ -1,4 +1,4 @@
-
+#define# __DATA__ <#include repeat="0" tp-data=""  file="{{LAM.DATA}}/list.json" /> #end#
 <#extends title="商品列表" data="{'list':[
 {'name':'喜鹊筑家旗舰店','href':'###','title':''},
 {'name':'商品管理','href':'###','title':''},
@@ -22,14 +22,7 @@
                 </ul>
             </div>
             <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" capture="function(s){return LAM.Template.jQCompile(s,
-            {'list':[
-            {'name':'李晨','style':'新古典,其他,简约'},
-            {'name':'刘军','style':'地中海-田园,北欧,其他,简约'},
-            {'name':'王磊','style':'新古典,地中海-田园'},
-            {'name':'萧红','style':'新古典,地中海-田园,其他,简约'},
-            {'name':'马良','style':'新古典,地中海-田园,北欧,简约'},
-            {'name':'赵明','style':'新古典,地中海-田园,北欧,其他'}
-            ]})}" />
+            {'list':__DATA__})}" />
 
 
 

@@ -60,6 +60,7 @@
                     ,'MYCOMMON':ROOT+'/common'
                     ,'CSS':ROOT+'/public/css'
                     ,'SCRIPT':ROOT+'/public/js'
+                    ,'DATA':ROOT+'/data'
                     ,'IMAGE':ROOT+'/public/images'
                     ,'CONTROLLERS':ROOT+'/controllers'
                     ,'VIEWS':ROOT+'/views'
