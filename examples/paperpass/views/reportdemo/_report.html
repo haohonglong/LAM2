@@ -1,0 +1,57 @@
+<#define __DIR__="http://www.paperpass.com/reportdemo/htmls" />
+<#define __CUR__="{{LAM.VIEWS}}/reportdemo" />
+#define# __DATA__  <#include repeat="0" tp-data="{}"   file="{{LAM.DATA}}/list.json" /> #end#
+
+
+<div>
+
+    <#include repeat="0" tp-data="{'style':'PT30'}" delimiters="['{#','#}']"  file="__CUR__/_paging.html" />
+    <div class="paper-txt P30 PB0">
+    <#include repeat="0" delimiters="['{#','#}']" tp-data="{}"  file="__CUR__/_list.html" capture="function(s){return LAM.Template.jQCompile(s,
+        {'list':__DATA__})}" />
+    </div>
+
+    <#include repeat="0" tp-data="{'style':'PB30'}" delimiters="['{#','#}']"  file="__CUR__/_paging.html" />
+    <div class="paper-footer">
+        <p>检测报告由<a href="http://www.paperpass.com/" target="_black">PaperPass</a>文献相似度检测系统生成</p>
+        <p>Copyright © 2007-2018 PaperPass</p>
+    </div>
+</div>
+<script type="text/html" template="section">
+    <div class="text-right">
+        <div class="modifyTxt-notice">
+            修改完本段落之后，点击“临时保存”，之后可在上方导航“修改文档”页面中查看修改后的内容
+        </div>
+        <textarea class="form-control resize-none" rows="4" tpl-section="textarea"></textarea>
+        <div class="button-wrap MT10">
+            <button type="button" class="g-btn g-btn-default g-btn-sm red" tpl-section-cancle="btn">取消保存</button>
+            <button type="button" class="g-btn g-btn-default g-btn-sm" tpl-section-save="btn">临时保存</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    (function(System,$){
+
+        var sectionEdit = System.Paper.sectionEdit();
+        var sectionSave = System.Paper.sectionSave(null);
+        $(function(){
+            $(document).on('click','[tpl-section=btn]',function(){
+                sectionEdit.call(this);
+            });
+            $(document).on('click','[tpl-section-save=btn]',function(){
+                sectionSave.call(this);
+
+            });
+            $(document).on('click','[tpl-section-cancle=btn]',function(){
+                var $warp = $(this).closest('[tpl-section="warp"]');
+                $warp.find('[tpl-section="box"]').html('');
+            });
+
+
+
+
+        });
+    })(Report,jQuery);
+
+</script>

@@ -440,7 +440,7 @@
 	 * @returns {String}
 	 */
 	Template.define=function (S) {
-        var reg_inc = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','gm');
+        var reg_inc = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','g');
         var k,v;
         var arr_inc = [];
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
@@ -449,8 +449,36 @@
             S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
             reg_inc.lastIndex = 0;
         }
+        S = Template.define2(S);
         return S;
     },
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2019-7-25
+	 * 修改日期：2019-7-25
+	 * 名称：Template.define2
+	 * 功能：预处理,可以包含include标签
+	 * 说明：
+	 * 注意：
+	 * example：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
+	 * @param S
+	 * @returns {String}
+	 */
+	Template.define2=function (S) {
+        var reg_inc = new RegExp('(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)','g');
+        var k,v;
+        var arr_inc = [];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            k = arr_inc[2];
+            v = arr_inc[4];
+            v = Template.include(v);
+            S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+            reg_inc.lastIndex = 0;
+        }
+        return S;
+    },
+
     /**
      * @author: lhh
      * 产品介绍：

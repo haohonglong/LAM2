@@ -47,37 +47,35 @@
     })(function(System){
         'use strict';
         System.Config = Config = {
-            'vendorPath':_ROOT_+'/lamborghiniJS',
+            'vendorPath':'http://127.0.0.1/lamborghiniJS/LAM2/lamborghiniJS',
             'LAM_DEBUG':true,
             'LAM_ENV':'dev',
             'Public':(function(){
-                var ROOT = _ROOT_+'/brandhall';
+                var ROOT = _ROOT_+'/paperpass';
                 return {
                     'ROOT':_ROOT_
                     ,'BACKEND':ROOT
-                    ,'COMMON':_ROOT_+'/common'
-                    ,'PLUGINS':_ROOT_+'/common/plugins'
-                    ,'MYCOMMON':ROOT+'/common'
+                    ,'COMMON':ROOT+'/common'
                     ,'CSS':ROOT+'/public/css'
                     ,'SCRIPT':ROOT+'/public/js'
-                    ,'DATA':ROOT+'/data'
                     ,'IMAGE':ROOT+'/public/images'
                     ,'CONTROLLERS':ROOT+'/controllers'
                     ,'VIEWS':ROOT+'/views'
+                    ,'DATA':ROOT+'/data'
                     ,'LAYOUTS':ROOT+'/views/layouts'
                     ,'COMPONENTS':ROOT+'/views/components'
                     ,'ERROR_404':ROOT+'/views/_404.html'
                     ,'INDEX':'index.html?r='
+                    ,'beta_2':'https://kjds.gezlife.com/beta_2'
+                    ,'PLUGINS':'http://127.0.0.1/lamborghiniJS/LAM2/common/plugins'
                 };
             })(),
             'components':{
                 'moduleId':'m',
                 'routerId':'r',
-                'defaultRoute':'room/list',
+                'defaultRoute':'site/index',
                 'routeRules':{
-                    'login':'site/login',
-                    'list':'room/list',
-                    'detail':'room/detail'
+                    'report':'reportDemo/index'
                 },
                 't':function (System) {
                     var id =0;
@@ -120,6 +118,7 @@
                 return [
                     classPath+'/jQuery/jquery.js'
                     // ,classPath+'/build/base.min.js'
+                    ,PLUGINS+'/vue/vue.js'
 
                     ,classPath+'/base/Base.class.js'
                     ,classPath+'/base/Object.class.js'
@@ -141,7 +140,6 @@
                     ,classPath+'/base/Controller.class.js'
                     ,classPath+'/base/Router.class.js'
                     // ,PLUGINS+'/layer-v3.1.1/layer/layer.js'
-                    ,PLUGINS+'/vue/vue.js'
                 ];
             },
 
