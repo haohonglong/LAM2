@@ -3,7 +3,7 @@
 	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-06-21
+	修改日期 ：2019-07-25
 
 
 # 产品介绍：
@@ -1276,8 +1276,12 @@
 
 ## 二十二、指令标签
   #### define：<#define NAME="value" />
-    
     可在模版里定义常量
+  
+  #### #define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
+    从include 返回的的的数据保存到常量
+    
+    
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
   #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />

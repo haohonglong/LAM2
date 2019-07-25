@@ -449,7 +449,6 @@
             S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
             reg_inc.lastIndex = 0;
         }
-        S = Template.define2(S);
         return S;
     },
 	/**
@@ -461,7 +460,7 @@
 	 * 功能：预处理,可以包含include标签
 	 * 说明：
 	 * 注意：
-	 * example：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
+	 * usage：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
 	 * @param S
 	 * @returns {String}
 	 */
