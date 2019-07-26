@@ -465,7 +465,7 @@
 	 * @returns {String}
 	 */
 	Template.define2=function (S) {
-        var reg_inc = new RegExp('(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)','g');
+        var reg_inc = new RegExp('(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)','gm');
         var k,v;
         var arr_inc = [];
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
