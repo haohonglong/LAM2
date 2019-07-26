@@ -459,7 +459,7 @@
 	 * 名称：Template.define2
 	 * 功能：预处理,可以包含include标签
 	 * 说明：
-	 * 注意：指令必须单独占一行，而且开头不能有空格
+	 * 注意：指令必须单独占一行，而且#define#开头和#end#结尾都不能有空格或任何别的字符
 	 * usage：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
 	 * @param S
 	 * @returns {String}

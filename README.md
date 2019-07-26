@@ -1279,7 +1279,7 @@
     可在模版里定义常量，注意：必须单独占一行
   
   #### #define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
-    从include 返回的的的数据保存到常量，注意：必须单独占一行，而且开头不能有空格
+    从include 返回的的的数据保存到常量，注意：指令必须单独占一行，而且#define#开头和#end#结尾都不能有空格或任何别的字符
     
     
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
