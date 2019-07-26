@@ -3,7 +3,7 @@
 	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-07-25
+	修改日期 ：2019-07-26
 
 
 # 产品介绍：
@@ -1276,10 +1276,10 @@
 
 ## 二十二、指令标签
   #### define：<#define NAME="value" />
-    可在模版里定义常量
+    可在模版里定义常量，注意：必须单独占一行
   
   #### #define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
-    从include 返回的的的数据保存到常量
+    从include 返回的的的数据保存到常量，注意：必须单独占一行，而且开头不能有空格
     
     
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
