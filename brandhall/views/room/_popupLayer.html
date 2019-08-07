@@ -1,16 +1,6 @@
-<script type="text/javascript">
-    LAM.run([jQuery],function($) {
-        'use strict';
-        var System = this;
-        System
-            .import([
-                '/PopupLayer.class'
-            ], System.classPath)
-            .import([
-                '/layer-v3.1.1/layer/layer.js'
-            ], System.PLUGINS, null, {xhr: false});
-    });
-</script>
+<#import path="/PopupLayer.class.js" root="{{LAM.classPath}}" />
+<#import path="/layer-v3.1.1/layer/layer.js" root="{{LAM.PLUGINS}}" />
+
 <!--popupLayer1 begin-->
 <!-- ============================================================================ -->
 <div class="sectionPopupLayer-A1 sectionPopupLayer-A1-1 js_sectionPopupLayerA1 border sectionShadow-A4 none">

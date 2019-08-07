@@ -3,7 +3,7 @@
 	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-07-26
+	修改日期 ：2019-08-7
 
 
 # 产品介绍：
@@ -1284,6 +1284,8 @@
     
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
+  #### import：<#import path="" root="{{LAM.ROOT}}"  />
+    导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早，多个文件时,path里用','分割
   #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
     方便在view里切换layout模版,设置title,可向layout模版里传递数据
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />

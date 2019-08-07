@@ -477,6 +477,46 @@
         }
         return S;
     },
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2019-8-7
+	 * 修改日期：2019-8-7
+	 * 名称：Template.import
+	 * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
+	 * 说明：多个文件时,path里用','分割
+	 * 注意：
+	 * @example <#import path="/PopupLayer.class.js" root="{{LAM.classPath}}" />
+	 * @param S
+	 * @returns {String}
+	 */
+	Template.import=function (S) {
+        var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
+        var k,v;
+        var arr_inc = [];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('="');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                data[k] =  v;
+            });
+            data.path = data.path || null;
+            if(data.path) {
+                data.root = data.root ? Template.template(data.root) : false;
+                System.import(data.path.split(','),data.root);
+            }
+            S = S.replace(arr_inc[0],function () {
+                return '';
+            });
+
+            reg_inc.lastIndex = 0;
+        }
+        return S;
+    },
 
     /**
      * @author: lhh
