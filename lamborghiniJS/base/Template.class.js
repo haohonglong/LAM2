@@ -431,7 +431,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2019-3-13
-	 * 修改日期：2019-3-13
+	 * 修改日期：2019-8-7
 	 * 名称：Template.define
 	 * 功能：预处理 在模版里定义常量
 	 * 说明：
@@ -446,6 +446,7 @@
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
             v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
+            v = Template.template(v);
             S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
             reg_inc.lastIndex = 0;
         }
