@@ -456,7 +456,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2019-7-25
-	 * 修改日期：2019-7-26
+	 * 修改日期：2019-8-7
 	 * 名称：Template.define2
 	 * 功能：预处理,可以包含include标签
 	 * 说明：
@@ -472,6 +472,7 @@
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             k = arr_inc[2];
             v = arr_inc[4];
+            v = Template.template(v);
             v = Template.include(v);
             S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
             reg_inc.lastIndex = 0;
