@@ -3,7 +3,7 @@
 	version ：v2.1.3
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-08-7
+	修改日期 ：2019-08-23
 
 
 # 产品介绍：
@@ -1279,7 +1279,7 @@
     可在模版里定义常量，注意：必须单独占一行
   
   #### #define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
-    从include 返回的的的数据保存到常量，注意：指令必须单独占一行，头尾都不能有空格或任何别的字符
+    从include 返回的的的数据保存到常量，注意：指令必须单独占一行，头尾都不能有空格或任何别的字符。__DATA__也可以定义为一个标签如：<paging/>,注意：标签内不运行有空格符
     
     
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
@@ -1299,7 +1299,7 @@
 				在Javascript中，如果一个对象不再被引用，那么这个对象就会被GC回收。如果两个对象互相引用，而不再被第3者所引用，那么这两个互相引用的对象也会被回收。
 				因为函数A被B引用，B又被A外的c引用，这就是为什么函数A执行后不会被回收的原因。
                      
-thanks <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a> （类库里的继承用到了这个工具）                     
+thanks to <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank">Base.js</a>                   
 
                    
 
