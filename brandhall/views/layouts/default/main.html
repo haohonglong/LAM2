@@ -1,3 +1,9 @@
+<#define __IMAGE__="{{LAM.IMAGE}}" />
+<#define __MYCOMMON__="{{LAM.MYCOMMON}}" />
+<#define __CLASSPATH__="{{LAM.classPath}}" />
+<#define _LAYOUTS_="{{LAM.LAYOUTS}}/default/include" />
+<#import path="/common" root="__MYCOMMON__" />
+<#import path="/Tools.class,/Tab.class" root="__CLASSPATH__" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,27 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-
     <title>{{title}}</title>
-    <script type="text/javascript">
-        LAM.run([LAM],function(LAM){
-            'use strict';
-            var System = this;
-
-
-            System
-                .import(['/common'],System.MYCOMMON)
-                .import([
-                    '/Tools.class'
-                    ,'/Tab.class'
-                ],System.classPath,'.js?t='+System.app.t);
-        });
-    </script>
-
-
-
 </head>
-<#define _LAYOUTS_="{{LAM.LAYOUTS}}/default/include" />
+
 <body class="h-percent-of100">
 <div id="hidden_bnt" class="sectionBtn-A2 sectionFixed-A1">
     <span class="mb3"></span>
@@ -40,16 +28,16 @@
         <div class="col-md-10 sectionWrap-A4">
             <div class="p20">
                 <div class="sectionPhoneTop-A1 clear none mb20">
-                    <img class="L logo" src="{{IMAGE}}/imgs_LHH/logo.png" width="130" height="54" alt="">
+                    <img class="L logo" src="__IMAGE__/imgs_LHH/logo.png" width="130" height="54" alt="">
                     <div class="sectionBtn-A2 R mt20 mr15">
                         <span class="mb3"></span>
                         <span class="mb3"></span>
                         <span></span>
                     </div>
-                    <img class="R img" data-var="tpl" src="{{IMAGE}}/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
+                    <img class="R img" data-var="tpl" src="__IMAGE__/imgs_LHH/pics/img_01.gif" width="20" height="20" alt="">
                 </div>
                 <#include repeat="0" tp-data="{'name':'{{D.user.name}}','age':'{{D.user.age}}'}" delimiters="['{#','#}']"  file="_LAYOUTS_/inc_header.html" />
-                <#include repeat="0" tp-data="{'list':'{{D.list}}'}"  file="{{LAM.LAYOUTS}}/default/include/inc_crumb.vue.html" />
+                <#include repeat="0" tp-data="{'list':'{{D.list}}'}"  file="_LAYOUTS_/inc_crumb.vue.html" />
                 {{content}}
             </div>
         </div>
