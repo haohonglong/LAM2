@@ -431,10 +431,10 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2019-3-13
-	 * 修改日期：2019-3-13
+	 * 修改日期：2019-8-25
 	 * 名称：Template.define
 	 * 功能：预处理 在模版里定义常量
-	 * 说明：
+	 * 说明：替换而且解析模版变量
 	 * 注意：
 	 * @param S
 	 * @returns {String}
@@ -446,27 +446,26 @@
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
             v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
-            S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+            S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),Template.findTpl(v));
             reg_inc.lastIndex = 0;
         }
-        S = Template.define2(S);
         return S;
     },
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2019-7-25
-	 * 修改日期：2019-7-25
+	 * 修改日期：2019-8-25
 	 * 名称：Template.define2
 	 * 功能：预处理,可以包含include标签
-	 * 说明：
-	 * 注意：
-	 * example：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
+	 * 说明：只替换模版变量不解析
+	 * 注意：指令必须单独占一行，头尾都不能有空格或任何别的字符
+	 * usage：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
 	 * @param S
 	 * @returns {String}
 	 */
 	Template.define2=function (S) {
-        var reg_inc = new RegExp('(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)','g');
+        var reg_inc = new RegExp('^(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)$','gm');
         var k,v;
         var arr_inc = [];
         while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
@@ -474,6 +473,67 @@
             v = arr_inc[4];
             v = Template.include(v);
             S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+            reg_inc.lastIndex = 0;
+        }
+        return S;
+    },
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2019-8-25
+	 * 修改日期：2019-8-25
+	 * 名称：Template.parse
+	 * 功能：解析,导入，包含
+	 * 说明：
+	 * 注意：
+	 * usage：
+	 * @param s
+	 * @returns {String}
+	 */
+	Template.parse=function (s) {
+        s = Template.define2(Template.define(s));
+        s = Template.import(s);
+        s = Template.include(s);
+        return s;
+    },
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2019-8-7
+	 * 修改日期：2019-8-25
+	 * 名称：Template.import
+	 * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
+	 * 说明：多个文件时,path里用','分割
+	 * 注意：
+	 * @example
+	 * 			<#define __PATH__="{{LAM.classPath}}" />
+	 * 			<#import path="/PopupLayer.class.js" root="__PATH__" />
+	 * @param S
+	 * @returns {String}
+	 */
+	Template.import=function (S) {
+        var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
+        var k,v;
+        var arr_inc = [];
+        while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            var data ={},arr = arr_inc[2].split('" ');
+            arr.each(function(){
+                var arr = this.split('="');
+                arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                k = System.camelCase(arr[0].trim());
+                v = arr[1];
+                data[k] =  v;
+            });
+            data.path = data.path || null;
+            if(data.path) {
+                data.root = data.root ? data.root : false;
+                System.import(data.path.split(','),data.root);
+            }
+            S = S.replace(arr_inc[0],function () {
+                return '';
+            });
+
             reg_inc.lastIndex = 0;
         }
         return S;

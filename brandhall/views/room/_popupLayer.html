@@ -1,11 +1,9 @@
+<#import path="/PopupLayer.class" root="{{LAM.classPath}}" />
 <script type="text/javascript">
     LAM.run([jQuery],function($) {
         'use strict';
         var System = this;
         System
-            .import([
-                '/PopupLayer.class'
-            ], System.classPath)
             .import([
                 '/layer-v3.1.1/layer/layer.js'
             ], System.PLUGINS, null, {xhr: false});

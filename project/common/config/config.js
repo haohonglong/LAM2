@@ -66,9 +66,10 @@
                 };
             })(),
             'components':{
-                'routeName':'r',
+                'moduleId':'m',
+                'routerId':'r',
                 'defaultRoute':'site/index',
-                'routeRules':{}
+                'routeRules':{},
             },
             'configure_cache':{
                 'type':sessionStorage,

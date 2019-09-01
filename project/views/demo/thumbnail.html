@@ -1,3 +1,5 @@
+<#import path="/Sport.class,/Thumbnail.class" root="{{LAM.classPath}}" />
+<#import path="/artTemplate/artTemplate" root="{{LAM.PLUGINS}}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,11 +20,7 @@
                     }).print();
 
 
-            System.import([
-                '/Sport.class'
-                ,'/Thumbnail.class'
-            ],System.classPath)
-                .import(['/artTemplate/artTemplate'],System.PLUGINS);
+
         });
     </script>
     <style type="text/css">
