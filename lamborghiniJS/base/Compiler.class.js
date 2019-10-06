@@ -89,7 +89,9 @@
                     return D[k];
                 }
             }
-            throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' '));
+            if(System.LAM_ENV_DEV){//只有测试时才报警错误提示
+                throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' '));
+            }
         },
 
         /**
