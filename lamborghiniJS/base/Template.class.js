@@ -212,6 +212,7 @@
 		 */
 		'replaceTpl':function(selector,attr_name,callback){
 			var value;
+			var self = this;
 			$(selector).each(function(){
 				if(callback && System.isFunction(callback)){
 					callback.call(this);
@@ -219,14 +220,14 @@
 					var $this=$(this);
 					if(System.isArray(attr_name)){
 						System.each(attr_name,function(){
-							value=Template.template($this.attr(this));
+							value=self.template($this.attr(this));
 							if(value && System.isString(value)){
 								$this.attr(this,value);
 
 							}
 						});
 					}else{
-						value=Template.template($this.attr(attr_name));
+						value=self.template($this.attr(attr_name));
 						if(value && System.isString(value)){
 							$this.attr(attr_name,value);
 
@@ -271,7 +272,7 @@
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
 		 * 修改日期：2019-6-13
-		 * 名称：Template.layout
+		 * 名称：layout
 		 * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
 		 * 说明：
 		 * 注意：
@@ -317,7 +318,7 @@
          * 产品介绍：
          * 创建日期：2019-3-13
          * 修改日期：2019-8-25
-         * 名称：Template.define
+         * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
          * 注意：
@@ -341,7 +342,7 @@
          * 产品介绍：
          * 创建日期：2019-7-25
          * 修改日期：2019-8-25
-         * 名称：Template.define2
+         * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
          * 注意：指令必须单独占一行，头尾都不能有空格或任何别的字符
@@ -368,7 +369,7 @@
          * 产品介绍：
          * 创建日期：2019-8-7
          * 修改日期：2019-8-25
-         * 名称：Template.import
+         * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割
          * 注意：
@@ -411,7 +412,7 @@
          * 产品介绍：
          * 创建日期：2018-11-27
          * 修改日期：2019-1-3
-         * 名称：Template.include
+         * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
          * 注意：
