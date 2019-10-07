@@ -603,17 +603,22 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2019-8-25
-     * 修改日期：2019-8-25
+     * 修改日期：2019-10-7
      * 名称：Template.parse
      * 功能：解析
      * 说明：
      * 注意：
      * usage：
      * @param s
+     * @param temp {Template|null}
      * @returns {String}
      */
-    Template.parse=function (s) {
-        return (new Template()).parse(s);
+    Template.parse=function (s,temp) {
+    	if(temp && temp instanceof Template){
+            return temp.parse(s);
+        }else{
+            return (new Template()).parse(s);
+        }
     };
 
     var temp = new Template();
