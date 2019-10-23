@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2019-7-1
+ * 修改日期:2019-10-23
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -1451,6 +1451,24 @@
 
 			return System.Base64.encode(hs.join('')).replace(/[_\s]/g,'');
 		},
+		'uniqid':function (code,hashLength) {
+            code = code || null;
+            hashLength = Number(hashLength);
+            if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {hashLength =  13;}
+            var ar = [];
+            ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+            ar[1] = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            ar[3] = code && System.isString(code) && code.split('') || [];
+            ar = ar[0].merge(ar[1]).merge(ar[3]);
+            var hs = [];
+            var hl = hashLength;
+            var al = ar.length;
+            for (var i = 0; i < hl; i ++) {
+                hs.push(ar[Math.floor(Math.random() * al)]);
+            }
+
+            return hs.join('').replace(/[_\s]/g,'');
+        },
 
         /**
          * @author: lhh
