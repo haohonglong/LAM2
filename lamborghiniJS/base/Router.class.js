@@ -111,8 +111,8 @@
                     controller.init();
                     view = controller[action](id);
                     if(System.isset(view) && System.isString(view)) {
-                    	System.print(view);
-                    	System._content = view;//there is saved the content of html that after parsed
+                        System._content = view;//there is saved the content of html that after parsed
+                        System.print(view);
                     } else{
                         System._content = null;
 					}
