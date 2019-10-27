@@ -110,7 +110,12 @@
                     controller.viewpath = System.VIEWS+'/'+M+Controller.toLowerCase();
                     controller.init();
                     view = controller[action](id);
-                    if(System.isset(view) && System.isString(view)) System.print(view); 
+                    if(System.isset(view) && System.isString(view)) {
+                    	System.print(view);
+                    	System._content = view;//there is saved the content of html that after parsed
+                    } else{
+                        System._content = null;
+					}
         		}else{ 
         			throw new Error("the action that '"+action+"' was not found"); 
         		} 
