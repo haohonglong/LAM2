@@ -87,6 +87,25 @@
 	};
 
     /**
+	 * 替换指定的占位符
+     * @param tag	占位符名称
+     * @param S
+     * @param S2
+     * @returns {*}
+     */
+    function rep_placeholder(tag,S,S2){
+        var reg = new RegExp('<!#'+tag+'/>','m');
+        var arr_inc = [];
+        if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
+            S = S.replace(arr_inc[0],function () {
+                return S2;
+            });
+        }
+        return S;
+    }
+
+
+    /**
 	 * perform controller by url and run the action
      */
 	Router.run=function (r,m) {
@@ -112,6 +131,24 @@
                     view = controller[action](id);
                     if(System.isset(view) && System.isString(view)) {
                         System._content = view;//there is saved the content of html that after parsed
+						//生产静态页开始
+						var csses = [],jses = [],script,css;
+                        jses.push(System.Html.scriptFile(System.ROOT+'/common/config/config.js'));
+                        jses.push(System.Html.scriptFile(System.classPath+'/base/System.js'));
+						System.each(System.files,function () {
+							if(System.isJsFile(this)){
+								if(this.indexOf('Router.class.js') !== -1) return true;
+                                jses.push(System.Html.scriptFile(this));
+							}else{
+                                csses.push(System.Html.linkFile(this));
+							}
+                        });
+						script = jses.join("\n");
+						css = csses.join("\n");
+                        System._content = rep_placeholder('META',System._content,'<meta charset="UTF-8">');
+                        System._content = rep_placeholder('HEADER',System._content,script+'\n'+css);
+                        System._content = System._content.trim();
+                        //end
                         System.print(view);
                     } else{
                         System._content = null;
