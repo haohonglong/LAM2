@@ -428,19 +428,17 @@
 				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
 			//加载基础类
 
-			if(srcs.length){
-				for(i=0,len = srcs.length;i < len; i++){
-					if(System.Config.files.indexOf(srcs[i]) !== -1){continue;}
-					System.Config.files.push(srcs[i]);
-					if(System.Config.render.create){
-						data.src = srcs[i];
-						System.Config.render.bulid(tag,data)
-					}else{
-						files.push(System.script(srcs[i],scriptAttribute));
-					}
-				}
-				System.print(files.join(''));
-			}
+			System.each(srcs,function (i) {
+                if(System.Config.files.indexOf(this) !== -1){return true;}
+                System.Config.files.push(this);
+                if(System.Config.render.create){
+                    data.src = this;
+                    System.Config.render.bulid(tag,data)
+                }else{
+                    files.push(System.script(this,scriptAttribute));
+                }
+            });
+            System.print(files.join(''));
 		},
         /**
          * @author: lhh

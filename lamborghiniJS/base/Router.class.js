@@ -104,27 +104,53 @@
         return S;
     }
 
+
+
     /**
 	 *
      * @param view
      * @returns {*|String|string}
      */
     function generator(view) {
-        var csses = [],jses = [],script,css;
-        jses.push(System.Html.scriptFile(System.ROOT+'/common/config/config.js'));
-        jses.push(System.Html.scriptFile(System.classPath+'/base/System.js'));
+        var jses = [],css = [],head = [];
+
+        var js_obj = System.Config.autoLoadFile();
+        var systemjs = System.classPath+'/base/System.js';
+        var config = System.ROOT+'/common/config/config.js';
+        var exclude = [
+            js_obj.Controller,
+            // js_obj.View,
+            js_obj.Router
+        ];
+        System.each(System.files,function () {
+			if(this.indexOf('Controller') > -1){
+                exclude.push(this);
+			}
+        });
+        head.push(System.Html.scriptFile(config));
+        head.push(System.Html.scriptFile(systemjs));
+        System.each(js_obj,function () {
+            if(!exclude.in_array(this)) {
+                head.push(System.Html.scriptFile(this));
+                exclude.push(this);
+			}
+        });
         System.each(System.files,function () {
             if(System.isJsFile(this)){
-                if(this.indexOf('Router.class.js') !== -1) return true;
-                jses.push(System.Html.scriptFile(this));
+				if(!exclude.in_array(this)){
+                    jses.push(System.Html.scriptFile(this));
+				}
             }else{
-                csses.push(System.Html.linkFile(this));
+                css.push(System.Html.linkFile(this));
             }
         });
-        script = jses.join("\n");
-        css = csses.join("\n");
-        view = rep_placeholder('META',view,'<meta charset="UTF-8">');
-        view = rep_placeholder('HEAD',view,script+'\n'+css);
+        jses = jses.join("\n");
+        head = head.join("\n");
+        css = css.join("\n");
+        view = rep_placeholder('UTF8',view,'<meta charset="UTF-8">');
+        view = rep_placeholder('HEAD',view,head);
+        view = rep_placeholder('CSS',view,css);
+        view = rep_placeholder('JS',view,jses);
         return view.trim();
     }
 
