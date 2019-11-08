@@ -124,7 +124,7 @@
         script = jses.join("\n");
         css = csses.join("\n");
         view = rep_placeholder('META',view,'<meta charset="UTF-8">');
-        view = rep_placeholder('HEADER',view,script+'\n'+css);
+        view = rep_placeholder('HEAD',view,script+'\n'+css);
         return view.trim();
     }
 
