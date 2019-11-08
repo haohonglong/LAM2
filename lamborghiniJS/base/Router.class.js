@@ -104,6 +104,30 @@
         return S;
     }
 
+    /**
+	 *
+     * @param view
+     * @returns {*|String|string}
+     */
+    function generator(view) {
+        var csses = [],jses = [],script,css;
+        jses.push(System.Html.scriptFile(System.ROOT+'/common/config/config.js'));
+        jses.push(System.Html.scriptFile(System.classPath+'/base/System.js'));
+        System.each(System.files,function () {
+            if(System.isJsFile(this)){
+                if(this.indexOf('Router.class.js') !== -1) return true;
+                jses.push(System.Html.scriptFile(this));
+            }else{
+                csses.push(System.Html.linkFile(this));
+            }
+        });
+        script = jses.join("\n");
+        css = csses.join("\n");
+        view = rep_placeholder('META',view,'<meta charset="UTF-8">');
+        view = rep_placeholder('HEADER',view,script+'\n'+css);
+        return view.trim();
+    }
+
 
     /**
 	 * perform controller by url and run the action
@@ -130,25 +154,8 @@
                     controller.init();
                     view = controller[action](id);
                     if(System.isset(view) && System.isString(view)) {
-                        System._content = view;//there is saved the content of html that after parsed
-						//生产静态页开始
-						var csses = [],jses = [],script,css;
-                        jses.push(System.Html.scriptFile(System.ROOT+'/common/config/config.js'));
-                        jses.push(System.Html.scriptFile(System.classPath+'/base/System.js'));
-						System.each(System.files,function () {
-							if(System.isJsFile(this)){
-								if(this.indexOf('Router.class.js') !== -1) return true;
-                                jses.push(System.Html.scriptFile(this));
-							}else{
-                                csses.push(System.Html.linkFile(this));
-							}
-                        });
-						script = jses.join("\n");
-						css = csses.join("\n");
-                        System._content = rep_placeholder('META',System._content,'<meta charset="UTF-8">');
-                        System._content = rep_placeholder('HEADER',System._content,script+'\n'+css);
-                        System._content = System._content.trim();
-                        //end
+						//生产静态页便于输出
+                        System._content = generator(view);//there is saved the content of html that after parsed
                         System.print(view);
                     } else{
                         System._content = null;
