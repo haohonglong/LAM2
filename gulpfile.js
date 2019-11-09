@@ -10,24 +10,35 @@ gulp.task('clean', function () {
         classPath+'/build/base.min.js'
     ]);
 });
+var jses = {
+    "Base":classPath+'/base/Base.class.js'
+    ,"Object":classPath+'/base/Object.class.js'
+    ,"Component":classPath+'/base/Component.class.js'
+    ,"Compiler":classPath+'/base/Compiler.class.js'
+    ,"Base64":classPath+'/base/Base64.class.js'
+    ,"Cache":classPath+'/base/Cache.class.js'
+    ,"HttpRequest":classPath+'/base/HttpRequest.class.js'
+    ,"Helper":classPath+'/base/Helper.class.js'
+    ,"Browser":classPath+'/base/Browser.class.js'
+    ,"Event":classPath+'/base/Event.class.js'
+    ,"Dom":classPath+'/base/Dom.class.js'
+    ,"View":classPath+'/base/View.class.js'
+    ,"Template":classPath+'/base/Template.class.js'
+    ,"Html":classPath+'/base/Html.class.js'
+    ,"Loader":classPath+'/base/Loader.class.js'
+    ,"Storage":classPath+'/base/Storage.class.js'
+    ,"Controller":classPath+'/base/Controller.class.js'
+    ,"Router":classPath+'/base/Router.class.js'
+};
+
+var srcs = [];
+var k;
+for(k in jses){
+    srcs.push(jses[k]);
+}
+
 gulp.task('js', function(){
-    return gulp.src([
-        ,classPath+'/base/Base.class.js'
-        ,classPath+'/base/Object.class.js'
-        ,classPath+'/base/Component.class.js'
-        ,classPath+'/base/Compiler.class.js'
-        ,classPath+'/base/Base64.class.js'
-        ,classPath+'/base/Cache.class.js'
-        ,classPath+'/base/HttpRequest.class.js'
-        ,classPath+'/base/Helper.class.js'
-        ,classPath+'/base/Browser.class.js'
-        ,classPath+'/base/Event.class.js'
-        ,classPath+'/base/Dom.class.js'
-        ,classPath+'/base/View.class.js'
-        ,classPath+'/base/Template.class.js'
-        ,classPath+'/base/Html.class.js'
-        ,classPath+'/base/Loader.class.js'
-    ])
+    return gulp.src(srcs)
         .pipe(concat('base.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(classPath+'/build'))

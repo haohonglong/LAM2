@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2019-10-23
+ * 修改日期:2019-11-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -412,7 +412,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018.11.22
-         * 修改日期：2018.11.22
+         * 修改日期：2019.11.9
          * 名称：bootstrap
          * 功能：加载初始化文件
          * 说明：
@@ -426,7 +426,32 @@
 			this.init();
 			var tag='script',scriptAttribute = System.Config.render.default.script.Attribute,
 				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
+			var classPath = System.classPath;
 			//加载基础类
+			var jses = {
+                "jquery":classPath+'/jQuery/jquery.js'
+                ,"Base":classPath+'/base/Base.class.js'
+                ,"Object":classPath+'/base/Object.class.js'
+                ,"Component":classPath+'/base/Component.class.js'
+                ,"Compiler":classPath+'/base/Compiler.class.js'
+                ,"Base64":classPath+'/base/Base64.class.js'
+                ,"Cache":classPath+'/base/Cache.class.js'
+                ,"HttpRequest":classPath+'/base/HttpRequest.class.js'
+                ,"Helper":classPath+'/base/Helper.class.js'
+                ,"Browser":classPath+'/base/Browser.class.js'
+                ,"Event":classPath+'/base/Event.class.js'
+                ,"Dom":classPath+'/base/Dom.class.js'
+                ,"View":classPath+'/base/View.class.js'
+                ,"Template":classPath+'/base/Template.class.js'
+                ,"Html":classPath+'/base/Html.class.js'
+                ,"Loader":classPath+'/base/Loader.class.js'
+                ,"Storage":classPath+'/base/Storage.class.js'
+                ,"Controller":classPath+'/base/Controller.class.js'
+                ,"Router":classPath+'/base/Router.class.js'
+            };
+			if(!srcs.baseMin){
+                srcs = System.merge(srcs,[jses]);
+			}
 
 			System.each(srcs,function (i) {
                 if(System.Config.files.indexOf(this) !== -1){return true;}

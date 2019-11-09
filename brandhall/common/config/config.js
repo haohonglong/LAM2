@@ -120,7 +120,6 @@
                 return {
                     "jquery":classPath+'/jQuery/jquery.js'
                     // ,classPath+'/build/base.min.js'
-
                     ,"Base":classPath+'/base/Base.class.js'
                     ,"Object":classPath+'/base/Object.class.js'
                     ,"Component":classPath+'/base/Component.class.js'
@@ -135,11 +134,11 @@
                     ,"View":classPath+'/base/View.class.js'
                     ,"Template":classPath+'/base/Template.class.js'
                     ,"Html":classPath+'/base/Html.class.js'
-
                     ,"Loader":classPath+'/base/Loader.class.js'
                     ,"Storage":classPath+'/base/Storage.class.js'
                     ,"Controller":classPath+'/base/Controller.class.js'
                     ,"Router":classPath+'/base/Router.class.js'
+
                     // ,"layer":PLUGINS+'/layer-v3.1.1/layer/layer.js'
                     ,"vue":PLUGINS+'/vue/vue.js'
                 };
