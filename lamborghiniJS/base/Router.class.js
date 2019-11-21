@@ -87,6 +87,75 @@
 	};
 
     /**
+	 * 替换指定的占位符
+     * @param tag	占位符名称
+     * @param S
+     * @param S2
+     * @returns {*}
+     */
+    function rep_placeholder(tag,S,S2){
+        var reg = new RegExp('<!#'+tag+'/>','m');
+        var arr_inc = [];
+        if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
+            S = S.replace(arr_inc[0],function () {
+                return S2;
+            });
+        }
+        return S;
+    }
+
+
+
+    /**
+	 *
+     * @param view
+     * @returns {*|String|string}
+     */
+    function generator(view) {
+        var jses = [],css = [],head = [];
+
+        var js_obj = System.Config.autoLoadFile();
+        var systemjs = System.classPath+'/base/System.js';
+        var config = System.ROOT+'/common/config/config.js';
+        var exclude = [
+            js_obj.Controller,
+            // js_obj.View,
+            js_obj.Router
+        ];
+        System.each(System.files,function () {
+			if(this.indexOf('Controller') > -1){
+                exclude.push(this);
+			}
+        });
+        head.push(System.Html.scriptFile(config));
+        head.push(System.Html.scriptFile(systemjs));
+        System.each(js_obj,function () {
+            if(!exclude.in_array(this)) {
+                head.push(System.Html.scriptFile(this));
+                exclude.push(this);
+			}
+        });
+        System.each(System.files,function () {
+            if(System.isJsFile(this)){
+				if(!exclude.in_array(this)){
+                    jses.push(System.Html.scriptFile(this));
+				}
+            }else{
+                css.push(System.Html.linkFile(this));
+            }
+        });
+        jses = jses.join("\n");
+        head = head.join("\n");
+        css = css.join("\n");
+        view = rep_placeholder('UTF8',view,'<meta charset="UTF-8">');
+        view = rep_placeholder('HEAD',view,head);
+        view = rep_placeholder('CSS',view,css);
+        view = rep_placeholder('JS',view,jses);
+        return view.trim();
+    }
+
+
+    /**
 	 * perform controller by url and run the action
      */
 	Router.run=function (r,m) {
@@ -110,7 +179,13 @@
                     controller.viewpath = System.VIEWS+'/'+M+Controller.toLowerCase();
                     controller.init();
                     view = controller[action](id);
-                    if(System.isset(view) && System.isString(view)) System.print(view); 
+                    if(System.isset(view) && System.isString(view)) {
+						//生产静态页便于输出
+                        System._content = generator(view);//there is saved the content of html that after parsed
+                        System.print(view);
+                    } else{
+                        System._content = null;
+					}
         		}else{ 
         			throw new Error("the action that '"+action+"' was not found"); 
         		} 

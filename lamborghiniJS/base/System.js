@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2019-7-1
+ * 修改日期:2019-11-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -48,7 +48,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="v2.1.3",
+	var VERSION="v2.1.4",
 		Interface={},
 		System={},
 		once=true,
@@ -412,7 +412,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018.11.22
-         * 修改日期：2018.11.22
+         * 修改日期：2019.11.9
          * 名称：bootstrap
          * 功能：加载初始化文件
          * 说明：
@@ -426,21 +426,44 @@
 			this.init();
 			var tag='script',scriptAttribute = System.Config.render.default.script.Attribute,
 				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
+			var classPath = System.classPath;
 			//加载基础类
-
-			if(srcs.length){
-				for(i=0,len = srcs.length;i < len; i++){
-					if(System.Config.files.indexOf(srcs[i]) !== -1){continue;}
-					System.Config.files.push(srcs[i]);
-					if(System.Config.render.create){
-						data.src = srcs[i];
-						System.Config.render.bulid(tag,data)
-					}else{
-						files.push(System.script(srcs[i],scriptAttribute));
-					}
-				}
-				System.print(files.join(''));
+			var jses = {
+                "jquery":classPath+'/jQuery/jquery.js'
+                ,"Base":classPath+'/base/Base.class.js'
+                ,"Object":classPath+'/base/Object.class.js'
+                ,"Component":classPath+'/base/Component.class.js'
+                ,"Compiler":classPath+'/base/Compiler.class.js'
+                ,"Base64":classPath+'/base/Base64.class.js'
+                ,"Cache":classPath+'/base/Cache.class.js'
+                ,"HttpRequest":classPath+'/base/HttpRequest.class.js'
+                ,"Helper":classPath+'/base/Helper.class.js'
+                ,"Browser":classPath+'/base/Browser.class.js'
+                ,"Event":classPath+'/base/Event.class.js'
+                ,"Dom":classPath+'/base/Dom.class.js'
+                ,"View":classPath+'/base/View.class.js'
+                ,"Template":classPath+'/base/Template.class.js'
+                ,"Html":classPath+'/base/Html.class.js'
+                ,"Loader":classPath+'/base/Loader.class.js'
+                ,"Storage":classPath+'/base/Storage.class.js'
+                ,"Controller":classPath+'/base/Controller.class.js'
+                ,"Router":classPath+'/base/Router.class.js'
+            };
+			if(!srcs.baseMin){
+                srcs = System.merge(srcs,[jses]);
 			}
+
+			System.each(srcs,function (i) {
+                if(System.Config.files.indexOf(this) !== -1){return true;}
+                System.Config.files.push(this);
+                if(System.Config.render.create){
+                    data.src = this;
+                    System.Config.render.bulid(tag,data)
+                }else{
+                    files.push(System.script(this,scriptAttribute));
+                }
+            });
+            System.print(files.join(''));
 		},
         /**
          * @author: lhh
@@ -1451,6 +1474,24 @@
 
 			return System.Base64.encode(hs.join('')).replace(/[_\s]/g,'');
 		},
+		'uniqid':function (code,hashLength) {
+            code = code || null;
+            hashLength = Number(hashLength);
+            if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {hashLength =  13;}
+            var ar = [];
+            ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+            ar[1] = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            ar[3] = code && System.isString(code) && code.split('') || [];
+            ar = ar[0].merge(ar[1]).merge(ar[3]);
+            var hs = [];
+            var hl = hashLength;
+            var al = ar.length;
+            for (var i = 0; i < hl; i ++) {
+                hs.push(ar[Math.floor(Math.random() * al)]);
+            }
+
+            return hs.join('').replace(/[_\s]/g,'');
+        },
 
         /**
          * @author: lhh
