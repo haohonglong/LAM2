@@ -93,31 +93,32 @@
                 ROOT = this.Public.ROOT;
                 var PLUGINS = this.Public.PLUGINS;
                 var classPath=this.getClassPath();
-                return [
-                    classPath+'/jQuery/jquery.js'
+                return {
+                    "jquery":classPath+'/jQuery/jquery.js'
                     // ,classPath+'/build/base.min.js'
 
-                    ,classPath+'/base/Base.class.js'
-                    ,classPath+'/base/Object.class.js'
-                    ,classPath+'/base/Component.class.js'
-                    ,classPath+'/base/Compiler.class.js'
-                    ,classPath+'/base/Base64.class.js'
-                    ,classPath+'/base/Cache.class.js'
-                    ,classPath+'/base/HttpRequest.class.js'
-                    ,classPath+'/base/Helper.class.js'
-                    ,classPath+'/base/Browser.class.js'
-                    ,classPath+'/base/Event.class.js'
-                    ,classPath+'/base/Dom.class.js'
-                    ,classPath+'/base/View.class.js'
-                    ,classPath+'/base/Template.class.js'
-                    ,classPath+'/base/Html.class.js'
+                    ,"Base":classPath+'/base/Base.class.js'
+                    ,"Object":classPath+'/base/Object.class.js'
+                    ,"Component":classPath+'/base/Component.class.js'
+                    ,"Compiler":classPath+'/base/Compiler.class.js'
+                    ,"Base64":classPath+'/base/Base64.class.js'
+                    ,"Cache":classPath+'/base/Cache.class.js'
+                    ,"HttpRequest":classPath+'/base/HttpRequest.class.js'
+                    ,"Helper":classPath+'/base/Helper.class.js'
+                    ,"Browser":classPath+'/base/Browser.class.js'
+                    ,"Event":classPath+'/base/Event.class.js'
+                    ,"Dom":classPath+'/base/Dom.class.js'
+                    ,"View":classPath+'/base/View.class.js'
+                    ,"Template":classPath+'/base/Template.class.js'
+                    ,"Html":classPath+'/base/Html.class.js'
 
-                    ,classPath+'/base/Loader.class.js'
-                    ,classPath+'/base/Storage.class.js'
-                    ,classPath+'/base/Controller.class.js'
-                    ,classPath+'/base/Router.class.js'
-                    ,PLUGINS+'/vue/vue.js'
-                ];
+                    ,"Loader":classPath+'/base/Loader.class.js'
+                    ,"Storage":classPath+'/base/Storage.class.js'
+                    ,"Controller":classPath+'/base/Controller.class.js'
+                    ,"Router":classPath+'/base/Router.class.js'
+                    // ,"layer":PLUGINS+'/layer-v3.1.1/layer/layer.js'
+                    ,"vue":PLUGINS+'/vue/vue.js'
+                };
             },
 
             //标签的渲染方式

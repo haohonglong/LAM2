@@ -80,7 +80,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2019-06-18
-         * 修改日期：2019-06-18
+         * 修改日期：2019-10-06
          * 名称：renderContent
          * 功能：
          * 说明：返回视图
@@ -90,7 +90,8 @@
          * @returns {string}
          */
         'renderContent':function (content,callback) {
-            var obj = System.Template.layout(content);
+            var temp = new System.Template();
+            var obj = temp.layout(content);
             if(System.isPlainObject(obj)){
                 content = obj.content;
                 this.title   = obj.title   || this.title;
