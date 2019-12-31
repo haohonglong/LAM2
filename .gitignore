@@ -2,3 +2,4 @@
 _mac
 node_modules/*
 .DS_Store
+*.xml
