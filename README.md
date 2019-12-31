@@ -8,33 +8,8 @@
 
 # 产品介绍：
 	LAM2 用的是单文件入口加载方式，面向对象，MVC模式，由路由根据浏览器地址栏解析加载指定的controller并执行action然后再渲染view(controller里指定的)。在view里面可以做你想做的，如用vue,angularjs 等别的第三方框架对视图里的dom节点进行操作。LAM2不做任何与UI有关的事，（例子里的demo只是为了演示怎么用）它是一个构建的底层类库工具。它有点像webpack 但远没有webpack强大，LAM2没有依赖任何node，npm ，它依赖于jQuery的ajax来引入文件，所以必须要在服务器环境里运行,如：apache,nginx 等，这样的目的为解决浏览器跨域访问的问题。
-
-#### 文件结构：
-		brandhall  #后台管理demo
-            |-commmon       项目公共文件目录
-                |-config       
-                    |-config.js       项目配置文件(2)
-            |-controllers   项目控制器文件存放位置(5)
-                |-RoomController.class.js  对应views文件夹下的room文件夹
-            |-public        项目资源文件存放位置(9)
-                |-css
-                |-images
-                |-js
-            |-views         项目视图文件存放位置
-                |—layouts   布局文件存放的位置
-                     |-main.html(8)
-                |-room
-                    |-list.html(7)
-            |-index.html    项目入口文件(1)
-        
-        lamborghiniJS #类库核心文件存放位置
-            |-base
-                |-System.js(3)
-                |-View.class.js(6)
-                |-Router.class.js(4)
-                |-...
-   ##### 上面数字代表的是执行的顺序
-	
+###reference 
+  <a href="https://github.com/haohonglong/LAM2-demos" target="_blank">LAM2-demos</a>
 
 # 单文件应用运行的过程：
              index.html(入口文件,参考: brandhall/index.html)(1)
@@ -87,10 +62,7 @@
                                        
                   
                   
-                  
- # usage
-    git clone https://github.com/haohonglong/LAM2.git
-    cd LAM2
+
 #### note:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
 #### 例如 nginx 配置
