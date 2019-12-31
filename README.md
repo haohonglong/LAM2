@@ -8,55 +8,54 @@
 
 # 产品介绍：
 	LAM2 用的是单文件入口加载方式，面向对象，MVC模式，由路由根据浏览器地址栏解析加载指定的controller并执行action然后再渲染view(controller里指定的)。在view里面可以做你想做的，如用vue,angularjs 等别的第三方框架对视图里的dom节点进行操作。LAM2不做任何与UI有关的事，（例子里的demo只是为了演示怎么用）它是一个构建的底层类库工具。它有点像webpack 但远没有webpack强大，LAM2没有依赖任何node，npm ，它依赖于jQuery的ajax来引入文件，所以必须要在服务器环境里运行,如：apache,nginx 等，这样的目的为解决浏览器跨域访问的问题。
-###reference 
-  <a href="https://github.com/haohonglong/LAM2-demos" target="_blank">LAM2-demos</a>
+[LAM2-demos](https://github.com/haohonglong/LAM2-demos)
 
-# 单文件应用运行的过程：
-             index.html(入口文件,参考: brandhall/index.html)(1)
-               \-|-common/config/config.js(2)  应用配置文件
-                 |-lamborghiniJS/base/System.js(3)  
-                 |-LAM.bootstrap();(4) 加载LAM2基础类库
-                  \
-                   -------------\
-                                 \
-                                 _\| 
-                                 路由器 Router.class(5) 获取浏览地址栏里的参数并解析对应的controller,action 
-                                            |
-                                            |
-                        HttpRequest.get()<--  
-                            \
-                            _\|
-                    控制器 Controller.class(6)\
-                              _\|
-                            视图 View.class(7)\
-                                             _\|
-                                               Template.class(8)
-                                                             \
-                                                     没有     _\|        
-                                                 |————————有layout时：
-                                                 |                 \
-                                                 |                 _\|
-                                                 |              视图作为模版嵌入layout里 
-                                                 |              /
-                                                  ----layout 布局
-                          |-------------render(9)|
-                          |                ______|                                                                     
-                          |               /
-                          |             显示视图文件
-                          |              /
-                          |       include (引入外部html文件替换掉占位符标签位置)(11)
-                          |         \                                                      
-                          |         _\|
-                          |------->Html.class(10)                 |-----------|                          
-                                             /                   |           |   
-                                         get cache<------------- |   cache   |                       
-                                          /                      |___________|
-                                         /                              ^
-                                      has cache                         |            LAM.import()
-                                  YES   /\ NO                           |            /
-                 get data<-------------/  \         ____________________|___________/ 
-                       \                  _\|       /                   |
-                        \<--------------jQuery.ajax()--------->add to cache
+### 单文件应用运行的过程：
+                         index.html(入口文件,参考: brandhall/index.html)(1)
+                           \-|-common/config/config.js(2)  应用配置文件
+                             |-lamborghiniJS/base/System.js(3)  
+                             |-LAM.bootstrap();(4) 加载LAM2基础类库
+                              \
+                               -------------\
+                                             \
+                                             _\| 
+                                             路由器 Router.class(5) 获取浏览地址栏里的参数并解析对应的controller,action 
+                                                        |
+                                                        |
+                                    HttpRequest.get()<--  
+                                        \
+                                        _\|
+                                控制器 Controller.class(6)\
+                                          _\|
+                                        视图 View.class(7)\
+                                                         _\|
+                                                           Template.class(8)
+                                                                         \
+                                                                 没有     _\|        
+                                                             |————————有layout时：
+                                                             |                 \
+                                                             |                 _\|
+                                                             |              视图作为模版嵌入layout里 
+                                                             |              /
+                                                              ----layout 布局
+                                      |-------------render(9)|
+                                      |                ______|                                                                     
+                                      |               /
+                                      |             显示视图文件
+                                      |              /
+                                      |       include (引入外部html文件替换掉占位符标签位置)(11)
+                                      |         \                                                      
+                                      |         _\|
+                                      |------->Html.class(10)                 |-----------|                          
+                                                         /                   |           |   
+                                                     get cache<------------- |   cache   |                       
+                                                      /                      |___________|
+                                                     /                              ^
+                                                  has cache                         |            LAM.import()
+                                              YES   /\ NO                           |            /
+                             get data<-------------/  \         ____________________|___________/ 
+                                   \                  _\|       /                   |
+                                    \<--------------jQuery.ajax()--------->add to cache
                                                                                           
                           
                                        
