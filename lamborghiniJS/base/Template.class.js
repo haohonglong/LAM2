@@ -340,6 +340,30 @@
         /**
          * @author: lhh
          * 产品介绍：
+         * 创建日期：2020-1-29
+         * 修改日期：2020-1-29
+         * 名称：block
+         * 功能：预处理 类似yii2 的 beginBlock
+         * 说明：
+         * 注意：
+         * @param S
+         * @returns {String}
+         */
+        'block':function (S) {
+            var reg_inc = new RegExp('(<#Block::begin\\()(\\s+)(\\);>) (([\\s\\S])*?) (<#Block::end();>)', 'gm');
+            var arr_inc = [];
+            var id = "",content = "";
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+                id = arr_inc[2];
+                content = arr_inc[4];
+                S = S.replace(arr_inc[0],'').replace(new RegExp('<#=Block::blocks["'+id+'"] />','gm'),content);
+                reg_inc.lastIndex = 0;
+            }
+            return S;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
          * 创建日期：2019-7-25
          * 修改日期：2019-8-25
          * 名称：define2
@@ -462,6 +486,7 @@
             }
             return S;
         },
+
         /**
          * @author: lhh
          * 产品介绍：
