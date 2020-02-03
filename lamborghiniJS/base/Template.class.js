@@ -340,6 +340,30 @@
         /**
          * @author: lhh
          * 产品介绍：
+         * 创建日期：2020-1-29
+         * 修改日期：2020-1-29
+         * 名称：block
+         * 功能：预处理 类似yii2 的 beginBlock
+         * 说明：
+         * 注意：
+         * @param S
+         * @returns {String}
+         */
+        'block':function (S) {
+            var reg_inc = new RegExp('(<#Block::begin\\()(\\s+)(\\);>) (([\\s\\S])*?) (<#Block::end();>)', 'gm');
+            var arr_inc = [];
+            var id = "",content = "";
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+                id = arr_inc[2];
+                content = arr_inc[4];
+                S = S.replace(arr_inc[0],'').replace(new RegExp('<#=Block::blocks["'+id+'"] />','gm'),content);
+                reg_inc.lastIndex = 0;
+            }
+            return S;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
          * 创建日期：2019-7-25
          * 修改日期：2019-8-25
          * 名称：define2
@@ -368,7 +392,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-3
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割
@@ -383,6 +407,7 @@
             var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
             var k,v;
             var arr_inc = [];
+            var files = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
                 var data ={},arr = arr_inc[2].split('" ');
                 arr.each(function(){
@@ -393,13 +418,22 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                data.path = data.path || null;
+                data.path  = data.path 	|| null;
+                data.write = System.eval(data.write) || false;
                 if(data.path) {
+                    data.paths = data.path.split(',');
                     data.root = data.root ? data.root : false;
-                    System.import(data.path.split(','),data.root);
+                    if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
+                    	var loader = System.import(data.paths,data.root,null,{'xhr':false});
+                    	files = loader.get_files();
+                        loader.remove();
+					}else{
+                        System.import(data.paths,data.root);
+					}
+
                 }
                 S = S.replace(arr_inc[0],function () {
-                    return '';
+                    return data.write ? files.join('') : '';
                 });
 
                 reg_inc.lastIndex = 0;
@@ -462,6 +496,7 @@
             }
             return S;
         },
+
         /**
          * @author: lhh
          * 产品介绍：

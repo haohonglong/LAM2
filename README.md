@@ -3,7 +3,7 @@
 	version ：v2.1.4
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2019-08-25
+	修改日期 ：2020-02-3
 
 
 # 产品介绍：
@@ -1250,13 +1250,14 @@
     可在模版里定义常量，注意：必须单独占一行,模版变量会被解析
   
   #### #define# \_\_DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
-    从include 返回的的的数据保存到常量，注意：指令必须单独占一行，头尾都不能有空格或任何别的字符。常量也可以定义为一个标签，如：<paging/>,注意：标签内不允许有空格符，模版变量不会被解析
+    从include 返回的的的数据保存到常量，注意：指令必须单独占一行，头尾都不能有空格或任何别的字符。常量也可以定义为一个标签，如：<paging/>,注意：标签内不允许有空格符，模版变量不会被解析，在script 标签里可以直接用里面的属性，如：__DATA__.list,如果是数组:__DATA__[0].name
     
     
   #### include：<#include repeat="0" tp-data="{}"  file="filePath"  />
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
-  #### import：<#import path="" root=""  />
-    导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早，多个文件时,path里用','分割
+  #### import：<#import path="" root="" [write="true|false"]  />
+    导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早，多个文件时,path里用','分割，
+    注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用write="true" 这个属性,默认是忽略的
   #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
     方便在view里切换layout模版,设置title,可向layout模版里传递数据
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
