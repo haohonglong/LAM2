@@ -392,7 +392,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-3
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割
@@ -417,10 +417,16 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                data.path = data.path || null;
+                data.path  = data.path 	|| null;
+                data.write = System.eval(data.write) || false;
                 if(data.path) {
                     data.root = data.root ? data.root : false;
-                    System.import(data.path.split(','),data.root);
+                    if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
+                    	System.import(data.path.split(','),data.root,null,{'xhr':false});
+					}else{
+                        System.import(data.path.split(','),data.root);
+					}
+
                 }
                 S = S.replace(arr_inc[0],function () {
                     return '';
