@@ -408,6 +408,7 @@
             var k,v;
             var arr_inc = [];
             var files = [];
+            var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
                 var data ={},arr = arr_inc[2].split('" ');
                 arr.each(function(){
@@ -420,20 +421,27 @@
                 });
                 data.path  = data.path 	|| null;
                 data.write = System.eval(data.write) || false;
+                data.befor = System.eval(data.befor) || false;
+                loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
                     data.root = data.root ? data.root : false;
                     if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                    	var loader = System.import(data.paths,data.root,null,{'xhr':false});
-                    	files = loader.get_files();
-                        loader.remove();
+                    	if(data.befor){//用 打印字符串方式，位置在head标签里
+                            System.import(data.paths,data.root,null,{'xhr':false}).print();
+						}else{//替换预处理占位符的位置
+                            loader = System.import(data.paths,data.root,null,{'xhr':false});
+                            loader._files = loader.get_files().join('');
+                            loader.remove();
+						}
+
 					}else{
                         System.import(data.paths,data.root);
 					}
 
                 }
                 S = S.replace(arr_inc[0],function () {
-                    return data.write ? files.join('') : '';
+                    return loader ? loader._files : '';
                 });
 
                 reg_inc.lastIndex = 0;
