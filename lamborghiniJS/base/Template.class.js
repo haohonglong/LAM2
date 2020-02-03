@@ -407,6 +407,7 @@
             var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
             var k,v;
             var arr_inc = [];
+            var files = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
                 var data ={},arr = arr_inc[2].split('" ');
                 arr.each(function(){
@@ -420,16 +421,19 @@
                 data.path  = data.path 	|| null;
                 data.write = System.eval(data.write) || false;
                 if(data.path) {
+                    data.paths = data.path.split(',');
                     data.root = data.root ? data.root : false;
                     if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                    	System.import(data.path.split(','),data.root,null,{'xhr':false});
+                    	var loader = System.import(data.paths,data.root,null,{'xhr':false});
+                    	files = loader.get_files();
+                        loader.remove();
 					}else{
-                        System.import(data.path.split(','),data.root);
+                        System.import(data.paths,data.root);
 					}
 
                 }
                 S = S.replace(arr_inc[0],function () {
-                    return '';
+                    return data.write ? files.join('') : '';
                 });
 
                 reg_inc.lastIndex = 0;

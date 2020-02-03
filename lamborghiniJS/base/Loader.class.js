@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014-9-9
- * 修改日期：2018-2-10
+ * 修改日期：2020-2-3
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -58,7 +58,7 @@
     var Loader = System.Html.extend({
         constructor: function(Config){
             this.base();
-            __this__=this;
+            __this__ = this;
             this.Config = Config || System.Config;
             this.D = null;
             this.js  =[];
@@ -310,7 +310,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-8-27
-         * 修改日期：2017-9-1
+         * 修改日期：2020-2-3
          * 名称：import
          * 功能：导入指定的js文件
          * 说明：System 参数不用传
@@ -367,10 +367,10 @@
                         'baseUrl':baseUrl,
                         'js':url,
                         'suffix':suffix
-                    }).print();
+                    });
                 }
             }
-            return this;
+            return __this__;
         },
         /**
          *
