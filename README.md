@@ -3,7 +3,7 @@
 	version ：v2.1.4
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-02-3
+	修改日期 ：2020-02-5
 
 
 # 产品介绍：
@@ -1263,6 +1263,60 @@
     方便在view里切换layout模版,设置title,可向layout模版里传递数据
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
+  #### block ： 
+  ######  <#beginBlock id="menu"> ... <#endBlock> 由一个唯一标识符定义block
+  ######  <#=blocks["menu"]> 根据id获取定义过的block的内容,然后打印，可以在任何地方显示N次
+        #define# __MENU__ <#include repeat="0" tp-data=""  file="{{LAM.DATA}}/menu.json" /> #end#
+        <#beginBlock id="menu">
+        <div class="sectionBox sectionTitle-A2"><h2>喜鹊筑家旗舰店</h2></div>
+        <div class="sectionScroll sectionList-A2 sectionIcon-B1 sectionFont-A1">
+            <dl id="vue-menu">
+                <dd v-for="menu in list">
+                    <div class="title">
+                        <i :class="'I1 '+menu.icon"></i><a href="javascript:void(0);">{#menu.title#}</a>
+                    </div>
+                    <div v-if="menu.ul" class="sectionList-A1 sectionList-A1-3 none">
+                        <ul>
+                            <li v-for="v in menu.ul"><a :href="v.href">{#v.title#}</a></li>
+                        </ul>
+                    </div>
+        
+                </dd>
+            </dl>
+        </div>
+        
+        
+        <script type="text/javascript">
+            LAM.run([LAM,jQuery],function(LAM,$) {
+                'use strict';
+                var System = this;
+        
+                System.setMenuSelectedStatus=function(href){
+                    $('.sectionList-A1-3 li a[href*="'+href+'"]')
+                        .closest('li').addClass('cur')
+                        .closest('.sectionList-A1-3').show()
+                        .closest('dd').addClass('hover');
+                };
+        
+                $(function(){
+        
+                    new Vue({
+                        delimiters: ['{#', '#}'],
+                        el: '#vue-menu',
+                        data: {
+                            list: __MENU__
+                        }
+                    });
+                    System.setMenuSelectedStatus(System.defaultRoute);
+                });
+        
+        
+        
+        
+            });
+        </script>
+        <#endBlock>
+        <#=blocks["menu"]>
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2019-10-06
+ * 修改日期:2020-2-05
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -29,6 +29,7 @@
 	System.is(System,'Component','Template',System.classPath+'/base');
     System.listen(function () {
         if(System.isFunction(System.import)){
+            System.import(['/Cache.class'],System.classPath+'/base');
             System.import(['/Compiler.class'],System.classPath+'/base');
             System.import(['/Html.class'],System.classPath+'/base');
             return true;
@@ -38,6 +39,8 @@
 
 	var __this__=null;
 	var guid=0;
+    var cache = new System.Cache('block');
+
 	var Template = System.Component.extend({
 		constructor: function(compiler) {
 			this.base();
@@ -341,22 +344,78 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-1-29
-         * 名称：block
-         * 功能：预处理 类似yii2 的 beginBlock
-         * 说明：
+         * 修改日期：2020-2-5
+         * 名称：setBlock
+         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block
+         * 说明：global 属性代表全局
          * 注意：
+         * usage：<#beginBlock id="menu"> ... <#endBlock>
          * @param S
          * @returns {String}
          */
-        'block':function (S) {
-            var reg_inc = new RegExp('(<#Block::begin\\()(\\s+)(\\);>) (([\\s\\S])*?) (<#Block::end();>)', 'gm');
+        'setBlock':function (S) {
+            var reg_inc = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
             var arr_inc = [];
+            var k,v;
             var id = "",content = "";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                id = arr_inc[2];
-                content = arr_inc[4];
-                S = S.replace(arr_inc[0],'').replace(new RegExp('<#=Block::blocks["'+id+'"] />','gm'),content);
+                var data ={},arr = arr_inc[1].split('" ');
+                arr.each(function(){
+                    var arr = this.split('="');
+                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    data[k] =  v;
+                });
+                id = data.id;
+                data.global = System.isBoolean(data.global) ? data.global : true;
+                content = arr_inc[3];
+                data.content = content;
+                if(data.global){//
+                    cache.find('id',id,function (index,id) {
+                        if(-1 === index){
+                            this.add(data);
+                        }else{
+                            this.update(index,data);
+                        }
+                    });
+				}
+                S = S.replace(arr_inc[0],'');
+
+                reg_inc.lastIndex = 0;
+            }
+            return this.getBlocks(S);
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-2-5
+         * 修改日期：2020-2-5
+         * 名称：getBlocks
+         * 功能：预处理-根据id获取之前定义的block
+         * 说明：
+         * 注意：
+         * usage：<#=blocks["id"]>
+         * @param S
+         * @returns {String}
+         */
+		'getBlocks':function (S) {
+            var reg_inc = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
+            var arr_inc = [];
+            var id = "",content="";
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+                id = arr_inc[1];
+            	content = "";
+                cache.find('id',id,function (index) {
+                    if(-1 === index){
+                        throw new Error('Unknown id of blocks '+arr_inc[0]);
+                    }else{
+                        content = this.get(index).content;
+					}
+
+                });
+                S = S.replace(arr_inc[0],content);
                 reg_inc.lastIndex = 0;
             }
             return S;
@@ -407,7 +466,6 @@
             var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
             var k,v;
             var arr_inc = [];
-            var files = [];
             var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
                 var data ={},arr = arr_inc[2].split('" ');
@@ -509,7 +567,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-05
          * 名称：parse
          * 功能：解析,导入，包含
          * 说明：
@@ -520,6 +578,7 @@
          */
 		'parse':function (s) {
             s = this.define2(this.define(s));
+            s = this.setBlock(s);
             s = this.import(s);
             s = this.include(s);
             return s;
