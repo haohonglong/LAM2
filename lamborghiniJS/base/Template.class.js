@@ -346,43 +346,31 @@
          * 创建日期：2020-1-29
          * 修改日期：2020-2-5
          * 名称：setBlock
-         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block
-         * 说明：global 属性代表全局
+         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
+         * 说明：
          * 注意：
          * usage：<#beginBlock id="menu"> ... <#endBlock>
          * @param S
          * @returns {String}
          */
         'setBlock':function (S) {
-            var reg_inc = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
+            var reg_inc = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
             var arr_inc = [];
-            var k,v;
             var id = "",content = "";
+            var data ={};
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                var data ={},arr = arr_inc[1].split('" ');
-                arr.each(function(){
-                    var arr = this.split('="');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    data[k] =  v;
+                data ={};id = System.camelCase(arr_inc[1].trim());
+                data.id = id;
+                content = arr_inc[2];
+                data.content = this.getBlocks(content);
+                cache.find('id',id,function (index,id) {
+                    if(-1 === index){
+                        this.add(data);
+                    }else{
+                        this.update(index,data);
+                    }
                 });
-                id = data.id;
-                data.global = System.isBoolean(data.global) ? data.global : true;
-                content = arr_inc[3];
-                data.content = content;
-                if(data.global){//
-                    cache.find('id',id,function (index,id) {
-                        if(-1 === index){
-                            this.add(data);
-                        }else{
-                            this.update(index,data);
-                        }
-                    });
-				}
                 S = S.replace(arr_inc[0],'');
-
                 reg_inc.lastIndex = 0;
             }
             return this.getBlocks(S);
