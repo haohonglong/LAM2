@@ -1264,7 +1264,7 @@
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
   #### block ： 
-  ######  <#beginBlock id="menu"> ... <#endBlock> 由一个唯一标识符定义block
+  ######  <#beginBlock id="menu"> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用
   ######  <#=blocks["menu"]> 根据id获取定义过的block的内容,然后打印，可以在任何地方显示N次
         #define# __MENU__ <#include repeat="0" tp-data=""  file="{{LAM.DATA}}/menu.json" /> #end#
         <#beginBlock id="menu">
