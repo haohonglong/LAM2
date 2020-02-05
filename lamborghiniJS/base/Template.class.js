@@ -47,8 +47,15 @@
 			__this__=this;
 			this.guid=0;
 			guid++;
-			this.compiler = compiler || System.Compiler.getInstance();
 			this.cache = cache || _cache;
+			this.compiler = compiler || System.Compiler.getInstance();
+			this.define_reg    = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','g');
+			this.define2_reg   = new RegExp('^(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)$','gm');
+			this.include_reg   = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
+			this.import_reg    = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
+			this.layout_reg    = new RegExp('(<#)(layout|extends) (([\\s\\S])*?) (/>)','gm');
+			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
+			this.get_block_reg = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
 			this.html=[];
 		},
 		'_className':'Template',
@@ -284,7 +291,7 @@
 		 * @returns {String}
 		 */
 		'layout':function(S){
-			var reg = new RegExp('(<#)(layout|extends) (([\\s\\S])*?) (/>)','gm');
+			var reg = this.layout_reg;
 			var k,v;
 			var arr_inc = [];
 			if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
@@ -330,7 +337,7 @@
          * @returns {String}
          */
         'define':function (S) {
-            var reg_inc = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','g');
+            var reg_inc = this.define_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
@@ -355,7 +362,7 @@
          * @returns {String}
          */
         'setBlock':function (S) {
-            var reg_inc = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
+            var reg_inc = this.set_block_reg;
             var arr_inc = [];
             var id = "",content = "";
             var data ={};
@@ -390,7 +397,7 @@
          * @returns {String}
          */
 		'getBlocks':function (S) {
-            var reg_inc = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
+            var reg_inc = this.get_block_reg;
             var arr_inc = [];
             var id = "",content="";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
@@ -423,7 +430,7 @@
          * @returns {String}
          */
         'define2':function (S) {
-            var reg_inc = new RegExp('^(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)$','gm');
+            var reg_inc = this.define2_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
@@ -452,7 +459,7 @@
          * @returns {String}
          */
         'import':function (S) {
-            var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
+            var reg_inc = this.import_reg;
             var k,v;
             var arr_inc = [];
             var loader = null;
@@ -509,7 +516,7 @@
          * @returns {String}
          */
         'include':function (S) {
-            var reg_inc = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
+            var reg_inc = this.include_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
