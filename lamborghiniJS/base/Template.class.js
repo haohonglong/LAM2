@@ -39,15 +39,23 @@
 
 	var __this__=null;
 	var guid=0;
-    var cache = new System.Cache('block');
+    var _cache = new System.Cache('block');
 
 	var Template = System.Component.extend({
-		constructor: function(compiler) {
+		constructor: function(cache,compiler) {
 			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;
+			this.cache = cache || _cache;
 			this.compiler = compiler || System.Compiler.getInstance();
+			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','g');
+			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
+			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
+			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
+			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
+			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
+			this.get_block_reg = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
 			this.html=[];
 		},
 		'_className':'Template',
@@ -274,7 +282,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
-		 * 修改日期：2019-6-13
+         * 修改日期：2020-2-05
 		 * 名称：layout
 		 * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
 		 * 说明：
@@ -283,11 +291,11 @@
 		 * @returns {String}
 		 */
 		'layout':function(S){
-			var reg = new RegExp('(<#)(layout|extends) (([\\s\\S])*?) (/>)','gm');
+			var reg = this.layout_reg;
 			var k,v;
 			var arr_inc = [];
 			if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
-				var data ={},arr = arr_inc[3].split('" ');
+				var data ={},arr = arr_inc[2].split('" ');
 				arr.each(function(){
 					var arr = this.split('="');
 					arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -320,7 +328,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-3-13
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-05
          * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
@@ -329,12 +337,12 @@
          * @returns {String}
          */
         'define':function (S) {
-            var reg_inc = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','g');
+            var reg_inc = this.define_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
-                v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
+                k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
+                v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
                 S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),this.findTpl(v));
                 reg_inc.lastIndex = 0;
             }
@@ -354,7 +362,7 @@
          * @returns {String}
          */
         'setBlock':function (S) {
-            var reg_inc = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
+            var reg_inc = this.set_block_reg;
             var arr_inc = [];
             var id = "",content = "";
             var data ={};
@@ -363,7 +371,7 @@
                 data.id = id;
                 content = arr_inc[2];
                 data.content = this.getBlocks(content);
-                cache.find('id',id,function (index,id) {
+                this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         this.add(data);
                     }else{
@@ -389,13 +397,13 @@
          * @returns {String}
          */
 		'getBlocks':function (S) {
-            var reg_inc = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
+            var reg_inc = this.get_block_reg;
             var arr_inc = [];
             var id = "",content="";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
                 id = arr_inc[1];
             	content = "";
-                cache.find('id',id,function (index) {
+                this.cache.find('id',id,function (index) {
                     if(-1 === index){
                         throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
@@ -412,7 +420,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-25
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-05
          * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
@@ -422,12 +430,12 @@
          * @returns {String}
          */
         'define2':function (S) {
-            var reg_inc = new RegExp('^(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)$','gm');
+            var reg_inc = this.define2_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[2];
-                v = arr_inc[4];
+                k = arr_inc[1];
+                v = arr_inc[3];
                 v = this.include(v);
                 S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                 reg_inc.lastIndex = 0;
@@ -439,10 +447,10 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-3
+         * 修改日期：2020-2-05
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割
+         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -451,12 +459,12 @@
          * @returns {String}
          */
         'import':function (S) {
-            var reg_inc = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
+            var reg_inc = this.import_reg;
             var k,v;
             var arr_inc = [];
             var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[2].split('" ');
+                var data ={},arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
                     arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -465,24 +473,41 @@
                     v = arr[1];
                     data[k] =  v;
                 });
+                data.type  = data.type 	|| 'js';
                 data.path  = data.path 	|| null;
                 data.write = System.eval(data.write) || false;
                 data.befor = System.eval(data.befor) || false;
+                data.root  = data.root ? data.root : false;
                 loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
-                    data.root = data.root ? data.root : false;
-                    if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                    	if(data.befor){//用 打印字符串方式，位置在head标签里
-                            System.import(data.paths,data.root,null,{'xhr':false}).print();
-						}else{//替换预处理占位符的位置
-                            loader = System.import(data.paths,data.root,null,{'xhr':false});
+                    if('css' === data.type){
+                    	var data_css = {
+                            'baseUrl':data.root,
+                            'suffix':'.css',
+                            'rel':'stylesheet',
+                            'css':data.paths
+                        };
+                        if(data.befor){
+                            System.Loader.load(data_css).print();
+                        }else{
+                            loader = System.Loader.load(data_css);
                             loader._files = loader.get_files().join('');
                             loader.remove();
-						}
+                        }
+                    }else{
+                        if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
+                            if(data.befor){//用 打印字符串方式，位置在head标签里
+                                System.import(data.paths,data.root,null,{'xhr':false}).print();
+                            }else{//替换预处理占位符的位置
+                                loader = System.import(data.paths,data.root,null,{'xhr':false});
+                                loader._files = loader.get_files().join('');
+                                loader.remove();
+                            }
 
-					}else{
-                        System.import(data.paths,data.root);
+                        }else{
+                            System.import(data.paths,data.root);
+                        }
 					}
 
                 }
@@ -499,7 +524,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2019-1-3
+         * 修改日期：2020-2-05
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -508,11 +533,11 @@
          * @returns {String}
          */
         'include':function (S) {
-            var reg_inc = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
+            var reg_inc = this.include_reg;
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[2].split('" ');
+                var data ={},arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
                     arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -693,10 +718,10 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2019-8-25
-     * 修改日期：2019-10-7
+     * 修改日期：2020-2-05
      * 名称：Template.parse
      * 功能：解析
-     * 说明：
+     * 说明：can be overwrite
      * 注意：
      * usage：
      * @param s
@@ -707,7 +732,7 @@
     	if(temp && temp instanceof Template){
             return temp.parse(s);
         }else{
-            return (new Template()).parse(s);
+            return (new Template(_cache)).parse(s);
         }
     };
 
