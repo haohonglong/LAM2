@@ -405,7 +405,7 @@
             	content = "";
                 this.cache.find('id',id,function (index) {
                     if(-1 === index){
-                        throw new Error('Unknown id of blocks '+arr_inc[0]);
+                        // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
                         content = this.get(index).content;
 					}
