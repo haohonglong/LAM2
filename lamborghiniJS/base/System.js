@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2019-11-9
+ * 修改日期:2020-2-05
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -463,6 +463,7 @@
                     files.push(System.script(this,scriptAttribute));
                 }
             });
+			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
             System.print(files.join(''));
 		},
         /**
@@ -1152,7 +1153,7 @@
          * 创建日期：2018-11-11
          * 修改日期：2018-11-11
          * 名称：System.isJsFile
-         * 功能：检查是js文件
+         * 功能：检查是否是js文件
          * 说明：
          * 注意：
          * @param   (String)url 			NO NULL :路径名称
@@ -1160,6 +1161,23 @@
          */
 		"isJsFile":function (url) {
             if(-1 === url.search(/\.js/))
+                return false;
+            return true;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-2-05
+         * 修改日期：2020-2-05
+         * 名称：System.isCssFile
+         * 功能：检查是否是css文件
+         * 说明：
+         * 注意：
+         * @param   (String)url 			NO NULL :路径名称
+         * @returns {boolean}
+         */
+		"isCssFile":function (url) {
+            if(-1 === url.search(/\.css/))
                 return false;
             return true;
         },
