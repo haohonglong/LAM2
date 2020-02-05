@@ -39,15 +39,16 @@
 
 	var __this__=null;
 	var guid=0;
-    var cache = new System.Cache('block');
+    var _cache = new System.Cache('block');
 
 	var Template = System.Component.extend({
-		constructor: function(compiler) {
+		constructor: function(cache,compiler) {
 			this.base();
 			__this__=this;
 			this.guid=0;
 			guid++;
 			this.compiler = compiler || System.Compiler.getInstance();
+			this.cache = cache || _cache;
 			this.html=[];
 		},
 		'_className':'Template',
@@ -363,7 +364,7 @@
                 data.id = id;
                 content = arr_inc[2];
                 data.content = this.getBlocks(content);
-                cache.find('id',id,function (index,id) {
+                this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         this.add(data);
                     }else{
@@ -395,7 +396,7 @@
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
                 id = arr_inc[1];
             	content = "";
-                cache.find('id',id,function (index) {
+                this.cache.find('id',id,function (index) {
                     if(-1 === index){
                         throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
@@ -693,10 +694,10 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2019-8-25
-     * 修改日期：2019-10-7
+     * 修改日期：2020-2-05
      * 名称：Template.parse
      * 功能：解析
-     * 说明：
+     * 说明：can be overwrite
      * 注意：
      * usage：
      * @param s
@@ -707,7 +708,7 @@
     	if(temp && temp instanceof Template){
             return temp.parse(s);
         }else{
-            return (new Template()).parse(s);
+            return (new Template(_cache)).parse(s);
         }
     };
 
