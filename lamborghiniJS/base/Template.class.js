@@ -49,11 +49,11 @@
 			guid++;
 			this.cache = cache || _cache;
 			this.compiler = compiler || System.Compiler.getInstance();
-			this.define_reg    = new RegExp('(<#define) ([\\S]+)="([\\S]+)" (/>)','g');
-			this.define2_reg   = new RegExp('^(#define#) (([\\s\\S])*?) (([\\s\\S])*?) (#end#)$','gm');
-			this.include_reg   = new RegExp('(<#include) (([\\s\\S])*?) (/>)','gm');
-			this.import_reg    = new RegExp('(<#import) (([\\s\\S])*?) (/>)','gm');
-			this.layout_reg    = new RegExp('(<#)(layout|extends) (([\\s\\S])*?) (/>)','gm');
+			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','g');
+			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
+			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
+			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
+			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
 			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
 			this.get_block_reg = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
 			this.html=[];
@@ -282,7 +282,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
-		 * 修改日期：2019-6-13
+         * 修改日期：2020-2-05
 		 * 名称：layout
 		 * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
 		 * 说明：
@@ -295,7 +295,7 @@
 			var k,v;
 			var arr_inc = [];
 			if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
-				var data ={},arr = arr_inc[3].split('" ');
+				var data ={},arr = arr_inc[2].split('" ');
 				arr.each(function(){
 					var arr = this.split('="');
 					arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -328,7 +328,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-3-13
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-05
          * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
@@ -341,8 +341,8 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[2].replace(/(^")|("$)/g,'').trim();
-                v = arr_inc[3].replace(/(^")|("$)/g,'').trim();
+                k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
+                v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
                 S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),this.findTpl(v));
                 reg_inc.lastIndex = 0;
             }
@@ -420,7 +420,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-25
-         * 修改日期：2019-8-25
+         * 修改日期：2020-2-05
          * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
@@ -434,8 +434,8 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[2];
-                v = arr_inc[4];
+                k = arr_inc[1];
+                v = arr_inc[3];
                 v = this.include(v);
                 S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                 reg_inc.lastIndex = 0;
@@ -447,7 +447,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-3
+         * 修改日期：2020-2-05
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割
@@ -464,7 +464,7 @@
             var arr_inc = [];
             var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[2].split('" ');
+                var data ={},arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
                     arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -507,7 +507,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2019-1-3
+         * 修改日期：2020-2-05
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -520,7 +520,7 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[2].split('" ');
+                var data ={},arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
                     arr[0] = arr[0].replace(/(^")|("$)/g,'');
