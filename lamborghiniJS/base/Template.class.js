@@ -447,7 +447,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-05
+         * 修改日期：2020-2-06
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性
@@ -473,19 +473,21 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                data.type  = data.type 	|| 'js';
-                data.path  = data.path 	|| null;
-                data.write = System.eval(data.write) || false;
-                data.befor = System.eval(data.befor) || false;
-                data.root  = data.root ? data.root : false;
+                data.path    = data.path 	|| null;
+                data.root    = data.root ? data.root : false;
+                data.type    = data.type 	|| 'js';
+                data.write   = System.eval(data.write) || false;
+                data.befor   = System.eval(data.befor) || false;
                 loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
                     if('css' === data.type){
+                        data.suffix  = data.suffix 	|| '.css';
+                        data.rel     = data.rel 	|| 'stylesheet';
                     	var data_css = {
                             'baseUrl':data.root,
-                            'suffix':'.css',
-                            'rel':'stylesheet',
+                            'suffix':data.suffix,
+                            'rel':data.rel,
                             'css':data.paths
                         };
                         if(data.befor){
@@ -496,17 +498,18 @@
                             loader.remove();
                         }
                     }else{
+                        data.suffix  = data.suffix 	|| '.js';
                         if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
                             if(data.befor){//用 打印字符串方式，位置在head标签里
-                                System.import(data.paths,data.root,null,{'xhr':false}).print();
+                                System.import(data.paths,data.root,data.suffix,{'xhr':false}).print();
                             }else{//替换预处理占位符的位置
-                                loader = System.import(data.paths,data.root,null,{'xhr':false});
+                                loader = System.import(data.paths,data.root,data.suffix,{'xhr':false});
                                 loader._files = loader.get_files().join('');
                                 loader.remove();
                             }
 
                         }else{
-                            System.import(data.paths,data.root);
+                            System.import(data.paths,data.root,data.suffix);
                         }
 					}
 

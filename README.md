@@ -1257,9 +1257,9 @@
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
   #### import：
     导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早。
-    <#import path="" root="" [write="true|false" [befor="true|false"]]  />
+    <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] />
     导入css 添加属性 type="css" 即可，
-    <#import type="css" path="" root="" [befor="true|false"] />
+    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] />
     多个文件时,path里用','分割！！！
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
