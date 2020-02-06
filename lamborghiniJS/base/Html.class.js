@@ -90,16 +90,6 @@
         }
     }
 
-	System.merge(null,[{
-		'isHTMLDocument'	: System.type("HTMLDocument"),
-        'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),
-		'isHTMLBodyElement' : System.type("HTMLBodyElement"),
-		'isHTMLHeadElement' : System.type("HTMLHeadElement"),
-		'isHTMLCollection' 	: System.type("HTMLCollection"),
-		'isXMLHttpRequest' 	: System.type("XMLHttpRequest"),
-		'isXMLSerializer' 	: System.type("XMLSerializer")
-	}],true);
-
 	var __this__=null;
 	var Html = System.Dom.extend({
         /**
