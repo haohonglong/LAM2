@@ -3,7 +3,7 @@
 	version ：v2.1.4
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-02-5
+	修改日期 ：2020-02-7
 
 
 # 产品介绍：
@@ -1257,10 +1257,10 @@
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
   #### import：
     导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早。
-    <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] />
+    <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [data="{}"] />
     导入css 添加属性 type="css" 即可，
-    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] />
-    多个文件时,path里用','分割！！！
+    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [data="{}"] />
+    多个文件时,path里用','分割！！！data属性可以加自定义属性。
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
          解决方式：要用write="true" 这个属性,默认是忽略的。

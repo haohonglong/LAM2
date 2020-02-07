@@ -447,10 +447,10 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-06
+         * 修改日期：2020-2-07
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性
+         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性,data属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -478,6 +478,7 @@
                 data.type    = data.type 	|| 'js';
                 data.write   = System.eval(data.write) || false;
                 data.befor   = System.eval(data.befor) || false;
+                data.data    = System.eval(data.data)  || null;
                 loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
@@ -490,6 +491,15 @@
                             'rel':data.rel,
                             'css':data.paths
                         };
+                    	if(data.data && System.isPlainObject(data.data)){
+                    		var arr = [];
+                            System.each(data_css.css,function () {
+								var attr = System.clone(data.data);
+								attr.href = this;
+                                arr.push(attr);
+                            });
+                            data_css.css = arr;
+						}
                         if(data.befor){
                             System.Loader.load(data_css).print();
                         }else{
@@ -500,7 +510,16 @@
                     }else{
                         data.suffix  = data.suffix 	|| '.js';
                         if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                            if(data.befor){//用 打印字符串方式，位置在head标签里
+                            if(data.data && System.isPlainObject(data.data)){
+                                var arr = [];
+                                System.each(data.paths,function () {
+                                    var attr = System.clone(data.data);
+                                    attr.src = this;
+                                    arr.push(attr);
+                                });
+                                data.paths = arr;
+                            }
+							if(data.befor){//用 打印字符串方式，位置在head标签里
                                 System.import(data.paths,data.root,data.suffix,{'xhr':false}).print();
                             }else{//替换预处理占位符的位置
                                 loader = System.import(data.paths,data.root,data.suffix,{'xhr':false});
