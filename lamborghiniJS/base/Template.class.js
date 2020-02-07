@@ -55,7 +55,7 @@
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
 			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
 			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
-			this.get_block_reg = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
+			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.html=[];
 		},
 		'_className':'Template',
@@ -387,27 +387,40 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2020-2-5
+         * 修改日期：2020-2-7
          * 名称：getBlocks
-         * 功能：预处理-根据id获取之前定义的block
+         * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
          * 注意：
-         * usage：<#=blocks["id"]>
+         * usage：<#=block id="xx" [data="{}"] />
          * @param S
          * @returns {String}
          */
 		'getBlocks':function (S) {
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
-            var id = "",content="";
+            var id = "",content="",k="",v="";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                id = arr_inc[1];
-            	content = "";
+                content = "";
+                var data ={},arr = arr_inc[1].split('" ');
+                arr.each(function(){
+                    var arr = this.split('="');
+                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    data[k] =  v;
+                });
+                id = data.id;
+                data.data = System.eval(data.data) || null;
                 this.cache.find('id',id,function (index) {
                     if(-1 === index){
                         // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
                         content = this.get(index).content;
+                        if(data.data){
+							content = System.Compiler.jQCompile(content,data.data);
+						}
 					}
 
                 });

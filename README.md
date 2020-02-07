@@ -1271,7 +1271,7 @@
     同layout指令一样
   #### block ： 
   ######  <#beginBlock id="menu"> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用
-  ######  <#=blocks["menu"]> 根据id获取定义过的block的内容,然后打印，可以在任何地方显示N次
+  ######  <#=block id="menu" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次
         #define# __MENU__ <#include repeat="0" tp-data=""  file="{{LAM.DATA}}/menu.json" /> #end#
         <#beginBlock id="menu">
         <div class="sectionBox sectionTitle-A2"><h2>喜鹊筑家旗舰店</h2></div>
@@ -1322,7 +1322,7 @@
             });
         </script>
         <#endBlock>
-        <#=blocks["menu"]>
+        <#=block id="menu" />
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
