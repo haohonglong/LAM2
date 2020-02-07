@@ -583,7 +583,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-2-05
+         * 修改日期：2020-2-07
          * 名称：parse
          * 功能：解析,导入，包含
          * 说明：
@@ -594,9 +594,9 @@
          */
 		'parse':function (s) {
             s = this.define2(this.define(s));
+            s = this.include(s);
             s = this.setBlock(s);
             s = this.import(s);
-            s = this.include(s);
             return s;
         },
 
@@ -724,7 +724,7 @@
      * 修改日期：2020-2-05
      * 名称：Template.parse
      * 功能：解析
-     * 说明：can be overwrite
+     * 说明：must not be overwrite
      * 注意：
      * usage：
      * @param s
@@ -735,7 +735,7 @@
     	if(temp && temp instanceof Template){
             return temp.parse(s);
         }else{
-            return (new Template(_cache)).parse(s);
+            return (new Template()).parse(s);
         }
     };
 
