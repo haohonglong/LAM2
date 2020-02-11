@@ -299,17 +299,14 @@
             var data ={};
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	data = {};
-                id = System.uniqid();
                 content = arr_inc[0];
-                data.id = id;
                 data.content = content;
-                this.cache.find('id',id,function (index,id) {
-                    if(-1 === index){
-                        this.add(data);
-                    }else{
-                        this.update(index,data);
-                    }
-                });
+                do{
+                    id = System.uniqid();
+                    data.id = id;
+                }while(this.cache.find('id',id).index !== -1);
+                this.cache.add(data);
+
                 S = S.replace(content,function (substring) {
                 	return '<#=block id="'+id+'" />';
 				});
