@@ -3,7 +3,7 @@
 	version ：v2.1.4
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-02-7
+	修改日期 ：2020-02-11
 
 
 # 产品介绍：
@@ -1270,59 +1270,127 @@
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
   #### block ： 
-  ######  <#beginBlock id="menu"> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用
-  ######  <#=block id="menu" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次
-        #define# __MENU__ <#include repeat="0" tp-data=""  file="{{LAM.DATA}}/menu.json" /> #end#
-        <#beginBlock id="menu">
-        <div class="sectionBox sectionTitle-A2"><h2>喜鹊筑家旗舰店</h2></div>
-        <div class="sectionScroll sectionList-A2 sectionIcon-B1 sectionFont-A1">
-            <dl id="vue-menu">
-                <dd v-for="menu in list">
-                    <div class="title">
-                        <i :class="'I1 '+menu.icon"></i><a href="javascript:void(0);">{#menu.title#}</a>
+  ######  <#beginBlock id="xxx"> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用
+  ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
+  ######  注意：为了防止js标识符冲突！仅只有script标签里的内容在block里不会被模版解析器解析，会被忽略（包括data属性传入的数据）,
+  ######       意思就是为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容。,但style标签内可以存在data属性里的数据
+  ##### usage：
+        room/list.html
+        <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" /> 这个命令调用了 components/list.html
+        <#=block id="components:list" data="{'list':__DATA__.room,'image':'__IMAGE__','style':{'color':'yellow','size':'500'}}" /> 这个命令打印了 id="components:list" block包含的内容，并解析了data属性传入的数据
+        
+        components/list.html
+        <#beginBlock id="components:list"> 这里是定义了block开始标识符位置
+        <style type="text/css">
+            <% var color = style.color;%>
+            <% var size = style.size;%>
+            body{
+                background: <%=color%>;
+                margin-top: <%=size%>px;
+            }
+            /* 也可以下面这样 */
+            
+            body{
+                background: <%=style.color%>;
+                margin-top: <%=style.size%>px;
+            }
+        </style>
+        <% for(var i=0,len=list.length;i < len;i++){%>
+        <div class="sectionBox-A10 sectionBox-A10-2 sectionFloat-A1">
+            <ul class="p10 clear">
+                <li class="col-1">
+                    <img class="ml5" data-var="tpl" src="<%=image%>/imgs_LHH/pics/img_07.jpg" width="100%" height="100%" alt="">
+                </li>
+                <li class="col-2">
+                    <div class="sectionBox-A30 sectionBox-A30-1 ml20">
+                        <div class="sectionTitle-A6 mb10">
+                            <h2>拥有浓厚复古色彩的以色列家居</h2>
+                        </div>
+                        <div class="sectionText-A3">
+                            <p class="grey">类型： 家装设计</p>
+                            <p class="grey">风格：
+                            <% var style = list[i]['style'].trim().split(',');%>
+                                <% for(var j =0,len2=style.length;j < len2;j++){%>
+                                <% if(j>0){%>|<%}%>
+                                <%=style[j]%>
+                                <% }%>
+                            </p>
+                            <p class="grey">图片数量：<strong class="linkRed">0</strong></p>
+                            <p class="grey">设计师：<%=list[i]['name']%></p>
+        
+                        </div>
                     </div>
-                    <div v-if="menu.ul" class="sectionList-A1 sectionList-A1-3 none">
-                        <ul>
-                            <li v-for="v in menu.ul"><a :href="v.href">{#v.title#}</a></li>
-                        </ul>
+                </li>
+                <li class="col-3 pt20">
+                    <div class="sectionBox-A13 sectionBox-A13-1 auto js_sectionBoxA13">
+                        <a href="###" class="i-1"></a>
+                        <a href="###" class="i-2"></a>
+                        <a href="###" class="i-3"></a>
+                        <a href="###" class="i-4"></a>
+                    </div>
+                </li>
+                <li class="col-7 pt20">2014-07-21<br>15:30</li>
+                <li class="col-8 pt20">
+                    <div class="sectionBox-A14 linkBlue">
+                        <a href="###">编辑</a>
+                        <a href="###">删除</a>
                     </div>
         
-                </dd>
-            </dl>
+                </li>
+            </ul>
         </div>
+        <% }%>
         
         
         <script type="text/javascript">
-            LAM.run([LAM,jQuery],function(LAM,$) {
+        //components-list
+            LAM.run(function() {
                 'use strict';
                 var System = this;
-        
-                System.setMenuSelectedStatus=function(href){
-                    $('.sectionList-A1-3 li a[href*="'+href+'"]')
-                        .closest('li').addClass('cur')
-                        .closest('.sectionList-A1-3').show()
-                        .closest('dd').addClass('hover');
-                };
-        
+                var tools = new System.Tools();
                 $(function(){
         
-                    new Vue({
-                        delimiters: ['{#', '#}'],
-                        el: '#vue-menu',
-                        data: {
-                            list: __MENU__
+                    $('.js_sectionBoxA13 a').bind('click',function(event){
+                        switch($(event.target).attr('class')){
+                            case 'i-1'	:
+                                tools.move_next_prev_first_last({
+                                    '$event'  :$(event.target),
+                                    'parent': '.sectionBox-A10',
+                                    'chose':  'first'
+                                });
+                                break;
+                            case 'i-2'	:
+                                tools.move_next_prev_first_last({
+                                    '$event'  :$(event.target),
+                                    'parent': '.sectionBox-A10',
+                                    'chose':  'prev'
+                                });
+                                break;
+                            case 'i-3':
+                                tools.move_next_prev_first_last({
+                                    '$event'  :$(event.target),
+                                    'parent': '.sectionBox-A10',
+                                    'chose':  'next'
+                                });
+                                break;
+                            case 'i-4'	:
+                                tools.move_next_prev_first_last({
+                                    '$event'  :$(event.target),
+                                    'parent': '.sectionBox-A10',
+                                    'chose':  'last'
+                                });
+                                break;
+        
+                            default:
+                                alert("Error");
                         }
                     });
-                    System.setMenuSelectedStatus(System.defaultRoute);
                 });
-        
-        
-        
-        
             });
+        
         </script>
-        <#endBlock>
-        <#=block id="menu" />
+        <#endBlock> 这里是定义了block结束标识符位置
+        
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)

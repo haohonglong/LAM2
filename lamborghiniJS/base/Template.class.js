@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-2-05
+ * 修改日期:2020-2-11
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -48,6 +48,7 @@
 			this.guid=0;
 			guid++;
 			this.cache = cache || _cache;
+			_cache = this.cache;
 			this.compiler = compiler || System.Compiler.getInstance();
 			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','g');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
@@ -279,6 +280,45 @@
 			return {'content':S,'tags':tags};
 		},
 		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-02-11
+         * 修改日期：2020-02-11
+         * 名称：extract_script_tag2
+         * 功能：根据标签提取它及里面的内容
+         * 说明：
+         * 注意：
+         * @param tag{String}   NOT NULL标签名称
+         * @param S{String}     NOT NULL内容
+         * @returns {String}
+         */
+        'extract_by_tag2':function(tag,S){
+			var reg_inc = new RegExp('<'+tag+' (([\\s\\S])*?)</'+tag+'>','gim');
+            var arr_inc = [];
+            var id = "",content = "";
+            var data ={};
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	data = {};
+                id = System.uniqid();
+                content = arr_inc[0];
+                data.id = id;
+                data.content = content;
+                this.cache.find('id',id,function (index,id) {
+                    if(-1 === index){
+                        this.add(data);
+                    }else{
+                        this.update(index,data);
+                    }
+                });
+                S = S.replace(content,function (substring) {
+                	return '<#=block id="'+id+'" />';
+				});
+                reg_inc.lastIndex = 0;
+            }
+			return S;
+		},
+
+		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
@@ -370,7 +410,9 @@
                 data ={};id = System.camelCase(arr_inc[1].trim());
                 data.id = id;
                 content = arr_inc[2];
-                data.content = this.getBlocks(content);
+                content = this.getBlocks(content);
+                content = this.extract_by_tag2('script',content);
+                data.content = content;
                 this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         this.add(data);
@@ -769,6 +811,10 @@
         }else{
             return (new Template()).parse(s);
         }
+    };
+
+    Template.getCache=function () {
+		return _cache;
     };
 
     var temp = new Template();
