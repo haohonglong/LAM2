@@ -654,18 +654,34 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-2-07
-         * 名称：parse
-         * 功能：解析,导入，包含
+         * 修改日期：2020-2-11
+         * 名称：beforParse
+         * 功能：
+         * 说明：
+         * 注意：
+         * usage：
+         * @param s
+         * @returns {String}
+         */
+		'beforParse':function (s) {
+            s = this.define2(this.define(s));
+            s = this.include(s);
+            return s;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-2-07
+         * 修改日期：2020-2-11
+         * 名称：afterParse
+         * 功能：
          * 说明：
          * 注意：
          * usage：
          * @param s
          * @returns {*|String}
-         */
-		'parse':function (s) {
-            s = this.define2(this.define(s));
-            s = this.include(s);
+		 */
+		'afterParse':function (s) {
             s = this.setBlock(s);
             s = this.import(s);
             return s;
@@ -788,27 +804,7 @@
         return S;
 
     };
-    /**
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2019-8-25
-     * 修改日期：2020-2-05
-     * 名称：Template.parse
-     * 功能：解析
-     * 说明：must not be overwrite
-     * 注意：
-     * usage：
-     * @param s
-     * @param temp {Template|null}
-     * @returns {String}
-     */
-    Template.parse=function (s,temp) {
-    	if(temp && temp instanceof Template){
-            return temp.parse(s);
-        }else{
-            return (new Template()).parse(s);
-        }
-    };
+
 
     Template.getCache=function () {
 		return _cache;

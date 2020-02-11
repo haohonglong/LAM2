@@ -75,10 +75,14 @@
         });
     }
 
+    var temp = new System.Template();
+
     function ajax_success_callback(data,textStatus,jqXHR){
         var _this = this;
-        data = System.Template.parse(data);
+        data = temp.beforParse(data);
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
+        data = temp.afterParse(data);
+
         if(System.isFunction(_this.capture)){data = _this.capture(data);}
         if(parseInt(_this.repeat) > 1 && System.isString(data)){data = _this.loop(data);}
         if(_this.success && System.isFunction(_this.success)){
