@@ -97,7 +97,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2018-12-12
+         * 修改日期：2020-2-11
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -142,7 +142,7 @@
             this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
             this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
             this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
-            this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	"GET";
+            this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	System.XHR.type  ||  "GET";
             this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
             this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
             this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
