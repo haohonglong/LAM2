@@ -314,6 +314,42 @@
             }
 			return S;
 		},
+		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-02-12
+         * 修改日期：2020-02-12
+         * 名称：extract_by_literal
+         * 功能：指定哪一段代码在block区块内会被模版解析器忽略
+         * 说明：
+         * 注意：
+         * usage：<!--literal:begin-->这里的内容会被模版解析器忽略<!--literal:end-->
+         * @param S{String}     NOT NULL内容
+         * @returns {String}
+         */
+        'extract_by_literal':function(S){
+			var reg_inc = new RegExp('<!--literal:begin-->(([\\s\\S])*?)<!--literal:end-->','gim');
+            var arr_inc = [];
+            var id = "",content = "";
+            var data ={};
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	data = {};
+                content = arr_inc[1];
+                data.content = content;
+                do{
+                    id = System.uniqid();
+                    data.id = id;
+                }while(this.cache.find('id',id).index !== -1);
+                this.cache.add(data);
+
+                S = S.replace(arr_inc[0],function () {
+                	return '<#=block id="'+id+'" />';
+				});
+                reg_inc.lastIndex = 0;
+            }
+			return S;
+		},
+
 
 		/**
 		 * @author: lhh
@@ -389,7 +425,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-2-5
+         * 修改日期：2020-2-12
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
          * 说明：
@@ -408,6 +444,7 @@
                 data.id = id;
                 content = arr_inc[2];
                 content = this.getBlocks(content);
+                content = this.extract_by_literal(content);
                 content = this.extract_by_tag2('script',content);
                 data.content = content;
                 this.cache.find('id',id,function (index,id) {
