@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-2-05
+ * 修改日期:2020-2-11
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -48,6 +48,7 @@
 			this.guid=0;
 			guid++;
 			this.cache = cache || _cache;
+			_cache = this.cache;
 			this.compiler = compiler || System.Compiler.getInstance();
 			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','g');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
@@ -55,7 +56,7 @@
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
 			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
 			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
-			this.get_block_reg = new RegExp('<#=blocks\\["(\\S+)"\\]>','gm');
+			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.html=[];
 		},
 		'_className':'Template',
@@ -279,6 +280,78 @@
 			return {'content':S,'tags':tags};
 		},
 		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-02-11
+         * 修改日期：2020-02-11
+         * 名称：extract_script_tag2
+         * 功能：根据标签提取它及里面的内容
+         * 说明：
+         * 注意：
+         * @param tag{String}   NOT NULL标签名称
+         * @param S{String}     NOT NULL内容
+         * @returns {String}
+         */
+        'extract_by_tag2':function(tag,S){
+			var reg_inc = new RegExp('<'+tag+' (([\\s\\S])*?)</'+tag+'>','gim');
+            var arr_inc = [];
+            var id = "",content = "";
+            var data ={};
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	data = {};
+                content = arr_inc[0];
+                data.content = content;
+                do{
+                    id = System.uniqid();
+                    data.id = id;
+                }while(this.cache.find('id',id).index !== -1);
+                this.cache.add(data);
+
+                S = S.replace(content,function (substring) {
+                	return '<#=block id="'+id+'" />';
+				});
+                reg_inc.lastIndex = 0;
+            }
+			return S;
+		},
+		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-02-12
+         * 修改日期：2020-02-12
+         * 名称：extract_by_literal
+         * 功能：指定哪一段代码在block区块内会被模版解析器忽略
+         * 说明：
+         * 注意：
+         * usage：<!--literal:begin-->这里的内容会被模版解析器忽略<!--literal:end-->
+         * @param S{String}     NOT NULL内容
+         * @returns {String}
+         */
+        'extract_by_literal':function(S){
+			var reg_inc = new RegExp('<!--literal:begin-->(([\\s\\S])*?)<!--literal:end-->','gim');
+            var arr_inc = [];
+            var id = "",content = "";
+            var data ={};
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	data = {};
+                content = arr_inc[1];
+                data.content = content;
+                do{
+                    id = System.uniqid();
+                    data.id = id;
+                }while(this.cache.find('id',id).index !== -1);
+                this.cache.add(data);
+
+                S = S.replace(arr_inc[0],function () {
+                	return '<#=block id="'+id+'" />';
+				});
+                reg_inc.lastIndex = 0;
+            }
+			return S;
+		},
+
+
+		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
@@ -352,7 +425,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-2-5
+         * 修改日期：2020-2-12
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
          * 说明：
@@ -370,7 +443,10 @@
                 data ={};id = System.camelCase(arr_inc[1].trim());
                 data.id = id;
                 content = arr_inc[2];
-                data.content = this.getBlocks(content);
+                content = this.getBlocks(content);
+                content = this.extract_by_literal(content);
+                content = this.extract_by_tag2('script',content);
+                data.content = content;
                 this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         this.add(data);
@@ -387,27 +463,40 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2020-2-5
+         * 修改日期：2020-2-7
          * 名称：getBlocks
-         * 功能：预处理-根据id获取之前定义的block
+         * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
          * 注意：
-         * usage：<#=blocks["id"]>
+         * usage：<#=block id="xx" [data="{}"] />
          * @param S
          * @returns {String}
          */
 		'getBlocks':function (S) {
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
-            var id = "",content="";
+            var id = "",content="",k="",v="";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                id = arr_inc[1];
-            	content = "";
+                content = "";
+                var data ={},arr = arr_inc[1].split('" ');
+                arr.each(function(){
+                    var arr = this.split('="');
+                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    data[k] =  v;
+                });
+                id = data.id;
+                data.data = System.eval(data.data) || null;
                 this.cache.find('id',id,function (index) {
                     if(-1 === index){
-                        throw new Error('Unknown id of blocks '+arr_inc[0]);
+                        // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
                         content = this.get(index).content;
+                        if(data.data){
+							content = System.Compiler.jQCompile(content,data.data);
+						}
 					}
 
                 });
@@ -447,10 +536,10 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-05
+         * 修改日期：2020-2-07
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性
+         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性,data属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -473,21 +562,33 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                data.type  = data.type 	|| 'js';
-                data.path  = data.path 	|| null;
-                data.write = System.eval(data.write) || false;
-                data.befor = System.eval(data.befor) || false;
-                data.root  = data.root ? data.root : false;
+                data.path    = data.path 	|| null;
+                data.root    = data.root ? data.root : false;
+                data.type    = data.type 	|| 'js';
+                data.write   = System.eval(data.write) || false;
+                data.befor   = System.eval(data.befor) || false;
+                data.data    = System.eval(data.data)  || null;
                 loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
                     if('css' === data.type){
+                        data.suffix  = data.suffix 	|| '.css';
+                        data.rel     = data.rel 	|| 'stylesheet';
                     	var data_css = {
                             'baseUrl':data.root,
-                            'suffix':'.css',
-                            'rel':'stylesheet',
+                            'suffix':data.suffix,
+                            'rel':data.rel,
                             'css':data.paths
                         };
+                    	if(data.data && System.isPlainObject(data.data)){
+                    		var arr = [];
+                            System.each(data_css.css,function () {
+								var attr = System.clone(data.data);
+								attr.href = this;
+                                arr.push(attr);
+                            });
+                            data_css.css = arr;
+						}
                         if(data.befor){
                             System.Loader.load(data_css).print();
                         }else{
@@ -496,17 +597,27 @@
                             loader.remove();
                         }
                     }else{
+                        data.suffix  = data.suffix 	|| '.js';
                         if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                            if(data.befor){//用 打印字符串方式，位置在head标签里
-                                System.import(data.paths,data.root,null,{'xhr':false}).print();
+                            if(data.data && System.isPlainObject(data.data)){
+                                var arr = [];
+                                System.each(data.paths,function () {
+                                    var attr = System.clone(data.data);
+                                    attr.src = this;
+                                    arr.push(attr);
+                                });
+                                data.paths = arr;
+                            }
+							if(data.befor){//用 打印字符串方式，位置在head标签里
+                                System.import(data.paths,data.root,data.suffix,{'xhr':false}).print();
                             }else{//替换预处理占位符的位置
-                                loader = System.import(data.paths,data.root,null,{'xhr':false});
+                                loader = System.import(data.paths,data.root,data.suffix,{'xhr':false});
                                 loader._files = loader.get_files().join('');
                                 loader.remove();
                             }
 
                         }else{
-                            System.import(data.paths,data.root);
+                            System.import(data.paths,data.root,data.suffix);
                         }
 					}
 
@@ -580,20 +691,36 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-2-05
-         * 名称：parse
-         * 功能：解析,导入，包含
+         * 修改日期：2020-2-11
+         * 名称：beforParse
+         * 功能：
+         * 说明：
+         * 注意：
+         * usage：
+         * @param s
+         * @returns {String}
+         */
+		'beforParse':function (s) {
+            s = this.define2(this.define(s));
+            s = this.include(s);
+            return s;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-2-07
+         * 修改日期：2020-2-11
+         * 名称：afterParse
+         * 功能：
          * 说明：
          * 注意：
          * usage：
          * @param s
          * @returns {*|String}
-         */
-		'parse':function (s) {
-            s = this.define2(this.define(s));
+		 */
+		'afterParse':function (s) {
             s = this.setBlock(s);
             s = this.import(s);
-            s = this.include(s);
             return s;
         },
 
@@ -714,26 +841,10 @@
         return S;
 
     };
-    /**
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2019-8-25
-     * 修改日期：2020-2-05
-     * 名称：Template.parse
-     * 功能：解析
-     * 说明：can be overwrite
-     * 注意：
-     * usage：
-     * @param s
-     * @param temp {Template|null}
-     * @returns {String}
-     */
-    Template.parse=function (s,temp) {
-    	if(temp && temp instanceof Template){
-            return temp.parse(s);
-        }else{
-            return (new Template(_cache)).parse(s);
-        }
+
+
+    Template.getCache=function () {
+		return _cache;
     };
 
     var temp = new Template();
