@@ -394,8 +394,8 @@
          * 名称：literal
          * 功能：指定哪一段代码在block区块内会被模版解析器忽略
          * 说明：
-         * 注意：
-         * usage：<!--literal:begin-->这里的内容会被模版解析器忽略<!--literal:end-->
+         * 注意：注意大小写！！！
+         * usage：<!--Literal:begin-->这里的内容会被模版解析器忽略<!--Literal:end-->
          * @param S{String}     NOT NULL内容
          * @returns {String}
          */
