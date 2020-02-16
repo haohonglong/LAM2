@@ -235,7 +235,7 @@
             try{
                 switch(XMLHttpRequest.status) {
 					case 404:
-                        System.View.ERROR_404('the path Error '+this.file
+                        System.View.ERROR_404("Error: the file '"+this.file+"' was not found"
                             ,this.file_404
                             ,this.jump ? null : this.$dom);
                         break;
