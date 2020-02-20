@@ -1288,7 +1288,7 @@
     <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [attr="{}"] />
     导入css 添加属性 type="css" 即可，
     <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
-    多个文件时,path里用','分割！！！data属性可以加自定义属性。
+    多个文件时,path里用','分割！！！attr属性可以加自定义属性。
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
          解决方式：要用write="true" 这个属性,默认是fase。
