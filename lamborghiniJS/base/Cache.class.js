@@ -9,26 +9,34 @@
  * note :
  * example:
  *
- * new LAM.Cache('mt11').find('jobId',1,function (index,id) {
-		var data={
-			"id":id,
-			"jobId":id,
-			"job":"程序员",
-			"name":"李明",
-			"addres":"雨花台区软件大道",
-			"city":"南京",
-			"sex":"男"
-		};
-		if(-1 === index){
-			this.add(data);
-		}else{
-			this.update(index,data);
-			text = this.get(index).name;
-			this.remove(index);
-			console.log(text);
+  var cache = new LAM.Cache('m1023432').find('id',1,function (index,i) {
+          		var data={
+          			"id":id,
+          			"job":"程序员",
+          			"name":"李明",
+          			"addres":"雨花台区软件大道",
+          			"city":"南京",
+          			"sex":"男"
+          		};
+          		if(-1 === index){
+          			this.add(data);
+          		}else{
+          			this.update(index,data);
+          			text = this.get(index).name;
+          			this.remove(index);
+          			console.log(text);
 
-		}
-	});
+          		}
+          	});
+
+ m1023432: 缓存标识符，初始化对象的时候，类似mysql数据库的表名称
+ id: 唯一标识符，类似数据库表字段里的unique id
+ 1 : 要查询id的值
+ index : 对于的数据如果存在，这个值就是数据在数组里对于的索引，否则是 -1
+ i : 就是id标识符的值
+
+ 没有callback时就返回对象，对象里的属性是index 和 value 分别代表这callback参数里的index 和 i
+
  *
  *		
  * 

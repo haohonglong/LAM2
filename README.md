@@ -1244,6 +1244,34 @@
                      
 
 ## 二十一、缓存机制
+          var cache = new LAM.Cache('m1023432').find('id',1,function (index,i) {
+          		var data={
+          			"id":id,
+          			"job":"程序员",
+          			"name":"李明",
+          			"addres":"雨花台区软件大道",
+          			"city":"南京",
+          			"sex":"男"
+          		};
+          		if(-1 === index){
+          			this.add(data);
+          		}else{
+          			this.update(index,data);
+          			text = this.get(index).name;
+          			this.remove(index);
+          			console.log(text);
+          
+          		}
+          	});
+          	
+          	m1023432: 缓存标识符，初始化对象的时候，类似mysql数据库的表名称
+          	id: 唯一标识符，类似数据库表字段里的unique id
+          	1 : 要查询id的值
+          	index : 对于的数据如果存在，这个值就是数据在数组里对于的索引，否则是 -1
+          	i : 就是id标识符的值
+          	
+          	没有callback时就返回对象，对象里的属性是index 和 value 分别代表这callback参数里的index 和 i
+          	
 
 ## 二十二、预处理指令
   #### define：<#define NAME="value" />
@@ -1257,13 +1285,13 @@
     根据占位符里file参数请求另一个页面，然后替换掉当前占位符
   #### import：
     导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早。
-    <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [data="{}"] />
+    <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [attr="{}"] />
     导入css 添加属性 type="css" 即可，
-    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [data="{}"] />
+    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
     多个文件时,path里用','分割！！！data属性可以加自定义属性。
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
-         解决方式：要用write="true" 这个属性,默认是忽略的。
+         解决方式：要用write="true" 这个属性,默认是fase。
          
   #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
     方便在view里切换layout模版,设置title,可向layout模版里传递数据
@@ -1274,7 +1302,7 @@
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  注意：为了防止block内js标识符冲突！仅只有script标签里的内容在block里不会被模版解析器解析，会被忽略（包括data属性传入的数据）,
   ######       意思就是为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容。,但style标签内data属性里的数据会被解析
-               也可以用：<!--Literal:begin-->这里的内容会被模版解析器忽略<!--Literal:end--> 这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
+               还可以用：<!--Literal:begin-->这里的内容会被模版解析器忽略<!--Literal:end--> 这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
   ##### usage：
         room/list.html
         <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" /> 这个命令调用了 components/list.html
@@ -1342,7 +1370,7 @@
         </div>
         <% }%>
         
-        
+        <!--Literal:begin-->
         <script type="text/javascript">
         //components-list
             LAM.run(function() {
@@ -1390,6 +1418,7 @@
             });
         
         </script>
+        <!--Literal:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
     

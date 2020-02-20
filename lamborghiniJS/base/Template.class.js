@@ -539,7 +539,7 @@
          * 修改日期：2020-2-07
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性,data属性可以加自定义属性
+         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -567,7 +567,7 @@
                 data.type    = data.type 	|| 'js';
                 data.write   = System.eval(data.write) || false;
                 data.befor   = System.eval(data.befor) || false;
-                data.data    = System.eval(data.data)  || null;
+                data.attr    = System.eval(data.attr)  || null;
                 loader = null;
                 if(data.path) {
                     data.paths = data.path.split(',');
@@ -580,10 +580,10 @@
                             'rel':data.rel,
                             'css':data.paths
                         };
-                    	if(data.data && System.isPlainObject(data.data)){
+                    	if(data.attr && System.isPlainObject(data.attr)){
                     		var arr = [];
                             System.each(data_css.css,function () {
-								var attr = System.clone(data.data);
+								var attr = System.clone(data.attr);
 								attr.href = this;
                                 arr.push(attr);
                             });
@@ -599,10 +599,10 @@
                     }else{
                         data.suffix  = data.suffix 	|| '.js';
                         if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
-                            if(data.data && System.isPlainObject(data.data)){
+                            if(data.attr && System.isPlainObject(data.attr)){
                                 var arr = [];
                                 System.each(data.paths,function () {
-                                    var attr = System.clone(data.data);
+                                    var attr = System.clone(data.attr);
                                     attr.src = this;
                                     arr.push(attr);
                                 });
