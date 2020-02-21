@@ -75,9 +75,9 @@
         });
     }
 
-    var temp = new System.Template();
-
+    var temp = null;
     function ajax_success_callback(data,textStatus,jqXHR){
+        temp = System.Template.getTemplate(null,null);
         var _this = this;
         data = temp.beforParse(data);
         if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}

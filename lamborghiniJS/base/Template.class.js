@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-2-11
+ * 修改日期:2020-2-21
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -40,6 +40,7 @@
 	var __this__=null;
 	var guid=0;
     var _cache = new System.Cache('block');
+    var temp = null;
 
 	var Template = System.Component.extend({
 		constructor: function(cache,compiler) {
@@ -50,7 +51,7 @@
 			this.cache = cache || _cache;
 			_cache = this.cache;
 			this.compiler = compiler || System.Compiler.getInstance();
-			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','g');
+			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
@@ -816,6 +817,8 @@
 	};
 
 
+
+
     /**
      * @author: lhh
      * 产品介绍：
@@ -842,12 +845,47 @@
 
     };
 
-
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2019-8-25
+     * 修改日期：2020-2-11
+     * 名称：Template.getCache
+     * 功能：返回当前的缓存对象
+     * 说明：
+     * 注意：
+     * usage：
+     * @returns {Cache}
+     */
     Template.getCache=function () {
 		return _cache;
     };
 
-    var temp = new Template();
+
+
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2020-2-21
+     * 修改日期：2020-2-21
+     * 名称：Template.getTemplate
+     * 功能：获取Template 单例对象
+     * 说明：can be overwrite
+     * 注意：
+     * usage：
+     * @param cache {Cache}
+     * @param compiler {Compiler}
+     * @returns {Template}
+     */
+    Template.getTemplate=function (cache,compiler) {
+        if(!(temp instanceof Template)){
+            temp = new Template(cache || _cache,compiler);
+        }
+        return temp;
+
+    };
+
+    temp = Template.getTemplate(null,null);
 
 	System.merge(null,[{
 		'analysisVar':temp.analysisVar,
