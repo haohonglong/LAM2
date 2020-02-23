@@ -285,7 +285,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-02-11
-         * 修改日期：2020-02-11
+         * 修改日期：2020-02-23
          * 名称：extract_script_tag2
          * 功能：根据标签提取它及里面的内容
          * 说明：
@@ -310,7 +310,7 @@
                 this.cache.add(data);
 
                 S = S.replace(content,function (substring) {
-                	return '<#=block id="'+id+'" />';
+                	return '<#=block type="literal" id="'+id+'" />';
 				});
                 reg_inc.lastIndex = 0;
             }
@@ -391,7 +391,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-02-12
-         * 修改日期：2020-02-12
+         * 修改日期：2020-02-23
          * 名称：literal
          * 功能：指定哪一段代码在block区块内会被模版解析器忽略
          * 说明：
@@ -416,7 +416,7 @@
                 this.cache.add(data);
 
                 S = S.replace(arr_inc[0],function () {
-                    return '<#=block id="'+id+'" />';
+                    return '<#=block type="literal" id="'+id+'" />';
                 });
                 reg_inc.lastIndex = 0;
             }
@@ -426,7 +426,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-2-12
+         * 修改日期：2020-2-23
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
          * 说明：
@@ -476,7 +476,7 @@
 		'getBlocks':function (S) {
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
-            var id = "",content="",k="",v="";
+            var id = "",content="",k="",v="",type="";
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
                 content = "";
                 var data ={},arr = arr_inc[1].split('" ');
@@ -488,13 +488,17 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                id = data.id;
+                id   = data.id;
+                type = data.type || null;
                 data.data = System.eval(data.data) || null;
                 this.cache.find('id',id,function (index) {
                     if(-1 === index){
                         // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
                         content = this.get(index).content;
+                        if(!System.LAM_DEBUG && "literal" === type){
+                            this.remove(index);
+						}
                         if(data.data){
 							content = System.Compiler.jQCompile(content,data.data);
 						}
