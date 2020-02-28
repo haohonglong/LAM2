@@ -196,8 +196,10 @@
         }
     };
 
+    if(System.routeAutoRun){
+        Router.run(System.routerId,System.moduleId);
+    }
 
-	Router.run(System.routerId,System.moduleId);
 	return Router;
 });
 

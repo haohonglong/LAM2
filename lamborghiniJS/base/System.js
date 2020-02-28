@@ -388,6 +388,7 @@
             System.each(System.merge({},[System.components,System.Public]),function(name){
                 if(!(name in System)){System[name] = this;}
             });
+            System.routeAutoRun = System.isset(System.routeAutoRun) && System.isBoolean(System.routeAutoRun) ? System.routeAutoRun : true;
             System.LAM_DEBUG = System.Config.LAM_DEBUG;
             System.LAM_ENV = System.Config.LAM_ENV;
             System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
