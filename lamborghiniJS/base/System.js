@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2020-2-05
+ * 修改日期:2020-2-28
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -388,6 +388,7 @@
             System.each(System.merge({},[System.components,System.Public]),function(name){
                 if(!(name in System)){System[name] = this;}
             });
+            System.routeAutoRun = System.isset(System.routeAutoRun) && System.isBoolean(System.routeAutoRun) ? System.routeAutoRun : true;
             System.LAM_DEBUG = System.Config.LAM_DEBUG;
             System.LAM_ENV = System.Config.LAM_ENV;
             System.LAM_ENV_PROD = 'prod' === System.LAM_ENV;
@@ -412,14 +413,14 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018.11.22
-         * 修改日期：2019.11.9
+         * 修改日期：2020.2.28
          * 名称：bootstrap
          * 功能：加载初始化文件
          * 说明：
          * 注意：
          * 调用方式：
 		 * @param Config
-         * Example：
+         * @returns {System}
          */
         'bootstrap':function (Config){
 			System.Config = Config || System.Config;
@@ -465,6 +466,7 @@
             });
 			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
             System.print(files.join(''));
+            return this;
 		},
         /**
          * @author: lhh
