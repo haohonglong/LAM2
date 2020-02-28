@@ -16,6 +16,8 @@
     if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
     System.import(['/View.class'],System.classPath+'/base');
 
+    var isrun = false;
+
 	var __this__=null;
 	var Router = System.Browser.extend({
 		constructor: function () {
@@ -159,6 +161,8 @@
 	 * perform controller by url and run the action
      */
 	Router.run=function (r,m) {
+	    if(isrun) return;
+	    isrun = true;
         var R = Router.init(r,m);
 		r = R.r.split('/');
 		var M = '';
