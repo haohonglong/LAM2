@@ -109,14 +109,27 @@
 				return {'index':index,'value':this.value};
 			}
 		},
-		/**
-		 *
-		 * @param index
-		 */
+
+        /**
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2017-1-5
+         * 修改日期:2020-3-1
+         * 名称：get
+         * 功能：获取数组对应下标下标的数据，无参数时返回数组中全部数据
+         * 说明：
+         * 注意：
+         * @param {int}index		NULL
+         * @returns {Array|Object}
+         */
 		'get':function(index){
+			var cache=null;
 			if(System.isset(index) && System.isNumeric(index)){
-				return this.getItem().caches[index];
+                cache = this.getItem().caches[index];
+			}else{
+                cache = this.getItem().caches;
 			}
+			return cache;
 		},
 
 		/**
@@ -128,7 +141,7 @@
          * 功能：添加数据，可以设置一个有效期
          * 说明：
          * 注意：
-		 * @param {json}data
+		 * @param {JSON}data
 		 * @param {timeStamp}expires 	NULL 失效期的时间戳
 		 * @returns {Cache}
 		 */
