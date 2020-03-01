@@ -56,7 +56,7 @@
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
 			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
-			this.set_block_reg = new RegExp('<#beginBlock id="(\\S+)">(([\\s\\S])*?)<#endBlock>', 'gm');
+			this.set_block_reg = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
 			this.html=[];
@@ -310,7 +310,7 @@
                 this.cache.add(data);
 
                 S = S.replace(content,function (substring) {
-                	return '<#=block type="literal" id="'+id+'" />';
+                	return '<#=block type="remove" id="'+id+'" />';
 				});
                 reg_inc.lastIndex = 0;
             }
@@ -416,7 +416,7 @@
                 this.cache.add(data);
 
                 S = S.replace(arr_inc[0],function () {
-                    return '<#=block type="literal" id="'+id+'" />';
+                    return '<#=block type="remove" id="'+id+'" />';
                 });
                 reg_inc.lastIndex = 0;
             }
@@ -426,24 +426,34 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-2-23
+         * 修改日期：2020-3-1
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
-         * 说明：
+         * 说明：type="overwrite" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
          * 注意：
-         * usage：<#beginBlock id="menu"> ... <#endBlock>
+         * usage：<#beginBlock id="menu" [type="overwrite"]> ... <#endBlock>
          * @param S
          * @returns {String}
          */
         'setBlock':function (S) {
             var reg_inc = this.set_block_reg;
             var arr_inc = [];
-            var id = "",content = "";
-            var data ={};
+            var id = "",content="",k="",v="",type="",data ={};
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                data ={};id = System.camelCase(arr_inc[1].trim());
-                data.id = id;
-                content = arr_inc[2];
+            	content = "";
+                data = {};
+                var arr = arr_inc[1].split('" ');
+                arr.each(function(){
+                    var arr = this.split('="');
+                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                    k = System.camelCase(arr[0].trim());
+                    v = arr[1];
+                    data[k] =  v;
+                });
+                id   = data.id;
+                type = data.type || null;
+                content = arr_inc[3];
                 content = this.getBlocks(content);
                 content = this.literal(content);
                 content = this.extract_by_tag2('script',content);
@@ -452,7 +462,9 @@
                     if(-1 === index){
                         this.add(data);
                     }else{
-                        this.update(index,data);
+                    	if(type && 'overwrite' === type){
+                            this.update(index,data);
+						}
                     }
                 });
                 S = S.replace(arr_inc[0],'');
@@ -496,7 +508,7 @@
                         // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
                         content = this.get(index).content;
-                        if(!System.LAM_DEBUG && "literal" === type){
+                        if(type && !System.LAM_DEBUG && "remove" === type){
                             this.remove(index);
 						}
                         if(data.data){
