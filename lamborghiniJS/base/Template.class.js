@@ -429,9 +429,9 @@
          * 修改日期：2020-3-1
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
-         * 说明：type="overwrite" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
+         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
          * 注意：
-         * usage：<#beginBlock id="menu" [type="overwrite"]> ... <#endBlock>
+         * usage：<#beginBlock id="menu" [type="override"]> ... <#endBlock>
          * @param S
          * @returns {String}
          */
@@ -462,7 +462,7 @@
                     if(-1 === index){
                         this.add(data);
                     }else{
-                    	if(type && 'overwrite' === type){
+                    	if(type && 'override' === type){
                             this.update(index,data);
 						}
                     }
