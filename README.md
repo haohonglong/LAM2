@@ -1300,7 +1300,7 @@
   #### block ： 
   ######  <#beginBlock id="xxx" [type="override"] [data="{}"]> ... <#endBlock> 由一个唯一标识符定义block，
   ######  可以继承使用,type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
-  ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表cache对象
+  ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  注意：为了防止block内js标识符冲突！仅只有script标签里的内容在block里不会被模版解析器解析，会被忽略（包括data属性传入的数据）,
   ######       意思就是为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容。,但style标签内data属性里的数据会被解析

@@ -430,7 +430,7 @@
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
          * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
-		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表cache对象
+		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：
          * usage：<#beginBlock id="menu" [type="override"] [data="{}"] [func="function(){}"]> ... <#endBlock>
          * @param S
@@ -440,6 +440,7 @@
             var reg_inc = this.set_block_reg;
             var arr_inc = [];
             var id = "",content="",k="",v="",type="",data ={};
+            var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	content = "";
                 data = System.createDict();
@@ -476,7 +477,7 @@
 						}
                     }
                     if(System.isFunction(data.func)){
-                        data.func.apply(this,[arguments,arr_inc]);
+                        data.func.apply(__this,[arguments,arr_inc]);
                     }
                 });
                 S = S.replace(arr_inc[0],'');
@@ -501,6 +502,7 @@
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
             var id = "",content="",k="",v="",type="";
+            var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
                 content = "";
                 var data =System.createDict(),arr = arr_inc[1].split('" ');
@@ -535,7 +537,7 @@
 						}
 					}
                     if(System.isFunction(data.func)){
-                        data.func.apply(this,[arguments,arr_inc]);
+                        data.func.apply(__this,[arguments,arr_inc]);
                     }
 
                 });
