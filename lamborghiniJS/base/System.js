@@ -547,25 +547,25 @@
                 },time);
                 timers.push(callback.timer);
 			}else if(System.isArray(callback)){
-                callback.each(function (index) {
-                    if(System.isPlainObject(this)){
-                        time = this.time || time;
-                        this.func.index = index;
+                System.each(callback,function (index) {
+                    if(System.isObject(this)){
+                        this.time = this.time || time;
+                        this.index = index;
                         this.timer = setInterval(function(){
                             var i = Math.floor(Math.random() * callback.length);
-                            var func = callback[i].func;
-                            if(func(func.timer)){
-                                System.stop(func.timer);
-                                callback.removeAt(func.index);
+                            var json = callback[i];
+                            if(System.isFunction(json.func) && json.func(json.timer)){
+                                System.stop(json.timer);
+                                callback.removeAt(json.index);
                             }
-                        },time);
+                        },this.time);
                         timers.push(this.timer);
                     }else{
                         this.index = index;
                         this.timer = setInterval(function(){
                             var i = Math.floor(Math.random() * callback.length);
                             var func = callback[i];
-                            if(func(func.timer)){
+                            if(System.isFunction(func) && func(func.timer)){
                                 System.stop(func.timer);
                                 callback.removeAt(func.index);
                             }
