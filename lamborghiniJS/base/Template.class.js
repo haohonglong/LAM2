@@ -426,12 +426,13 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-3-1
+         * 修改日期：2020-3-3
          * 名称：setBlock
-         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
-         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
+         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
+         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
+		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：
-         * usage：<#beginBlock id="menu" [type="override"]> ... <#endBlock>
+         * usage：<#beginBlock id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#endBlock>
          * @param S
          * @returns {String}
          */
@@ -439,9 +440,10 @@
             var reg_inc = this.set_block_reg;
             var arr_inc = [];
             var id = "",content="",k="",v="",type="",data ={};
+            var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	content = "";
-                data = {};
+                data = System.createDict();
                 var arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
@@ -451,20 +453,42 @@
                     v = arr[1];
                     data[k] =  v;
                 });
-                id   = data.id;
-                type = data.type || null;
+                id    = data.id;
+                type  = data.type || null;
+
                 content = arr_inc[3];
                 content = this.getBlocks(content);
                 content = this.literal(content);
                 content = this.extract_by_tag2('script',content);
                 data.content = content;
+                data.data    = System.eval(data.data) || null;
+                data.func    = System.eval(data.func) || null;
+
                 this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         this.add(data);
                     }else{
-                    	if(type && 'override' === type){
-                            this.update(index,data);
+                    	if(type){
+                    		var override = type.split(':');
+                    		override[1] = System.eval(override[1]);
+                    		override[1] = System.isBoolean(override[1]) || 1 === override[1] ? override[1] : false;
+                            if('override' === override[0]){
+                                var json = this.get(index);
+                                if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
+                                    if(override[1]){
+                                        data.data = System.merge(true,data.data,[json.data]);
+                                    }else{
+                                        data.data = System.merge(true,json.data,[data.data]);
+                                    }
+                                }
+
+                                this.update(index,data);
+                            }
 						}
+
+                    }
+                    if(System.isFunction(data.func)){
+                        data.func.apply(__this,[arguments,arr_inc]);
                     }
                 });
                 S = S.replace(arr_inc[0],'');
@@ -476,12 +500,12 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2020-2-7
+         * 修改日期：2020-3-2
          * 名称：getBlocks
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
          * 注意：
-         * usage：<#=block id="xx" [data="{}"] />
+         * usage：<#=block id="xx" [data="{}"] [func="function(){}"] />
          * @param S
          * @returns {String}
          */
@@ -489,9 +513,10 @@
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
             var id = "",content="",k="",v="",type="";
+            var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
                 content = "";
-                var data ={},arr = arr_inc[1].split('" ');
+                var data =System.createDict(),arr = arr_inc[1].split('" ');
                 arr.each(function(){
                     var arr = this.split('="');
                     arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -503,18 +528,28 @@
                 id   = data.id;
                 type = data.type || null;
                 data.data = System.eval(data.data) || null;
-                this.cache.find('id',id,function (index) {
+                data.func    = System.eval(data.func) || null;
+                this.cache.find('id',id,function (index,id) {
                     if(-1 === index){
                         // throw new Error('Unknown id of blocks '+arr_inc[0]);
                     }else{
-                        content = this.get(index).content;
-                        if(type && !System.LAM_DEBUG && "remove" === type){
+                        var json = this.get(index);
+                        content  = json.content;
+
+                        if(type && !System.LAM_DEBUG && "remove" === type){//删除cache中随机生产block id 的数据
                             this.remove(index);
 						}
-                        if(data.data){
+
+                        if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
+                            data.data = System.merge(true,data.data,[json.data]);
+                        }
+                        if(System.isPlainObject(data.data)){
 							content = System.Compiler.jQCompile(content,data.data);
 						}
 					}
+                    if(System.isFunction(data.func)){
+                        data.func.apply(__this,[arguments,arr_inc]);
+                    }
 
                 });
                 S = S.replace(arr_inc[0],content);

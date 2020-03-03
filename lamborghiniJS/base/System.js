@@ -529,23 +529,36 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-4-18
-         * 修改日期：2018-5-15
+         * 修改日期：2020-3-3
          * 名称：System.listen
          * 功能：支持链式调用，总是返回当前命名空间对象，
          * 说明：启动一个监听器，callback 不返回true 监听器就不停止，一直监听
          * 注意：
-         * @param   (Function)callback 		NO NULL :启动监听器要做的操作
-         * @param   (Number)time 			   NULL :监听时间间隔
-         * @return  (System)
+         * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array时每个func是随机被调用的
+         * @param   {Number}time 			   NULL :监听时间间隔
+         * @return  {System}
          * Example：
          */
 		'listen':function (callback,time) {
+			time = time || 3000;
 			if(System.isFunction(callback)) {
-                time = time || 3000;
                 callback.timer = setInterval(function(){
                     if(callback(callback.timer)){System.stop(callback.timer);}
                 },time);
                 timers.push(callback.timer);
+			}else if(System.isArray(callback)){
+                callback.each(function (index) {
+                	this.index = index;
+                    this.timer = setInterval(function(){
+                        var i = Math.floor(Math.random() * callback.length);
+                    	var func = callback[i];
+                        if(func(func.timer)){
+                        	System.stop(func.timer);
+                        	callback.removeAt(func.index);
+                        }
+                    },time);
+                    timers.push(this.timer);
+                });
 			}
 			return this;
         },
