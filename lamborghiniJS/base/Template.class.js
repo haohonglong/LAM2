@@ -470,7 +470,8 @@
                     }else{
                     	if(type){
                     		var override = type.split(':');
-                    		override[1] = override[1] || false;
+                    		override[1] = System.eval(override[1]);
+                    		override[1] = System.isBoolean(override[1]) || 1 === override[1] ? override[1] : false;
                             if('override' === override[0]){
                                 var json = this.get(index);
                                 if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
