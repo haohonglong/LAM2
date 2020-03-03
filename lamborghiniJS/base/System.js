@@ -534,7 +534,7 @@
          * 功能：支持链式调用，总是返回当前命名空间对象，
          * 说明：启动一个监听器，callback 不返回true 监听器就不停止，一直监听
          * 注意：
-         * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array时每个func是随机被调用的
+         * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array时每个func是随机被调用的,Array中每个元素是对象时可以给每个func设置time
          * @param   {Number}time 			   NULL :监听时间间隔
          * @return  {System}
          * Example：
@@ -548,16 +548,31 @@
                 timers.push(callback.timer);
 			}else if(System.isArray(callback)){
                 callback.each(function (index) {
-                	this.index = index;
-                    this.timer = setInterval(function(){
-                        var i = Math.floor(Math.random() * callback.length);
-                    	var func = callback[i];
-                        if(func(func.timer)){
-                        	System.stop(func.timer);
-                        	callback.removeAt(func.index);
-                        }
-                    },time);
-                    timers.push(this.timer);
+                    if(System.isPlainObject(this)){
+                        time = this.time || time;
+                        this.func.index = index;
+                        this.timer = setInterval(function(){
+                            var i = Math.floor(Math.random() * callback.length);
+                            var func = callback[i].func;
+                            if(func(func.timer)){
+                                System.stop(func.timer);
+                                callback.removeAt(func.index);
+                            }
+                        },time);
+                        timers.push(this.timer);
+                    }else{
+                        this.index = index;
+                        this.timer = setInterval(function(){
+                            var i = Math.floor(Math.random() * callback.length);
+                            var func = callback[i];
+                            if(func(func.timer)){
+                                System.stop(func.timer);
+                                callback.removeAt(func.index);
+                            }
+                        },time);
+                        timers.push(this.timer);
+                    }
+
                 });
 			}
 			return this;
