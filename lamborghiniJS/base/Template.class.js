@@ -426,13 +426,13 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-3-2
+         * 修改日期：2020-3-3
          * 名称：setBlock
-         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用
-         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,默认发生冲突时后者被忽略
+         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
+         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
 		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：
-         * usage：<#beginBlock id="menu" [type="override"] [data="{}"] [func="function(){}"]> ... <#endBlock>
+         * usage：<#beginBlock id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#endBlock>
          * @param S
          * @returns {String}
          */
@@ -468,13 +468,23 @@
                     if(-1 === index){
                         this.add(data);
                     }else{
-                    	if(type && 'override' === type){
-                    		var json = this.get(index);
-                    		if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
-                    			data.data = System.merge(true,json.data,[data.data]);
-							}
-                            this.update(index,data);
+                    	if(type){
+                    		var override = type.split(':');
+                    		override[1] = override[1] || false;
+                            if('override' === override[0]){
+                                var json = this.get(index);
+                                if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
+                                    if(override[1]){
+                                        data.data = System.merge(true,data.data,[json.data]);
+                                    }else{
+                                        data.data = System.merge(true,json.data,[data.data]);
+                                    }
+                                }
+
+                                this.update(index,data);
+                            }
 						}
+
                     }
                     if(System.isFunction(data.func)){
                         data.func.apply(__this,[arguments,arr_inc]);
