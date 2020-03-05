@@ -382,7 +382,8 @@
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
                 k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
                 v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
-                S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),this.findTpl(v));
+                v = this.findTpl(v);
+                S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                 reg_inc.lastIndex = 0;
             }
             return S;

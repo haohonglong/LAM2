@@ -533,7 +533,7 @@
          * 名称：System.listen
          * 功能：支持链式调用，总是返回当前命名空间对象，
          * 说明：启动一个监听器，callback 不返回true 监听器就不停止，一直监听
-         * 注意：
+         * 注意：callback是Array，对象与function混合使用时，israndom为false时结果是出乎意料的
          * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array中每个元素是对象时可以给每个func设置time
          * @param   {Number}time 			           NULL :监听时间间隔
          * @param   {Boolean}israndom 			       NULL :callback是Array时每个func是否是随机被调用的，默认false,是轮循被调用
