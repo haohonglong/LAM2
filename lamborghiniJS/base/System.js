@@ -529,17 +529,18 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-4-18
-         * 修改日期：2020-3-3
+         * 修改日期：2020-3-5
          * 名称：System.listen
          * 功能：支持链式调用，总是返回当前命名空间对象，
          * 说明：启动一个监听器，callback 不返回true 监听器就不停止，一直监听
          * 注意：
-         * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array时每个func是随机被调用的,Array中每个元素是对象时可以给每个func设置time
-         * @param   {Number}time 			   NULL :监听时间间隔
+         * @param   {Function|Array}callback 		NO NULL :启动监听器要做的操作,Array中每个元素是对象时可以给每个func设置time
+         * @param   {Number}time 			           NULL :监听时间间隔
+         * @param   {Boolean}israndom 			       NULL :callback是Array时每个func是否是随机被调用的，默认false,是轮循被调用
          * @return  {System}
          * Example：
          */
-		'listen':function (callback,time) {
+		'listen':function (callback,time,israndom) {
 			time = time || 3000;
 			if(System.isFunction(callback)) {
                 callback.timer = setInterval(function(){
@@ -547,12 +548,19 @@
                 },time);
                 timers.push(callback.timer);
 			}else if(System.isArray(callback)){
+                israndom = israndom || false;
+                var i = -1;
                 System.each(callback,function (index) {
                     if(System.isObject(this)){
                         this.time = this.time || time;
                         this.index = index;
                         this.timer = setInterval(function(){
-                            var i = Math.floor(Math.random() * callback.length);
+                        	if(israndom){
+                            	i = Math.floor(Math.random() * callback.length);
+							}else {
+                        		if(callback.length === i){i = -1;}
+                        		i++;
+							}
                             var json = callback[i];
                             if(System.isFunction(json.func) && json.func(json.timer)){
                                 System.stop(json.timer);
@@ -563,7 +571,12 @@
                     }else{
                         this.index = index;
                         this.timer = setInterval(function(){
-                            var i = Math.floor(Math.random() * callback.length);
+                            if(israndom){
+                                i = Math.floor(Math.random() * callback.length);
+                            }else {
+                                if(callback.length === i){i = -1;}
+                                i++;
+                            }
                             var func = callback[i];
                             if(System.isFunction(func) && func(func.timer)){
                                 System.stop(func.timer);
