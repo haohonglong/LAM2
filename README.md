@@ -1,9 +1,9 @@
 # LAM2
 	name    ：LamborghiniJS(OO JS)
-	version ：v2.1.4
+	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-03-1
+	修改日期 ：2020-03-17
 
 
 # 产品介绍：

@@ -186,6 +186,9 @@
                     if(System.isset(view) && System.isString(view)) {
 						//生产静态页便于输出
                         System._content = generator(view);//there is saved the content of html that after parsed
+                        if(System.isFunction(System.main)){
+                            System.main(System._content,controller,action);
+                        }
                         System.print(view);
                     } else{
                         System._content = null;
