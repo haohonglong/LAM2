@@ -334,7 +334,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-1-18
+		 * 修改日期：2020-3-17
 		 * 名称：System.main
 		 * 功能：程序主方法
 		 * 说明：
@@ -344,7 +344,7 @@
 		 * @return  (Object) 返回callback 里的返回值
 		 * Example：
 		 */
-		'main':null,
+		'main':function (view,controller,action) {},
         /**
          * @author: lhh
          * 产品介绍：
