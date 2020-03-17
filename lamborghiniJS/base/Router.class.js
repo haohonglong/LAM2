@@ -176,30 +176,30 @@
         var id = r[2];
         var view="";
         id = System.eval(id);
-        try{ 
-        	var controller = new System[ControllerName](); 
-        	if(controller instanceof System.Controller){ 
-        		if(action && System.isFunction(controller[action])){
-                    controller.viewpath = System.VIEWS+'/'+M+Controller.toLowerCase();
+        try{
+        	var controller = new System[ControllerName]();
+        	if(controller instanceof System.Controller){
+        		if(action && System.isFunction(controller[action])) {
+                    controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
                     controller.init();
                     view = controller[action](id);
-                    if(System.isset(view) && System.isString(view)) {
-						//生产静态页便于输出
+                    if (System.isset(view) && System.isString(view)) {
+                        //生产静态页便于输出
                         System._content = generator(view);//there is saved the content of html that after parsed
-                        if(System.isFunction(System.main)){
-                            System.main(System._content,controller,action,id);
+                        if (System.isFunction(System.main)) {
+                            System.main(System._content, controller, action, id);
                         }
                         System.print(view);
-                    } else{
+                    }else{
                         System._content = null;
-					}
-        		}else{ 
-        			throw new Error("the action '"+action+"' was not found"); 
-        		} 
-        	} 
-        }catch(e){ 
-        	System.View.ERROR_404(e); 
-        	throw new Error(e); 
+                    }
+                }else{
+        			throw new Error("the action '"+action+"' was not found");
+        		}
+        	}
+        }catch(e){
+        	System.View.ERROR_404(e);
+        	throw new Error(e);
         }
     };
 
