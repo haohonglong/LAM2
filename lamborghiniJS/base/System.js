@@ -361,7 +361,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-7-21
+		 * 修改日期：2020-3-17
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -372,10 +372,10 @@
 		 * Example：
 		 */
 		'run':function(args,callback){
-            if(once && System.isFunction(this.main)){
-                once = false;
-                runtime.apply(this,[this.main]);
-            }
+            // if(once && System.isFunction(this.main)){
+            //     once = false;
+            //     runtime.apply(this,[this.main]);
+            // }
             return runtime.apply(this,[args,callback]);
 
 		},
