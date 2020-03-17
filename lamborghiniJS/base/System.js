@@ -337,14 +337,14 @@
 		 * 修改日期：2020-3-17
 		 * 名称：System.main
 		 * 功能：程序主方法
-		 * 说明：
+		 * 说明：此方法在Router.run 方法里解析完视图后被调用,这个方法可以在LAM.bootstrap()调用前overwrite
 		 * 注意：
 		 * @param   (Array)args 			   NULL :传入的参数
 		 * @param   (Function)callback 		NO NULL :
 		 * @return  (Object) 返回callback 里的返回值
 		 * Example：
 		 */
-		'main':function (view,controller,action) {},
+		'main':function (view,controller,action,id) {},
         /**
          * @author: lhh
          * 产品介绍：
