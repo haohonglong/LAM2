@@ -372,12 +372,7 @@
 		 * Example：
 		 */
 		'run':function(args,callback){
-            // if(once && System.isFunction(this.main)){
-            //     once = false;
-            //     runtime.apply(this,[this.main]);
-            // }
             return runtime.apply(this,[args,callback]);
-
 		},
 		'init':function () {
             System.Config.files = System.Config.files || [];
