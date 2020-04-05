@@ -427,7 +427,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-3-3
+         * 修改日期：2020-4-5
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
          * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
@@ -460,7 +460,7 @@
                 content = arr_inc[3];
                 content = this.getBlocks(content);
                 content = this.literal(content);
-                content = this.extract_by_tag2('script',content);
+                // content = this.extract_by_tag2('script',content);
                 data.content = content;
                 data.data    = System.eval(data.data) || null;
                 data.func    = System.eval(data.func) || null;
