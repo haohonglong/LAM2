@@ -1304,10 +1304,10 @@
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  注意：因为block内会自动执行模版解析器，这就会与js源代码发送冲突，
   ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
-  ######       使用<!--Literal:begin--><!--Literal:end-->
-       <!--Literal:begin-->
+  ######       使用<!--Escape:begin--><!--Escape:end-->
+       <!--Escape:begin-->
           这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
-       <!--Literal:end--> 
+       <!--Escape:end--> 
   
   ##### usage：
         room/list.html
@@ -1376,7 +1376,7 @@
         </div>
         <% }%>
         
-        <!--Literal:begin-->
+        <!--Escape:begin-->
         <script type="text/javascript">
         //components-list
             LAM.run(function() {
@@ -1424,7 +1424,7 @@
             });
         
         </script>
-        <!--Literal:end-->
+        <!--Escape:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
     
