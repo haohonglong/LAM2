@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2020-2-28
+ * 修改日期:2020-3-17
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -48,7 +48,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="v2.1.4",
+	var VERSION="v2.1.5",
 		Interface={},
 		System={},
 		once=true,
@@ -334,17 +334,17 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-1-18
+		 * 修改日期：2020-3-17
 		 * 名称：System.main
 		 * 功能：程序主方法
-		 * 说明：
+		 * 说明：此方法在Router.run 方法里解析完视图后被调用,这个方法可以在LAM.bootstrap()调用前overwrite
 		 * 注意：
 		 * @param   (Array)args 			   NULL :传入的参数
 		 * @param   (Function)callback 		NO NULL :
 		 * @return  (Object) 返回callback 里的返回值
 		 * Example：
 		 */
-		'main':null,
+		'main':function (view,controller,action,id) {},
         /**
          * @author: lhh
          * 产品介绍：
@@ -361,7 +361,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2018-7-21
+		 * 修改日期：2020-3-17
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -372,12 +372,7 @@
 		 * Example：
 		 */
 		'run':function(args,callback){
-            if(once && System.isFunction(this.main)){
-                once = false;
-                runtime.apply(this,[this.main]);
-            }
             return runtime.apply(this,[args,callback]);
-
 		},
 		'init':function () {
             System.Config.files = System.Config.files || [];

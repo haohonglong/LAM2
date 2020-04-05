@@ -59,6 +59,7 @@
 			this.set_block_reg = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
+			this.escape_reg   = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
 			this.html=[];
 		},
 		'_className':'Template',
@@ -392,17 +393,17 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-02-12
-         * 修改日期：2020-02-23
-         * 名称：literal
+         * 修改日期：2020-04-5
+         * 名称：escape
          * 功能：指定哪一段代码在block区块内会被模版解析器忽略
          * 说明：
          * 注意：注意大小写！！！
-         * usage：<!--Literal:begin-->这里的内容会被模版解析器忽略<!--Literal:end-->
+         * usage：<!--Escape:begin-->这里的内容会被模版解析器忽略<!--Escape:end-->
          * @param S{String}     NOT NULL内容
          * @returns {String}
          */
-        'literal':function(S){
-            var reg_inc = this.literal_reg;
+        'escape':function(S){
+            var reg_inc = this.escape_reg;
             var arr_inc = [];
             var id = "",content = "";
             var data ={};
@@ -427,7 +428,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-3-3
+         * 修改日期：2020-4-5
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
          * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
@@ -459,8 +460,7 @@
 
                 content = arr_inc[3];
                 content = this.getBlocks(content);
-                content = this.literal(content);
-                content = this.extract_by_tag2('script',content);
+                content = this.escape(content);
                 data.content = content;
                 data.data    = System.eval(data.data) || null;
                 data.func    = System.eval(data.func) || null;

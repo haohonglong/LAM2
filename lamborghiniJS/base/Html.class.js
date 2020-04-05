@@ -38,7 +38,7 @@
                 }else{
                     Cache = new System.Storage(
                     	 name || 'template'
-                        ,System.configure_cache.type || sessionStorage 
+                        ,System.configure_cache.type || sessionStorage
 						,System.configure_cache.expires || 0);
                 }
 			}catch (e){
@@ -50,17 +50,17 @@
         return Cache;
     }
 
-    /** 
+    /**
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-11-13
      * 修改日期：2018-11-13
      * 名称： setCache
      * 功能：数据存储到缓存中，
-     * 说明：路径一定要抛弃?带的参数 
+     * 说明：路径一定要抛弃?带的参数
      *
-     * @param url 
-     * @param data 
+     * @param url
+     * @param data
      */
     function setCache(url,data){
         var n = url.indexOf('?'),_url = url;
@@ -185,16 +185,16 @@
         'get':function(){
             var _this = this,url = this.file,n = url.indexOf('?'),content='';
             if(System.isFunction(System.Cache) && System.isset(this.file)) {
-                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64 
+                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64
                     if (-1 === index) {
                         _this.ajax();
                     }else{
                         content = this.get(index).content;
-                        if('js' === this.get(index).type){//脚本文件就直接执行 
+                        if('js' === this.get(index).type){//脚本文件就直接执行
                             System.globalEval(content);
-                        }else{
-                            ajax_success_callback.call(_this,content,null,null);
-						 }
+                        }else {
+                            ajax_success_callback.call(_this, content, null, null);
+                        }
                     }
                 });
             }else{

@@ -1,9 +1,9 @@
 # LAM2
 	name    ：LamborghiniJS(OO JS)
-	version ：v2.1.4
+	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-03-1
+	修改日期 ：2020-04-5
 
 
 # 产品介绍：
@@ -1302,9 +1302,13 @@
   ######  type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
-  ######  注意：为了防止block内js标识符冲突！仅只有script标签里的内容在block里不会被模版解析器解析，会被忽略（包括data属性传入的数据）,
-  ######       意思就是为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容。,但style标签内data属性里的数据会被解析
-               还可以用：<!--Literal:begin-->这里的内容会被模版解析器忽略<!--Literal:end--> 这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
+  ######  注意：因为block内会自动执行模版解析器，这就会与js源代码发送冲突，
+  ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
+  ######       使用<!--Escape:begin--><!--Escape:end-->
+       <!--Escape:begin-->
+          这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
+       <!--Escape:end--> 
+  
   ##### usage：
         room/list.html
         <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" /> 这个命令调用了 components/list.html
@@ -1372,7 +1376,7 @@
         </div>
         <% }%>
         
-        <!--Literal:begin-->
+        <!--Escape:begin-->
         <script type="text/javascript">
         //components-list
             LAM.run(function() {
@@ -1420,7 +1424,7 @@
             });
         
         </script>
-        <!--Literal:end-->
+        <!--Escape:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
     

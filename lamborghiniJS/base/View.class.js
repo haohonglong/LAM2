@@ -80,9 +80,9 @@
 		 */
 		'destructor':function(){}
 	});
-    /** 
+    /**
 	 *
-	 *  @author lh 
+	 *  @author lhh
 	 *  产品介绍：
 	 *  创建日期：2018-9-12
 	 *  修改日期：2019-3-5
@@ -94,7 +94,7 @@
 	 *  @param (String)message     NO NULL    message of error
 	 *  @param (String)url            NULL    page of 404
 	 *  @param (jQuery)$dom           NULL    element of include
-	 *  @return  (void) 
+	 *  @return  (void)
 	 *  Example:
 	 */
     View.ERROR_404 = function (code,message, url, $dom) {
