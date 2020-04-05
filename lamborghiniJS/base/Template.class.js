@@ -460,7 +460,6 @@
                 content = arr_inc[3];
                 content = this.getBlocks(content);
                 content = this.literal(content);
-                // content = this.extract_by_tag2('script',content);
                 data.content = content;
                 data.data    = System.eval(data.data) || null;
                 data.func    = System.eval(data.func) || null;
