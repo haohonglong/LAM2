@@ -80,7 +80,7 @@
         temp = new System.Template();
         temp.datas      = this.tpData;
         temp.delimiters = this.delimiters;
-        data = temp.afterParse(temp.beforParse(data));
+        data = temp.parse(data);
 
         if(System.isFunction(this.capture)){data = this.capture(data);}
         if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}

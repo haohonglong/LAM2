@@ -747,6 +747,9 @@
             s = this.import(s);
             return s;
         },
+		'parse':function (s) {
+			return this.afterParse(this.beforParse(s));
+        },
 
 		/**
 		 *
