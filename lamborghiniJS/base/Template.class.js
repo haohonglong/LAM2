@@ -83,9 +83,9 @@
 		 * @returns {String}
 		 */
 		'render':function(path,D,callBack,Cajax){
-			var self=this,view="";
+			var view="";
 			System.Html.getFile(path,function(content){
-                view = self.compiler.compile(content,D);
+                view = Template.compile(content,D);
 				if(System.isFunction(callBack)){
 					callBack(view);
 					view = null;
@@ -722,12 +722,8 @@
          * @returns {String}
          */
 		'beforParse':function (s) {
-            if(this.datas && (System.isPlainObject(this.datas) || System.isArray(this.datas))) {
-                if(System.isArray(this.datas)){
-                    s = Template.foreach(s,this.datas,this.delimiters);
-                }else{
-                    s = Template.compile(s,this.datas,this.delimiters);
-                }
+            if(this.datas) {
+                s = Template.compile(s,this.datas,this.delimiters);
             }
             s = this.define2(this.define(s));
             s = this.include(s);
