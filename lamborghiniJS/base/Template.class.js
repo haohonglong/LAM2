@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-2-21
+ * 修改日期:2020-4-8
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -59,8 +59,10 @@
 			this.set_block_reg = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
-			this.escape_reg   = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
+			this.escape_reg    = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
 			this.html=[];
+			this.datas = null;
+			this.delimiters = null;
 		},
 		'_className':'Template',
 		'create':function(){},
@@ -81,9 +83,9 @@
 		 * @returns {String}
 		 */
 		'render':function(path,D,callBack,Cajax){
-			var self=this,view="";
+			var view="";
 			System.Html.getFile(path,function(content){
-                view = self.compiler.compile(content,D);
+                view = Template.compile(content,D);
 				if(System.isFunction(callBack)){
 					callBack(view);
 					view = null;
@@ -282,41 +284,7 @@
 			}
 			return {'content':S,'tags':tags};
 		},
-		/**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2020-02-11
-         * 修改日期：2020-02-23
-         * 名称：extract_script_tag2
-         * 功能：根据标签提取它及里面的内容
-         * 说明：
-         * 注意：
-         * @param tag{String}   NOT NULL标签名称
-         * @param S{String}     NOT NULL内容
-         * @returns {String}
-         */
-        'extract_by_tag2':function(tag,S){
-			var reg_inc = new RegExp('<'+tag+' (([\\s\\S])*?)</'+tag+'>','gim');
-            var arr_inc = [];
-            var id = "",content = "";
-            var data ={};
-            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-            	data = {};
-                content = arr_inc[0];
-                data.content = content;
-                do{
-                    id = System.uniqid();
-                    data.id = id;
-                }while(this.cache.find('id',id).index !== -1);
-                this.cache.add(data);
 
-                S = S.replace(content,function (substring) {
-                	return '<#=block type="remove" id="'+id+'" />';
-				});
-                reg_inc.lastIndex = 0;
-            }
-			return S;
-		},
 
 		/**
 		 * @author: lhh
@@ -744,7 +712,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-2-11
+         * 修改日期：2020-4-8
          * 名称：beforParse
          * 功能：
          * 说明：
@@ -754,6 +722,9 @@
          * @returns {String}
          */
 		'beforParse':function (s) {
+            if(this.datas) {
+                s = Template.compile(s,this.datas,this.delimiters);
+            }
             s = this.define2(this.define(s));
             s = this.include(s);
             return s;
@@ -775,6 +746,9 @@
             s = this.setBlock(s);
             s = this.import(s);
             return s;
+        },
+		'parse':function (s) {
+			return this.afterParse(this.beforParse(s));
         },
 
 		/**
