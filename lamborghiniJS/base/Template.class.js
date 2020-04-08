@@ -284,41 +284,7 @@
 			}
 			return {'content':S,'tags':tags};
 		},
-		/**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2020-02-11
-         * 修改日期：2020-02-23
-         * 名称：extract_script_tag2
-         * 功能：根据标签提取它及里面的内容
-         * 说明：
-         * 注意：
-         * @param tag{String}   NOT NULL标签名称
-         * @param S{String}     NOT NULL内容
-         * @returns {String}
-         */
-        'extract_by_tag2':function(tag,S){
-			var reg_inc = new RegExp('<'+tag+' (([\\s\\S])*?)</'+tag+'>','gim');
-            var arr_inc = [];
-            var id = "",content = "";
-            var data ={};
-            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-            	data = {};
-                content = arr_inc[0];
-                data.content = content;
-                do{
-                    id = System.uniqid();
-                    data.id = id;
-                }while(this.cache.find('id',id).index !== -1);
-                this.cache.add(data);
 
-                S = S.replace(content,function (substring) {
-                	return '<#=block type="remove" id="'+id+'" />';
-				});
-                reg_inc.lastIndex = 0;
-            }
-			return S;
-		},
 
 		/**
 		 * @author: lhh
@@ -756,16 +722,15 @@
          * @returns {String}
          */
 		'beforParse':function (s) {
-            s = this.define2(this.define(s));
-            s = this.include(s);
-            if(System.isString(s) && this.datas && (System.isPlainObject(this.datas) || System.isArray(this.datas))) {
+            if(this.datas && (System.isPlainObject(this.datas) || System.isArray(this.datas))) {
                 if(System.isArray(this.datas)){
                     s = Template.foreach(s,this.datas,this.delimiters);
                 }else{
                     s = Template.compile(s,this.datas,this.delimiters);
                 }
-			}
-
+            }
+            s = this.define2(this.define(s));
+            s = this.include(s);
             return s;
         },
         /**
