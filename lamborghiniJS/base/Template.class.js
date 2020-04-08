@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-2-21
+ * 修改日期:2020-4-8
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -59,8 +59,10 @@
 			this.set_block_reg = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
-			this.escape_reg   = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
+			this.escape_reg    = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
 			this.html=[];
+			this.datas = null;
+			this.delimiters = null;
 		},
 		'_className':'Template',
 		'create':function(){},
@@ -744,7 +746,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-2-11
+         * 修改日期：2020-4-8
          * 名称：beforParse
          * 功能：
          * 说明：
@@ -756,6 +758,14 @@
 		'beforParse':function (s) {
             s = this.define2(this.define(s));
             s = this.include(s);
+            if(System.isString(s) && this.datas && (System.isPlainObject(this.datas) || System.isArray(this.datas))) {
+                if(System.isArray(this.datas)){
+                    s = Template.foreach(s,this.datas,this.delimiters);
+                }else{
+                    s = Template.compile(s,this.datas,this.delimiters);
+                }
+			}
+
             return s;
         },
         /**

@@ -77,19 +77,18 @@
 
     var temp = null;
     function ajax_success_callback(data,textStatus,jqXHR){
-        temp = System.Template.getTemplate(null,null);
-        var _this = this;
-        data = temp.beforParse(data);
-        if(System.isString(data) && (System.isPlainObject(_this.tpData) || System.isArray(_this.tpData))){data = _this.compile(data);}
-        data = temp.afterParse(data);
+        temp = new System.Template();
+        temp.datas      = this.tpData;
+        temp.delimiters = this.delimiters;
+        data = temp.afterParse(temp.beforParse(data));
 
-        if(System.isFunction(_this.capture)){data = _this.capture(data);}
-        if(parseInt(_this.repeat) > 1 && System.isString(data)){data = _this.loop(data);}
-        if(_this.success && System.isFunction(_this.success)){
-            _this.success(data,textStatus,jqXHR);
+        if(System.isFunction(this.capture)){data = this.capture(data);}
+        if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}
+        if(this.success && System.isFunction(this.success)){
+            this.success(data,textStatus,jqXHR);
         }else{
-            if(_this.$dom){
-                _this.$dom.after(data).remove();
+            if(this.$dom){
+                this.$dom.after(data).remove();
             }
         }
     }
@@ -169,13 +168,6 @@
 		'__constructor':function(){},
 		'init':function () {
             return this;
-        },
-        'compile':function (S) {
-            if(System.isArray(this.tpData)){
-                return System.Template.foreach(S,this.tpData,this.delimiters);
-            }else{
-                return System.Template.compile(S,this.tpData,this.delimiters);
-            }
         },
         'loop':function (S) {
             var s = '',total = this.repeat >= 1 ? this.repeat : 1;
