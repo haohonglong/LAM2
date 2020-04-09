@@ -163,20 +163,21 @@
 	Router.run=function (r,m) {
 	    if(isrun) return;
 	    isrun = true;
-        var R = Router.init(r,m);
-		r = R.r.split('/');
-		var M = '';
-	    var str = r[0];
-        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-        var ControllerName = Controller+'Controller';
-        if(System.isString(R.m)) M = R.m+'/';
-        System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
-
-        var action = r[1]+'Action';
-        var id = r[2];
-        var view="";
-        id = System.eval(id);
         try{
+            var R = Router.init(r,m);
+            r = R.r.split('/');
+            var M = '';
+            var str = r[0];
+            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+            var ControllerName = Controller+'Controller';
+            if(System.isString(R.m)) M = R.m+'/';
+            System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
+
+            var action = r[1]+'Action';
+            var id = r[2];
+            var view="";
+            id = System.eval(id);
+
         	var controller = new System[ControllerName]();
         	if(controller instanceof System.Controller){
         		if(action && System.isFunction(controller[action])) {
@@ -198,7 +199,7 @@
         		}
         	}
         }catch(e){
-        	System.View.ERROR_404(e);
+        	System.View.ERROR_404(404,e.message +"\n"+ e.stack);
         	throw new Error(e);
         }
     };
