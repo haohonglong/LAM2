@@ -72,24 +72,29 @@
                             k,
                             v,
                             root){
-            if(-1 !== vars.indexOf('.')){
-                v=vars.split('.');
-                if((k=v[0]) in D ){
-                    root=D[k];
-                    v.each(function(i){
-                        if(i!=0){
-                            root=root[this];
-                        }
-                    });
-                    return root;
+            try{
+                if(-1 !== vars.indexOf('.')){
+                    v=vars.split('.');
+                    if((k=v[0]) in D ){
+                        root=D[k];
+                        v.each(function(i){
+                            if(i!=0){
+                                root=root[this];
+                            }
+                        });
+                        return root;
+                    }
+                    if(v = System.eval(vars)){return v;}
+                }else{
+                    if((k=vars) in D){
+                        return D[k];
+                    }
                 }
-                if(v = System.eval(vars)){return v;}
-            }else{
-                if((k=vars) in D){
-                    return D[k];
-                }
+            }catch (e){
+                throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' ')+e);
             }
-            throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' '));
+
+
         },
 
         /**
@@ -138,10 +143,10 @@
      * @returns {*}
      */
     Compiler.jQCompile=function(S,D) {
-        var fn = !/\W/.test(S) ?
-            cache[S] = cache[S] ||
-                Compiler.jQCompile(document.getElementById(S).innerHTML) :
-
+        try{
+            var fn = !/\W/.test(S) ?
+                cache[S] = cache[S] ||
+                    Compiler.jQCompile(document.getElementById(S).innerHTML) :
             new Function("obj",
                 "var p=[],print=function(){p.push.apply(p,arguments);};" +
                 "with(obj){p.push('" +
@@ -154,7 +159,10 @@
                     .split("%>").join("p.push('")
                     .split("\r").join("\\'")
                 + "');}return p.join('');");
-        return D ? fn( D ) : fn;
+            return D ? fn( D ) : fn;
+        }catch (e){
+            throw new Error(e.message + S);
+        }
     };
     var compiler = null;
     Compiler.getInstance=function () {

@@ -84,16 +84,21 @@
 		 */
 		'render':function(path,D,callBack,Cajax){
 			var view="";
-			System.Html.getFile(path,function(content){
-                view = Template.compile(content,D);
-				if(System.isFunction(callBack)){
-					callBack(view);
-					view = null;
-				}
+			try{
+                System.Html.getFile(path,function(content){
+                    view = Template.compile(content,D);
+                    if(System.isFunction(callBack)){
+                        callBack(view);
+                        view = null;
+                    }
 
-			},Cajax);
-			this.guid++;
-			return view;
+                },Cajax);
+                this.guid++;
+                return view;
+			}catch (e){
+                throw new Error(e);
+			}
+
 		},
 
         /**
@@ -112,20 +117,25 @@
         'analysisVar':function(vars,
                                       v,
                                       root){
+        	try{
+                if(-1 === vars.indexOf('.')){
+                    return System.eval(vars);
+                }
 
-			if(-1 === vars.indexOf('.')){
-				return System.eval(vars);
+                v=vars.split('.');
+                root=System.eval(v[0]);
+                v.each(function(i){
+                    if(i!=0){
+                        root=root[this];
+                    }
+                });
+
+                return root;
+			}catch (e){
+                throw new Error(e);
 			}
 
-			v=vars.split('.');
-			root=System.eval(v[0]);
-			v.each(function(i){
-				if(i!=0){
-					root=root[this];
-				}
-			});
 
-			return root;
 		},
 		/**
 		 *
@@ -184,32 +194,37 @@
 		 * @returns {String}
 		 */
 		'findTpl':function(S,delimiters){
-			if(!S) return null;
-			var self = this;
-			var ss=[],arr=[],v=[],$1,$2;
-			delimiters = delimiters || System.Config.templat.delimiters;
-			var delimiterLeft  = delimiters[0];
-			var delimiterRight = delimiters[1];
-			//没找到模版分隔符就返回传入的字符串
-			if(S.indexOf(delimiterLeft) !== -1){
-				ss=S.split(delimiterLeft);
-				ss.each(function(){
-					if(-1 === this.indexOf(delimiterRight)){
-						arr.push(this);
-					}else{//如果每个里有模版标签
-						v=this.split(delimiterRight);
-						$1=v[0];
-						$2=v[1].trim();
-						arr.push([self.analysisVar($1),self.findTpl($2,delimiters)].join('').trim());
+			try{
+                if(!S) return null;
+                var self = this;
+                var ss=[],arr=[],v=[],$1,$2;
+                delimiters = delimiters || System.Config.templat.delimiters;
+                var delimiterLeft  = delimiters[0];
+                var delimiterRight = delimiters[1];
+                //没找到模版分隔符就返回传入的字符串
+                if(S.indexOf(delimiterLeft) !== -1){
+                    ss=S.split(delimiterLeft);
+                    ss.each(function(){
+                        if(-1 === this.indexOf(delimiterRight)){
+                            arr.push(this);
+                        }else{//如果每个里有模版标签
+                            v=this.split(delimiterRight);
+                            $1=v[0];
+                            $2=v[1].trim();
+                            arr.push([self.analysisVar($1),self.findTpl($2,delimiters)].join('').trim());
 
-					}
+                        }
 
-				});
-			}else{
-				return S ||'';
-			}
+                    });
+                }else{
+                    return S ||'';
+                }
 
-			return arr.join('');
+                return arr.join('');
+			}catch (e){
+                throw new Error(e);
+            }
+
 
 		},
 		/**
@@ -303,32 +318,37 @@
 			var k,v;
 			var arr_inc = [];
 			if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
-				var data ={},arr = arr_inc[2].split('" ');
-				arr.each(function(){
-					var arr = this.split('="');
-					arr[0] = arr[0].replace(/(^")|("$)/g,'');
-					arr[1] = arr[1].replace(/(^")|("$)/g,'');
-					k = System.camelCase(arr[0].trim());
-					v = arr[1];
-					switch(k){
-						case 'data':
-							try{
-								if(!System.empty(v)){
-									v = System.eval(v);
-								}
-							}catch (e){
-								throw new Error(e);
-							}
+				try{
+                    var data ={},arr = arr_inc[2].split('" ');
+                    arr.each(function(){
+                        var arr = this.split('="');
+                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                        k = System.camelCase(arr[0].trim());
+                        v = arr[1];
+                        switch(k){
+                            case 'data':
+                                try{
+                                    if(!System.empty(v)){
+                                        v = System.eval(v);
+                                    }
+                                }catch (e){
+                                    throw new Error(e);
+                                }
 
-					}
-					data[k] =  v;
+                        }
+                        data[k] =  v;
 
-				});
-				S = S.replace(arr_inc[0],function () {
-					return '';
-				});
-				data.content = S;
-				return data;
+                    });
+                    S = S.replace(arr_inc[0],function () {
+                        return '';
+                    });
+                    data.content = S;
+                    return data;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
 			}
 			return null;
 		},
@@ -349,11 +369,16 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
-                v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
-                v = this.findTpl(v);
-                S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
-                reg_inc.lastIndex = 0;
+            	try{
+                    k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
+                    v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
+                    v = this.findTpl(v);
+                    S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
             }
             return S;
         },
@@ -376,19 +401,24 @@
             var id = "",content = "";
             var data ={};
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                data = {};
-                content = arr_inc[1];
-                data.content = content;
-                do{
-                    id = System.uniqid();
-                    data.id = id;
-                }while(this.cache.find('id',id).index !== -1);
-                this.cache.add(data);
+            	try{
+                    data = {};
+                    content = arr_inc[1];
+                    data.content = content;
+                    do{
+                        id = System.uniqid();
+                        data.id = id;
+                    }while(this.cache.find('id',id).index !== -1);
+                    this.cache.add(data);
 
-                S = S.replace(arr_inc[0],function () {
-                    return '<#=block type="remove" id="'+id+'" />';
-                });
-                reg_inc.lastIndex = 0;
+                    S = S.replace(arr_inc[0],function () {
+                        return '<#=block type="remove" id="'+id+'" />';
+                    });
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
             }
             return S;
         },
@@ -412,56 +442,61 @@
             var id = "",content="",k="",v="",type="",data ={};
             var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-            	content = "";
-                data = System.createDict();
-                var arr = arr_inc[1].split('" ');
-                arr.each(function(){
-                    var arr = this.split('="');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    data[k] =  v;
-                });
-                id    = data.id;
-                type  = data.type || null;
+            	try{
+                    content = "";
+                    data = System.createDict();
+                    var arr = arr_inc[1].split('" ');
+                    arr.each(function(){
+                        var arr = this.split('="');
+                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                        k = System.camelCase(arr[0].trim());
+                        v = arr[1];
+                        data[k] =  v;
+                    });
+                    id    = data.id;
+                    type  = data.type || null;
 
-                content = arr_inc[3];
-                content = this.getBlocks(content);
-                content = this.escape(content);
-                data.content = content;
-                data.data    = System.eval(data.data) || null;
-                data.func    = System.eval(data.func) || null;
+                    content = arr_inc[3];
+                    content = this.getBlocks(content);
+                    content = this.escape(content);
+                    data.content = content;
+                    data.data    = System.eval(data.data) || null;
+                    data.func    = System.eval(data.func) || null;
 
-                this.cache.find('id',id,function (index,id) {
-                    if(-1 === index){
-                        this.add(data);
-                    }else{
-                    	if(type){
-                    		var override = type.split(':');
-                    		override[1] = System.eval(override[1]);
-                    		override[1] = System.isBoolean(override[1]) || 1 === override[1] ? override[1] : false;
-                            if('override' === override[0]){
-                                var json = this.get(index);
-                                if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
-                                    if(override[1]){
-                                        data.data = System.merge(true,data.data,[json.data]);
-                                    }else{
-                                        data.data = System.merge(true,json.data,[data.data]);
+                    this.cache.find('id',id,function (index,id) {
+                        if(-1 === index){
+                            this.add(data);
+                        }else{
+                            if(type){
+                                var override = type.split(':');
+                                override[1] = System.eval(override[1]);
+                                override[1] = System.isBoolean(override[1]) || 1 === override[1] ? override[1] : false;
+                                if('override' === override[0]){
+                                    var json = this.get(index);
+                                    if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
+                                        if(override[1]){
+                                            data.data = System.merge(true,data.data,[json.data]);
+                                        }else{
+                                            data.data = System.merge(true,json.data,[data.data]);
+                                        }
                                     }
+
+                                    this.update(index,data);
                                 }
-
-                                this.update(index,data);
                             }
-						}
 
-                    }
-                    if(System.isFunction(data.func)){
-                        data.func.apply(__this,[arguments,arr_inc]);
-                    }
-                });
-                S = S.replace(arr_inc[0],'');
-                reg_inc.lastIndex = 0;
+                        }
+                        if(System.isFunction(data.func)){
+                            data.func.apply(__this,[arguments,arr_inc]);
+                        }
+                    });
+                    S = S.replace(arr_inc[0],'');
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
             }
             return this.getBlocks(S);
         },
@@ -484,45 +519,50 @@
             var id = "",content="",k="",v="",type="";
             var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
-                content = "";
-                var data =System.createDict(),arr = arr_inc[1].split('" ');
-                arr.each(function(){
-                    var arr = this.split('="');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    data[k] =  v;
-                });
-                id   = data.id;
-                type = data.type || null;
-                data.data = System.eval(data.data) || null;
-                data.func    = System.eval(data.func) || null;
-                this.cache.find('id',id,function (index,id) {
-                    if(-1 === index){
-                        // throw new Error('Unknown id of blocks '+arr_inc[0]);
-                    }else{
-                        var json = this.get(index);
-                        content  = json.content;
+            	try{
+                    content = "";
+                    var data =System.createDict(),arr = arr_inc[1].split('" ');
+                    arr.each(function(){
+                        var arr = this.split('="');
+                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                        k = System.camelCase(arr[0].trim());
+                        v = arr[1];
+                        data[k] =  v;
+                    });
+                    id   = data.id;
+                    type = data.type || null;
+                    data.data = System.eval(data.data) || null;
+                    data.func    = System.eval(data.func) || null;
+                    this.cache.find('id',id,function (index,id) {
+                        if(-1 === index){
+                            // throw new Error('Unknown id of blocks '+arr_inc[0]);
+                        }else{
+                            var json = this.get(index);
+                            content  = json.content;
 
-                        if(type && !System.LAM_DEBUG && "remove" === type){//删除cache中随机生产block id 的数据
-                            this.remove(index);
-						}
+                            if(type && !System.LAM_DEBUG && "remove" === type){//删除cache中随机生产block id 的数据
+                                this.remove(index);
+                            }
 
-                        if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
-                            data.data = System.merge(true,data.data,[json.data]);
+                            if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
+                                data.data = System.merge(true,data.data,[json.data]);
+                            }
+                            if(System.isPlainObject(data.data)){
+                                content = System.Compiler.jQCompile(content,data.data);
+                            }
                         }
-                        if(System.isPlainObject(data.data)){
-							content = System.Compiler.jQCompile(content,data.data);
-						}
-					}
-                    if(System.isFunction(data.func)){
-                        data.func.apply(__this,[arguments,arr_inc]);
-                    }
+                        if(System.isFunction(data.func)){
+                            data.func.apply(__this,[arguments,arr_inc]);
+                        }
 
-                });
-                S = S.replace(arr_inc[0],content);
-                reg_inc.lastIndex = 0;
+                    });
+                    S = S.replace(arr_inc[0],content);
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
             }
             return S;
         },
@@ -544,11 +584,16 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                k = arr_inc[1];
-                v = arr_inc[3];
-                v = this.include(v);
-                S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
-                reg_inc.lastIndex = 0;
+            	try{
+                    k = arr_inc[1];
+                    v = arr_inc[3];
+                    v = this.include(v);
+                    S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
             }
             return S;
         },
@@ -574,80 +619,85 @@
             var arr_inc = [];
             var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[1].split('" ');
-                arr.each(function(){
-                    var arr = this.split('="');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    data[k] =  v;
-                });
-                data.path    = data.path 	|| null;
-                data.root    = data.root ? data.root : false;
-                data.type    = data.type 	|| 'js';
-                data.write   = System.eval(data.write) || false;
-                data.befor   = System.eval(data.befor) || false;
-                data.attr    = System.eval(data.attr)  || null;
-                loader = null;
-                if(data.path) {
-                    data.paths = data.path.split(',');
-                    if('css' === data.type){
-                        data.suffix  = data.suffix 	|| '.css';
-                        data.rel     = data.rel 	|| 'stylesheet';
-                    	var data_css = {
-                            'baseUrl':data.root,
-                            'suffix':data.suffix,
-                            'rel':data.rel,
-                            'css':data.paths
-                        };
-                    	if(data.attr && System.isPlainObject(data.attr)){
-                    		var arr = [];
-                            System.each(data_css.css,function () {
-								var attr = System.clone(data.attr);
-								attr.href = this;
-                                arr.push(attr);
-                            });
-                            data_css.css = arr;
-						}
-                        if(data.befor){
-                            System.Loader.load(data_css).print();
-                        }else{
-                            loader = System.Loader.load(data_css);
-                            loader._files = loader.get_files().join('');
-                            loader.remove();
-                        }
-                    }else{
-                        data.suffix  = data.suffix 	|| '.js';
-                        if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
+            	try{
+                    var data ={},arr = arr_inc[1].split('" ');
+                    arr.each(function(){
+                        var arr = this.split('="');
+                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                        k = System.camelCase(arr[0].trim());
+                        v = arr[1];
+                        data[k] =  v;
+                    });
+                    data.path    = data.path 	|| null;
+                    data.root    = data.root ? data.root : false;
+                    data.type    = data.type 	|| 'js';
+                    data.write   = System.eval(data.write) || false;
+                    data.befor   = System.eval(data.befor) || false;
+                    data.attr    = System.eval(data.attr)  || null;
+                    loader = null;
+                    if(data.path) {
+                        data.paths = data.path.split(',');
+                        if('css' === data.type){
+                            data.suffix  = data.suffix 	|| '.css';
+                            data.rel     = data.rel 	|| 'stylesheet';
+                            var data_css = {
+                                'baseUrl':data.root,
+                                'suffix':data.suffix,
+                                'rel':data.rel,
+                                'css':data.paths
+                            };
                             if(data.attr && System.isPlainObject(data.attr)){
                                 var arr = [];
-                                System.each(data.paths,function () {
+                                System.each(data_css.css,function () {
                                     var attr = System.clone(data.attr);
-                                    attr.src = this;
+                                    attr.href = this;
                                     arr.push(attr);
                                 });
-                                data.paths = arr;
+                                data_css.css = arr;
                             }
-							if(data.befor){//用 打印字符串方式，位置在head标签里
-                                System.import(data.paths,data.root,data.suffix,{'xhr':false}).print();
-                            }else{//替换预处理占位符的位置
-                                loader = System.import(data.paths,data.root,data.suffix,{'xhr':false});
+                            if(data.befor){
+                                System.Loader.load(data_css).print();
+                            }else{
+                                loader = System.Loader.load(data_css);
                                 loader._files = loader.get_files().join('');
                                 loader.remove();
                             }
-
                         }else{
-                            System.import(data.paths,data.root,data.suffix);
+                            data.suffix  = data.suffix 	|| '.js';
+                            if(data.write){//处理跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。这时就要用document.write() 方式加载来解决这个问题
+                                if(data.attr && System.isPlainObject(data.attr)){
+                                    var arr = [];
+                                    System.each(data.paths,function () {
+                                        var attr = System.clone(data.attr);
+                                        attr.src = this;
+                                        arr.push(attr);
+                                    });
+                                    data.paths = arr;
+                                }
+                                if(data.befor){//用 打印字符串方式，位置在head标签里
+                                    System.import(data.paths,data.root,data.suffix,{'xhr':false}).print();
+                                }else{//替换预处理占位符的位置
+                                    loader = System.import(data.paths,data.root,data.suffix,{'xhr':false});
+                                    loader._files = loader.get_files().join('');
+                                    loader.remove();
+                                }
+
+                            }else{
+                                System.import(data.paths,data.root,data.suffix);
+                            }
                         }
-					}
 
+                    }
+                    S = S.replace(arr_inc[0],function () {
+                        return loader ? loader._files : '';
+                    });
+
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
                 }
-                S = S.replace(arr_inc[0],function () {
-                    return loader ? loader._files : '';
-                });
 
-                reg_inc.lastIndex = 0;
             }
             return S;
         },
@@ -669,41 +719,42 @@
             var k,v;
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
-                var data ={},arr = arr_inc[1].split('" ');
-                arr.each(function(){
-                    var arr = this.split('="');
-                    arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                    arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                    k = System.camelCase(arr[0].trim());
-                    v = arr[1];
-                    switch(k){
-                        case 'capture':
-                        case 'preform':
-                        case 'beforeSend':
-                        case 'success':
-                        case 'done':
-                        case 'data':
-                        case 'tpData':
-                        case 'delimiters':
-                        case 'repeat':
-                        case 'error':
-                            try{
+            	try{
+                    var data ={},arr = arr_inc[1].split('" ');
+                    arr.each(function(){
+                        var arr = this.split('="');
+                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
+                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
+                        k = System.camelCase(arr[0].trim());
+                        v = arr[1];
+                        switch(k){
+                            case 'capture':
+                            case 'preform':
+                            case 'beforeSend':
+                            case 'success':
+                            case 'done':
+                            case 'data':
+                            case 'tpData':
+                            case 'delimiters':
+                            case 'repeat':
+                            case 'error':
                                 if(!System.empty(v)){
                                     v = System.eval(v);
                                 }
-                            }catch (e){
-                                throw new Error(e);
-                            }
 
-                    }
-                    data[k] =  v;
-                });
-                System.Html.getFile(data.file,function(content){
-                    S = S.replace(arr_inc[0],function () {
-                        return content;
+                        }
+                        data[k] =  v;
                     });
-                },data);
-                reg_inc.lastIndex = 0;
+                    System.Html.getFile(data.file,function(content){
+                        S = S.replace(arr_inc[0],function () {
+                            return content;
+                        });
+                    },data);
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+				}
+
             }
             return S;
         },
