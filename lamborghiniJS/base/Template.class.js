@@ -458,7 +458,7 @@
                     type  = data.type || null;
 
                     content = arr_inc[3];
-                    content = this.getBlocks(content);
+                    content = this.getBlock(content);
                     content = this.escape(content);
                     data.content = content;
                     data.data    = System.eval(data.data) || null;
@@ -498,14 +498,14 @@
                 }
 
             }
-            return this.getBlocks(S);
+            return this.getBlock(S);
         },
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
          * 修改日期：2020-3-2
-         * 名称：getBlocks
+         * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
          * 注意：
@@ -513,7 +513,7 @@
          * @param S
          * @returns {String}
          */
-		'getBlocks':function (S) {
+		'getBlock':function (S) {
             var reg_inc = this.get_block_reg;
             var arr_inc = [];
             var id = "",content="",k="",v="",type="";
@@ -936,6 +936,44 @@
      */
     Template.getCache=function () {
 		return _cache;
+    };
+
+    /**
+     * @author: lhh
+     * 产品介绍：
+     * 创建日期：2020-4-13
+     * 修改日期：2020-4-13
+     * 名称：Template.getBlock
+     * 功能：根据id 返回对应的block内容
+     * 说明：
+     * 注意：
+     * usage：
+     * @param id{String}
+     * @param data{Json}
+     * @returns {string}
+     */
+    Template.getBlock=function (id,data) {
+        var content = "";
+        var cache = Template.getCache();
+        try{
+            cache.find('id',id,function (index) {
+                if(index !== -1){
+                    var json = this.get(index);
+                    content  = json.content;
+
+                    if(json.data && System.isPlainObject(json.data) || data && System.isPlainObject(data)){
+                        data = System.merge(true,data,[json.data]);
+                    }
+                    if(System.isPlainObject(data)){
+                        content = System.Compiler.jQCompile(content,data);
+                    }
+                }
+
+            });
+            return content;
+        }catch (e){
+            throw new Error(e.message);
+        }
     };
 
 

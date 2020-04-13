@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-04-5
+	修改日期 ：2020-04-13
 
 
 # 产品介绍：
@@ -1302,6 +1302,7 @@
   ######  type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
+  ######  Template.getBlock(id,{})方法会根据id 返回对应的block内容 。
   ######  注意：因为block内会自动执行模版解析器，这就会与js源代码发送冲突，
   ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
   ######       使用<!--Escape:begin--><!--Escape:end-->
