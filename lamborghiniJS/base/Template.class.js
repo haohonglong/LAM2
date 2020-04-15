@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-4-8
+ * 修改日期:2020-4-15
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -56,7 +56,7 @@
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
 			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
-			this.set_block_reg = new RegExp('<#beginBlock (([\\s\\S])*?)>(([\\s\\S])*?)<#endBlock>', 'gm');
+			this.set_block_reg = new RegExp('<#(beginBlock|Block:begin) (([\\s\\S])*?)>(([\\s\\S])*?)<#(endBlock|Block:end)>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
 			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
 			this.escape_reg    = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
@@ -426,13 +426,13 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-4-5
+         * 修改日期：2020-4-15
          * 名称：setBlock
          * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
          * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
 		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
-         * 注意：
-         * usage：<#beginBlock id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#endBlock>
+         * 注意：标签名大小写！！！
+         * usage：<#(beginBlock|Block:begin) id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#(endBlock|Block:end)>
          * @param S
          * @returns {String}
          */
@@ -445,7 +445,7 @@
             	try{
                     content = "";
                     data = System.createDict();
-                    var arr = arr_inc[1].split('" ');
+                    var arr = arr_inc[2].split('" ');
                     arr.each(function(){
                         var arr = this.split('="');
                         arr[0] = arr[0].replace(/(^")|("$)/g,'');
@@ -454,15 +454,17 @@
                         v = arr[1];
                         data[k] =  v;
                     });
+                    data.data    = System.eval(data.data) || null;
+                    data.func    = System.eval(data.func) || null;
                     id    = data.id;
                     type  = data.type || null;
 
-                    content = arr_inc[3];
+                    content = arr_inc[4];
                     content = this.getBlock(content);
                     content = this.escape(content);
+
+
                     data.content = content;
-                    data.data    = System.eval(data.data) || null;
-                    data.func    = System.eval(data.func) || null;
 
                     this.cache.find('id',id,function (index,id) {
                         if(-1 === index){
@@ -549,6 +551,7 @@
                                 data.data = System.merge(true,data.data,[json.data]);
                             }
                             if(System.isPlainObject(data.data)){
+                                // content = Template.compile(content,data.data);
                                 content = System.Compiler.jQCompile(content,data.data);
                             }
                         }
@@ -965,6 +968,7 @@
                         data = System.merge(true,data,[json.data]);
                     }
                     if(System.isPlainObject(data)){
+                        // content = Template.compile(content,data);
                         content = System.Compiler.jQCompile(content,data);
                     }
                 }

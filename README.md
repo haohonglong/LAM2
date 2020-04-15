@@ -1298,14 +1298,16 @@
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
   #### block ： 
-  ######  <#beginBlock id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
+  ######  <#(beginBlock|Block:begin) id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#(endBlock|Block:end)> 由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
   ######  type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  Template.getBlock(id,{})方法会根据id 返回对应的block内容 。
-  ######  注意：因为block内会自动执行模版解析器，这就会与js源代码发送冲突，
+  ######  注意：因为block内会自动执行模版解析器--模版引擎中必须注意：表达式结尾必须加分号';',相反输出语句尾部绝不能加!!!。
+  ######       这就会与js源代码发送冲突，
   ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
   ######       使用<!--Escape:begin--><!--Escape:end-->
+  ####         标签名称大小写敏感！！！
        <!--Escape:begin-->
           这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
        <!--Escape:end--> 
