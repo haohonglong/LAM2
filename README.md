@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-04-13
+	修改日期 ：2020-04-18
 
 
 # 产品介绍：
@@ -1430,6 +1430,50 @@
         <!--Escape:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
+##### it is usage of case that a page is load that was not via include(不通过include加载页面的用例)：   
+        <script type="text/javascript">
+        LAM.run(function () {
+                'use strict';
+                var System = this;
+                var temp = new System.Template();//(1)初始化模版类实例
+                
+                $(function(){
+                    
+                    temp.parse($('#content_tpl').html());//(2)Get a template and save it to cache (获取模版并存入缓存中)
+                    var id = 5;
+                    $.get('/link-address/index',{
+                        'sorts_id':id
+                    },function(D){
+                        if(D.status){
+                            list = D.data;
+                            _this.add({list:list});
+                        }else{
+                            list = null;
+                        }
+                        $('#content').html(System.Template.getBlock('content',{list:list,sortid:id}));//(3)Get the template existing in the cache by block ID and analyze the data (根据block ID 获取模版并解析数据)
+                    },'json');
+                    
+                    
+                    
+                });
+                
+                
+        });
+        
+        </script>   
+        <div id="content"></div>
+        
+        <script type="text/html" id="content_tpl">
+            <#Block:begin id="content" data="{'list':null}">
+            <%LAM.each(list,function(){%>
+                <button class="btn btn-info MB10" data-id="<%=this['id']%>">
+                    <a href="<%=this['url']%>" target="_blank"><%=this['name']%></a>
+                    <a href="/link-address/edit?id=<%=this['id']%>&sortid=<%=sortid%>" target="_blank">修改</a>
+                    <a href="javascript:void(0);" ref="del" data-id="<%=this['id']%>" >删除</a>
+                </button>
+                <% });%>
+            <#Block:end>
+        </script>  
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
