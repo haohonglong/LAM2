@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-04-13
+	修改日期 ：2020-04-18
 
 
 # 产品介绍：
@@ -1298,14 +1298,16 @@
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
   #### block ： 
-  ######  <#beginBlock id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#endBlock> 由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
+  ######  <#(beginBlock|Block:begin) id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#(endBlock|Block:end)> 由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
   ######  type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  Template.getBlock(id,{})方法会根据id 返回对应的block内容 。
-  ######  注意：因为block内会自动执行模版解析器，这就会与js源代码发送冲突，
+  ######  注意：因为block内会自动执行模版解析器--模版引擎中必须注意：表达式结尾必须加分号';',相反输出语句尾部绝不能加!!!。
+  ######       这就会与js源代码发送冲突，
   ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
   ######       使用<!--Escape:begin--><!--Escape:end-->
+  ####         标签名称大小写敏感！！！
        <!--Escape:begin-->
           这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
        <!--Escape:end--> 
@@ -1428,6 +1430,50 @@
         <!--Escape:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
+##### it is usage of case that a page is load that was not via include(不通过include加载页面的用例)：   
+        <script type="text/javascript">
+        LAM.run(function () {
+                'use strict';
+                var System = this;
+                var temp = new System.Template();//(1)初始化模版类实例
+                
+                $(function(){
+                    
+                    temp.parse($('#content_tpl').html());//(2)Get a template and save it to cache (获取模版并存入缓存中)
+                    var id = 5;
+                    $.get('/link-address/index',{
+                        'sorts_id':id
+                    },function(D){
+                        if(D.status){
+                            list = D.data;
+                            _this.add({list:list});
+                        }else{
+                            list = null;
+                        }
+                        $('#content').html(System.Template.getBlock('content',{list:list,sortid:id}));//(3)Get the template existing in the cache by block ID and analyze the data (根据block ID 获取模版并解析数据)
+                    },'json');
+                    
+                    
+                    
+                });
+                
+                
+        });
+        
+        </script>   
+        <div id="content"></div>
+        
+        <script type="text/html" id="content_tpl">
+            <#Block:begin id="content" data="{'list':null}">
+            <%LAM.each(list,function(){%>
+                <button class="btn btn-info MB10" data-id="<%=this['id']%>">
+                    <a href="<%=this['url']%>" target="_blank"><%=this['name']%></a>
+                    <a href="/link-address/edit?id=<%=this['id']%>&sortid=<%=sortid%>" target="_blank">修改</a>
+                    <a href="javascript:void(0);" ref="del" data-id="<%=this['id']%>" >删除</a>
+                </button>
+                <% });%>
+            <#Block:end>
+        </script>  
     
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)

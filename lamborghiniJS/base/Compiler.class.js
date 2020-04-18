@@ -137,7 +137,11 @@
     var cache={};
 
     /**
-     *jQuery模版解析引擎
+     *
+     * 名称：Compiler.jQCompile
+     * 功能：模版解析引擎
+     * 说明：表达式结尾必须加分号';',相反输出语句尾部绝不能加!!!
+     * 注意：
      * @param S{String} NOT NULL 内容
      * @param D{Object} NOT NULL 分配的数据
      * @returns {*}
