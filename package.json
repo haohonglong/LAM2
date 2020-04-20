@@ -1,6 +1,6 @@
 {
   "name": "LAM2",
-  "version": "2.0.7",
+  "version": "2.1.5",
   "description": "是一种javascript OO思想实现的类库，它可以为生产应用框架做更好的基础服务",
   "main": "",
   "directories": {
