@@ -1446,17 +1446,13 @@
                     },function(D){
                         if(D.status){
                             list = D.data;
-                            _this.add({list:list});
                         }else{
                             list = null;
                         }
                         $('#content').html(System.Template.getBlock('content',{list:list,sortid:id}));//(3)Get the template existing in the cache by block ID and analyze the data (根据block ID 获取模版并解析数据)
                     },'json');
                     
-                    
-                    
                 });
-                
                 
         });
         
