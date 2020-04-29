@@ -478,9 +478,9 @@
                                     var json = this.get(index);
                                     if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
                                         if(override[1]){
-                                            data.data = System.merge(true,data.data,[json.data]);
+                                            data.data = System.merge(data.data,[json.data]);
                                         }else{
-                                            data.data = System.merge(true,json.data,[data.data]);
+                                            data.data = System.merge(json.data,[data.data]);
                                         }
                                     }
 
@@ -548,7 +548,7 @@
                             }
 
                             if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
-                                data.data = System.merge(true,data.data,[json.data]);
+                                data.data = System.merge(data.data,[json.data]);
                             }
                             if(System.isPlainObject(data.data)){
                                 // content = Template.compile(content,data.data);
@@ -965,7 +965,7 @@
                     content  = json.content;
 
                     if(json.data && System.isPlainObject(json.data) || data && System.isPlainObject(data)){
-                        data = System.merge(true,data,[json.data]);
+                        data = System.merge(data,[json.data]);
                     }
                     if(System.isPlainObject(data)){
                         // content = Template.compile(content,data);
