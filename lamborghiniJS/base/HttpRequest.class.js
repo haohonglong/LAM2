@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2018－10－28
- * 修改日期:2018－10－28
+ * 修改日期:2020－04－29
  * 名称：HttpRequest
  * 功能：
  * 说明 : http
@@ -74,9 +74,13 @@
     HttpRequest.post=function(){};
     HttpRequest.put=function(){};
     HttpRequest.delete=function(){};
+    HttpRequest.redirect=function(url){
+    	window.location = url;
+	};
 
     System.merge(null,[{
-    	'get':HttpRequest.get
+    	 'get':HttpRequest.get
+    	,'redirect':HttpRequest.redirect
 	}],true);
 
 	return HttpRequest;
