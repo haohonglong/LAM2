@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2017-1-5
- * 修改日期:2018-5-18
+ * 修改日期:2020-5-6
  * 名称：Cache类
  * 功能：缓存
  * 说明 :
@@ -166,11 +166,35 @@
 			this.setItem();
 			return this;
 		},
+        /**
+         * @author lhh
+         * 产品介绍：
+         * 创建日期:2020-5-6
+         * 修改日期:2020-5-6
+         * 名称：had_expired
+         * 功能：检查当前数据是否过了失效期
+         * 说明：
+         * 注意：
+         * @param  {int}index		NOT NULL 数组索引
+         * @returns {boolean}
+         */
+		'had_expired':function (index) {
+			if(index > -1){
+                var expires = this.caches[index].expires;
+                if(System.isset(expires) && System.isNumber(expires) && expires !==0){
+                    if(System.timestamp() >= expires){//当前时间大于等于设定时间
+                        return true;
+                    }
+                }
+			}
+
+            return false;
+        },
 		/**
 		 * @author lhh
 		 * 产品介绍：
 		 * 创建日期:2017-1-5
-		 * 修改日期:2018-5-16
+		 * 修改日期:2020-5-6
 		 * 名称：exists
 		 * 功能：检查数据是否存在，如果存在返回数据被存储在哪个数组的下标，不存在返回-1
 		 * 说明：
@@ -183,16 +207,15 @@
 			key   = key   || this.key;
 			value = value || this.value;
 			var caches = this.caches;
-			for(var i=0,len=caches.length;i<len;i++){
-				if((key in caches[i]) && (value === caches[i][key])){
-					var expires = caches[i].expires;
-					if(System.isset(expires) && System.isNumber(expires) && expires !==0){
-						if(System.timestamp() >= expires){//当前时间大于等于设定时间
-							this.remove(i);
-							return -1;
-						}
+			for(var i=0, len=caches.length; i < len; i++){
+				var cache = caches[i];
+				if((key in cache) && (value === cache[key])){
+					if(this.had_expired(i)){
+                        this.remove(i);
+                        return -1;
+					}else {
+						return i;
 					}
-					return i;
 				}
 			}
 			return -1;
