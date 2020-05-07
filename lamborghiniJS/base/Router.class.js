@@ -175,7 +175,8 @@
 
             var action = r[1]+'Action';
             var id = r[2];
-            var view="";
+            var view = null;
+            System._content = null;
             id = System.eval(id);
 
         	var controller = new System[ControllerName]();
@@ -187,12 +188,9 @@
                     if (System.isset(view) && System.isString(view)) {
                         //生产静态页便于输出
                         System._content = generator(view);//there is saved the content of html that after parsed
-                        if (System.isFunction(System.main)) {
-                            System.main(System._content, controller, action, id);
-                        }
-                        System.print(view);
-                    }else{
-                        System._content = null;
+                    }
+                    if (System.isFunction(System.main)) {
+                        System.main(view, controller, action, id);
                     }
                 }else{
         			throw new Error("the action '"+action+"' was not found");

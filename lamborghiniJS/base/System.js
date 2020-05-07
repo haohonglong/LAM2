@@ -334,19 +334,19 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2020-4-6
+		 * 修改日期：2020-5-6
 		 * 名称：System.main
 		 * 功能：程序主方法
 		 * 说明：此方法在Router.run 方法里解析完视图后被调用,这个方法可以在LAM.bootstrap()调用前overwrite
 		 * 注意：
-		 * @param   view       {String}			:当前解析后的视图内容
+		 * @param   view       {String}			:视图
 		 * @param   controller {Controller} 	:当前控制器实例对象
 		 * @param   action     {String}		    :方法名称
 		 * @param   id         {String}		    :id
 		 * @return  {void}
 		 * Example：
 		 */
-		'main':function (view,controller,action,id) {},
+		'main':function (view,controller,action,id) {this.print(view);},
         /**
          * @author: lhh
          * 产品介绍：

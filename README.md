@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-04-18
+	修改日期 ：2020-05-6
 
 
 # 产品介绍：
@@ -85,7 +85,14 @@
             <script type="text/javascript">window._ROOT_ = "..";</script>
             <script type="text/javascript" src="../brandhall/common/config/config.js"></script>
             <script type="text/javascript" src="../lamborghiniJS/base/System.js"></script>
-            <script type="text/javascript">LAM.bootstrap();</script>
+            <script type="text/javascript">
+                LAM.main=function (view) {
+                    if(view){
+                        this.print(view);
+                    }
+                };
+                LAM.bootstrap();
+            </script>
         </head>
         </html>
 
