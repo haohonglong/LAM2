@@ -71,7 +71,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-10
-		 * 修改日期：2019-6-18
+		 * 修改日期：2020-5-8
 		 * 名称：render
 		 * 功能：
 		 * 说明：
@@ -85,8 +85,9 @@
 		'render':function(path,D,callBack,Cajax){
 			var view="";
 			try{
+                Cajax.tpData = D;
                 System.Html.getFile(path,function(content){
-                    view = Template.compile(content,D);
+                    view = content;
                     if(System.isFunction(callBack)){
                         callBack(view);
                         view = null;
