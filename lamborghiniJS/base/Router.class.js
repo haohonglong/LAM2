@@ -190,7 +190,10 @@
                         System._content = generator(view);//there is saved the content of html that after parsed
                     }
                     if (System.isFunction(System.main)) {
-                        System.main(view, controller, action, id);
+                        view = System.main(view, controller, action, id);
+                        if (System.isset(view) && System.isString(view)) {
+                            System.print(view);
+                        }
                     }
                 }else{
         			throw new Error("the action '"+action+"' was not found");
