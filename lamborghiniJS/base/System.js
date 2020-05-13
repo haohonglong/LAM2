@@ -408,8 +408,8 @@
         /**
          * @author: lhh
          * 产品介绍：
-         * 创建日期：2018.11.22
-         * 修改日期：2020.2.28
+         * 创建日期：2018-11-22
+         * 修改日期：2020-5-13
          * 名称：bootstrap
          * 功能：加载初始化文件
          * 说明：
@@ -444,6 +444,7 @@
                 ,"Loader":classPath+'/base/Loader.class.js'
                 ,"Storage":classPath+'/base/Storage.class.js'
                 ,"Controller":classPath+'/base/Controller.class.js'
+                ,"Model":classPath+'/base/Model.class.js'
                 ,"Router":classPath+'/base/Router.class.js'
             };
 			if(!srcs.baseMin){
