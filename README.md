@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-05-6
+	修改日期 ：2020-05-14
 
 
 # 产品介绍：
@@ -46,7 +46,7 @@
                                       |       include (引入外部html文件替换掉占位符标签位置)(11)
                                       |         \                                                      
                                       |         _\|
-                                      |------->Html.class(10)                 |-----------|                          
+                                      |------->Html.class(10)                |-----------|                          
                                                          /                   |           |   
                                                      get cache<------------- |   cache   |                       
                                                       /                      |___________|
@@ -73,6 +73,17 @@
             #解决html 405 Not Allowed (nginx默认静态页面不允许POST方式访问，允许GET方式)
             error_page 405 =200 $request_uri;
         }
+        
+#### 或者使用 node-http-server 作服务器
+        1.安装node-http-server
+        npm i -g node-http-server
+        2.在LAM2-demos目录里运行命令
+        node-http-server port=9527 verbose=true
+        3.在浏览器地址栏输入
+         http://localhost:9527/brandhall/ 
+        注意：后面的/ 不要丢掉！！！
+
+#### 或者使用 Apache 作服务器
 
 		
 #### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
@@ -87,9 +98,7 @@
             <script type="text/javascript" src="../lamborghiniJS/base/System.js"></script>
             <script type="text/javascript">
                 LAM.main=function (view) {
-                    if(view){
-                        this.print(view);
-                    }
+                    return view;
                 };
                 LAM.bootstrap();
             </script>
