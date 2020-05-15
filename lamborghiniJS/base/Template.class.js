@@ -767,7 +767,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-4-8
+         * 修改日期：2020-5-15
          * 名称：beforParse
          * 功能：
          * 说明：
@@ -781,6 +781,7 @@
                 s = Template.compile(s,this.datas,this.delimiters);
             }
             s = this.define2(this.define(s));
+            s = this.import(s);
             s = this.include(s);
             return s;
         },
@@ -788,7 +789,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-07
-         * 修改日期：2020-2-11
+         * 修改日期：2020-5-15
          * 名称：afterParse
          * 功能：
          * 说明：
@@ -799,7 +800,6 @@
 		 */
 		'afterParse':function (s) {
             s = this.setBlock(s);
-            s = this.import(s);
             return s;
         },
 		'parse':function (s) {
