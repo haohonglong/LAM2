@@ -477,7 +477,7 @@
 			LAMJS.wait(args,callback,time);//在延时的时间后在执行，默认时间是3秒
 				 名称：wait
 				 功能：支持链式调用，总是返回当前命名空间对象，
-				 说明：与main方法功类似,不同的是每隔规定的时间数再去调用传进来的函数
+				 说明：与run方法功类似,不同的是每隔规定的时间数再去调用传进来的函数
 				 注意：
 				 @param   (Array)args 			   NULL :传入的参数,里面的的元素和回调函数的参数试一一对应的。（可选）
 				 @param   (Function)callback 		NO NULL :在运行此方法要等待多长时间才执行的操作,这里的this指的是LAMJS 对象（必选）
