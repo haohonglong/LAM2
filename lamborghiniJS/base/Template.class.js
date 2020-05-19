@@ -387,7 +387,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-02-12
-         * 修改日期：2020-04-5
+         * 修改日期：2020-05-18
          * 名称：escape
          * 功能：指定哪一段代码在block区块内会被模版解析器忽略
          * 说明：
@@ -403,17 +403,9 @@
             var data ={};
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	try{
-                    data = {};
-                    content = arr_inc[1];
-                    data.content = content;
-                    do{
-                        id = System.uniqid();
-                        data.id = id;
-                    }while(this.cache.find('id',id).index !== -1);
-                    this.cache.add(data);
-
+                    content = this.block_once(arr_inc[1]);
                     S = S.replace(arr_inc[0],function () {
-                        return '<#=block type="remove" id="'+id+'" />';
+                        return content;
                     });
                     reg_inc.lastIndex = 0;
 				}catch (e){
@@ -422,6 +414,45 @@
 
             }
             return S;
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-05-18
+         * 修改日期：2020-05-18
+         * 名称：block_uniqid
+         * 功能：the block_uniqid generated and saved then returned the block id
+         * 说明：
+         * @param content       要存入缓存的内容
+         * @returns {string}    返回block_id
+         */
+        'block_uniqid':function(content){
+            var data = {},id="";
+            data.content = content;
+            try{
+                do{
+                    id = System.uniqid();
+                    data.id = id;
+                }while(this.cache.find('id',id).index !== -1);
+                this.cache.add(data);
+                return id;
+            } catch (e) {
+                throw new Error(e.message + "block_uniqid");
+            }
+
+        },
+        /**
+         * 产品介绍：
+         * 创建日期：2020-05-18
+         * 修改日期：2020-05-18
+         * 名称：block_once
+         * 功能：自动生成唯一的bock
+         * 说明：
+         * @param content    要存入缓存的内容
+         * @returns {string} 生成的block
+         */
+        'block_once':function(content){
+            return '<#=block type="remove" id="'+this.block_uniqid(content)+'" />';
         },
         /**
          * @author: lhh
@@ -710,7 +741,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2020-2-05
+         * 修改日期：2020-5-19
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -737,6 +768,7 @@
                             case 'beforeSend':
                             case 'success':
                             case 'done':
+                            case 'func':
                             case 'data':
                             case 'tpData':
                             case 'delimiters':
@@ -749,8 +781,13 @@
                         }
                         data[k] =  v;
                     });
+
                     System.Html.getFile(data.file,function(content){
                         S = S.replace(arr_inc[0],function () {
+                            if(System.isFunction(data.func)){
+                            	data.content = content;
+                                data.func();
+                            }
                             return content;
                         });
                     },data);

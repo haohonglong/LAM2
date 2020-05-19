@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2020-3-17
+ * 修改日期:2020-5-18
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -807,7 +807,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-2-29
-		 * 修改日期：2017-7-14
+		 * 修改日期：2020-5-18
 		 * 名称： each
 		 * 功能：遍历数组或对象
 		 * 说明：
@@ -817,17 +817,19 @@
 		 * @returns {*}
 		 */
 		'each':function( obj, callback ) {
-			var key;
+			var key, item;
 			if(!obj || !callback){throw new Error('Warning: : 两个参数是必传的');}
 			if(System.isNumber(obj) || System.isBoolean(obj)){throw new Error('Warning: '+obj+': 数据类型非法！');}
 			if(!System.isFunction(callback)){throw new Error('Warning: :第二参数 必须是个callback！');}
 			if(System.isPlainObject(obj)){
 				for (key in obj ) {
-					if (false === callback.call( obj[ key ], key, obj[ key ])) {break;}
+					item = obj[key];
+					if (false === callback.call( item, key, item, obj)) {break;}
 				}
 			}else{
 				for(var i= 0,len=obj.length;i<len;i++) {
-					if (false === callback.call( obj[i], i, obj[i])) {break;}
+                    item = obj[i];
+					if (false === callback.call( item, i, item, obj)) {break;}
 				}
 			}
 			return obj;
