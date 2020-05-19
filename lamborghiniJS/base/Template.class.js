@@ -741,7 +741,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2020-2-05
+         * 修改日期：2020-5-19
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -768,6 +768,7 @@
                             case 'beforeSend':
                             case 'success':
                             case 'done':
+                            case 'func':
                             case 'data':
                             case 'tpData':
                             case 'delimiters':
@@ -780,8 +781,13 @@
                         }
                         data[k] =  v;
                     });
+
                     System.Html.getFile(data.file,function(content){
                         S = S.replace(arr_inc[0],function () {
+                            if(System.isFunction(data.func)){
+                            	data.content = content;
+                                data.func();
+                            }
                             return content;
                         });
                     },data);
