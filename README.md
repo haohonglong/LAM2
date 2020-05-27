@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-05-14
+	修改日期 ：2020-05-27
 
 
 # 产品介绍：
@@ -1327,6 +1327,20 @@
        <!--Escape:begin-->
           这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
        <!--Escape:end--> 
+       
+  #### delete ：清空指定的字符串 <!--Del:begin-->这里的内容会被清空<!--Del:end--> 
+  #### exec_script ： 
+        功能：在预处理指令加载时执行javascript代码
+         * 说明：例如：block 中是调用不到当前页面的script标签中的脚本，因为预处理执行时间比script标签中的脚本早，解决方法有两种：
+         * 1.写在另一个脚本文件中，被加载进来
+         * 2.就是用这个方法解决
+         * 为了代码高亮显示在<!--Script:begin--> ... <!--Script:end-->的外面包裹一层<script type="text/javascript"></script>，
+         * 如果不想在页面打印<script type="text/javascript"></script>,可以用一个删除标签包裹着它。（删除标签的用法参看empty方法介绍）
+         *
+         * 如：<!--Del:begin--><script type="text/javascript"><!--Del:end-->
+         *     <!--Del:begin--></script><!--Del:end-->
+         * 注意：标签名大小写！！！
+         * usage：<!--Script:begin--> ... <!--Script:end-->
   
   ##### usage：
         room/list.html
