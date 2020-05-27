@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-4-15
+ * 修改日期:2020-5-27
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -58,8 +58,9 @@
 			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
 			this.set_block_reg = new RegExp('<#(beginBlock|Block:begin) (([\\s\\S])*?)>(([\\s\\S])*?)<#(endBlock|Block:end)>', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
-			this.literal_reg   = new RegExp('<!--Literal:begin-->(([\\s\\S])*?)<!--Literal:end-->','gm');
 			this.escape_reg    = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
+			this.del_reg   	   = new RegExp('<!--Del:begin-->(([\\s\\S])*?)<!--Del:end-->','gm');
+            this.script_reg    = new RegExp('<!--Script:begin-->(([\\s\\S])*?)<!--Script:end-->', 'gm');
 			this.html=[];
 			this.datas = null;
 			this.delimiters = null;
@@ -415,6 +416,34 @@
             }
             return S;
         },
+		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-05-27
+         * 修改日期：2020-05-27
+         * 名称：empty
+         * 功能：清空指定的字符串
+         * 说明：
+         * 注意：注意大小写！！！
+         * usage：<!--Del:begin-->这里的内容会被清空<!--Del:end-->
+         * @param S{String}     NOT NULL内容
+         * @returns {String}	empty of string
+         */
+        'empty':function(S){
+            var reg_inc = this.del_reg;
+            var arr_inc = [];
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	try{
+                    S = S.replace(arr_inc[0],'');
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
+            }
+            return S;
+        },
+
         /**
          * @author: lhh
          * 产品介绍：
@@ -534,6 +563,42 @@
             }
             return this.getBlock(S);
         },
+		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-5-27
+         * 修改日期：2020-5-27
+         * 名称：exec_script
+         * 功能：在预处理指令加载时执行javascript代码
+         * 说明：例如：block 中是调用不到当前页面的script标签中的脚本，因为预处理执行时间比script标签中的脚本早，解决方法有两种：
+		 * 1.写在另一个脚本文件中，被加载进来
+		 * 2.就是用这个方法解决
+		 * 为了代码高亮显示在<!--Script:begin--> ... <!--Script:end-->的外面包裹一层<script type="text/javascript"></script>，
+		 * 如果不想在页面打印<script type="text/javascript"></script>,可以用一个删除标签包裹着它。（删除标签的用法参看empty方法介绍）
+		 *
+		 * 如：<!--Del:begin--><script type="text/javascript"><!--Del:end-->
+		 *     <!--Del:begin--></script><!--Del:end-->
+         * 注意：标签名大小写！！！
+         * usage：<!--Script:begin--> ... <!--Script:end-->
+         * @param S
+         * @returns {String}	empty of string
+         */
+        'exec_script':function (S) {
+            var reg_inc = this.script_reg;
+            var arr_inc = [];
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	try{
+                    System.globalEval(arr_inc[1]);
+                    S = S.replace(arr_inc[0],'');
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    throw new Error(e.message + arr_inc[0]);
+                }
+
+            }
+            return S;
+        },
+
         /**
          * @author: lhh
          * 产品介绍：
@@ -804,7 +869,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-5-15
+         * 修改日期：2020-5-27
          * 名称：beforParse
          * 功能：
          * 说明：
@@ -818,7 +883,9 @@
                 s = Template.compile(s,this.datas,this.delimiters);
             }
             s = this.define2(this.define(s));
+            s = this.empty(s);
             s = this.import(s);
+            s = this.exec_script(s);
             s = this.include(s);
             return s;
         },
