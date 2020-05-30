@@ -702,10 +702,10 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-2-07
+         * 修改日期：2020-5-30
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
+         * 说明：多个文件时,path里用','分割,首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -736,8 +736,14 @@
                     data.befor   = System.eval(data.befor) || false;
                     data.attr    = System.eval(data.attr)  || null;
                     loader = null;
+
                     if(data.path) {
-                        data.paths = data.path.split(',');
+                        data.paths = [];
+                        System.each(data.path.split(','),function () {
+                            if(!System.hasIgnored(this)){
+                                data.paths.push(this);
+                            }
+                        });
                         if('css' === data.type){
                             data.suffix  = data.suffix 	|| '.css';
                             data.rel     = data.rel 	|| 'stylesheet';
