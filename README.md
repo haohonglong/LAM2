@@ -3,7 +3,7 @@
 	version ：v2.1.5
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2020-05-27
+	修改日期 ：2020-05-30
 
 
 # 产品介绍：
@@ -1304,7 +1304,7 @@
     <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [attr="{}"] />
     导入css 添加属性 type="css" 即可，
     <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
-    多个文件时,path里用','分割！！！attr属性可以加自定义属性。
+    多个文件时,path里用','分割,首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
          解决方式：要用write="true" 这个属性,默认是fase。

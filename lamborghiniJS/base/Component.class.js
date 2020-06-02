@@ -179,6 +179,24 @@
             return module;
 		}()),
 
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2020-5-30
+         * 修改日期：2020-5-30
+         * 名称：System.hasIgnored
+         * 功能：检查文件第一个字符是否是'!',如果是就说明是这个被注释了，文件会被忽略
+         * 说明：
+         * 注意：
+         * @param path{String}
+         * @returns {boolean}
+         */
+        'hasIgnored':function (path) {
+            if( '!' === path.trim().substring(0,1)){
+                return true;
+            }
+            return false;
+        },
 
 		/**
 		 *
