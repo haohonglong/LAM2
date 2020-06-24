@@ -185,6 +185,7 @@
                     controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
                     controller.init();
                     view = controller[action](id);
+                    view = (new System.Template()).getBlock(view);
                     if (System.isset(view) && System.isString(view)) {
                         //生产静态页便于输出
                         System._content = generator(view);//there is saved the content of html that after parsed
