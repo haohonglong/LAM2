@@ -561,7 +561,7 @@
                 }
 
             }
-            return this.getBlock(S);
+            return S;
         },
 		/**
          * @author: lhh
@@ -603,7 +603,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2020-3-2
+         * 修改日期：2020-6-25
          * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
@@ -1050,6 +1050,10 @@
      */
     Template.getCache=function () {
 		return _cache;
+    };
+
+    Template.parseBlock=function (s) {
+        return (new Template()).getBlock(s);
     };
 
     /**
