@@ -30,7 +30,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-03-9
-         * 修改日期：2019-03-17
+         * 修改日期：2022-02-4
          * 名称：compile
          * 功能：编译模版标签
          * 说明：
@@ -54,12 +54,12 @@
                     }else{//如果每个里有模版标签
                         v=this.split(delimiterRight);
                         $1=v[0].trim();
-                        $2=v[1].trim();
+                        $2=v[1];
                         $1 = self.analysis($1,D);
                         $2 = self.compile($2,D);
                         $1 = System.isPlainObject($1) || System.isArray($1) ? System.Json.stringify($1) : $1;
                         $2 = System.isPlainObject($2) || System.isArray($2) ? System.Json.stringify($2) : $2;
-                        arr.push([$1,$2].join('').trim());
+                        arr.push([$1,$2].join(''));
                     }
                 });
             }else{
