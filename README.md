@@ -1,9 +1,9 @@
 # LAM2
 	name    ：LamborghiniJS(OO JS)
-	version ：v2.1.6
+	version ：v2.1.5.1
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2022-2-4
+	修改日期 ：2022-2-5
 
 
 # 产品介绍：
@@ -11,56 +11,8 @@
 [LAM2-demos](https://github.com/haohonglong/LAM2-demos)
 
 ### 单文件应用运行的过程：
-                         index.html(入口文件,参考: brandhall/index.html)(1)
-                           \-|-common/config/config.js(2)  应用配置文件
-                             |-lamborghiniJS/base/System.js(3)  
-                             |-LAM.bootstrap();(4) 加载LAM2基础类库
-                              \
-                               -------------\
-                                             \
-                                             _\| 
-                                             路由器 Router.class(5) 获取浏览地址栏里的参数并解析对应的controller,action 
-                                                        |
-                                                        |
-                                    HttpRequest.get()<--  
-                                        \
-                                        _\|
-                                控制器 Controller.class(6)\
-                                          _\|
-                                        视图 View.class(7)\
-                                                         _\|
-                                                           Template.class(8)
-                                                                         \
-                                                                 没有     _\|        
-                                                             |————————有layout时：
-                                                             |                 \
-                                                             |                 _\|
-                                                             |              视图作为模版嵌入layout里 
-                                                             |              /
-                                                              ----layout 布局
-                                      |-------------render(9)|
-                                      |                ______|                                                                     
-                                      |               /
-                                      |             显示视图文件
-                                      |              /
-                                      |       include (引入外部html文件替换掉占位符标签位置)(11)
-                                      |         \                                                      
-                                      |         _\|
-                                      |------->Html.class(10)                |-----------|                          
-                                                         /                   |           |   
-                                                     get cache<------------- |   cache   |                       
-                                                      /                      |___________|
-                                                     /                              ^
-                                                  has cache                         |            LAM.import()
-                                              YES   /\ NO                           |            /
-                             get data<-------------/  \         ____________________|___________/ 
-                                   \                  _\|       /                   |
-                                    \<--------------jQuery.ajax()--------->add to cache
-                                                                                          
-                          
-                                       
-                  
-                  
+
+![LAM2 运行的过程图](chart.jpg)         
 
 #### note:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
