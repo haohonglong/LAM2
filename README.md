@@ -12,7 +12,11 @@
 
 ### 单文件应用运行的过程：
 
+[LAM2运行过程图](https://www.processon.com/view/link/61fe392ee0b34d06c3ba74da)
+
+
 ![LAM2运行过程图](chart.jpg)
+
 
 #### note:必须要在服务器环境里运行（为了解决ajax跨域的问题）                  
         
