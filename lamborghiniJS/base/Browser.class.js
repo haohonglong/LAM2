@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2019-7-13
+ * 修改日期:2022-2-13
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -31,6 +31,19 @@
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
 		var __this__=null,
 			isOpera = System.type("Opera");
+		
+		// Browser environment sniffing
+		var inBrowser = typeof window !== 'undefined';
+		var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+		var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+		var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+		var isIE = UA && /msie|trident/.test(UA);
+		var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
+		var isEdge = UA && UA.indexOf('edge/') > 0;
+		var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
+		var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+		var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+		
 		/**
 		 *
 		 * @author lhh
@@ -168,51 +181,30 @@
 
 
 
-		Browser.getExplorer=function(){
+		Browser.inBrowser = inBrowser;
+
+		Browser.getExplorer = function(){
 			return getExplorer();
 		};
-		Browser.isIE=function(){
-			return !!window.ActiveXObject;
-			//简短
-			//return !-[1,];
-			//浏览器检测
-			//return /MSIE/.test(navigator.userAgent);
-		};
-		Browser.isIE6=function(){
-			//if(!-[1,] && !window.XMLHttpRequest){
-			if(Browser.isIE() && !window.XMLHttpRequest){
-				return true;
-			}else{
-				return false;
-			}
-		};
-		Browser.isIE8=function(){
-			if(Browser.isIE() && !!document.documentMode){
-				return true;
-			}else{
-				return false;
-			}
-		};
-		Browser.isIE7=function(){
-			if(Browser.isIE() && !Browser.isIE6() && !Browser.isIE8()){
-				return true;
-			}else{
-				return false;
-			}
+		Browser.isIE = isIE;
+		Browser.isIE6 = (isIE && !window.XMLHttpRequest);
+		Browser.isIE7 = (isIE && !Browser.isIE6() && !Browser.isIE8());
+		Browser.isIE8 = (isIE && !!document.documentMode);
+		Browser.isIE9 = isIE9;
+
+		Browser.isChrome = isChrome;
+		Browser.isFirefox = (2 === getExplorer());
+		Browser.isSafari  = (4 === getExplorer());
+		Browser.isOpera = function(s){
+			return (5 === getExplorer() || isOpera(s));
 		};
 
-		Browser.isFirefox=function(){
-			return (2===getExplorer());
-		};
-		Browser.isChrome=function(){
-			return (1===getExplorer());
-		};
-		Browser.isSafari=function(){
-			return (4===getExplorer());
-		};
-		Browser.isOpera=function(s){
-			return (5===getExplorer() || isOpera(s));
-		};
+		Browser.inWeex = inWeex;
+		Browser.weexPlatform = weexPlatform;
+		Browser.UA = UA;
+		Browser.isEdge = isEdge;
+		Browser.isAndroid = isAndroid;
+		Browser.isIOS = isIOS;
 
 
 
