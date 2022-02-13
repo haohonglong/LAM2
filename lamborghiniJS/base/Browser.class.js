@@ -188,8 +188,8 @@
 		};
 		Browser.isIE = isIE;
 		Browser.isIE6 = (isIE && !window.XMLHttpRequest);
-		Browser.isIE7 = (isIE && !Browser.isIE6() && !Browser.isIE8());
 		Browser.isIE8 = (isIE && !!document.documentMode);
+		Browser.isIE7 = (isIE && !Browser.isIE6 && !Browser.isIE8);
 		Browser.isIE9 = isIE9;
 
 		Browser.isChrome = isChrome;
