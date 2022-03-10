@@ -87,7 +87,7 @@
 			var view="";
 			try{
                 Cajax.tpData = D;
-                System.Html.getFile(path,function(content){
+                System.getFile(path,function(content){
                     view = content;
                     if(System.isFunction(callBack)){
                         callBack(view);
@@ -853,7 +853,7 @@
                         data[k] =  v;
                     });
 
-                    System.Html.getFile(data.file,function(content){
+                    System.getFile(data.file,function(content){
                         S = S.replace(arr_inc[0],function () {
                             if(System.isFunction(data.func)){
                             	data.content = content;

@@ -54,7 +54,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2018-11-13
-     * 修改日期：2018-11-13
+     * 修改日期：2022-3-9
      * 名称： setCache
      * 功能：数据存储到缓存中，
      * 说明：路径一定要抛弃?带的参数
@@ -63,11 +63,11 @@
      * @param data
      */
     function setCache(url,data){
-        var n = url.indexOf('?'),_url = url;
-        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {
+        var n = url.indexOf('?');
+        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index, id) {
             if (-1 === index) {
                 this.add({
-                    "path":_url.trim(),
+                    "path":url.trim(),
                     "type":System.isJsFile(url) ? 'js' : '',
                     "content":data
                 });
@@ -175,18 +175,13 @@
             return s;
         },
         'get':function(){
-            var _this = this,url = this.file,n = url.indexOf('?'),content='';
+            var _this = this,url = this.file,n = url.indexOf('?');
             if(System.isFunction(System.Cache) && System.isset(this.file)) {
                 getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64
                     if (-1 === index) {
                         _this.ajax();
                     }else{
-                        content = this.get(index).content;
-                        if('js' === this.get(index).type){//脚本文件就直接执行
-                            System.globalEval(content);
-                        }else {
-                            ajax_success_callback.call(_this, content, null, null);
-                        }
+                        ajax_success_callback.call(_this, this.get(index).content, null, null);
                     }
                 });
             }else{
@@ -311,8 +306,8 @@
 	 * 创建日期：2016-3-12
 	 * 修改日期：2016-10-14
 	 * 名称： Html.getFile
-	 * 功能：返回指定的文件
-	 * 说明：支持链式调用
+	 * 功能：获取文件的内容
+	 * 说明：覆写System.getFile 方法
 	 * 注意：
 	 * @param 	(String)  	D.url         	      NULL :请求地址
 	 * @param 	(Function)	D.callBack       	  NULL :参数：文件里的内容
@@ -322,7 +317,7 @@
 	 * @param 	(String|{}) D.data             	  NULL :请求地址的参数
 	 * @param 	(Boolean) 	D.async               NULL :是否异步加载
 	 * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
-	 * @returns {Html|*}
+	 * @returns {System}
 	 * Example：
 	 *
 	 */
@@ -334,7 +329,7 @@
 			'success':callBack
 		},[D || {}]));
 
-		return System.Html;
+		return System;
 
 	};
 
@@ -686,6 +681,8 @@
 				return String.fromCharCode(parseInt($1, 10));
             })
 	};
+
+	System.getFile = Html.getFile;
 
 
 	return Html;

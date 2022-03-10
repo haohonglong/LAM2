@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2018-10-28
+ * 修改日期:2022-3-9
  * 名称：组件类
  * 功能：服务于应用层类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -202,40 +202,6 @@
 		 *
 		 * @author: lhh
 		 * 产品介绍：
-		 * 创建日期：2016-8-20
-		 * 修改日期：2018-4-9
-		 * 名称：System.fileExisted
-		 * 功能：检查系统加载器里的文件是否已加载过,class.js 是否已加载过了
-		 * 说明：
-		 * 注意：
-		 * @param file		NO NULL
-         * @param namespace NULL
-		 * @returns {boolean}
-		 */
-		'fileExisted':function(file,namespace) {
-            if(System.files.in_array(file)){
-            	return true;
-			}else if(System.isClassFile(file)){
-                var arr,className;
-                namespace = namespace || System;
-                if(file.indexOf("/") != -1){
-                    arr=file.split("/");
-                    file =arr[arr.length-1];
-                }
-                if(file.indexOf(".") != -1){
-                    arr=file.split(".");
-                    className=arr[0].firstToUpperCase();
-                    //这个文件已经加载过了
-                    if(System.isFunction(namespace[className])){return true;}
-                }
-			}
-            return false;
-		},
-
-		/**
-		 *
-		 * @author: lhh
-		 * 产品介绍：
 		 * 创建日期：2016-02-17
 		 * 修改日期：2016-02-17
 		 * 名称：checkout
@@ -291,9 +257,7 @@
 		 * @returns {boolean}
 		 */
 		'isJson':function(s){
-			if(System.isset(s) && System.isString(s) && s.match("^\{(.+:.+,*){1,}\}$")){
-				return true;
-			}
+			if(System.isset(s) && System.isString(s) && s.match("^\{(.+:.+,*){1,}\}$")) return true;
 			return false;
 		},
 		/**

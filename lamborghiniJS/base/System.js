@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2022-2-5
+ * 修改日期:2022-3-9
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -395,14 +395,6 @@
             //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
             //Object.freeze(System.Config);
             //Object.freeze(System.Config.Public);
-            if(System.Config.files){
-                //把加载的基础文件放在加载器里
-                System.each(System.files = System.Config.files,function(){
-                    if(System.isClassFile(this)){
-                        System.classes.push(this);
-                    }
-                });
-            }
         },
 
         /**
@@ -451,9 +443,15 @@
                 srcs = System.merge(srcs,[jses]);
 			}
 
+			if (!System.isset(System.CONTROLLERS)) {
+				delete srcs['Controller'];
+				delete srcs['Router'];
+			}
+
 			System.each(srcs,function (i) {
-                if(System.Config.files.indexOf(this) !== -1){return true;}
-                System.Config.files.push(this);
+                if(System.fileExisted(this)) return true;
+                System.files.push(this);
+                if(System.isClassFile(this)) System.classes.push(this);
                 if(System.Config.render.create){
                     data.src = this;
                     System.Config.render.bulid(tag,data)
@@ -461,6 +459,7 @@
                     files.push(System.script(this,scriptAttribute));
                 }
             });
+            System.files.unshift(classPath+'/base/System.js');
 			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
             System.print(files.join(''));
             return this;
@@ -1185,44 +1184,93 @@
 		 */
 		"isClassFile":function(path) {
 			//查找是否有.class这个关键字
-			if(-1 === path.search(/\.class\.js/))//这个类文件没有加载过
-				return false;
-			return true;
+			return this.isTheFile(path, 'class\\.js');
+		},
+		/**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2022-3-9
+         * 修改日期：2022-3-9
+         * 名称：System.isTheFile
+         * 功能：是指定文件的后缀名吗
+         * 说明：
+         * 注意：
+         * @param   (String)url 			NO NULL :路径名称
+         * @param   (String)suffix 			NO NULL :后缀名称
+         * @returns {boolean}
+         */
+		"isTheFile":function(url, suffix) {
+			var n = url.indexOf('?');
+			if (n > -1) url = url.substring(0,n).trim(); // 先要抛弃问号和后面的参数
+            if(url.search(new RegExp("\\."+ suffix +"$","i")) > -1) return true;
+            return false;
 		},
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-11
-         * 修改日期：2018-11-11
+         * 修改日期：2022-3-9
          * 名称：System.isJsFile
          * 功能：检查是否是js文件
          * 说明：
          * 注意：
          * @param   (String)url 			NO NULL :路径名称
+         * @param   (String)suffix 			NULL :后缀名称
          * @returns {boolean}
          */
-		"isJsFile":function (url) {
-            if(-1 === url.search(/\.js/))
-                return false;
-            return true;
+		"isJsFile":function (url, suffix) {
+			return this.isTheFile(url, suffix || 'js');
         },
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-05
-         * 修改日期：2020-2-05
+         * 修改日期：2022-3-9
          * 名称：System.isCssFile
          * 功能：检查是否是css文件
          * 说明：
          * 注意：
          * @param   (String)url 			NO NULL :路径名称
+         * @param   (String)suffix 			NULL :后缀名称
          * @returns {boolean}
          */
-		"isCssFile":function (url) {
-            if(-1 === url.search(/\.css/))
-                return false;
-            return true;
+		"isCssFile":function (url, suffix) {
+            return this.isTheFile(url, suffix || 'css');
         },
+
+        /**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-8-20
+		 * 修改日期：2018-4-9
+		 * 名称：System.fileExisted
+		 * 功能：检查系统加载器里的文件是否已加载过,class.js 是否已加载过了
+		 * 说明：
+		 * 注意：
+		 * @param file		NO NULL
+         * @param namespace NULL
+		 * @returns {boolean}
+		 */
+		'fileExisted':function(file,namespace) {
+            if(System.files.in_array(file)){
+            	return true;
+			}else if(System.isClassFile(file)){
+                var arr,className;
+                namespace = namespace || System;
+                if(file.indexOf("/") != -1){
+                    arr=file.split("/");
+                    file =arr[arr.length-1];
+                }
+                if(file.indexOf(".") != -1){
+                    arr=file.split(".");
+                    className=arr[0].firstToUpperCase();
+                    //这个文件已经加载过了
+                    if(System.isFunction(namespace[className])) return true;
+                }
+			}
+            return false;
+		},
 
 		/**
 		 *
@@ -1570,6 +1618,33 @@
         }
 	};
 
+	/**
+	 *
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2022-3-10
+	 * 修改日期：2022-3-10
+	 * 名称： System.getFile
+	 * 功能：获取文件的内容
+	 * 说明：支持链式调用。Html.getFile 覆写了此方法, 
+	 *		因为Template类里调用了这个方法。Html类和Template类耦合度太紧，
+	 *		目前只能先想到用这样一个约定的接口方法，用来临时解耦，
+	 *		以后有更好的方案替代Html类,那么也要参照Html.getFile方法在替代的类里覆写了此方法！！！
+	 * 注意：
+	 * @param 	(String)  	D.url         	      NULL :请求地址
+	 * @param 	(Function)	D.callBack       	  NULL :参数：文件里的内容
+	 * @param 	(Object)D                	   NO NULL :json 数据
+	 * @param 	(String)  	D.type             NO NULL :获取方式
+	 * @param 	(String)  	D.dataType         NO NULL :获取文件类型
+	 * @param 	(String|{}) D.data             	  NULL :请求地址的参数
+	 * @param 	(Boolean) 	D.async               NULL :是否异步加载
+	 * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
+	 * @returns {System}
+	 * Example：
+	 *
+	 */
+	System.getFile=function(url,callBack,D){ return System; };
+
 
 	System.String	 		= System.createDict();
 	System.Number	 		= {
@@ -1671,6 +1746,7 @@
 	System.guid=0;
 	System.classPath='./';
 	System.classes=[];
+	System.files=[];
 	System.Super=System.createDict();
 	System.app=null;
 	System.Object = Object.prototype     || System.createDict();
