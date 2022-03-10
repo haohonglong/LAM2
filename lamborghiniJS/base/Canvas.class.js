@@ -21,7 +21,7 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014.6.4
-	 * 修改日期：2017.9.4
+	 * 修改日期：2022.3.9
 	 * 名称： Canvas
 	 * 功能：
 	 * 说明：
@@ -313,7 +313,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2015-9-18
-		 * 修改日期：2015-10-10
+		 * 修改日期：2022-3-9
 		 * 名称： clearRect
 		 * 功能：清空给定矩形内的指定像素。
 		 * 说明：
@@ -327,8 +327,42 @@
 
 		 */
 		'clearRect':function(x,y,w,h){
-			this.ctx.clearRect(x,y,w,h);
+			this.ctx.clearRect(x || 0 ,y || 0 ,w || this.getWidth() ,h || this.getHeight());
 			return this;
+		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2022-3-9
+		 * 修改日期：2022-3-9
+		 * 名称： getWidth
+		 * 功能：获取画布width
+		 * 说明：
+		 * 注意：
+		 * @returns {Number}
+		 * Example：
+
+		 */
+		'getWidth':function(){
+			return this.theCanvas.width;
+		},
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2022-3-9
+		 * 修改日期：2022-3-9
+		 * 名称： getHeight
+		 * 功能：获取画布height
+		 * 说明：
+		 * 注意：
+		 * @returns {Number}
+		 * Example：
+
+		 */
+		'getHeight':function(){
+			return this.theCanvas.height;
 		},
 
 		/**
