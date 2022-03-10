@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-2-13
+ * 修改日期:2022-2-28
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -43,6 +43,10 @@
 		var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
 		var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 		var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+		var isPhantomJS = UA && /phantomjs/.test(UA);
+		var isFF = UA && UA.match(/firefox\/(\d+)/);
+
+
 		
 		/**
 		 *
@@ -193,7 +197,8 @@
 		Browser.isIE9 = isIE9;
 
 		Browser.isChrome = isChrome;
-		Browser.isFirefox = (2 === getExplorer());
+		Browser.isFirefox = isFF;
+		Browser.isPhantomJS = isPhantomJS;
 		Browser.isSafari  = (4 === getExplorer());
 		Browser.isOpera = function(s){
 			return (5 === getExplorer() || isOpera(s));
