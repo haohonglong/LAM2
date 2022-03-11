@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2022-3-9
+ * 修改日期:2022-3-11
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -422,6 +422,7 @@
                 ,"Base":classPath+'/base/Base.class.js'
                 ,"Object":classPath+'/base/Object.class.js'
                 ,"Component":classPath+'/base/Component.class.js'
+                ,"Md5":classPath+'/base/Md5.class.js'
                 ,"Compiler":classPath+'/base/Compiler.class.js'
                 ,"Base64":classPath+'/base/Base64.class.js'
                 ,"Cache":classPath+'/base/Cache.class.js'
