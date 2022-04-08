@@ -15,7 +15,7 @@
 	System.is(System,'Dom','Html',System.classPath+'/base');
 	System.listen(function () {
 		if(System.isFunction(System.import)){
-            System.import(['/Template.class'],System.classPath+'/base');
+            System.import(['/Md5.class', '/Template.class'],System.classPath+'/base');
             if(System.LAM_ENV_DEV){
                 System.import(['/Cache.class'],System.classPath+'/base');
 			}else{
@@ -50,34 +50,8 @@
         return Cache;
     }
 
-    /**
-     * @author: lhh
-     * 产品介绍：
-     * 创建日期：2018-11-13
-     * 修改日期：2022-3-9
-     * 名称： setCache
-     * 功能：数据存储到缓存中，
-     * 说明：路径一定要抛弃?带的参数
-     *
-     * @param url
-     * @param data
-     */
-    function setCache(url,data){
-        var n = url.indexOf('?');
-        getCache().find('id',System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index, id) {
-            if (-1 === index) {
-                this.add({
-                    "path":url.trim(),
-                    "type":System.isJsFile(url) ? 'js' : '',
-                    "content":data
-                });
-            }
-        });
-    }
-
-    var temp = null;
-    function ajax_success_callback(data,textStatus,jqXHR){
-        temp = new System.Template();
+	var temp = new System.Template();
+    function ajax_success_callback(data, textStatus, jqXHR) {
         temp.datas      = this.tpData;
         temp.delimiters = this.delimiters;
         data = temp.parse(data);
@@ -100,7 +74,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2020-2-11
+         * 修改日期：2022-3-31
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -177,22 +151,27 @@
         'get':function(){
             var _this = this,url = this.file,n = url.indexOf('?');
             if(System.isFunction(System.Cache) && System.isset(this.file)) {
-                getCache().find('id', System.Base64.encode(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index) {//路径一定要抛弃?带的参数,才可以base64
+                getCache().find('id', System.Md5.md5(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index, id) {//路径一定要抛弃?带的参数,才可以md5
+                    var cache = this;
                     if (-1 === index) {
-                        _this.ajax();
+                        _this.ajax(function(data){
+                        	cache.add({
+			                    "path":url.trim(),
+			                    "type":System.isJsFile(url) ? 'js' : '',
+			                    "content":data
+			                });
+                        });
                     }else{
                         ajax_success_callback.call(_this, this.get(index).content, null, null);
                     }
                 });
-            }else{
-                _this.ajax();
             }
         },
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-06-19
-         * 修改日期：2019-06-19
+         * 修改日期：2022-03-31
          * 名称： success_callback
          * 功能：
          * 说明：
@@ -201,8 +180,8 @@
          * @param textStatus
          * @param jqXHR
          */
-		'success_callback':function (data,textStatus,jqXHR) {
-            setCache(this.file,data);
+		'success_callback':function (data, textStatus, jqXHR, saveCache) {
+            if (System.isFunction(saveCache)) saveCache(data);
             ajax_success_callback.call(this,data,textStatus,jqXHR);
         },
         /**
@@ -238,7 +217,7 @@
             }
         },
         'html':function(obj){},
-        'ajax':function () {
+        'ajax':function (func) {
 		    var _this = this;
             if(System.isset(this.file)){
                 jQuery
@@ -258,7 +237,7 @@
                             _this.error_callback(XMLHttpRequest, textStatus, errorThrown);
 						},
                         success: function(data,textStatus,jqXHR){
-                            _this.success_callback(data,textStatus,jqXHR);
+                            _this.success_callback(data, textStatus, jqXHR, func);
                         }
 					})
 					.done(_this.done);

@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2022-3-11
+ * 修改日期:2022-3-26
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -48,7 +48,7 @@
 })(typeof global !== 'undefined' ? global : this,function(global,namespace,undefined){
 	'use strict';
 // Used for trimming whitespace
-	var VERSION="v2.1.5.1",
+	var VERSION="v2.1.6",
 		Interface={},
 		System={},
 		once=true,
@@ -375,7 +375,8 @@
 		'run':function(args,callback){
             return runtime.apply(this,[args,callback]);
 		},
-		'init':function () {
+		'init':function (Config) {
+			System.Config = Config || System.Config;
             System.Config.files = System.Config.files || [];
             System.classPath  = System.Config.getClassPath();
             System.configure_cache = System.Config.configure_cache || System.createDict();
@@ -395,13 +396,107 @@
             //不允许外部直接修改，添加，删除 配置里面指定的参数！只能读取
             //Object.freeze(System.Config);
             //Object.freeze(System.Config.Public);
+            return this;
+        },
+        /**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2020-3-16
+		 * 修改日期：2020-3-16
+		 * 名称：System.autoload
+		 * 功能：加载基础类
+		 * 说明：
+		 * 注意：
+		 * Example：
+		 */
+        'autoload': function() {
+            var classPath = System.classPath, tag = 'script', 
+				scriptAttribute = System.Config.render.default.script.Attribute, 
+				data = scriptAttribute, files = [];
+			
+			var autoLoadFile = System.Config.autoLoadFile(System);
+			var	srcs = autoLoadFile.files || [],
+				MINI = autoLoadFile.mini || false;
+				
+			System.excluded = System.excluded || [];
+			
+			// 这种格式可以防止浏览器默认对key自动排序
+			var jses = [
+            	{'name': 'jquery', 'path': classPath+'/jQuery/jquery.js'},
+                {'name': 'Base', 'path': classPath+'/base/Base.class.js'},
+                {'name': 'Object', 'path': classPath+'/base/Object.class.js'},
+                {'name': 'Component', 'path': classPath+'/base/Component.class.js'},
+                {'name': 'Md5', 'path': classPath+'/base/Md5.class.js'},
+                {'name': 'Base64', 'path': classPath+'/base/Base64.class.js'},
+                {'name': 'Compiler', 'path': classPath+'/base/Compiler.class.js'},
+                {'name': 'Cache', 'path': classPath+'/base/Cache.class.js'},
+                {'name': 'PowerCookie', 'path': classPath+'/base/PowerCookie.class.js'},
+                {'name': 'Storage', 'path': classPath+'/base/Storage.class.js'},
+                {'name': 'HttpRequest', 'path': classPath+'/base/HttpRequest.class.js'},
+                {'name': 'Helper', 'path': classPath+'/base/Helper.class.js'},
+                {'name': 'Browser', 'path': classPath+'/base/Browser.class.js'},
+                {'name': 'Event', 'path': classPath+'/base/Event.class.js'},
+                {'name': 'Dom', 'path': classPath+'/base/Dom.class.js'},
+                {'name': 'View', 'path': classPath+'/base/View.class.js'},
+                {'name': 'Template', 'path': classPath+'/base/Template.class.js'},
+                {'name': 'Html', 'path': classPath+'/base/Html.class.js'},
+                {'name': 'Loader', 'path': classPath+'/base/Loader.class.js'},
+                {'name': 'Controller', 'path': classPath+'/base/Controller.class.js'},
+                {'name': 'Model', 'path': classPath+'/base/Model.class.js'},
+                {'name': 'Router', 'path': classPath+'/base/Router.class.js'}
+            ];
+
+			if(!MINI){
+				if (srcs.length) {
+					for (var i = 0, len = jses.length; i < len; i++) {
+						for (var j = i; j < srcs.length; j++) {
+							if (srcs[j].name === jses[i].name) { // 同名时优先用配置文件覆盖默认的
+								jses[i] = srcs[j];
+								srcs.removeAt(j);
+								break;
+							}
+						}
+					}
+
+					for (var i = 0, len = srcs.length; i < len; i++) {
+						jses.push(srcs[i]);
+					}
+				}
+				srcs = jses;
+			}
+
+			if (System.excluded.length) {
+				for (var i = 0; i < srcs.length; i++) {
+					if (System.isset(srcs[i].name) && System.excluded.in_array(srcs[i].name)) {
+						srcs.removeAt(i);
+					}
+
+				}
+			}
+			System.autoLoadFiles = srcs;
+
+			System.each(System.autoLoadFiles,function (i) {
+				var path = this.path;
+                if(System.fileExisted(path)) return true;
+                System.files.push(path);
+                if(System.isClassFile(path)) System.classes.push(path);
+                if(System.Config.render.create){
+                    data.src = path;
+                    System.Config.render.bulid(tag,data)
+                }else{
+                    files.push(System.script(path,scriptAttribute));
+                }
+            });
+            System.files.unshift(System.CONFIGURATION_PATH, classPath+'/base/System.js');
+			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
+            System.print(files.join(''));
         },
 
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-22
-         * 修改日期：2020-5-13
+         * 修改日期：2022-3-30
          * 名称：bootstrap
          * 功能：加载初始化文件
          * 说明：
@@ -411,58 +506,7 @@
          * @returns {System}
          */
         'bootstrap':function (Config){
-			System.Config = Config || System.Config;
-			this.init();
-			var tag='script',scriptAttribute = System.Config.render.default.script.Attribute,
-				i = 0,len,data = scriptAttribute,files=[],srcs =System.Config.autoLoadFile();
-			var classPath = System.classPath;
-			//加载基础类
-			var jses = {
-                "jquery":classPath+'/jQuery/jquery.js'
-                ,"Base":classPath+'/base/Base.class.js'
-                ,"Object":classPath+'/base/Object.class.js'
-                ,"Component":classPath+'/base/Component.class.js'
-                ,"Md5":classPath+'/base/Md5.class.js'
-                ,"Compiler":classPath+'/base/Compiler.class.js'
-                ,"Base64":classPath+'/base/Base64.class.js'
-                ,"Cache":classPath+'/base/Cache.class.js'
-                ,"HttpRequest":classPath+'/base/HttpRequest.class.js'
-                ,"Helper":classPath+'/base/Helper.class.js'
-                ,"Browser":classPath+'/base/Browser.class.js'
-                ,"Event":classPath+'/base/Event.class.js'
-                ,"Dom":classPath+'/base/Dom.class.js'
-                ,"View":classPath+'/base/View.class.js'
-                ,"Template":classPath+'/base/Template.class.js'
-                ,"Html":classPath+'/base/Html.class.js'
-                ,"Loader":classPath+'/base/Loader.class.js'
-                ,"Storage":classPath+'/base/Storage.class.js'
-                ,"Controller":classPath+'/base/Controller.class.js'
-                ,"Model":classPath+'/base/Model.class.js'
-                ,"Router":classPath+'/base/Router.class.js'
-            };
-			if(!srcs.baseMin){
-                srcs = System.merge(srcs,[jses]);
-			}
-
-			if (!System.isset(System.CONTROLLERS)) {
-				delete srcs['Controller'];
-				delete srcs['Router'];
-			}
-
-			System.each(srcs,function (i) {
-                if(System.fileExisted(this)) return true;
-                System.files.push(this);
-                if(System.isClassFile(this)) System.classes.push(this);
-                if(System.Config.render.create){
-                    data.src = this;
-                    System.Config.render.bulid(tag,data)
-                }else{
-                    files.push(System.script(this,scriptAttribute));
-                }
-            });
-            System.files.unshift(classPath+'/base/System.js');
-			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
-            System.print(files.join(''));
+			this.init(Config).autoload();
             return this;
 		},
         /**
@@ -824,12 +868,12 @@
 			if(System.isPlainObject(obj)){
 				for (key in obj ) {
 					item = obj[key];
-					if (false === callback.call( item, key, item, obj)) {break;}
+					if (false === callback.call( item, key, item, obj)) break;
 				}
 			}else{
-				for(var i= 0,len=obj.length;i<len;i++) {
+				for(var i= 0, len=obj.length; i < len; i++) {
                     item = obj[i];
-					if (false === callback.call( item, i, item, obj)) {break;}
+					if (false === callback.call( item, i, item, obj)) break;
 				}
 			}
 			return obj;
@@ -1581,7 +1625,7 @@
 				hs.push(ar[Math.floor(Math.random() * al)]);
 			}
 
-			return System.Base64.encode(hs.join('')).replace(/[_\s]/g,'');
+			return System.Md5.md5(hs.join('')).replace(/[_\s]/g,'');
 		},
 		'uniqid':function (code,hashLength) {
             code = code || null;

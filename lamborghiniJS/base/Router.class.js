@@ -114,37 +114,29 @@
      * @returns {*|String|string}
      */
     function generator(view) {
-        var jses = [],css = [],head = [];
+        var jses = [],css = [],head = [],
+            excluded = [], excluded_names = ["Controller", "Router"];
 
-        var js_obj = System.Config.autoLoadFile();
-        var systemjs = System.classPath+'/base/System.js';
-        var config = System.ROOT+'/common/config/config.js';
-        var exclude = [
-            js_obj.Controller,
-            // js_obj.View,
-            js_obj.Router
-        ];
-        System.each(System.files,function () {
-			if(this.indexOf('Controller') > -1){
-                exclude.push(this);
-			}
+        System.each(System.autoLoadFiles,function () {
+            if (excluded_names.in_array(this.name) && !excluded.in_array(this.path)) {
+                excluded.push(this.path);
+            }
         });
-        head.push(System.Html.scriptFile(config));
-        head.push(System.Html.scriptFile(systemjs));
-        System.each(js_obj,function () {
-            if(!exclude.in_array(this)) {
+        System.each(System.files,function () {
+            if(!excluded.in_array(this)) {
                 head.push(System.Html.scriptFile(this));
-                exclude.push(this);
+                excluded.push(this);
 			}
         });
         System.each(System.files,function () {
             if(System.isJsFile(this)){
-				if(!exclude.in_array(this)){
+                if(!excluded.in_array(this)){
                     jses.push(System.Html.scriptFile(this));
-				}
+                }
             }else{
                 css.push(System.Html.linkFile(this));
             }
+            
         });
         jses = jses.join("\n");
         head = head.join("\n");
