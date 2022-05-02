@@ -13,6 +13,9 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Html',System.classPath+'/base');
+
+	var FILEPATH = System.classPath+'/base/Html.class.js';
+
 	System.listen(function () {
 		if(System.isFunction(System.import)){
             System.import(['/Md5.class', '/Template.class'],System.classPath+'/base');
@@ -42,7 +45,7 @@
 						,System.configure_cache.expires || 0);
                 }
 			}catch (e){
-                throw new Error(e);
+                throw e;
             }
 
 
@@ -198,20 +201,13 @@
          * @param errorThrown
          */
 		'error_callback':function (XMLHttpRequest, textStatus, errorThrown) {
-            try{
-                switch(XMLHttpRequest.status) {
-					case 404:
-                        System.View.ERROR_404("Error: the file '"+this.file+"' was not found"
-                            ,this.file_404
-                            ,this.jump ? null : this.$dom);
-                        break;
-                    default:
+            switch(XMLHttpRequest.status) {
+				case 404:
+					throw new Error("the file '"+this.file+"' was not found");
+	                break;
+	            default:
 
-                }
-
-            }catch(e){
-                throw new Error(e);
-            }
+	        }
             if(this.error && System.isFunction(this.error)){
                 this.error(XMLHttpRequest, textStatus, errorThrown);
             }

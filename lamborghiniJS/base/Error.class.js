@@ -15,29 +15,48 @@
 	System.is(System,'Component','Error',System.classPath+'/base');
 	var __this__=null;
 	var Error = System.Component.extend({
-		constructor: function(sMessage, sUrl, sLine){
+		constructor: function(error, message, path, line){
 			this.base();
 			__this__=this;
-			this.sMessage=sMessage;
-			this.sUrl=sUrl;
-			this.sLine=sLine;
+			this.error = null;
+			this.e_type = null;
+			this.e_message = null;
+			this.stack = null;
+			if(error) {
+				this.error = error;
+				this.e_type = error.name;
+				this.e_message = error.message;
+				this.stack = error.stack;
+			}
+			
+			this.message = message;
+			this.path = path;
+			this.line = line;
+
+			// throw new Error(this.getMessage());
+            // System.View.ERROR_404(404, this.getMessage());
 
 		},
 		'_className':'Error',
 		'__constructor':function(){},
-		//注意：onerror事件必需在此网页中其它Javascript程序之前！
-		'reportError':function(){
+		'getMessage':function(){
 			var str = "";
-			str += " 错误信息:" + this.sMessage + "\n";
-			str += " 错误地址:" + this.sUrl + "\n";
-			str += " 错误行数:" + this.sLine + "\n";
-			str += "<=========调用堆栈=========>\n";
-			var func = window.onerror.caller;
+			str += " [" + (new Date()).format("yyyy-M-d h:m:s") + "]";
+			if (this.e_type) str += " [error type : " + this.e_type + "]";
+			str += " [custom message : " + this.message  + "]";
+			if (this.e_message) str += " [error message: " + this.e_message + "]";
+			str += " [path : " + this.path + "]";
+			str += " [line : " + this.line + "] <br>\n\r";
+			if(this.stack) str += " [stack : " + this.stack + "] <br />";
+
+			var func = null;
+			if(window && window.onerror && window.onerror.caller) func = window.onerror.caller;
+			
 			var index = 1;
-			while (func != null) {
-				str += "第" + index + "个函数：" + func + "\n";
+			while (System.isset(func)) {
+				str += "第" + index + "个函数：" + func + "\n\r <br />";
 				str += "第" + index + "个函数：参数表：";
-				for(var i=0;i<func.arguments.count;i++){
+				for(var i=0; i < func.arguments.count; i++){
 					str += func.arguments[i] + ",";
 				}
 				str += func;
@@ -45,13 +64,7 @@
 				func = func.caller;
 				index++;
 			}
-			return true;
-		},
-		'message':function(sMessage){
-			this.sMessage=sMessage;
-		},
-		'set_line':function(sLine){
-			this.sLine=sLine;
+			return str + "<br />\r\n";
 		},
 		/**
 		 *
@@ -66,9 +79,7 @@
 		 * @return  ()						:
 		 * Example：
 		 */
-		'destructor':function(){
-
-		}
+		'destructor':function(){}
 	});
 
 	return Error;

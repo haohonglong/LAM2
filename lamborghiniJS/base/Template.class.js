@@ -36,6 +36,8 @@
         }
     },1);
 
+    var FILEPATH = System.classPath+'/base/Template.class.js';
+
 
 	var __this__=null;
 	var guid=0;
@@ -98,7 +100,11 @@
                 this.guid++;
                 return view;
 			}catch (e){
-                throw new Error(e);
+                var error = new System.Error(e,
+                 "render指定渲染视图页面路径: " + path, 
+                 FILEPATH, 104);
+                throw new Error(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
 			}
 
 		},
@@ -108,7 +114,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-03-8
-         * 修改日期：2017-03-3
+         * 修改日期：2022-04-20
          * 名称：analysisVar
          * 功能：解析变量
          * 说明：
@@ -116,25 +122,15 @@
          * @param vars
          * @returns {var}
          */
-        'analysisVar':function(vars,
-                                      v,
-                                      root){
+        'analysisVar':function(vars){
         	try{
-                if(-1 === vars.indexOf('.')){
-                    return System.eval(vars);
-                }
-
-                v=vars.split('.');
-                root=System.eval(v[0]);
-                v.each(function(i){
-                    if(i!=0){
-                        root=root[this];
-                    }
-                });
-
-                return root;
+                return System.eval(vars);
 			}catch (e){
-                throw new Error(e);
+                var error = new System.Error(e,
+                 "analysisVar 解析变量 " + vars + "错误",
+                 FILEPATH, 128);
+                throw new EvalError(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
 			}
 
 
@@ -224,7 +220,11 @@
 
                 return arr.join('');
 			}catch (e){
-                throw new Error(e);
+                var error = new System.Error(e,
+                 "查找模版标签 " + S + "错误",
+                  FILEPATH, 220);
+                throw new Error(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
             }
 
 
@@ -335,7 +335,10 @@
                                         v = System.eval(v);
                                     }
                                 }catch (e){
-                                    throw new Error(e);
+                                    var error = new System.Error(e,
+                                         "解析变量" + v + "发生错误 " + arr_inc[0], 
+                                         FILEPATH, 335);
+                                    throw new EvalError(error.getMessage());
                                 }
 
                         }
@@ -348,7 +351,11 @@
                     data.content = S;
                     return data;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "layout " + S + "错误 " + arr_inc[0], 
+                     FILEPATH, 346);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
 			}
@@ -358,7 +365,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-3-13
-         * 修改日期：2020-2-05
+         * 修改日期：2022-4-20
          * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
@@ -367,18 +374,26 @@
          * @returns {String}
          */
         'define':function (S) {
+            var delimiters = System.Config.templat.delimiters;
             var reg_inc = this.define_reg;
             var k,v;
             var arr_inc = [];
+            
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
                     k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
                     v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
-                    v = this.findTpl(v);
+                    //找到模版分隔符才会去解析
+                    if(v.indexOf(delimiters[0]) > -1) v = this.findTpl(v);
+                    
                     S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令define 错误: " + arr_inc[0], 
+                     FILEPATH, 394);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -410,7 +425,11 @@
                     });
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令\"<!--Escape:begin--><!--Escape:end-->\" 错误: " + arr_inc[0], 
+                     FILEPATH, 416);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -437,7 +456,11 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令\"<!--Del:begin--><!--Del:end-->\" 错误: " + arr_inc[0],
+                      FILEPATH, 446);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -466,7 +489,11 @@
                 this.cache.add(data);
                 return id;
             } catch (e) {
-                throw new Error(e.message + "block_uniqid");
+                var error = new System.Error(e,
+                 "block_uniqid 生成唯一blockId 错误: ",
+                  FILEPATH, 478);
+                throw new Error(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
             }
 
         },
@@ -557,7 +584,12 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令 <#Block:begin id=\"xxx\"> ... <#Block:end> 错误: " + arr_inc[0],
+                      FILEPATH, 572);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
+
                 }
 
             }
@@ -592,7 +624,11 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令\"<!--Script:begin--><!--Script:end-->\" 错误:\n\r" + arr_inc[0],
+                      FILEPATH, 611);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -660,7 +696,11 @@
                     S = S.replace(arr_inc[0],content);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令 <#=block id=\"xx\" /> 错误: " + arr_inc[0],
+                      FILEPATH, 682);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -691,7 +731,11 @@
                     S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
+                      FILEPATH, 736);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -801,7 +845,11 @@
 
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令 <#import path=\"\" /> 错误: " + arr_inc[0],
+                      FILEPATH, 829);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -864,7 +912,11 @@
                     },data);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    throw new Error(e.message + arr_inc[0]);
+                    var error = new System.Error(e,
+                     "预处理指令 <#include file=\"\" /> 错误: " + arr_inc[0],
+                      FILEPATH, 895);
+                    throw new Error(error.getMessage());
+                    // System.View.ERROR_404(404, error.getMessage());
 				}
 
             }
@@ -1091,7 +1143,11 @@
             });
             return content;
         }catch (e){
-            throw new Error(e.message);
+            var error = new System.Error(e,
+                 "Template.getBlock 根据id获取对应的block内容错误: ",
+              FILEPATH, 1125);
+            throw new Error(error.getMessage());
+            // System.View.ERROR_404(404, error.getMessage());
         }
     };
 

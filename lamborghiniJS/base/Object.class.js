@@ -121,7 +121,7 @@
 	Object.generate=function(n){
 		var code = Object._hashCodePrefix+System.hash(System.timestamp().toString(),n || System.hashLength || 32);
         Object._hashCodeCounter++;
-        return code;
+        return System.md5(code);
 	};
 	Object.toHashCode=function(o){
 		if(o._hashCode!=null)

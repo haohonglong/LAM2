@@ -113,7 +113,6 @@
             } else {
                 System.print(content);
             }
-            throw message;
         }, {
             beforeSend: function (a, b) {
                 this.async = false;

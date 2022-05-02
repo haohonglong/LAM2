@@ -519,7 +519,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-7-15
-		 * 修改日期：2016-7-15
+		 * 修改日期：2022-4-20
 		 * 名称：isitclone
 		 * 功能：当前对象是从它克隆来的？
 		 * 说明：
@@ -537,7 +537,7 @@
 				throw new Error("Warning: 参数是克隆对象");
 
 			}
-			if(obj._hashCode === this._hashCode.split('_')[0]){
+			if(obj._hashCode === this._hashCode.split('::')[0]){
 				return true;
 			}else{
 				return false;
@@ -549,7 +549,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-7-15
-		 * 修改日期：2016-7-15
+		 * 修改日期：2022-4-20
 		 * 名称：iscurclone
 		 * 功能：是从当前对象克隆过来的吗
 		 * 说明：
@@ -567,7 +567,7 @@
 				throw new Error("Warning: 参数不是是克隆对象");
 
 			}
-			if(this._hashCode === obj._hashCode.split('_')[0]){
+			if(this._hashCode === obj._hashCode.split('::')[0]){
 				return true;
 			}else{
 				return false;

@@ -14,6 +14,8 @@
     'use strict';
     System.is(System,'Component','Compiler',System.classPath+'/base');
 
+    var FILEPATH = System.classPath+'/base/Compiler.class.js';
+
     var __this__=null;
     var Compiler = System.Component.extend({
         constructor: function (Config) {
@@ -91,7 +93,11 @@
                     }
                 }
             }catch (e){
-                throw new Error(['Warning: 数据里没有分配',vars,'这个值'].join(' ')+e);
+                var error = new System.Error(e,
+                 "解析变量 " + vars + "发生错误",
+                  FILEPATH, 98);
+                throw new Error(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
             }
 
 
@@ -165,7 +171,11 @@
                 + "');}return p.join('');");
             return D ? fn( D ) : fn;
         }catch (e){
-            throw new Error(e.message + S);
+            var error = new System.Error(e,
+                 "在block中解析模版标签 " + S + "发生错误",
+                  FILEPATH, 170);
+                throw new Error(error.getMessage());
+                // System.View.ERROR_404(404, error.getMessage());
         }
     };
     var compiler = null;

@@ -13,7 +13,10 @@
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-    if(!System.isset(System.CONTROLLERS)){throw new Error("LAM.CONTROLLERS undefined");}
+
+    var FILEPATH = System.classPath+'/base/Router.class.js';
+
+    if(!System.isset(System.CONTROLLERS)) throw new Error("LAM.CONTROLLERS undefined");
     System.import(['/View.class'],System.classPath+'/base');
 
     var isrun = false;
@@ -155,51 +158,63 @@
 	Router.run=function (r,m) {
 	    if(isrun) return;
 	    isrun = true;
-        try{
-            var R = Router.init(r,m);
-            r = R.r.split('/');
-            var M = '';
-            var str = r[0];
-            var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
-            var ControllerName = Controller+'Controller';
-            if(System.isString(R.m)) M = R.m+'/';
-            System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
 
-            var action = r[1]+'Action';
-            var id = r[2];
-            var view = null;
-            System._content = null;
-            id = System.eval(id);
+        var R = Router.init(r,m);
+        r = R.r.split('/');
+        var M = '';
+        var str = r[0];
+        var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
+        var ControllerName = Controller+'Controller';
+        if(System.isString(R.m)) M = R.m+'/';
+        System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
 
-        	var controller = new System[ControllerName]();
-        	if(controller instanceof System.Controller){
-        		if(action && System.isFunction(controller[action])) {
-                    controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
-                    controller.init();
-                    view = controller[action](id);
-                    view = (new System.Template()).getBlock(view);
+        var action = r[1]+'Action';
+        var id = r[2];
+        var view = null;
+        System._content = null;
+        id = System.eval(id);
+
+    	var controller = new System[ControllerName]();
+    	if(controller instanceof System.Controller){
+    		if(action && System.isFunction(controller[action])) {
+                controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
+                controller.init();
+                view = controller[action](id);
+                view = (new System.Template()).getBlock(view);
+                if (System.isset(view) && System.isString(view)) {
+                    //生产静态页便于输出
+                    System._content = generator(view);//there is saved the content of html that after parsed
+                }
+                if (System.isFunction(System.main)) {
+                    view = System.main(view, controller, action, id);
                     if (System.isset(view) && System.isString(view)) {
-                        //生产静态页便于输出
-                        System._content = generator(view);//there is saved the content of html that after parsed
+                        System.print(view);
                     }
-                    if (System.isFunction(System.main)) {
-                        view = System.main(view, controller, action, id);
-                        if (System.isset(view) && System.isString(view)) {
-                            System.print(view);
-                        }
-                    }
-                }else{
-        			throw new Error("the action '"+action+"' was not found");
-        		}
-        	}
-        }catch(e){
-        	System.View.ERROR_404(404,e.message +"\n"+ e.stack);
-        	throw new Error(e);
+                }
+            }else{
+                var error = new System.Error(null,
+                     "the action's name '"+action+"' was not found", 
+                     FILEPATH, 194);
+    			throw new Error(error.getMessage());
+    		}
+    	} else {
+            var error = new System.Error(null,
+                     "the controller's name '"+ControllerName+"' was not found", 
+                     FILEPATH, 203);
+            throw new Error(error.getMessage());
         }
+
     };
 
     if(System.routeAutoRun){
-        Router.run(System.routerId,System.moduleId);
+        try {
+            Router.run(System.routerId,System.moduleId);
+        } catch (e) {
+            console.error(e);
+            System.View.ERROR_404(404, e.message);
+
+        }
+        
     }
 
 	return Router;

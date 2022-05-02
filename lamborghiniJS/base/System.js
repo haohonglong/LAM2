@@ -382,7 +382,7 @@
             System.configure_cache = System.Config.configure_cache || System.createDict();
             System.components = System.merge({},[System.Config.components]) || System.createDict();
             System.each(System.merge({},[System.Config]),function(name){System[name] = this;});
-            System.each(System.merge({},[System.components,System.Public]),function(name){
+            System.each(System.merge({},[System.components,System.Public(System)]),function(name){
                 if(!(name in System)){System[name] = this;}
             });
             System.routeAutoRun = System.isset(System.routeAutoRun) && System.isBoolean(System.routeAutoRun) ? System.routeAutoRun : true;
@@ -426,6 +426,7 @@
                 {'name': 'Base', 'path': classPath+'/base/Base.class.js'},
                 {'name': 'Object', 'path': classPath+'/base/Object.class.js'},
                 {'name': 'Component', 'path': classPath+'/base/Component.class.js'},
+                {'name': 'Error', 'path': classPath+'/base/Error.class.js'},
                 {'name': 'Md5', 'path': classPath+'/base/Md5.class.js'},
                 {'name': 'Base64', 'path': classPath+'/base/Base64.class.js'},
                 {'name': 'Compiler', 'path': classPath+'/base/Compiler.class.js'},
@@ -1010,10 +1011,10 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2015-10-13
-         * 修改日期：2016-8-23
+         * 修改日期：2022-4-20
          * 名称：clone
          * 功能：对象克隆
-         * 说明：_hashCode里的'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
+         * 说明：_hashCode里的'::'代表是从别的对象克隆来的，如果'::'前面的字符相同就说明俩对象是克隆关系
          * 注意：
          * @param   (Boolean)deep  		   	   NULL :是否要深度拷贝对象
          * @param   (Object)className 		NO NULL : 要克隆的类
@@ -1026,10 +1027,12 @@
                 deep = className;
                 className = arguments[1];
             }
-            var obj;
+            var obj = null;
             obj = System.merge(deep,System.createDict(),[className]);
             if(obj['_hashCode']){
-                obj['_hashCode'] += '_'+System.Object.generate();
+                obj['_hashCode'] += '::'+System.Object.generate();
+            } else {
+            	obj['_hashCode'] = System.Object.generate();
             }
             return obj;
 
@@ -1039,7 +1042,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-7-15
-         * 修改日期：2016-8-23
+         * 修改日期：2022-4-20
          * 名称：isclone
          * 功能：检查对象是否是克隆对象
          * 说明：'_'代表是从别的对象克隆来的，如果'_'前面的字符相同就说明俩对象是克隆关系
@@ -1049,7 +1052,7 @@
          */
         'isclone': function(obj) {
         	if(!obj._hashCode) return false;
-            if(-1 === obj._hashCode.indexOf('_')){
+            if(-1 === obj._hashCode.indexOf('::')){
                 return false;
             }else{
                 return true;
@@ -1061,7 +1064,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-4
-         * 修改日期：2019-7-4
+         * 修改日期：2022-4-20
          * 名称：isRelClone
          * 功能：检查俩对象是否是克隆关系
          * 说明：
@@ -1074,8 +1077,8 @@
         'isRelClone': function(obj1,obj2,n) {
         	n = n || 0;
         	if(obj1._hashCode && obj2._hashCode) {
-        		var arr1 = obj1._hashCode.split('_');
-        		var arr2 = obj2._hashCode.split('_');
+        		var arr1 = obj1._hashCode.split('::');
+        		var arr2 = obj2._hashCode.split('::');
 
                 var hash1 = 1 === arr1.length ? arr1[0].toString() : arr1[n].toString();
                 var hash2 = 1 === arr2.length ? arr2[0].toString() : arr2[n].toString();
@@ -1087,7 +1090,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-4
-         * 修改日期：2019-7-4
+         * 修改日期：2022-4-20
          * 名称：isDirectClone
          * 功能：检查俩对象是否是直接克隆关系
          * 说明：
@@ -1097,16 +1100,10 @@
          * @returns {boolean}
          */
 		'isDirectClone':function(origin,cloned){
-        	if(System.isRelClone(origin,cloned)){
-                var ori_arr = origin._hashCode.split('_');
-                var clo_arr = cloned._hashCode.split('_');
-                var len = clo_arr.length;
-        		if(1 === (clo_arr.length - ori_arr.length)){
-        			if(clo_arr[len-2] === ori_arr[len-2]) return true;
-				}
-
-			}
-        	return false;
+			var ori_arr = origin._hashCode.split('::');
+            var clo_arr = cloned._hashCode.split('::');
+            var len = clo_arr.length;
+        	return ((1 === (clo_arr.length - ori_arr.length)) && (clo_arr[len-2] === ori_arr[len-2]));
 		},
 		/**
 		 * @author: lhh
@@ -1617,33 +1614,18 @@
 			ar[2] = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 			ar[3] = code && System.isString(code) && code.split('') || [];
 			ar[4] = "~!@#$%^&*()_+{}<>?:|=";
-			ar = ar[0].merge(ar[1]).merge(ar[2]).merge(ar[3]).merge(ar[4].split(''));
-			var hs = [];
-			var hl = hashLength;
+			ar[5] = System.timestamp().toString();
+			ar = ar[0].merge(ar[1]).merge(ar[2]).merge(ar[3]).merge(ar[4].split('')).merge(ar[5].split(''));
+			var arr = [];
 			var al = ar.length;
-			for (var i = 0; i < hl; i ++) {
-				hs.push(ar[Math.floor(Math.random() * al)]);
+			for (var i = 0; i < hashLength; i ++) {
+				arr.push(ar[Math.floor(Math.random() * al)]);
 			}
 
-			return System.Md5.md5(hs.join('')).replace(/[_\s]/g,'');
+			return System.Md5.md5(arr.join('')).replace(/[_\s]/g,'');
 		},
-		'uniqid':function (code,hashLength) {
-            code = code || null;
-            hashLength = Number(hashLength);
-            if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) {hashLength =  13;}
-            var ar = [];
-            ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-            ar[1] = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-            ar[3] = code && System.isString(code) && code.split('') || [];
-            ar = ar[0].merge(ar[1]).merge(ar[3]);
-            var hs = [];
-            var hl = hashLength;
-            var al = ar.length;
-            for (var i = 0; i < hl; i ++) {
-                hs.push(ar[Math.floor(Math.random() * al)]);
-            }
-
-            return hs.join('').replace(/[_\s]/g,'');
+		'uniqid':function (hashLength) {
+            return this.hash(System.timestamp(), hashLength);
         },
 
         /**
