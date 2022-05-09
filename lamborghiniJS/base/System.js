@@ -1625,7 +1625,7 @@
 			return System.Md5.md5(arr.join('')).replace(/[_\s]/g,'');
 		},
 		'uniqid':function (hashLength) {
-            return this.hash(System.timestamp(), hashLength);
+            return this.hash(System.timestamp().toString(), hashLength);
         },
 
         /**
