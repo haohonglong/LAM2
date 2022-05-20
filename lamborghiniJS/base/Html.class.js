@@ -55,8 +55,8 @@
 
 	var temp = new System.Template();
     function ajax_success_callback(data, textStatus, jqXHR) {
-        temp.datas      = this.tpData;
-        temp.delimiters = this.delimiters;
+        temp.setData(this.tpData);
+        temp.setDelimiters(this.delimiters);
         data = temp.parse(data);
 
         if(System.isFunction(this.capture)){data = this.capture(data);}

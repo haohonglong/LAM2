@@ -69,6 +69,8 @@
 		},
 		'_className':'Template',
 		'create':function(){},
+        'setDelimiters': function(delimiters){ this.delimiters = delimiters; },
+        'setData': function(data) { this.datas = data; },
 		/**
 		 *
 		 * @author: lhh
