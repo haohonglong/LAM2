@@ -520,7 +520,7 @@
          * 修改日期：2022-5-23
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
-         * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖数据，第二个true代表覆盖内容，它们默认都是false(两者覆盖操作都不执行)。
+         * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
 		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：标签名大小写！！！
          * usage：<#Block:begin id="xxx" [override="true:true]"] [data="{}"] [func="function(){}"]> ... <#Block:end>
@@ -561,8 +561,8 @@
                         }else{
                             if(override){
                                 var overrides = override.split(':');
-                                var isdata = System.eval(overrides[0]) || false;
-                                var iscontent = System.eval(overrides[1]) || false;
+                                var iscontent = System.eval(overrides[0]) || false;
+                                var isdata = System.eval(overrides[1]) || false;
                                 if(isdata || iscontent){
                                     var json = this.get(index);
                                     if(isdata) json.data = data.data; // 只覆盖数据
