@@ -1273,8 +1273,8 @@
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />
     同layout指令一样
   #### block ： 
-  ######  <#(beginBlock|Block:begin) id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#(endBlock|Block:end)> 由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
-  ######  type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
+  #####  <#Block:begin id="xxx" [override="true:true]"] [data="{}"] [func="function(){}"]> ... <#Block:end> 预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
+  ######  override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖数据，第二个true代表覆盖内容，它们默认都是false(两者覆盖操作都不执行)。
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  Template.getBlock(id,{})方法会根据id 返回对应的block内容 。

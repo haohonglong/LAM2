@@ -96,8 +96,8 @@
                 var error = new System.Error(e,
                  "解析变量 " + vars + "发生错误",
                   FILEPATH, 98);
-                throw new Error(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new Error(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
             }
 
 
@@ -174,8 +174,8 @@
             var error = new System.Error(e,
                  "在block中解析模版标签 " + S + "发生错误",
                   FILEPATH, 170);
-                throw new Error(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new Error(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
         }
     };
     var compiler = null;

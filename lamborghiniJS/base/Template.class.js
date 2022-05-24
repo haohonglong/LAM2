@@ -105,8 +105,8 @@
                 var error = new System.Error(e,
                  "render指定渲染视图页面路径: " + path, 
                  FILEPATH, 104);
-                throw new Error(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new Error(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
 			}
 
 		},
@@ -131,8 +131,8 @@
                 var error = new System.Error(e,
                  "analysisVar 解析变量 " + vars + "错误",
                  FILEPATH, 128);
-                throw new EvalError(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new EvalError(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
 			}
 
 
@@ -225,8 +225,8 @@
                 var error = new System.Error(e,
                  "查找模版标签 " + S + "错误",
                   FILEPATH, 220);
-                throw new Error(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new Error(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
             }
 
 
@@ -340,7 +340,8 @@
                                     var error = new System.Error(e,
                                          "解析变量" + v + "发生错误 " + arr_inc[0], 
                                          FILEPATH, 335);
-                                    throw new EvalError(error.getMessage());
+                                    // throw new EvalError(error.getMessage());
+                                    System.View.ERROR_404(404, error.getMessage());
                                 }
 
                         }
@@ -356,8 +357,8 @@
                     var error = new System.Error(e,
                      "layout " + S + "错误 " + arr_inc[0], 
                      FILEPATH, 346);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
 			}
@@ -394,8 +395,8 @@
                     var error = new System.Error(e,
                      "预处理指令define 错误: " + arr_inc[0], 
                      FILEPATH, 394);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -430,8 +431,8 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Escape:begin--><!--Escape:end-->\" 错误: " + arr_inc[0], 
                      FILEPATH, 416);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -461,8 +462,8 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Del:begin--><!--Del:end-->\" 错误: " + arr_inc[0],
                       FILEPATH, 446);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -494,8 +495,8 @@
                 var error = new System.Error(e,
                  "block_uniqid 生成唯一blockId 错误: ",
                   FILEPATH, 478);
-                throw new Error(error.getMessage());
-                // System.View.ERROR_404(404, error.getMessage());
+                // throw new Error(error.getMessage());
+                System.View.ERROR_404(404, error.getMessage());
             }
 
         },
@@ -516,20 +517,20 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2020-4-15
+         * 修改日期：2022-5-23
          * 名称：setBlock
-         * 功能：预处理 类似yii2 的 beginBlock，由一个唯一标识符定义block，可以继承使用（在block定义中调用<#=block id="xxx" />）,
-         * 说明：type="override" 这个可选属性代表block id 发生冲突时会覆盖之前的block存储的内容,:true意思是现在的默认数据覆盖之前已存存储的，默认是false。之前与现在发生冲突时（无override值），默认现在是被忽略的
+         * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
+         * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖数据，第二个true代表覆盖内容，它们默认都是false(两者覆盖操作都不执行)。
 		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：标签名大小写！！！
-         * usage：<#(beginBlock|Block:begin) id="xxx" [type="override[:true]"] [data="{}"] [func="function(){}"]> ... <#(endBlock|Block:end)>
+         * usage：<#Block:begin id="xxx" [override="true:true]"] [data="{}"] [func="function(){}"]> ... <#Block:end>
          * @param S
          * @returns {String}
          */
         'setBlock':function (S) {
             var reg_inc = this.set_block_reg;
             var arr_inc = [];
-            var id = "",content="",k="",v="",type="",data ={};
+            var id = "",content="",k="",v="",override="",data ={};
             var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	try{
@@ -547,36 +548,31 @@
                     data.data    = System.eval(data.data) || null;
                     data.func    = System.eval(data.func) || null;
                     id    = data.id;
-                    type  = data.type || null;
+                    override  = data.override || null;
 
                     content = arr_inc[4];
                     content = this.getBlock(content);
                     content = this.escape(content);
-
-
                     data.content = content;
 
                     this.cache.find('id',id,function (index,id) {
                         if(-1 === index){
                             this.add(data);
                         }else{
-                            if(type){
-                                var override = type.split(':');
-                                override[1] = System.eval(override[1]);
-                                override[1] = System.isBoolean(override[1]) || 1 === override[1] ? override[1] : false;
-                                if('override' === override[0]){
+                            if(override){
+                                var overrides = override.split(':');
+                                var isdata = System.eval(overrides[0]) || false;
+                                var iscontent = System.eval(overrides[1]) || false;
+                                if(isdata || iscontent){
                                     var json = this.get(index);
-                                    if(json.data && System.isPlainObject(json.data) || data.data && System.isPlainObject(data.data)){
-                                        if(override[1]){
-                                            data.data = System.merge(data.data,[json.data]);
-                                        }else{
-                                            data.data = System.merge(json.data,[data.data]);
-                                        }
-                                    }
-
-                                    this.update(index,data);
+                                    if(isdata) json.data = data.data; // 只覆盖数据
+                                    if(iscontent) json.content = data.content; // 只覆盖内容
+                                    json.override = data.override;
+                                    this.update(index,json);
                                 }
+
                             }
+                            
 
                         }
                         if(System.isFunction(data.func)){
@@ -589,8 +585,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#Block:begin id=\"xxx\"> ... <#Block:end> 错误: " + arr_inc[0],
                       FILEPATH, 572);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
 
                 }
 
@@ -629,8 +625,8 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Script:begin--><!--Script:end-->\" 错误:\n\r" + arr_inc[0],
                       FILEPATH, 611);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -701,8 +697,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#=block id=\"xx\" /> 错误: " + arr_inc[0],
                       FILEPATH, 682);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -736,8 +732,8 @@
                     var error = new System.Error(e,
                      "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
                       FILEPATH, 736);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -850,8 +846,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#import path=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 829);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
                 }
 
             }
@@ -917,8 +913,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#include file=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 895);
-                    throw new Error(error.getMessage());
-                    // System.View.ERROR_404(404, error.getMessage());
+                    // throw new Error(error.getMessage());
+                    System.View.ERROR_404(404, error.getMessage());
 				}
 
             }
@@ -964,6 +960,7 @@
 		 */
 		'afterParse':function (s) {
             s = this.setBlock(s);
+            s = this.getBlock(s);
             return s;
         },
 		'parse':function (s) {
@@ -1148,8 +1145,8 @@
             var error = new System.Error(e,
                  "Template.getBlock 根据id获取对应的block内容错误: ",
               FILEPATH, 1125);
-            throw new Error(error.getMessage());
-            // System.View.ERROR_404(404, error.getMessage());
+            // throw new Error(error.getMessage());
+            System.View.ERROR_404(404, error.getMessage());
         }
     };
 
