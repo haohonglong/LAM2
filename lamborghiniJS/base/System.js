@@ -362,7 +362,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2020-3-17
+		 * 修改日期：2022-5-27
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -376,7 +376,7 @@
             return runtime.apply(this,[args,callback]);
 		},
 		'init':function (Config) {
-			System.Config = Config || System.Config;
+			System.Config = Config || System.isFunction(System.configure) ? System.configure.call(System, System) : (System.isset(System.Config) && System.Config);
             System.Config.files = System.Config.files || [];
             System.classPath  = System.Config.getClassPath();
             System.configure_cache = System.Config.configure_cache || System.createDict();
@@ -402,7 +402,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2020-3-16
-		 * 修改日期：2020-3-16
+		 * 修改日期：2022-5-28
 		 * 名称：System.autoload
 		 * 功能：加载基础类
 		 * 说明：
@@ -451,8 +451,8 @@
 				if (srcs.length) {
 					for (var i = 0, len = jses.length; i < len; i++) {
 						for (var j = i; j < srcs.length; j++) {
-							if (srcs[j].name === jses[i].name) { // 同名时优先用配置文件覆盖默认的
-								jses[i] = srcs[j];
+							if ((srcs[j].name === jses[i].name) || (srcs[j].path === jses[i].path)) { // 同名时优先用配置文件覆盖默认的
+								if((srcs[j].name === jses[i].name) && (srcs[j].path !== jses[i].path)) jses[i].path = srcs[j].path;
 								srcs.removeAt(j);
 								break;
 							}
