@@ -517,7 +517,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-5-23
+         * 修改日期：2022-6-1
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
@@ -530,7 +530,7 @@
         'setBlock':function (S) {
             var reg_inc = this.set_block_reg;
             var arr_inc = [];
-            var id = "",content="",k="",v="",override="",data ={};
+            var id = "",content="",k="",v="",override="", data ={};
             var __this = this;
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	try{
@@ -549,11 +549,12 @@
                     data.func    = System.eval(data.func) || null;
                     id    = data.id;
                     override  = data.override || null;
+                    
 
                     content = arr_inc[4];
                     content = this.getBlock(content);
                     content = this.escape(content);
-                    data.content = content;
+                    data.content = System.Base64.encode(content);
 
                     this.cache.find('id',id,function (index,id) {
                         if(-1 === index){
@@ -563,11 +564,16 @@
                                 var overrides = override.split(':');
                                 var iscontent = System.eval(overrides[0]) || false;
                                 var isdata = System.eval(overrides[1]) || false;
+
                                 if(isdata || iscontent){
                                     var json = this.get(index);
-                                    if(isdata) json.data = data.data; // 只覆盖数据
+                                    var deep  = data.deep && System.eval(data.deep) || false;
+                                    
+                                    if(isdata) json.data = System.merge(deep, data.data, [json.data]); // 只覆盖数据
                                     if(iscontent) json.content = data.content; // 只覆盖内容
-                                    json.override = data.override;
+
+                                    json.override = override;
+                                    json.deep = deep;
                                     this.update(index,json);
                                 }
 
@@ -637,7 +643,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2020-6-25
+         * 修改日期：2022-5-31
          * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
@@ -673,6 +679,7 @@
                         }else{
                             var json = this.get(index);
                             content  = json.content;
+                            content = System.Base64.decode(content);
 
                             if(type && !System.LAM_DEBUG && "remove" === type){//删除cache中随机生产block id 的数据
                                 this.remove(index);
@@ -1111,7 +1118,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2020-4-13
-     * 修改日期：2020-4-13
+     * 修改日期：2022-5-31
      * 名称：Template.getBlock
      * 功能：根据id 返回对应的block内容
      * 说明：
@@ -1129,6 +1136,7 @@
                 if(index !== -1){
                     var json = this.get(index);
                     content  = json.content;
+                    content = System.Base64.decode(content);
 
                     if(json.data && System.isPlainObject(json.data) || data && System.isPlainObject(data)){
                         data = System.merge(data,[json.data]);
