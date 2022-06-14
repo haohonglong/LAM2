@@ -31,6 +31,7 @@
     var sAttribute   = System.Config.render.default.script.Attribute,
         cAttribute = System.Config.render.default.css.Attribute,
         Cache = null;
+
     function getCache(name){
         if(!Cache){
         	try{
@@ -44,6 +45,7 @@
                         ,System.configure_cache.type || sessionStorage
 						,System.configure_cache.expires || 0);
                 }
+                
 			}catch (e){
                 throw e;
             }
@@ -52,6 +54,8 @@
         }
         return Cache;
     }
+
+
 
 	var temp = new System.Template();
     function ajax_success_callback(data, textStatus, jqXHR) {
@@ -161,11 +165,11 @@
                         	cache.add({
 			                    "path":url.trim(),
 			                    "type":System.isJsFile(url) ? 'js' : '',
-			                    "content":data
+			                    "content": System.Base64.encode(data)
 			                });
                         });
                     }else{
-                        ajax_success_callback.call(_this, this.get(index).content, null, null);
+                        ajax_success_callback.call(_this, System.Base64.decode(this.get(index).content), null, null);
                     }
                 });
             }
@@ -656,6 +660,8 @@
 				return String.fromCharCode(parseInt($1, 10));
             })
 	};
+
+	Html.getCache = function(){ return Cache; };
 
 	System.getFile = Html.getFile;
 
