@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2020-5-27
+ * 修改日期:2022-6-22
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -37,6 +37,12 @@
     },1);
 
     var FILEPATH = System.classPath+'/base/Template.class.js';
+
+    function setErrorMessage(message) {
+        // throw new Error(message);
+        console.error(message);
+        System.View.ERROR_404(404, message);
+    }
 
 
 	var __this__=null;
@@ -76,7 +82,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-10
-		 * 修改日期：2020-5-8
+		 * 修改日期：2022-6-22
 		 * 名称：render
 		 * 功能：
 		 * 说明：
@@ -105,8 +111,7 @@
                 var error = new System.Error(e,
                  "render指定渲染视图页面路径: " + path, 
                  FILEPATH, 104);
-                // throw new Error(error.getMessage());
-                System.View.ERROR_404(404, error.getMessage());
+                setErrorMessage(error.getMessage());
 			}
 
 		},
@@ -116,7 +121,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-03-8
-         * 修改日期：2022-04-20
+         * 修改日期：2022-6-22
          * 名称：analysisVar
          * 功能：解析变量
          * 说明：
@@ -131,8 +136,7 @@
                 var error = new System.Error(e,
                  "analysisVar 解析变量 " + vars + "错误",
                  FILEPATH, 128);
-                // throw new EvalError(error.getMessage());
-                System.View.ERROR_404(404, error.getMessage());
+                setErrorMessage(error.getMessage());
 			}
 
 
@@ -184,7 +188,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-9
-		 * 修改日期：2017-3-3
+		 * 修改日期：2022-6-22
 		 * 名称：findTpl
 		 * 功能：查找模版标签
 		 * 说明：
@@ -225,8 +229,7 @@
                 var error = new System.Error(e,
                  "查找模版标签 " + S + "错误",
                   FILEPATH, 220);
-                // throw new Error(error.getMessage());
-                System.View.ERROR_404(404, error.getMessage());
+                setErrorMessage(error.getMessage());
             }
 
 
@@ -309,7 +312,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
-         * 修改日期：2020-2-05
+         * 修改日期：2022-6-22
 		 * 名称：layout
 		 * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
 		 * 说明：
@@ -340,8 +343,7 @@
                                     var error = new System.Error(e,
                                          "解析变量" + v + "发生错误 " + arr_inc[0], 
                                          FILEPATH, 335);
-                                    // throw new EvalError(error.getMessage());
-                                    System.View.ERROR_404(404, error.getMessage());
+                                    setErrorMessage(error.getMessage());
                                 }
 
                         }
@@ -357,8 +359,7 @@
                     var error = new System.Error(e,
                      "layout " + S + "错误 " + arr_inc[0], 
                      FILEPATH, 346);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
 			}
@@ -368,7 +369,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-3-13
-         * 修改日期：2022-4-20
+         * 修改日期：2022-6-22
          * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
@@ -395,8 +396,7 @@
                     var error = new System.Error(e,
                      "预处理指令define 错误: " + arr_inc[0], 
                      FILEPATH, 394);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -406,7 +406,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-02-12
-         * 修改日期：2020-05-18
+         * 修改日期：2022-6-22
          * 名称：escape
          * 功能：指定哪一段代码在block区块内会被模版解析器忽略
          * 说明：
@@ -431,8 +431,7 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Escape:begin--><!--Escape:end-->\" 错误: " + arr_inc[0], 
                      FILEPATH, 416);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -442,7 +441,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-05-27
-         * 修改日期：2020-05-27
+         * 修改日期：2022-6-22
          * 名称：empty
          * 功能：清空指定的字符串
          * 说明：
@@ -462,8 +461,7 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Del:begin--><!--Del:end-->\" 错误: " + arr_inc[0],
                       FILEPATH, 446);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -474,7 +472,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-05-18
-         * 修改日期：2020-05-18
+         * 修改日期：2022-6-22
          * 名称：block_uniqid
          * 功能：the block_uniqid generated and saved then returned the block id
          * 说明：
@@ -495,8 +493,7 @@
                 var error = new System.Error(e,
                  "block_uniqid 生成唯一blockId 错误: ",
                   FILEPATH, 478);
-                // throw new Error(error.getMessage());
-                System.View.ERROR_404(404, error.getMessage());
+                setErrorMessage(error.getMessage());
             }
 
         },
@@ -517,7 +514,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-6-1
+         * 修改日期：2022-6-22
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
@@ -591,8 +588,7 @@
                     var error = new System.Error(e,
                      "预处理指令 <#Block:begin id=\"xxx\"> ... <#Block:end> 错误: " + arr_inc[0],
                       FILEPATH, 572);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
 
                 }
 
@@ -603,7 +599,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-5-27
-         * 修改日期：2020-5-27
+         * 修改日期：2022-6-22
          * 名称：exec_script
          * 功能：在预处理指令加载时执行javascript代码
          * 说明：例如：block 中是调用不到当前页面的script标签中的脚本，因为预处理执行时间比script标签中的脚本早，解决方法有两种：
@@ -631,8 +627,7 @@
                     var error = new System.Error(e,
                      "预处理指令\"<!--Script:begin--><!--Script:end-->\" 错误:\n\r" + arr_inc[0],
                       FILEPATH, 611);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -643,7 +638,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2022-5-31
+         * 修改日期：2022-6-22
          * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
@@ -704,8 +699,7 @@
                     var error = new System.Error(e,
                      "预处理指令 <#=block id=\"xx\" /> 错误: " + arr_inc[0],
                       FILEPATH, 682);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -715,7 +709,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-25
-         * 修改日期：2020-2-05
+         * 修改日期：2022-6-22
          * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
@@ -739,8 +733,8 @@
                     var error = new System.Error(e,
                      "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
                       FILEPATH, 736);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -751,7 +745,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2020-5-30
+         * 修改日期：2022-6-22
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割,首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
@@ -853,8 +847,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#import path=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 829);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+                    
+                    setErrorMessage(error.getMessage());
                 }
 
             }
@@ -865,7 +859,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2020-5-19
+         * 修改日期：2022-6-22
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -920,8 +914,8 @@
                     var error = new System.Error(e,
                      "预处理指令 <#include file=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 895);
-                    // throw new Error(error.getMessage());
-                    System.View.ERROR_404(404, error.getMessage());
+
+                    setErrorMessage(error.getMessage());
 				}
 
             }
@@ -1118,7 +1112,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2020-4-13
-     * 修改日期：2022-5-31
+     * 修改日期：2022-6-22
      * 名称：Template.getBlock
      * 功能：根据id 返回对应的block内容
      * 说明：
@@ -1153,8 +1147,8 @@
             var error = new System.Error(e,
                  "Template.getBlock 根据id获取对应的block内容错误: ",
               FILEPATH, 1125);
-            // throw new Error(error.getMessage());
-            System.View.ERROR_404(404, error.getMessage());
+            
+            setErrorMessage(error.getMessage());
         }
     };
 
