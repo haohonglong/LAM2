@@ -551,7 +551,6 @@
                     
 
                     content = arr_inc[4];
-                    content = this.include(content);
                     content = this.escape(content);
                     data.content = System.Base64.encode(content);
 
@@ -946,8 +945,9 @@
             s = this.empty(s);
             s = this.import(s);
             s = this.exec_script(s);
-            s = this.setBlock(s);
+            
             s = this.include(s);
+            s = this.setBlock(s);
             return s;
         },
         /**
