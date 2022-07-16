@@ -514,7 +514,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-7-11
+         * 修改日期：2022-7-16
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
@@ -551,7 +551,7 @@
                     
 
                     content = arr_inc[4];
-                    content = this.getBlock(content);
+                    content = this.include(content);
                     content = this.escape(content);
                     data.content = System.Base64.encode(content);
 
@@ -929,7 +929,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2020-5-27
+         * 修改日期：2022-7-16
          * 名称：beforParse
          * 功能：
          * 说明：
@@ -946,6 +946,7 @@
             s = this.empty(s);
             s = this.import(s);
             s = this.exec_script(s);
+            s = this.setBlock(s);
             s = this.include(s);
             return s;
         },
@@ -953,7 +954,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-07
-         * 修改日期：2020-5-15
+         * 修改日期：2022-7-16
          * 名称：afterParse
          * 功能：
          * 说明：
@@ -963,8 +964,6 @@
          * @returns {*|String}
 		 */
 		'afterParse':function (s) {
-            s = this.setBlock(s);
-            s = this.getBlock(s);
             return s;
         },
 		'parse':function (s) {
@@ -1115,7 +1114,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2020-4-13
-     * 修改日期：2022-6-22
+     * 修改日期：2022-7-16
      * 名称：Template.getBlock
      * 功能：根据id 返回对应的block内容
      * 说明：
@@ -1131,15 +1130,16 @@
         try{
             cache.find('id',id,function (index) {
                 if(index !== -1){
+                    var template = new System.Template();
                     var json = this.get(index);
                     content  = json.content;
                     content = System.Base64.decode(content);
+                    content = template.getBlock(content);
 
                     if(json.data && System.isPlainObject(json.data) || data && System.isPlainObject(data)){
                         data = System.merge(data,[json.data]);
                     }
                     if(System.isPlainObject(data)){
-                        // content = Template.compile(content,data);
                         content = System.Compiler.jQCompile(content,data);
                     }
                 }
