@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2019-06-19
+ * 修改日期:202-08-14
  * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -36,7 +36,7 @@
             init = init || {};
             this.layout = 'main';
             this.suffix = '.html';
-            this.layoutPath = 'layouts';
+            this.layoutPath = System.LAYOUTS;
             this.viewpath = System.VIEWS;
             this.ajaxConfig = null;
             this.title = 'title';
@@ -60,7 +60,7 @@
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2018-9-12
-         * 修改日期：2019-06-18
+         * 修改日期：2022-08-14
          * 名称：render
          * 功能：render the page
          * 说明：返回视图
@@ -72,15 +72,13 @@
          * @returns {string}
          */
         'render':function (name,data,ajaxConfig,callback) {
-            var content = this.renderPartial(name,data,ajaxConfig);
-            this.viewpath = System.VIEWS;
-            return this.renderContent(content,callback);
+            return this.renderContent(this.renderPartial(name,data,ajaxConfig),callback);
         },
         /**
          * @author lhh
          * 产品介绍：渲染视图与layout
          * 创建日期：2019-06-18
-         * 修改日期：2019-10-06
+         * 修改日期：2022-8-14
          * 名称：renderContent
          * 功能：
          * 说明：返回视图
@@ -98,9 +96,10 @@
                 this.suffix  = obj.suffix  || this.suffix;
                 this.layout  = obj.name    || this.layout;
                 System.isPlainObject(obj.data) && System.merge(true,this.content,[obj.data],true);
-                this.layoutPath = (obj.path && this.layoutPath+'/'+obj.path) || this.layoutPath;
+                this.layoutPath = obj.path || this.layoutPath;
             }
-            return this.renderPartial('/'+this.layoutPath+'/'+this.layout,{
+            this.viewpath = this.layoutPath;
+            return this.renderPartial('/'+this.layout,{
                 'VIEWS':System.VIEWS,
                 'IMAGE':System.IMAGE,
                 'LAM':System,

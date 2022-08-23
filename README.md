@@ -3,7 +3,7 @@
 	version ：v2.1.6
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2022-7-11
+	修改日期 ：2022-8-22
 
 
 # 产品介绍：
@@ -1274,19 +1274,15 @@
     同layout指令一样
   #### block ： 
   #####  <#Block:begin id="xxx" [final="false"] [override="true:true"] [data="{}"] [func="function(){}"]> ... <#Block:end> 预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
-  ######  override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
-  ######  final="true" 使上面的override属性覆盖功能失效，默认false 允许覆盖。
+  ######  override="true:true" 遇到同名block id时而发生冲突，这个可选属性代表，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行，也就是说默认是不会强制覆盖已存在缓存区的block, 后面定义的block会被忽略)。
+  ######  final="true" 使上面的override属性覆盖功能失效，就是说这个block是无法被覆盖的，默认false 允许覆盖。
   ######  data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
   ######  <#=block id="xxx" [data="{}"] /> 预处理-根据id标识符获取之前定义的block，可以由data属性分配数据,然后打印，可以在任何地方显示N次。
   ######  Template.getBlock(id,{})方法会根据id 返回对应的block内容 。
   ######  注意：因为block内会自动执行模版解析器--模版引擎中必须注意：表达式结尾必须加分号';',相反输出语句尾部绝不能加!!!。
-  ######       这就会与js源代码发送冲突，
-  ######       为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,
-  ######       使用<!--Escape:begin--><!--Escape:end-->
-  ####         标签名称大小写敏感！！！
-       <!--Escape:begin-->
-          这区间的代码在block区块内会被模版解析器忽略(注意大小写！！！)
-       <!--Escape:end--> 
+  ######  为了防止script标签里出现的{}跟模版解析器发生冲突，不让模版解析器解析script标签里的内容,所以永远不要在block中出现script标签里的内容
+  ######  因为block是方便重复使用，而script标签里的内容不应该被重复！
+	
        
   #### delete ：清空指定的字符串 
          * usage: <!--Del:begin-->这里的内容会被清空<!--Del:end--> 
@@ -1370,55 +1366,7 @@
         </div>
         <% }%>
         
-        <!--Escape:begin-->
-        <script type="text/javascript">
-        //components-list
-            LAM.run(function() {
-                'use strict';
-                var System = this;
-                var tools = new System.Tools();
-                $(function(){
         
-                    $('.js_sectionBoxA13 a').bind('click',function(event){
-                        switch($(event.target).attr('class')){
-                            case 'i-1'	:
-                                tools.move_next_prev_first_last({
-                                    '$event'  :$(event.target),
-                                    'parent': '.sectionBox-A10',
-                                    'chose':  'first'
-                                });
-                                break;
-                            case 'i-2'	:
-                                tools.move_next_prev_first_last({
-                                    '$event'  :$(event.target),
-                                    'parent': '.sectionBox-A10',
-                                    'chose':  'prev'
-                                });
-                                break;
-                            case 'i-3':
-                                tools.move_next_prev_first_last({
-                                    '$event'  :$(event.target),
-                                    'parent': '.sectionBox-A10',
-                                    'chose':  'next'
-                                });
-                                break;
-                            case 'i-4'	:
-                                tools.move_next_prev_first_last({
-                                    '$event'  :$(event.target),
-                                    'parent': '.sectionBox-A10',
-                                    'chose':  'last'
-                                });
-                                break;
-        
-                            default:
-                                alert("Error");
-                        }
-                    });
-                });
-            });
-        
-        </script>
-        <!--Escape:end-->
         <#endBlock> 这里是定义了block结束标识符位置
         
 ##### it is usage of case that a page is load that was not via include(不通过include加载页面的用例)：   

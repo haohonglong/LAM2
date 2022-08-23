@@ -61,7 +61,7 @@
     function ajax_success_callback(data, textStatus, jqXHR) {
         temp.setData(this.tpData);
         temp.setDelimiters(this.delimiters);
-        data = temp.parse(data);
+        data = temp.parse(data).trim();
 
         if(System.isFunction(this.capture)){data = this.capture(data);}
         if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}

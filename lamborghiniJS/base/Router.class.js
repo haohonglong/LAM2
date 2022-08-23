@@ -114,11 +114,12 @@
     /**
 	 *
      * @param view
+     * @param excluded {Array}
      * @returns {*|String|string}
      */
-    function generator(view) {
-        var jses = [],css = [],head = [],
-            excluded = [], excluded_names = ["Controller", "Router"];
+    function generator(view, excluded) {
+        var jses = [],css = [],head = [], excluded_names = ["Controller", "Router"];
+        excluded = excluded || [];
 
         System.each(System.autoLoadFiles,function () {
             if (excluded_names.in_array(this.name) && !excluded.in_array(this.path)) {
@@ -166,7 +167,8 @@
         var Controller = str.substring(0,1).toUpperCase()+str.substring(1);
         var ControllerName = Controller+'Controller';
         if(System.isString(R.m)) M = R.m+'/';
-        System.import(['/'+M+ControllerName+'.class'],System.CONTROLLERS);
+        var controllerPath = '/'+M+ControllerName+'.class.js';
+        System.import([controllerPath], System.CONTROLLERS);
 
         var action = r[1]+'Action';
         var id = r[2];
@@ -183,7 +185,7 @@
                 view = (new System.Template()).getBlock(view);
                 if (System.isset(view) && System.isString(view)) {
                     //生产静态页便于输出
-                    System._content = generator(view);//there is saved the content of html that after parsed
+                    System._content = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and wants to build
                 }
                 if (System.isFunction(System.main)) {
                     view = System.main(view, controller, action, id);

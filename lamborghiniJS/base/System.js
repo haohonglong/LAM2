@@ -108,11 +108,11 @@
 		return (null != obj && obj == obj.window);
 	}
 
-    function is_instanceof_jQuery(obj){ 
-		if(obj instanceof jQuery) 
+    function is_instanceof_jQuery(obj){
+		if(obj instanceof jQuery)
 			return true;
-		 else 
-			return false; 
+		else
+			return false;
 	}
 
 
