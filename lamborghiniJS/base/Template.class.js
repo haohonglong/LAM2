@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-8-23
+ * 修改日期:2022-8-26
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -472,7 +472,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-05-18
-         * 修改日期：2022-8-23
+         * 修改日期：2022-8-26
          * 名称：block_uniqid
          * 功能：对传入的内容Base64编码后存入到缓存中，然后返回一个唯一的id, 可用这个ID找到对应在缓存中的内容。
          * 说明：
@@ -481,7 +481,9 @@
          */
         'block_uniqid':function(content){
             var data = {},id="";
-            data.content = System.Base64.encode(content.trim());
+            content = content.trim();
+            if (System.BASE64ENCODE) content = System.Base64.encode(content);
+            data.content = content;
             try{
                 do{
                     id = System.uniqid();
@@ -514,7 +516,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-8-23
+         * 修改日期：2022-8-26
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
@@ -552,7 +554,8 @@
                     content = arr_inc[4].trim();
                     content = this.getBlock(content);
                     content = this.escape(content);
-                    data.content = System.Base64.encode(content);
+                    if (System.BASE64ENCODE) content = System.Base64.encode(content);
+                    data.content = content;
 
                     this.cache.find('id',id,function (index,id) {
                         if(-1 === index){
@@ -640,7 +643,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2022-6-22
+         * 修改日期：2022-8-26
          * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
          * 说明：
@@ -676,7 +679,7 @@
                         }else{
                             var json = this.get(index);
                             content  = json.content;
-                            content = System.Base64.decode(content);
+                            if (System.BASE64ENCODE) content = System.Base64.decode(content);
 
                             if(type && !System.LAM_DEBUG && "remove" === type){//删除cache中随机生产block id 的数据
                                 this.remove(index);
@@ -1114,7 +1117,7 @@
      * @author: lhh
      * 产品介绍：
      * 创建日期：2020-4-13
-     * 修改日期：2022-7-16
+     * 修改日期：2022-8-26
      * 名称：Template.getBlock
      * 功能：根据id 返回对应的block内容
      * 说明：
@@ -1133,7 +1136,7 @@
                     var template = new System.Template();
                     var json = this.get(index);
                     content  = json.content;
-                    content = System.Base64.decode(content);
+                    if (System.BASE64ENCODE) content = System.Base64.decode(content);
                     content = template.getBlock(content);
 
                     if(json.data && System.isPlainObject(json.data) || data && System.isPlainObject(data)){
