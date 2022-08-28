@@ -516,7 +516,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-8-26
+         * 修改日期：2022-8-28
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
@@ -568,10 +568,9 @@
                                 var isdata = System.eval(overrides[1]) || false;
 
                                 if(isdata || iscontent){
-                                    
                                     var deep  = data.deep && System.eval(data.deep) || false;
                                     
-                                    if(isdata) json.data = System.merge(deep, data.data, [json.data]); // 只覆盖数据
+                                    System.merge(deep, json.data, [data.data], isdata); // 只覆盖数据
                                     if(iscontent) json.content = data.content; // 只覆盖内容
 
                                     json.override = override;
