@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2022-3-26
+ * 修改日期:2022-9-1
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -47,6 +47,23 @@
 
 })(typeof global !== 'undefined' ? global : this, function (global, namespace, undefined) {
 	'use strict';
+
+	/**
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2015-11-22
+	 * 修改日期：2022-9-1
+	 * 名称：module
+	 * 功能：模块
+	 * 说明：
+	 * 注意：
+	 * Example：
+	 */
+	function module(System){
+		System.module = System.createDict();
+		System.module.exports = System.createDict();
+	}
+
 	// Used for trimming whitespace
 	var VERSION = "v2.1.6",
 		Interface = {},
@@ -212,6 +229,9 @@
 		'Controller': {},
 		'Router': {},
 		'Model': {},
+		'module': {
+			"exports": {}
+		},
 		'Module': {},
 		'Html': {},
 		'Browser': {},
@@ -344,7 +364,7 @@
 		 * @param   action     {String}		    :方法名称
 		 * @param   id         {String}		    :id
 		 * @returns {String}   
-				 */
+		 */
 		'main': function (view, controller, action, id) { return view },
 		/**
 		 * @author: lhh
@@ -358,11 +378,12 @@
 		 * @param   (String)message 			   NULL :错误信息
 		 */
 		'exit': function (message) { throw new Error(message || 0); },
+
 		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
-		 * 修改日期：2022-5-27
+		 * 修改日期：2022-9-1
 		 * 名称：System.run
 		 * 功能：程序主方法
 		 * 说明：
@@ -372,13 +393,13 @@
 		 * @return  {*} 返回callback 里的返回值
 		 * Example：
 		 */
-		'run': function (args, callback) {
-			return runtime.apply(this, [args, callback]);
-		},
+		'run': function (args, callback) { return runtime.apply(this, [args, callback]); },
+
 		'init': function (Config) {
+			module(System);
 			System.Config = Config || System.isFunction(System.configure) ? System.configure.call(System, System) : (System.isset(System.Config) && System.Config);
 			System.Config.files = System.Config.files || [];
-			System.classPath = System.Config.getClassPath();
+			System.classPath = System.Config.getClassPath(System);
 			System.configure_cache = System.Config.configure_cache || System.createDict();
 			System.components = System.merge({}, [System.Config.components]) || System.createDict();
 			System.each(System.merge({}, [System.Config]), function (name) { System[name] = this; });
@@ -400,16 +421,16 @@
 			return this;
 		},
 		/**
- * @author: lhh
- * 产品介绍：
- * 创建日期：2020-3-16
- * 修改日期：2022-5-28
- * 名称：System.autoload
- * 功能：加载基础类
- * 说明：
- * 注意：
- * Example：
- */
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2020-3-16
+		 * 修改日期：2022-5-28
+		 * 名称：System.autoload
+		 * 功能：加载基础类
+		 * 说明：
+		 * 注意：
+		 * Example：
+		 */
 		'autoload': function () {
 			var classPath = System.classPath, tag = 'script',
 				scriptAttribute = System.Config.render.default.script.Attribute,
@@ -504,7 +525,7 @@
 		 * 说明：
 		 * 注意：
 		 * 调用方式：
- * @param Config
+     * @param Config
 		 * @returns {System}
 		 */
 		'bootstrap': function (Config) {
@@ -1149,6 +1170,48 @@
 			}
 			return this;
 		},
+		
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-10-23
+		 * 修改日期：2016-11-9
+		 * 名称：System.require
+		 * 功能：调用export的接口
+		 * 说明：
+		 * 注意：
+		 * @param {String} name
+		 * @returns {*}					:
+		 * Example：
+		 */
+		 'require':function(name){
+			if(System.module.exports[name]){
+				return System.module.exports[name];
+			}else{
+				throw new Error(['Warning: \'',name,'\' 没有定义'].join(''));
+			}
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-10-23
+		 * 修改日期：2016-10-23
+		 * 名称：System.export
+		 * 功能：设置对外提供接口
+		 * 说明：
+		 * 注意：
+		 * @param {String} name
+		 * @param {*} value
+		 * @return  (voide)						:
+		 * Example：
+		 */
+		'export':function(name,value){
+			if(System.module.exports[name]){
+				throw new Error(['Warning: \'',name,'\' 名称已经存在,请换个名字'].join(''));
+			}else{
+				System.module.exports[name] = value;
+			}
+		},
 
 		/**
 		 *
@@ -1230,18 +1293,19 @@
 			return this.isTheFile(path, 'class\\.js');
 		},
 		/**
-				 * @author: lhh
-				 * 产品介绍：
-				 * 创建日期：2022-3-9
-				 * 修改日期：2022-3-9
-				 * 名称：System.isTheFile
-				 * 功能：是指定文件的后缀名吗
-				 * 说明：
-				 * 注意：
-				 * @param   (String)url 			NO NULL :路径名称
-				 * @param   (String)suffix 			NO NULL :后缀名称
-				 * @returns {boolean}
-				 */
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2022-3-9
+		 * 修改日期：2022-3-9
+		 * 名称：System.isTheFile
+		 * 功能：是指定文件的后缀名吗
+		 * 说明：
+		 * 注意：
+		 * @param   (String)url 			NO NULL :路径名称
+		 * @param   (String)suffix 			NO NULL :后缀名称
+		 * @returns {boolean}
+		 * 
+		 */
 		"isTheFile": function (url, suffix) {
 			var n = url.indexOf('?');
 			if (n > -1) url = url.substring(0, n).trim(); // 先要抛弃问号和后面的参数
@@ -1282,19 +1346,19 @@
 		},
 
 		/**
- *
- * @author: lhh
- * 产品介绍：
- * 创建日期：2016-8-20
- * 修改日期：2018-4-9
- * 名称：System.fileExisted
- * 功能：检查系统加载器里的文件是否已加载过,class.js 是否已加载过了
- * 说明：
- * 注意：
- * @param file		NO NULL
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2016-8-20
+		 * 修改日期：2018-4-9
+		 * 名称：System.fileExisted
+		 * 功能：检查系统加载器里的文件是否已加载过,class.js 是否已加载过了
+		 * 说明：
+		 * 注意：
+		 * @param file		NO NULL
 		 * @param namespace NULL
- * @returns {boolean}
- */
+		 * @returns {boolean}
+		 */
 		'fileExisted': function (file, namespace) {
 			if (System.files.in_array(file)) {
 				return true;
@@ -1335,7 +1399,6 @@
 				return true;
 			}
 			return false;
-
 
 		},
 

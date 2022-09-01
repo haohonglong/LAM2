@@ -31,48 +31,6 @@
 		/**
 		 * @author: lhh
 		 * 产品介绍：
-		 * 创建日期：2016-10-23
-		 * 修改日期：2016-11-9
-		 * 名称：System.require
-		 * 功能：调用export的接口
-		 * 说明：
-		 * 注意：
-		 * @param {String} name
-		 * @returns {*}					:
-		 * Example：
-		 */
-		'require':function(name){
-			if(System.module.exports[name]){
-				return System.module.exports[name];
-			}else{
-				throw new Error(['Warning: \'',name,'\' 没有定义'].join(''));
-			}
-		},
-		/**
-		 * @author: lhh
-		 * 产品介绍：
-		 * 创建日期：2016-10-23
-		 * 修改日期：2016-10-23
-		 * 名称：System.export
-		 * 功能：设置对外提供接口
-		 * 说明：
-		 * 注意：
-		 * @param {String} name
-		 * @param {*} value
-		 * @return  (voide)						:
-		 * Example：
-		 */
-		'export':function(name,value){
-			if(System.module.exports[name]){
-				throw new Error(['Warning: \'',name,'\' 名称已经存在,请换个名字'].join(''));
-			}else{
-				System.module.exports[name] = value;
-			}
-		},
-
-		/**
-		 * @author: lhh
-		 * 产品介绍：
 		 * 创建日期：2015-9-15
 		 * 修改日期：2016-9-10
 		 * 名称：System.config
@@ -162,41 +120,25 @@
 			}
 			return false;
 		},
+		
 		/**
 		 * @author: lhh
 		 * 产品介绍：
-		 * 创建日期：2015-11-22
-		 * 修改日期：2018-4-11
-		 * 名称：System.module
-		 * 功能：模块
+		 * 创建日期：2020-5-30
+		 * 修改日期：2020-5-30
+		 * 名称：System.hasIgnored
+		 * 功能：检查文件第一个字符是否是'!',如果是就说明是这个被注释了，文件会被忽略
 		 * 说明：
 		 * 注意：
-		 * Example：
+		 * @param path{String}
+		 * @returns {boolean}
 		 */
-		'module':(function(){
-			var module = System.createDict();
-			module.exports = System.createDict();
-            return module;
-		}()),
-
-        /**
-         * @author: lhh
-         * 产品介绍：
-         * 创建日期：2020-5-30
-         * 修改日期：2020-5-30
-         * 名称：System.hasIgnored
-         * 功能：检查文件第一个字符是否是'!',如果是就说明是这个被注释了，文件会被忽略
-         * 说明：
-         * 注意：
-         * @param path{String}
-         * @returns {boolean}
-         */
-        'hasIgnored':function (path) {
-            if( '!' === path.trim().substring(0,1)){
-                return true;
-            }
-            return false;
-        },
+		'hasIgnored':function (path) {
+				if( '!' === path.trim().substring(0,1)){
+						return true;
+				}
+				return false;
+		},
 
 		/**
 		 *
@@ -212,24 +154,24 @@
 		 */
 		'checkout': function() {},
 
-        /**
-         * @author jQuery
-         * 产品介绍：
-         * 创建日期：2018-4-18
-         * 修改日期：2018-4-18
-         * 名称：camelCase
-         * 功能：转换横线链接单词为驼峰
-         * 说明：抄jQuery 同名方法
-         * 注意：
-         * @param   (String)string            NO NULL :
-         * @return  {String}
-         *
-         */
-        'camelCase': function( string ) {
-            return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z]|[0-9])/ig, function( all, letter ) {
-                return ( letter + "" ).toUpperCase();
-            });
-        },
+		/**
+		 * @author jQuery
+		 * 产品介绍：
+		 * 创建日期：2018-4-18
+		 * 修改日期：2018-4-18
+		 * 名称：camelCase
+		 * 功能：转换横线链接单词为驼峰
+		 * 说明：抄jQuery 同名方法
+		 * 注意：
+		 * @param   (String)string            NO NULL :
+		 * @return  {String}
+		 *
+		 */
+		'camelCase': function( string ) {
+				return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z]|[0-9])/ig, function( all, letter ) {
+						return ( letter + "" ).toUpperCase();
+				});
+		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：

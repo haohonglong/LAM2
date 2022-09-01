@@ -49,7 +49,9 @@
 	 if(!System){
 		 return;
 	 }else{
-		 System['PopupLayer'] = factory(System);
+			typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+			(System['PopupLayer'] = factory(System));
 	 }
 
  })(this,function(System){

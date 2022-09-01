@@ -20,7 +20,9 @@
 	if(!System){
 		return;
 	}else{
-		System['Tools'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+			(System['Tools'] = factory(System));
 	}
 
 })(this,function(System){

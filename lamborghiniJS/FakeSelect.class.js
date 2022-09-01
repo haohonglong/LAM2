@@ -17,7 +17,9 @@
     if(!System){
         return;
     }else{
-        System['FakeSelect'] = factory(System);
+        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+		typeof define === 'function' && define.amd ? define(factory(System)) :
+		(System['FakeSelect'] = factory(System));
     }
 
 })(this,function(System){

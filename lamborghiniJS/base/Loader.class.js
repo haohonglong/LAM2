@@ -19,13 +19,20 @@
     if(!System){
         return;
     }else{
-        var Loader = factory(System);
-        System['Cloader'] =Loader;
-        System['Loadcommon'] = System['Loader'] =new Loader();
-        System.merge(null,[{
-            'import': System.Loader.import
-            ,'loadScript': System.Loader.loadScript
-        }]);
+        if (typeof exports === 'object' && typeof module !== 'undefined') {
+            module.exports = factory(System); 
+        } else if (typeof define === 'function' && define.amd) {
+            define(factory(System));
+        } else {
+            var Loader = factory(System);
+            System['Cloader'] = Loader;
+            System['Loadcommon'] = System['Loader'] = new Loader();
+            System.merge(null,[{
+                'import': System.Loader.import
+                ,'loadScript': System.Loader.loadScript
+            }]);
+        }
+
     }
 
 })(this,function(System){

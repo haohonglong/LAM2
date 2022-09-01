@@ -5,7 +5,9 @@
 	if(!System){
 		return;
 	}else{
-		System['Roll'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+			(System['Roll'] = factory(System));
 	}
 
 })(this,function(System){

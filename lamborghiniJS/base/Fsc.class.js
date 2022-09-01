@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建文件流对象
  * 创建日期：2016-10-17
- * 修改日期：2018-1-2
+ * 修改日期：2022-8-28
  * 名称：LAMJS.Fsc
  * 功能：
  * 说明：
@@ -19,7 +19,9 @@
 	if(!System){
 		return;
 	}else{
-		System['Fsc'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+		typeof define === 'function' && define.amd ? define(factory(System)) :
+		(System['Fcs'] = factory(System));
 	}
 
 })(this,function(System){

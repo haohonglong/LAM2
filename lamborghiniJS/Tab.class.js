@@ -6,7 +6,8 @@
 		return;
 	}else{
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) : (System['Tab'] = factory(System));
+			typeof define === 'function' && define.amd ? define(factory(System)) :
+			(System['Tab'] = factory(System));
 	}
 
 })(this,function(System){

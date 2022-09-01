@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期：2016-12-8
- * 修改日期：2018-5-16
+ * 修改日期：2022-8-28
  * 名称：Cookie
  * 功能：cookie
  * 说明 :
@@ -20,8 +20,9 @@
 	if(!System){
 		return;
 	}else{
-		var Cookie = factory(System);
-		System['Cookie'] = new Cookie();
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+        typeof define === 'function' && define.amd ? define(factory(System)) :
+        System['Cookie'] = factory(System);
 	}
 
 })(this,function(System){

@@ -41,7 +41,9 @@
 	if(!System){
 		return;
 	}else{
-		System['PowerCookie'] = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
+		typeof define === 'function' && define.amd ? define(factory(System)) :
+		(System['PowerCookie'] = factory(System));
 	}
 
 })(this,function(System){
