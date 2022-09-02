@@ -1,29 +1,33 @@
 /**
  * 创建人：lhh
  * 创建日期:2018-2-1
- * 修改日期：2018-2-10
+ * 修改日期：2022-9-1
  * 名称：Base64
  * 功能：
  * 说明 :
  * note :
  */
 
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+    var System = global['LAM_20150910123700_'];
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-        typeof define === 'function' && define.amd ? define(factory(System)) :
-        (System['Base64'] = factory(System));
+        var Base64 = factory(System);
+        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Base64 :
+        typeof define === 'function' && define.amd ? define(factory) : System.Base64 = Base64;
+        System.export("System.base.Base64", Base64);
     }
 
 })(this,function(System){
     'use strict';
 
     System.is(System,'Component','Base64',System.classPath+'/base');
+    var Component = System.require("System.base.Component");
     var __this__=null;
     var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -82,8 +86,9 @@
             }
             return string;
         };
+    
 
-    var Base64 = System.Component.extend({
+    var Base64 = Component.extend({
         constructor: function (){
             this.base();
             __this__=this;

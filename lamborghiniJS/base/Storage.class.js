@@ -34,24 +34,28 @@
  * 
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Storage'] = factory(System));
+		var Storage = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Storage :
+		typeof define === 'function' && define.amd ? define(factory) : System.Storage = Storage;
+		System.export("System.base.Storage", Storage);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Cache','Storage',System.classPath+'/base');
+	var Cache = System.require("System.base.Cache");
 	var __this__=null;
 
-	var Storage = System.Cache.extend({
+	var Storage = Cache.extend({
         /**
          * @author lhh
          * 产品介绍：

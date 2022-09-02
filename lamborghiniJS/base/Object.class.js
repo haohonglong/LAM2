@@ -1,7 +1,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2019-7-1
+ * 修改日期:2022-9-1
  * 名称：Object类
  * 功能：服务于派生类生成hashCode
  * 标准 :
@@ -12,24 +12,28 @@
  *
  *
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Object'] = factory(System));
+		var Object = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Object :
+		typeof define === 'function' && define.amd ? define(factory) : System.Object = Object;
+		System.export("System.base.Object", Object);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Base','Object',System.classPath+'/base');
+	var Base = System.require("System.base.Base");
 	var __this__=null;
 
-	var Object = System.Base.extend({
+	var Object = Base.extend({
 		constructor: function() {
 			__this__=this;
 			if(!(System.app instanceof System.Object)){

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2016－6－17
- * 修改日期:2017－10－27
+ * 修改日期:2022－9－1
  * 名称：Widget
  * 功能：
  * 说明 : 小部件，
@@ -12,25 +12,29 @@
  *		
  * 
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Widget'] = factory(System));
+		var Widget = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Widget :
+		typeof define === 'function' && define.amd ? define(factory) : System.Widget = Widget;
+		System.export("System.base.Widget", Widget);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Html','Widget',System.classPath+'/base');
+	var Html = System.require("System.base.Html");
 
 	var __this__=null;
 
-	var Widget = System.Html.extend({
+	var Widget = Html.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;

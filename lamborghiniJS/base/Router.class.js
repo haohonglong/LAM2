@@ -1,18 +1,22 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Router'] = factory(System));
+		var Router = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Router :
+		typeof define === 'function' && define.amd ? define(factory) : System.Router = Router;
+		System.export("System.base.Router", Router);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
+    var Browser = System.require("System.base.Browser");
 
     var FILEPATH = System.classPath+'/base/Router.class.js';
 
@@ -22,7 +26,7 @@
     var isrun = false;
 
 	var __this__=null;
-	var Router = System.Browser.extend({
+	var Router = Browser.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;

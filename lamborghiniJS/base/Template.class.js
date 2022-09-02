@@ -12,21 +12,27 @@
  *
  *
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Template'] = factory(System));
+		var Template = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Template :
+		typeof define === 'function' && define.amd ? define(factory) : System.Template = Template;
+		System.export("System.base.Template", Template);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Template',System.classPath+'/base');
+    var Component = System.require("System.base.Component");
+    
+
     System.listen(function () {
         if(System.isFunction(System.import)){
             System.import(['/Cache.class'],System.classPath+'/base');
@@ -50,7 +56,7 @@
     var _cache = new System.Cache('block');
     var temp = null;
 
-	var Template = System.Component.extend({
+	var Template = Component.extend({
 		constructor: function(cache,compiler) {
 			this.base();
 			__this__=this;

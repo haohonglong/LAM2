@@ -11,21 +11,25 @@
  *
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Dom'] = factory(System));
+		var Dom = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Dom :
+		typeof define === 'function' && define.amd ? define(factory) : System.Dom = Dom;
+		System.export("System.base.Dom", Dom);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
+	var Browser = System.require("System.base.Browser");
 	System.merge(null,[{
             'isHTMLDocument'	: System.type("HTMLDocument"),
             'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),
@@ -96,7 +100,7 @@
 			"selector":selector
 		};
 	}
-	var Dom = System.Browser.extend({
+	var Dom = Browser.extend({
 		constructor: function(single,tag,Attr,text,comment){
 			this.base();
             if(!System.isBoolean(single)){

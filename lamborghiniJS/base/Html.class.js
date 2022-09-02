@@ -1,18 +1,24 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Html'] = factory(System));
+		var Html = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Html :
+		typeof define === 'function' && define.amd ? define(factory) : System.Html = Html;
+		System.export("System.base.Html", Html);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Html',System.classPath+'/base');
+	var Dom = System.require("System.base.Dom");
+	var Md5 = System.require("System.base.Md5");
+	var Template = System.require("System.base.Template");
 
 	var FILEPATH = System.classPath+'/base/Html.class.js';
 
@@ -57,7 +63,7 @@
 
 
 
-	var temp = new System.Template();
+	var temp = new Template();
     function ajax_success_callback(data, textStatus, jqXHR) {
         temp.setData(this.tpData);
         temp.setDelimiters(this.delimiters);
@@ -75,7 +81,7 @@
     }
 
 	var __this__=null;
-	var Html = System.Dom.extend({
+	var Html = Dom.extend({
         /**
          *
          * @author: lhh
@@ -158,7 +164,7 @@
         'get':function(){
             var _this = this,url = this.file,n = url.indexOf('?');
             if(System.isFunction(System.Cache) && System.isset(this.file)) {
-                getCache().find('id', System.Md5.md5(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index, id) {//路径一定要抛弃?带的参数,才可以md5
+                getCache().find('id', Md5.md5(n > -1 ? url.substring(0,n).trim() : url.trim()), function (index, id) {//路径一定要抛弃?带的参数,才可以md5
                     var cache = this;
                     if (-1 === index) {
                         _this.ajax(function(data){

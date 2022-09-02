@@ -1,18 +1,22 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-			(System['Tab'] = factory(System));
+		var Tab = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tab :
+		typeof define === 'function' && define.amd ? define(factory) : System.Tab = Tab;
+		System.export("System.base.Tab", Tab);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Tab',System.classPath+'/base');
+	var Dom = System.require("System.base.Dom");
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
@@ -240,7 +244,7 @@
 	 * 			(function)after    	   						:	ULL 回调
 	 *  Example：
 	 */
-	var Tab = System.Dom.extend({
+	var Tab = Dom.extend({
 		constructor: function(D) {
 			this.base();
 			var defaults ={

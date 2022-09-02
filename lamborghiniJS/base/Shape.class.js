@@ -1,21 +1,25 @@
 /**
  * 基本形
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Html5']['Shape'] = factory(System));
+		var Shape = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Shape :
+		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Shape'] = Shape;
+		System.export("System.base.Shape", Shape);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Canvas','Shape',System.classPath+'/base');
+	var Canvas = System.require("System.base.Canvas");
 
 	var __this__=null;
 
@@ -34,7 +38,7 @@
 	 * Example：
 
 	 */
-	var Shape = System.Html5.Canvas.extend({
+	var Shape = Canvas.extend({
 		constructor: function(theCanvas,init){
 			this.base(theCanvas,init);
 			__this__=this;

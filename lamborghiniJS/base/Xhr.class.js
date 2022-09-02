@@ -3,7 +3,7 @@
  * @author lhh
  * 产品介绍：创建一个XMLHTTP 对象
  * 创建日期：2016-10-17
- * 修改日期：2018-9-4
+ * 修改日期：2022-9-1
  * 名称：LAMJS.Xhr
  * 功能：
  * 说明：
@@ -11,21 +11,25 @@
  * @return  ()						:
  * Example：
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Xhr'] = factory(System));
+		var Xhr = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Xhr :
+		typeof define === 'function' && define.amd ? define(factory) : System.Xhr = Xhr;
+		System.export("System.base.Xhr", Xhr);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Xhr',System.classPath+'/base');
+	var Browser = System.require("System.base.Browser");
 	var __this__=null;
 	var allTypes = "*/".concat( "*" );
 	// Functions to create xhrs
@@ -40,7 +44,7 @@
 			return new window.ActiveXObject( "Microsoft.XMLHTTP" );
 		} catch( e ) {}
 	}
-	var Xhr = System.Browser.extend({
+	var Xhr = Browser.extend({
 		constructor: function (url,D) {
 			this.base();
 			__this__ = this;

@@ -1,20 +1,24 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['BinaryTree'] = factory(System));
+		var BinaryTree = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = BinaryTree :
+		typeof define === 'function' && define.amd ? define(factory) : System.BinaryTree = BinaryTree;
+		System.export("System.base.BinaryTree", BinaryTree);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','BinaryTree',System.classPath+'/base');
+	var Helper = System.require("System.base.Helper");
 
-	var None = System.Helper.extend({
+	var None = Helper.extend({
 		constructor: function (root) {
 			this.base();
 			this.root = root;

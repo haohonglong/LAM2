@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-2-28
+ * 修改日期:2022-9-1
  * 名称：浏览器兼容类
  * 功能：服务于基于jQuery 的类
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -13,21 +13,25 @@
  * 
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Browser'] = factory(System));
+		var Browser = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Browser :
+		typeof define === 'function' && define.amd ? define(factory) : System.Browser = Browser;
+		System.export("System.base.Browser", Browser);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Browser',System.classPath+'/base');
+	var Helper = System.require("System.base.Helper");
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
 		var __this__=null,
 			isOpera = System.type("Opera");
@@ -92,7 +96,7 @@
 				return 0;
 			}
 		};
-		var Browser = System.Helper.extend({
+		var Browser = Helper.extend({
 			constructor: function() {
 				this.base();
 				__this__=this;

@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014-9-9
- * 修改日期：2020-2-3
+ * 修改日期：2022-9-1
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -13,31 +13,33 @@
  *
  */
 
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+    var System = global['LAM_20150910123700_'];
     if(!System){
         return;
     }else{
-        if (typeof exports === 'object' && typeof module !== 'undefined') {
-            module.exports = factory(System); 
-        } else if (typeof define === 'function' && define.amd) {
-            define(factory(System));
-        } else {
-            var Loader = factory(System);
-            System['Cloader'] = Loader;
-            System['Loadcommon'] = System['Loader'] = new Loader();
-            System.merge(null,[{
-                'import': System.Loader.import
-                ,'loadScript': System.Loader.loadScript
-            }]);
-        }
+        var Loader = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Loader :
+		typeof define === 'function' && define.amd ? define(factory) : System.Cloader = Loader;
+		System.export("System.base.Loader", Loader);
+
+        System['Loadcommon'] = System['Loader'] = new Loader();
+        System.merge(null,[{
+            'import': System.Loader.import
+            ,'loadScript': System.Loader.loadScript
+        }]);
+        System.export("System.base.import", System.Loader.import);
+        System.export("System.base.loadScript", System.Loader.loadScript);
 
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Html','Loader',System.classPath+'/base');
+    var Html = System.require("System.base.Html");
     var html,head,body,meta,script,link;
     var create;
     var sAttribute   = System.Config.render.default.script.Attribute;
@@ -62,7 +64,7 @@
     }
     var __this__=null;
     var files = [];
-    var Loader = System.Html.extend({
+    var Loader = Html.extend({
         constructor: function(Config){
             this.base();
             __this__ = this;

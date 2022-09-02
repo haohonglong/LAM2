@@ -12,24 +12,28 @@
  * Example：
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Fcs'] = factory(System));
+		var Fsc = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Fsc :
+		typeof define === 'function' && define.amd ? define(factory) : System.Fsc = Fsc;
+		System.export("System.base.Fsc", Fsc);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Xhr','Fsc',System.classPath+'/base');
+	var Xhr = System.require("System.base.Xhr");
 
 	var __this__=null;
-	var Fsc = System.Xhr.extend({
+	var Fsc = Xhr.extend({
 		constructor: function (url,D){
 			this.base(url,D);
 			__this__=this;

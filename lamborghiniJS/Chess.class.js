@@ -1,21 +1,25 @@
 /**
  * 棋盘
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Html5']['Chess'] = factory(System));
+		var Chess = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Chess :
+		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Chess'] = Chess;
+		System.export("System.Html5.Chess", Chess);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Chess',System.classPath+'/base');
+	var Shape = System.require("System.base.Shape");
 	var __this__=null;
 	//棋盘行列数
 	var num = 15;
@@ -27,7 +31,7 @@
 	//赢法数组
 	var wins=[];
 
-	var Chess = System.Html5.Shape.extend({
+	var Chess = Shape.extend({
 		constructor: function(dom,n){
 			this.base(dom);
 			__this__=this;

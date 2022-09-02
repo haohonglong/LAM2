@@ -1,18 +1,22 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['AutoLayout'] = factory(System));
+		var AutoLayout = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = AutoLayout :
+		typeof define === 'function' && define.amd ? define(factory) : System.AutoLayout = AutoLayout;
+		System.export("System.base.AutoLayout", AutoLayout);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Layout','AutoLayout',System.classPath+'/base');
+	var Layout = System.require("System.base.Layout");
 	var __this__=null;
 	/**
 	 * @author: lhh
@@ -48,7 +52,7 @@
 
 
 	 */
-	var AutoLayout = System.Layout.extend({
+	var AutoLayout = Layout.extend({
 		constructor: function(D) {
 			__this__ = this;
 			var defaults={

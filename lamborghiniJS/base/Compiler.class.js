@@ -1,18 +1,22 @@
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+    var System = global['LAM_20150910123700_'];
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-            typeof define === 'function' && define.amd ? define(factory(System)) :
-                (System['Compiler'] = factory(System));
+        var Compiler = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Compiler :
+        typeof define === 'function' && define.amd ? define(factory) : System.Compiler = Compiler;
+		System.export("System.base.Compiler", Compiler);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Component','Compiler',System.classPath+'/base');
+    var Component = System.require("System.base.Component");
 
     function setErrorMessage(message) {
         // throw new Error(message);
@@ -23,7 +27,7 @@
     var FILEPATH = System.classPath+'/base/Compiler.class.js';
 
     var __this__=null;
-    var Compiler = System.Component.extend({
+    var Compiler = Component.extend({
         constructor: function (Config) {
             this.base();
             __this__=this;

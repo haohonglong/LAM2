@@ -12,23 +12,27 @@
  *
  *
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Validation'] = factory(System));
+		var Validation = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Validation :
+		typeof define === 'function' && define.amd ? define(factory) : System.Validation = Validation;
+		System.export("System.base.Validation", Validation);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Validation',System.classPath+'/base');
+	var Browser = System.require("System.base.Browser");
 	var __this__=null;
-	var Validation = System.Browser.extend({
+	var Validation = Browser.extend({
 		constructor: function (D){
 			this.base();
 			__this__=this;

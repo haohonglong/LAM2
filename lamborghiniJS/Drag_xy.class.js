@@ -1,7 +1,7 @@
 
 /**
  * 创建日期：2014-10-18
- * 修改日期：2014-10-22
+ * 修改日期：2022-9-1
  * 名称：Drag_xy
  * 功能：鼠标点击某个区域 垂直滑动拖拽，或者水平滑动拖拽
  * 参数：(dom_node) dom,
@@ -17,21 +17,25 @@
  *      
  * 
  */
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+    var System = global['LAM_20150910123700_'];
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Drag_xy'] = factory(System));
+        var Drag_xy = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag_xy :
+		typeof define === 'function' && define.amd ? define(factory) : System.Drag_xy = Drag_xy;
+		System.export("System.base.Drag_xy", Drag_xy);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Drag','Drag_xy',System.classPath+'/base');
+    var Drag = System.require("System.base.Drag");
     System.import([
         '/Event.class'
     ],System.classPath+'/base');
@@ -117,7 +121,7 @@
 
         };
 
-    var Drag_xy = System.Drag.extend({
+    var Drag_xy = Drag.extend({
         constructor: function(dom,init){//实现鼠标拖动元素
             this.base(dom,init);
             __this__=this;

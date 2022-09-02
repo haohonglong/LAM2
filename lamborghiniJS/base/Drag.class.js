@@ -24,21 +24,25 @@
  * 
  */
 
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+    var System = global['LAM_20150910123700_'];
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-        typeof define === 'function' && define.amd ? define(factory(System)) :
-        (System['Drag'] = factory(System));
+        var Drag = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag :
+		typeof define === 'function' && define.amd ? define(factory) : System.Drag = Drag;
+		System.export("System.base.Drag", Drag);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Browser','Drag',System.classPath+'/base');
+    var Browser = System.require("System.base.Browser");
     System.import([
          '/Event.class'
         ,'/Css.class'
@@ -49,7 +53,7 @@
     //事件兼容类方法
     var fixEvt=System.Event.fixEvt;
 
-    var Drag = System.Browser.extend({
+    var Drag = Browser.extend({
         constructor: function(dom,init) {
             this.base();
             __this__=this;

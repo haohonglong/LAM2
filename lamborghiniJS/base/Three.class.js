@@ -1,21 +1,25 @@
 /**
  * 三维
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Html5']['Three'] = factory(System));
+		var Three = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Three :
+		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Three'] = Three;
+		System.export("System.base.Three", Three);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Three',System.classPath+'/base');
+	var Shape = System.require("System.base.Shape");
 
 	var __this__=null;
 
@@ -34,7 +38,7 @@
 	 * Example：
 
 	 */
-	var Three = System.Html5.Shape.extend({
+	var Three = Shape.extend({
 		constructor: function(theShape,init){
 			this.base(theShape,init);
 			__this__=this;

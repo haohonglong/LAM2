@@ -13,23 +13,27 @@
  *
  *
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-        typeof define === 'function' && define.amd ? define(factory(System)) :
-        System['Cookie'] = factory(System);
+		var Cookie = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Cookie :
+		typeof define === 'function' && define.amd ? define(factory) : System.Cookie = Cookie;
+		System.export("System.base.Cookie", Cookie);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Cookie',System.classPath+'/base');
+	var Browser = System.require("System.base.Browser");
 	var __this__=null;
-	var Cookie = System.Browser.extend({
+	var Cookie = Browser.extend({
 		constructor: function() {
 			this.base();
 			__this__=this;

@@ -1,20 +1,24 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Error'] = factory(System));
+		var Error = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Error :
+		typeof define === 'function' && define.amd ? define(factory) : System.Error = Error;
+		System.export("System.base.Error", Error);
 	}
 
 })(this,function(System){
 	//'use strict';
 	System.is(System,'Component','Error',System.classPath+'/base');
+	var Component = System.require("System.base.Component");
 	var __this__=null;
-	var Error = System.Component.extend({
+	var Error = Component.extend({
 		constructor: function(error, message, path, line){
 			this.base();
 			__this__=this;

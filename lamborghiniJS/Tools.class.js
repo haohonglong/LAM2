@@ -5,36 +5,40 @@
  * 功能：区域隐藏或显示、
  *		 文本框输入时设默认文字提示、
  *		 图片动画移动
- *	创建日期：2013.11.08		
- *	修改日期：2014.10.21		
+ *	创建日期：2013-11-08		
+ *	修改日期：2022-9-1		
  * 
  *
  * Copyright Software 
  * 
  * 
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-			(System['Tools'] = factory(System));
+		var Tools = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tools :
+		typeof define === 'function' && define.amd ? define(factory) : System.Tools = Tools;
+		System.export("System.base.Tools", Tools);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Html','Tools',System.classPath+'/base');
+	var Html = System.require("System.base.Html");
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
 	var __this__=null;
 	var fixEvt = System.Event.fixEvt;
 	var isIE6 = System.Browser.isIE6;
-	var Tools = System.Html.extend({
+	var Tools = Html.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;

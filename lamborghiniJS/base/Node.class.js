@@ -1,18 +1,22 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Node'] = factory(System));
+		var Node = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Node :
+		typeof define === 'function' && define.amd ? define(factory) : System.Node = Node;
+		System.export("System.base.Node", Node);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Node',System.classPath+'/base');
+    var Helper = System.require("System.base.Helper");
 
 	var __this__=null;
     var node_key = System.Object.key,
@@ -22,7 +26,7 @@
                 Elements[k] = v;
             }
         };
-	var Node = System.Helper.extend({
+	var Node = Helper.extend({
 		constructor: function (single,tag,Attr,text,children,comment){
 			__this__ = this;
 			this.base();

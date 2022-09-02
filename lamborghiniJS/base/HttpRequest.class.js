@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2018－10－28
- * 修改日期:2020－04－29
+ * 修改日期:2022－9－1
  * 名称：HttpRequest
  * 功能：
  * 说明 : http
@@ -12,25 +12,29 @@
  *		
  * 
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['HttpRequest'] = factory(System));
+		var HttpRequest = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = HttpRequest :
+		typeof define === 'function' && define.amd ? define(factory) : System.HttpRequest = HttpRequest;
+		System.export("System.base.HttpRequest", HttpRequest);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','HttpRequest',System.classPath+'/base');
+	var Component = System.require("System.base.Component");
 
 	var __this__=null;
 
-	var HttpRequest = System.Component.extend({
+	var HttpRequest = Component.extend({
 		constructor: function () {
 			this.base();
 			__this__ = this;

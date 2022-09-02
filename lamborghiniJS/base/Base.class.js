@@ -3,16 +3,19 @@
 	Copyright 2006-2010, Dean Edwards
 	License: http://www.opensource.org/licenses/mit-license.php
 */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Base'] = factory(System)) && System.export("Base", System['Base']);
+		var Base = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Base :
+		typeof define === 'function' && define.amd ? define(factory) : System.Base = Base;
+		System.export("System.base.Base", Base);
 
 	}
 

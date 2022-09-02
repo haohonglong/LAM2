@@ -2,7 +2,7 @@
  * @author: lhh
  * 产品介绍：
  * 创建日期：2015-8-26
- * 修改日期：2017-10-13
+ * 修改日期：2022-9-1
  * 名称：
  * 功能：操作VNode
  * 说明：
@@ -11,24 +11,28 @@
  *
  */
 
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['VNode'] = factory(System));
+		var VNode = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = VNode :
+		typeof define === 'function' && define.amd ? define(factory) : System.VNode = VNode;
+		System.export("System.base.VNode", VNode);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','VNode',System.classPath+'/base');
+	var Dom = System.require("System.base.Dom");
 	var __this__=null;
 	
-	var VNode = System.Dom.extend({
+	var VNode = Dom.extend({
 		constructor: function(single,tag,Attr,text,comment){
 			this.base(single,tag,Attr,text,comment);
 			__this__=this;

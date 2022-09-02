@@ -1,7 +1,7 @@
 /**
  * 创建人：lhh
  * 创建日期：2018-5-16
- * 修改日期：2018-5-18
+ * 修改日期：2022-9-1
  * 名称：PowerCookie
  * 功能：cookie
  * 说明 :
@@ -34,23 +34,27 @@
  *
  *
  */
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['PowerCookie'] = factory(System));
+		var PowerCookie = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = PowerCookie :
+		typeof define === 'function' && define.amd ? define(factory) : System.PowerCookie = PowerCookie;
+		System.export("System.base.PowerCookie", PowerCookie);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Cache','PowerCookie',System.classPath+'/base');
+	var Cache = System.require("System.base.Cache");
 	var __this__=null;
-	var PowerCookie = System.Cache.extend({
+	var PowerCookie = Cache.extend({
         /**
          * @author lhh
          * 产品介绍：

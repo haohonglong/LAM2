@@ -1,20 +1,23 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System.Html5.Canvas = factory(System));
+		var Canvas = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Canvas :
+		typeof define === 'function' && define.amd ? define(factory) : System.Html5.Canvas = Canvas;
+		System.export("System.base.Canvas", Canvas);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.import(['/Browser.class'],System.classPath+'/base');
 	System.is('System.Browser','System.Html5.Canvas');
+	var Browser = System.require("System.base.Browser");
 	var __this__=null;
 	/**
 	 *
@@ -32,7 +35,7 @@
 	 * Example：
 
 	 */
-	var Canvas = System.Browser.extend({
+	var Canvas = Browser.extend({
 		constructor: function(theCanvas,D){
 			this.base();
 			__this__=this;

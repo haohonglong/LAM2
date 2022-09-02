@@ -33,6 +33,8 @@
 
 (function (global, factory) {
 	'use strict';
+
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
 	var UNIQUE = "LAM_20150910123700_";
 	var System = global[UNIQUE] || null;
 	if (System) {
@@ -40,12 +42,13 @@
 	} else {
 		var namespace = global.GRN_LHH;
 		if (!namespace) { namespace = {}; }
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(global, namespace) :
-			typeof define === 'function' && define.amd ? define(factory(global, namespace)) :
-				(global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = factory(global, namespace));
+		System = factory(global, namespace);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = System :
+		typeof define === 'function' && define.amd ? define(factory) :
+		global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = System;
 	}
 
-})(typeof global !== 'undefined' ? global : this, function (global, namespace, undefined) {
+})(this, function (global, namespace, undefined) {
 	'use strict';
 
 	/**
@@ -1669,6 +1672,7 @@
 		 * @returns {string}
 		 */
 		'hash': function (code, hashLength) {
+			var Md5 = System.require("System.base.Md5");
 			code = code || null;
 			hashLength = Number(hashLength);
 			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) { hashLength = 32; }
@@ -1686,7 +1690,7 @@
 				arr.push(ar[Math.floor(Math.random() * al)]);
 			}
 
-			return System.Md5.md5(arr.join('')).replace(/[_\s]/g, '');
+			return Md5.md5(arr.join('')).replace(/[_\s]/g, '');
 		},
 		'uniqid': function (hashLength) {
 			return this.hash(System.timestamp().toString(), hashLength);
