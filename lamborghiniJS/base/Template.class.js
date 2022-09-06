@@ -65,7 +65,7 @@
 			this.cache = cache || _cache;
 			_cache = this.cache;
 			this.compiler = compiler || System.Compiler.getInstance();
-			this.define_reg    = new RegExp('<#define ([\\S]+)="([\\S]+)" />','gm');
+			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
