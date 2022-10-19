@@ -23,7 +23,7 @@
 	}else{
 		var Helper = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Helper :
-		typeof define === 'function' && define.amd ? define(factory) : System.Helper = Helper;
+		typeof define === 'function' && define.amd ? define(Helper) : System.Helper = Helper;
 		System.export("System.base.Helper", Helper);
 	}
 

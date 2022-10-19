@@ -9,7 +9,7 @@
 	}else{
 		var Slider = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Slider :
-		typeof define === 'function' && define.amd ? define(factory) : System.Slider = Slider;
+		typeof define === 'function' && define.amd ? define(Slider) : System.Slider = Slider;
 		System.export("System.Slider", Slider);
 	}
 

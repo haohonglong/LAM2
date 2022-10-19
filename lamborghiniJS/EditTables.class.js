@@ -3,21 +3,24 @@
  * 用法:new EditTables(tb1);
  *
  **/
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['EditTables'] = factory(System));
+		var EditTables = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = EditTables :
+		typeof define === 'function' && define.amd ? define(EditTables) : System.EditTables = EditTables;
+		System.export("System.EditTables", EditTables);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','EditTables',System.classPath+'/base');
+	var Dom = System.require("System.base.Dom");
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
@@ -32,7 +35,7 @@
 	 * @param D
 	 * @constructor
 	 */
-	var EditTables = System.Dom.extend({
+	var EditTables = Dom.extend({
 		constructor: function(table,D) {
 			this.base();
 			var __this__=this;

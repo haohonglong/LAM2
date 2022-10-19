@@ -3,7 +3,7 @@
 	version ：v2.1.6
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2022-8-22
+	修改日期 ：2022-9-7
 
 
 # 产品介绍：
@@ -1298,7 +1298,8 @@
          *     <!--Del:begin--></script><!--Del:end-->
          * 注意：标签名大小写！！！
          * usage：<!--Script:begin--> ... <!--Script:end-->
-  
+  ## 注意：除了<#include />， <#=block id="xxx" />指令外，其余的指令绝对要这么做：头要顶格，尾不可有空格或其他字符, 否则就不会工作，而且可能也不会报错，即使报错，根据报错信息也是无法定位到出错地方的，这会带来很大的烦恼的，请牢记！！！
+
   ##### usage：
         room/list.html
         <#include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" /> 这个命令调用了 components/list.html

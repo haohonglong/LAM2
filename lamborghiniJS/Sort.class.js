@@ -1,19 +1,21 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-			(System['Sort'] = factory(System));
+		var Sort = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Sort :
+		typeof define === 'function' && define.amd ? define(Sort) : System.Sort = Sort;
+		System.export("System.Sort", Sort);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Sort',System.classPath+'/base');
-
+	var Helper = System.require("System.base.Helper");
 	var __this__=null;
 
 
@@ -58,7 +60,7 @@
 		return arr;
 	}
 
-	var Sort = System.Helper.extend({
+	var Sort = Helper.extend({
 		constructor: function(D) {
 			this.base();
 			__this__=this;

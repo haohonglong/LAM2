@@ -1,21 +1,24 @@
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['Dropdown'] = factory(System));
+        var Dropdown = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Dropdown :
+		typeof define === 'function' && define.amd ? define(Dropdown) : System.Dropdown = Dropdown;
+		System.export("System.Dropdown", Dropdown);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Dom','Dropdown',System.classPath+'/base');
+    var Dom = System.require("System.base.Dom");
     var __this__=null;
 
-    var Dropdown = System.Dom.extend({
+    var Dropdown = Dom.extend({
         /**
          * @author: lhh
          * 产品介绍：

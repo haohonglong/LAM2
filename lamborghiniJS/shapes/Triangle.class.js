@@ -12,8 +12,8 @@
 	}else{
 		var Triangle = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Triangle :
-		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Triangle'] = Triangle;
-		System.export("System.Html5.Triangle", Triangle);
+		typeof define === 'function' && define.amd ? define(Triangle) : System['Html5']['Triangle'] = Triangle;
+		System.export("System.shapes.Triangle", Triangle);
 	}
 
 })(this,function(System){

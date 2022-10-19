@@ -45,7 +45,7 @@
 	}else{
 		var Storage = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Storage :
-		typeof define === 'function' && define.amd ? define(factory) : System.Storage = Storage;
+		typeof define === 'function' && define.amd ? define(Storage) : System.Storage = Storage;
 		System.export("System.base.Storage", Storage);
 	}
 

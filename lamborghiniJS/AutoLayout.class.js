@@ -9,8 +9,8 @@
 	}else{
 		var AutoLayout = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = AutoLayout :
-		typeof define === 'function' && define.amd ? define(factory) : System.AutoLayout = AutoLayout;
-		System.export("System.base.AutoLayout", AutoLayout);
+		typeof define === 'function' && define.amd ? define(AutoLayout) : System.AutoLayout = AutoLayout;
+		System.export("System.AutoLayout", AutoLayout);
 	}
 
 })(this,function(System){

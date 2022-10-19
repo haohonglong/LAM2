@@ -12,7 +12,7 @@
 	}else{
 		var Shape = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Shape :
-		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Shape'] = Shape;
+		typeof define === 'function' && define.amd ? define(Shape) : System['Html5']['Shape'] = Shape;
 		System.export("System.base.Shape", Shape);
 	}
 

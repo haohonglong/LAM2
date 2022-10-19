@@ -23,7 +23,7 @@
 	}else{
 		var HttpRequest = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = HttpRequest :
-		typeof define === 'function' && define.amd ? define(factory) : System.HttpRequest = HttpRequest;
+		typeof define === 'function' && define.amd ? define(HttpRequest) : System.HttpRequest = HttpRequest;
 		System.export("System.base.HttpRequest", HttpRequest);
 	}
 

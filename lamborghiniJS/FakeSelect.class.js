@@ -3,34 +3,38 @@
  * @author lhh
  * 产品介绍：
  * 创建日期：2015-1-15
- * 修改日期：2017-10-24
+ * 修改日期：2022-9-18
  * 名称：class FakeSelect 
  * 功能：伪下拉框
  * 说明：
  * 注意：
  * Example：
  *----------------------------------*/
-(function(IT,factory){
+(function(global,factory){
     'use strict';
-    var System = IT['LAM_20150910123700_'];
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
+
 
     if(!System){
         return;
     }else{
-        typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['FakeSelect'] = factory(System));
+        var FakeSelect = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = FakeSelect :
+		typeof define === 'function' && define.amd ? define(FakeSelect) : System.FakeSelect = FakeSelect;
+		System.export("System.FakeSelect", FakeSelect);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Dom','FakeSelect',System.classPath+'/base');
+    var Dom = System.require("System.base.Dom");
     System.import([
         '/Event.class'
     ],System.classPath+'/base');
 
     var __this__=null;
-    var FakeSelect = System.Dom.extend({
+    var FakeSelect = Dom.extend({
         constructor: function (D) {
             this.base();
             __this__ = this;

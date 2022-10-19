@@ -24,7 +24,7 @@
 	}else{
 		var Cookie = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Cookie :
-		typeof define === 'function' && define.amd ? define(factory) : System.Cookie = Cookie;
+		typeof define === 'function' && define.amd ? define(Cookie) : System.Cookie = Cookie;
 		System.export("System.base.Cookie", Cookie);
 	}
 

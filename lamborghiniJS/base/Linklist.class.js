@@ -9,7 +9,7 @@
 	}else{
 		var Linklist = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Linklist :
-		typeof define === 'function' && define.amd ? define(factory) : System.Linklist = Linklist;
+		typeof define === 'function' && define.amd ? define(Linklist) : System.Linklist = Linklist;
 		System.export("System.base.Linklist", Linklist);
 	}
 

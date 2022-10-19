@@ -9,7 +9,7 @@
 	}else{
 		var Error = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Error :
-		typeof define === 'function' && define.amd ? define(factory) : System.Error = Error;
+		typeof define === 'function' && define.amd ? define(Error) : System.Error = Error;
 		System.export("System.base.Error", Error);
 	}
 

@@ -9,7 +9,7 @@
 	}else{
 		var Layout = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Layout :
-		typeof define === 'function' && define.amd ? define(factory) : System.Layout = Layout;
+		typeof define === 'function' && define.amd ? define(Layout) : System.Layout = Layout;
 		System.export("System.base.Layout", Layout);
 	}
 

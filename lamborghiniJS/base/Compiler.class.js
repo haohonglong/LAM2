@@ -9,7 +9,7 @@
     }else{
         var Compiler = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Compiler :
-        typeof define === 'function' && define.amd ? define(factory) : System.Compiler = Compiler;
+        typeof define === 'function' && define.amd ? define(Compiler) : System.Compiler = Compiler;
 		System.export("System.base.Compiler", Compiler);
     }
 
@@ -42,7 +42,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-03-9
-         * 修改日期：2022-02-4
+         * 修改日期：2022-09-29
          * 名称：compile
          * 功能：编译模版标签
          * 说明：
@@ -56,8 +56,8 @@
             var self=this;
             var arr=[],v=[],$1,$2;
             delimiters = delimiters || this.delimiters;
-            var delimiterLeft  = delimiters[0];
-            var delimiterRight = delimiters[1];
+            var delimiterLeft  = delimiters[0] + '-';
+            var delimiterRight = '-' + delimiters[1];
             //没找到模版分隔符就返回传入的字符串
             if(S.indexOf(delimiterLeft) !== -1){
                 S.split(delimiterLeft).each(function(){
@@ -96,12 +96,14 @@
                         });
                         return root;
                     }
-                    if(v = System.eval(vars)){return v;}
+                    
                 }else{
                     if((k=vars) in D){
                         return D[k];
                     }
                 }
+                if(v = System.eval(vars)){return v;}
+
             }catch (e){
                 var error = new System.Error(e,
                  "解析变量 " + vars + "发生错误",

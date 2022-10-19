@@ -19,7 +19,7 @@
     }else{
         var Base64 = factory(System);
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Base64 :
-        typeof define === 'function' && define.amd ? define(factory) : System.Base64 = Base64;
+        typeof define === 'function' && define.amd ? define(Base64) : System.Base64 = Base64;
         System.export("System.base.Base64", Base64);
     }
 

@@ -9,7 +9,7 @@
 	}else{
 		var Html = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Html :
-		typeof define === 'function' && define.amd ? define(factory) : System.Html = Html;
+		typeof define === 'function' && define.amd ? define(Html) : System.Html = Html;
 		System.export("System.base.Html", Html);
 	}
 
@@ -32,53 +32,54 @@
 			}
 			return true;
 		}
-    },1);
+  },1);
 
-    var sAttribute   = System.Config.render.default.script.Attribute,
-        cAttribute = System.Config.render.default.css.Attribute,
-        Cache = null;
+	var sAttribute   = System.Config.render.default.script.Attribute,
+			cAttribute = System.Config.render.default.css.Attribute,
+			Cache = null;
 
-    function getCache(name){
-        if(!Cache){
-        	try{
-                if(System.LAM_ENV_DEV){
-                    Cache = new System.Cache(
-                    	 name || 'template'
-                        ,System.configure_cache.expires || 0);
-                }else{
-                    Cache = new System.Storage(
-                    	 name || 'template'
-                        ,System.configure_cache.type || sessionStorage
-						,System.configure_cache.expires || 0);
-                }
-                
-			}catch (e){
-                throw e;
-            }
-
-
-        }
-        return Cache;
-    }
+	function getCache(name){
+			if(!Cache){
+				try{
+							if(System.LAM_ENV_DEV){
+									Cache = new System.Cache(
+											name || 'template'
+											,System.configure_cache.expires || 0);
+							}else{
+									Cache = new System.Storage(
+											name || 'template'
+											,System.configure_cache.type || sessionStorage
+					,System.configure_cache.expires || 0);
+							}
+							
+		}catch (e){
+							throw e;
+					}
 
 
+			}
+			return Cache;
+	}
 
-	var temp = new Template();
-    function ajax_success_callback(data, textStatus, jqXHR) {
-        temp.setData(this.tpData);
-        temp.setDelimiters(this.delimiters);
-        data = temp.parse(data).trim();
 
-        if(System.isFunction(this.capture)){data = this.capture(data);}
-        if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}
-        if(this.success && System.isFunction(this.success)){
-            this.success(data,textStatus,jqXHR);
-        }else{
-            if(this.$dom){
-                this.$dom.after(data).remove();
-            }
-        }
-    }
+	var temp = null;
+	function ajax_success_callback(data, textStatus, jqXHR) {
+		temp = new Template();
+		temp.setData(this.tpData);
+		temp.setDelimiters(this.delimiters);
+		data = temp.parse(data).trim();
+		temp = null;
+
+		if(System.isFunction(this.capture)){data = this.capture(data);}
+		if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}
+		if(this.success && System.isFunction(this.success)){
+				this.success(data,textStatus,jqXHR);
+		}else{
+				if(this.$dom){
+						this.$dom.after(data).remove();
+				}
+		}
+	}
 
 	var __this__=null;
 	var Html = Dom.extend({
@@ -121,34 +122,34 @@
 			__this__=this;
 			var _this = this;
 			this.symbol=[];
-            //如果第一个是对象且不是jQuery对象
-            if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
-                D = $dom;
-                $dom = null;
-            }
+			//如果第一个是对象且不是jQuery对象
+			if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
+					D = $dom;
+					$dom = null;
+			}
 
-            this.$dom = $dom;
-            this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"text";
-            this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
-            this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
-            this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
-            this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	System.XHR.type  ||  "GET";
-            this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
-            this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
-            this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
-            this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
-            this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
-            this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async 		||  false;
-            this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache 		||	false;
-            this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
-            this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
-            this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
-            this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
-            this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
-            this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
-            this.file     = System.template(this.file);
-            this.file_404 = System.template(this.file_404);
-            if(System.isFunction(this.preform)){this.preform();}
+			this.$dom = $dom;
+			this.dataType 	 = $dom && $dom.attr('dataType') 											|| D&&D.dataType 	||	"text";
+			this.contentType = $dom && $dom.attr('contentType') 										|| D&&D.contentType ||	"application/x-www-form-urlencoded; charset=UTF-8";
+			this.file  		 = $dom && $dom.attr('file')  												|| D&&D.url         ||  null;
+			this.file_404  	 = $dom && $dom.attr('file_404')  				    						|| D&&D.file_404    ||  System.ERROR_404;
+			this.type  		 = $dom && $dom.attr('type')  												|| D&&D.type  	 	||	System.XHR.type  ||  "GET";
+			this.repeat  	 = $dom && $dom.attr('repeat') 		&& parseInt($dom.attr('repeat'))		|| D&&D.repeat  	||	1;
+			this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
+			this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
+			this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
+			this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
+			this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async 		||  false;
+			this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache 		||	false;
+			this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
+			this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
+			this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
+			this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
+			this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
+			this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
+			this.file     = System.template(this.file);
+			this.file_404 = System.template(this.file_404);
+			if(System.isFunction(this.preform)){this.preform();}
 
 		},
 		'_className':'Html',

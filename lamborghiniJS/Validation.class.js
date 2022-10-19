@@ -23,8 +23,8 @@
 	}else{
 		var Validation = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Validation :
-		typeof define === 'function' && define.amd ? define(factory) : System.Validation = Validation;
-		System.export("System.base.Validation", Validation);
+		typeof define === 'function' && define.amd ? define(Validation) : System.Validation = Validation;
+		System.export("System.Validation", Validation);
 	}
 
 })(this,function(System){

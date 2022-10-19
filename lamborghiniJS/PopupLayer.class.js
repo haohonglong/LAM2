@@ -53,8 +53,8 @@
 	 }else{
 		var PopupLayer = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = PopupLayer :
-		typeof define === 'function' && define.amd ? define(factory) : System.PopupLayer = PopupLayer;
-		System.export("System.base.PopupLayer", PopupLayer);
+		typeof define === 'function' && define.amd ? define(PopupLayer) : System.PopupLayer = PopupLayer;
+		System.export("System.PopupLayer", PopupLayer);
 	 }
 
  })(this,function(System){

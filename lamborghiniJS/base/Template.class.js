@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-8-26
+ * 修改日期:2022-9-7
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -23,7 +23,7 @@
 	}else{
 		var Template = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Template :
-		typeof define === 'function' && define.amd ? define(factory) : System.Template = Template;
+		typeof define === 'function' && define.amd ? define(Template) : System.Template = Template;
 		System.export("System.base.Template", Template);
 	}
 
@@ -68,16 +68,17 @@
 			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
-			this.import_reg    = new RegExp('<#import (([\\s\\S])*?) />','gm');
-			this.layout_reg    = new RegExp('<#(layout|extends) (([\\s\\S])*?) />','gm');
-			this.set_block_reg = new RegExp('<#(beginBlock|Block:begin) (([\\s\\S])*?)>(([\\s\\S])*?)<#(endBlock|Block:end)>', 'gm');
+			this.import_reg    = new RegExp('^<#import (([\\s\\S])*?) />$','gm');
+			this.layout_reg    = new RegExp('^<#(layout|extends) (([\\s\\S])*?) />$','gm');
+			this.set_block_reg = new RegExp('^<#(beginBlock|Block:begin) (([\\s\\S])*?)>(([\\s\\S])*?)<#(endBlock|Block:end)>\\n$', 'gm');
 			this.get_block_reg = new RegExp('<#=block (([\\s\\S])*?) />','gm');
-			this.escape_reg    = new RegExp('<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->','gm');
-			this.del_reg   	   = new RegExp('<!--Del:begin-->(([\\s\\S])*?)<!--Del:end-->','gm');
-            this.script_reg    = new RegExp('<!--Script:begin-->(([\\s\\S])*?)<!--Script:end-->', 'gm');
+			this.escape_reg    = new RegExp('^<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->$','gm');
+			this.del_reg   	   = new RegExp('^<!--Del:begin-->(([\\s\\S])*?)<!--Del:end-->$','gm');
+            this.script_reg    = new RegExp('^<!--Script:begin-->(([\\s\\S])*?)<!--Script:end-->\\n$', 'gm');
 			this.html=[];
 			this.datas = null;
 			this.delimiters = null;
+            this.content = "";
 		},
 		'_className':'Template',
 		'create':function(){},
@@ -88,7 +89,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-10
-		 * 修改日期：2022-6-22
+		 * 修改日期：2022-10-11
 		 * 名称：render
 		 * 功能：
 		 * 说明：
@@ -97,11 +98,12 @@
 		 * @param {Object}D	    		NO NULL	:渲染到模版中的数据
 		 * @param {Function}callBack 	   NULL :参数：(解析后模板字符串)
 		 * @param {Object}Cajax	    	NO NULL	:设置Ajax参数
-		 * @returns {String}
+		 * @returns {System.Template}
 		 */
 		'render':function(path,D,callBack,Cajax){
 			var view="";
 			try{
+                this.setData(D);
                 Cajax.tpData = D;
                 System.getFile(path,function(content){
                     view = content;
@@ -112,13 +114,16 @@
 
                 },Cajax);
                 this.guid++;
-                return view;
+                this.content = view;
+                
 			}catch (e){
                 var error = new System.Error(e,
                  "render指定渲染视图页面路径: " + path, 
                  FILEPATH, 104);
                 setErrorMessage(error.getMessage());
-			}
+			} finally {
+                return this;
+            }
 
 		},
 

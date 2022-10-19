@@ -53,7 +53,7 @@
 	}else{
 		var Cache = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Cache :
-		typeof define === 'function' && define.amd ? define(factory) : System.Cache = Cache;
+		typeof define === 'function' && define.amd ? define(Cache) : System.Cache = Cache;
 		System.export("System.base.Cache", Cache);
 	}
 
@@ -64,17 +64,17 @@
 	var __this__=null;
 
 	var Cache = Component.extend({
-        /**
-         * @author lhh
-         * 产品介绍：
-         * 创建日期:2017-1-5
-         * 修改日期:2018-5-16
-         * 功能：
-         * 说明：
-         * 注意：
-         * @param {String}name  							NOT NULL 缓存标示
-         * @param {timeStamp}expires 						NULL 	 失效期的时间戳
-         */
+		/**
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2017-1-5
+		 * 修改日期:2018-5-16
+		 * 功能：
+		 * 说明：
+		 * 注意：
+		 * @param {String}name  							NOT NULL 缓存标示
+		 * @param {timeStamp}expires 						NULL 	 失效期的时间戳
+		 */
 		constructor: function(name,expires){
 			this.base();
 			__this__=this;
@@ -114,18 +114,18 @@
 			}
 		},
 
-        /**
-         * @author lhh
-         * 产品介绍：
-         * 创建日期:2017-1-5
-         * 修改日期:2020-3-1
-         * 名称：get
-         * 功能：获取数组对应下标的数据，无参数时返回数组中全部数据
-         * 说明：
-         * 注意：
-         * @param {int}index		NULL
-         * @returns {Array|Object}
-         */
+		/**
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2017-1-5
+		 * 修改日期:2020-3-1
+		 * 名称：get
+		 * 功能：获取数组对应下标的数据，无参数时返回数组中全部数据
+		 * 说明：
+		 * 注意：
+		 * @param {int}index		NULL
+		 * @returns {Array|Object}
+		 */
 		'get':function(index){
 			var cache=null;
 			if(System.isset(index) && System.isNumeric(index)){
@@ -137,14 +137,14 @@
 		},
 
 		/**
-         * @author lhh
-         * 产品介绍：
-         * 创建日期:2017-1-5
-         * 修改日期:2018-5-16
-         * 名称：add
-         * 功能：添加数据，可以设置一个有效期
-         * 说明：
-         * 注意：
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2017-1-5
+		 * 修改日期:2018-5-16
+		 * 名称：add
+		 * 功能：添加数据，可以设置一个有效期
+		 * 说明：
+		 * 注意：
 		 * @param {JSON}data
 		 * @param {timeStamp}expires 	NULL 失效期的时间戳
 		 * @returns {Cache}
@@ -156,9 +156,9 @@
 			this.setItem();
 			return this;
 		},
-        'set':function(data,expires){
-            this.add(data,expires);
-        },
+		'set':function(data,expires){
+				this.add(data,expires);
+		},
 		/**
 		 *
 		 * @param index
@@ -170,30 +170,30 @@
 			this.setItem();
 			return this;
 		},
-        /**
-         * @author lhh
-         * 产品介绍：
-         * 创建日期:2020-5-6
-         * 修改日期:2020-5-6
-         * 名称：had_expired
-         * 功能：检查当前数据是否过了失效期
-         * 说明：
-         * 注意：
-         * @param  {int}index		NOT NULL 数组索引
-         * @returns {boolean}
-         */
+		/**
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2020-5-6
+		 * 修改日期:2020-5-6
+		 * 名称：had_expired
+		 * 功能：检查当前数据是否过了失效期
+		 * 说明：
+		 * 注意：
+		 * @param  {int}index		NOT NULL 数组索引
+		 * @returns {boolean}
+		 */
 		'had_expired':function (index) {
 			if(index > -1){
-                var expires = this.caches[index].expires;
-                if(System.isset(expires) && System.isNumber(expires) && expires !==0){
-                    if(System.timestamp() >= expires){//当前时间大于等于设定时间
-                        return true;
-                    }
-                }
+				var expires = this.caches[index].expires;
+				if(System.isset(expires) && System.isNumber(expires) && expires !==0){
+						if(System.timestamp() >= expires){//当前时间大于等于设定时间
+								return true;
+						}
+				}
 			}
+			return false;
 
-            return false;
-        },
+		},
 		/**
 		 * @author lhh
 		 * 产品介绍：
@@ -224,22 +224,22 @@
 			}
 			return -1;
 		},
-        'clear':function(){
-            this.caches = [];
-            return this;
-        },
-        'remove':function(index){
-            if(System.isset(index) && System.isNumeric(index)){
-                var caches = this.caches;
-                if (index > -1 && index <= caches.length-1) {
-                    caches.removeAt(index);
-                    this.setItem();
-                }
-            }else{
-                this.clear();
-            }
-            return this;
-        },
+		'clear':function(){
+				this.caches = [];
+				return this;
+		},
+		'remove':function(index){
+			if(System.isset(index) && System.isNumeric(index)){
+					var caches = this.caches;
+					if (index > -1 && index <= caches.length-1) {
+							caches.removeAt(index);
+							this.setItem();
+					}
+			}else{
+					this.clear();
+			}
+			return this;
+		},
 		/**
 		 *
 		 * @author lhh

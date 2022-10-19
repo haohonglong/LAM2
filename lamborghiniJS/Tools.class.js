@@ -24,8 +24,8 @@
 	}else{
 		var Tools = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tools :
-		typeof define === 'function' && define.amd ? define(factory) : System.Tools = Tools;
-		System.export("System.base.Tools", Tools);
+		typeof define === 'function' && define.amd ? define(Tools) : System.Tools = Tools;
+		System.export("System.Tools", Tools);
 	}
 
 })(this,function(System){

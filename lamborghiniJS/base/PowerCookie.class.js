@@ -45,7 +45,7 @@
 	}else{
 		var PowerCookie = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = PowerCookie :
-		typeof define === 'function' && define.amd ? define(factory) : System.PowerCookie = PowerCookie;
+		typeof define === 'function' && define.amd ? define(PowerCookie) : System.PowerCookie = PowerCookie;
 		System.export("System.base.PowerCookie", PowerCookie);
 	}
 
@@ -55,32 +55,32 @@
 	var Cache = System.require("System.base.Cache");
 	var __this__=null;
 	var PowerCookie = Cache.extend({
-        /**
-         * @author lhh
-         * 产品介绍：
-         * 创建日期:2018-5-16
-         * 修改日期:2018-5-17
-         * 功能：
-         * 说明：
-         * 注意：
-         * @param {String}name  							NOT NULL 缓存标示
-         * @param {timeStamp}D.expires 						NULL 	 失效期的时间戳
-         */
-        constructor: function(name,D){
-            __this__=this;
-            var defaults = {
-                 "expires":0
-				,"path":null
-				,"domain":null
-				,"secure":false
-            };
-            D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
-            this.base(name,D.expires);
-            this.path 		= System.isset(D.path) && System.isString(D.path) && !System.empty(D.path.trim()) ? D.path.trim() : null;
-            this.domain 	= System.isset(D.domain) && System.isString(D.domain) && !System.empty(D.domain.trim()) ? D.domain.trim() : null;
-            this.secure 	= System.isset(D.secure) && System.isBoolean(D.secure) ? D.secure : false;
+		/**
+		 * @author lhh
+		 * 产品介绍：
+		 * 创建日期:2018-5-16
+		 * 修改日期:2018-5-17
+		 * 功能：
+		 * 说明：
+		 * 注意：
+		 * @param {String}name  							NOT NULL 缓存标示
+		 * @param {timeStamp}D.expires 						NULL 	 失效期的时间戳
+		 */
+		constructor: function(name,D){
+				__this__=this;
+				var defaults = {
+							"expires":0
+		,"path":null
+		,"domain":null
+		,"secure":false
+				};
+				D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
+				this.base(name,D.expires);
+				this.path 		= System.isset(D.path) && System.isString(D.path) && !System.empty(D.path.trim()) ? D.path.trim() : null;
+				this.domain 	= System.isset(D.domain) && System.isString(D.domain) && !System.empty(D.domain.trim()) ? D.domain.trim() : null;
+				this.secure 	= System.isset(D.secure) && System.isBoolean(D.secure) ? D.secure : false;
 
-        },
+		},
 		'_className':'PowerCookie',
 		'__constructor':function(){},
 		'setItem':function(){
@@ -116,19 +116,19 @@
             d.setTime(timestamp);
 			return d.toUTCString();
 		},
-        'remove':function(index){//
-            if(System.isset(index) && System.isNumeric(index)){
-                var caches = this.caches;
-                if (index > -1 && index <= caches.length-1) {
-                    caches.removeAt(index);
-                    this.setItem();
-                    // delete cache[index];
-                }
-            }else{
-                this.clear();
-            }
-            return this;
-        },
+		'remove':function(index){//
+				if(System.isset(index) && System.isNumeric(index)){
+						var caches = this.caches;
+						if (index > -1 && index <= caches.length-1) {
+								caches.removeAt(index);
+								this.setItem();
+								// delete cache[index];
+						}
+				}else{
+						this.clear();
+				}
+				return this;
+		},
 		'clear':function(){//删除cookie
 			this.getItem();
 			if(this.caches!=null) document.cookie= this.name + "="+this.caches+";expires="+this.getExpDate(System.timestamp()-1);

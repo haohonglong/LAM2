@@ -9,8 +9,8 @@
 	}else{
 		var Thumbnail = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Thumbnail :
-		typeof define === 'function' && define.amd ? define(factory) : System.Thumbnail = Thumbnail;
-		System.export("System.base.Thumbnail", Thumbnail);
+		typeof define === 'function' && define.amd ? define(Thumbnail) : System.Thumbnail = Thumbnail;
+		System.export("System.Thumbnail", Thumbnail);
 	}
 
 })(this,function(System){

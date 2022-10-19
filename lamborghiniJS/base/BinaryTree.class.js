@@ -9,7 +9,7 @@
 	}else{
 		var BinaryTree = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = BinaryTree :
-		typeof define === 'function' && define.amd ? define(factory) : System.BinaryTree = BinaryTree;
+		typeof define === 'function' && define.amd ? define(BinaryTree) : System.BinaryTree = BinaryTree;
 		System.export("System.base.BinaryTree", BinaryTree);
 	}
 

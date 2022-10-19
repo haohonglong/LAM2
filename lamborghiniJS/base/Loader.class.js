@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014-9-9
- * 修改日期：2022-9-1
+ * 修改日期：2022-10-4
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -23,16 +23,18 @@
     }else{
         var Loader = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Loader :
-		typeof define === 'function' && define.amd ? define(factory) : System.Cloader = Loader;
-		System.export("System.base.Loader", Loader);
-
+		typeof define === 'function' && define.amd ? define(Loader) : System.Cloader = Loader;
+        
         System['Loadcommon'] = System['Loader'] = new Loader();
         System.merge(null,[{
-            'import': System.Loader.import
-            ,'loadScript': System.Loader.loadScript
+            'import': System['Loader']['import']
+            ,'loadScript': System['Loader']['loadScript']
         }]);
-        System.export("System.base.import", System.Loader.import);
-        System.export("System.base.loadScript", System.Loader.loadScript);
+
+
+        System.export("System.base.Loader", Loader);
+        System.export("System.base.Loader.import", System.import);
+        System.export("System.base.Loader.loadScript", System.loadScript);
 
     }
 
@@ -281,15 +283,14 @@
          * @returns {Loader}
          */
         'loadScript':function(url, callback){
-            var self = this;
-            var append = self.Config.render.append;
+            var self = this || System;
             var script = document.createElement("script") ;
             script.type = "text/javascript";
             if(System.fileExisted(url)){
                 if(System.isFunction(callback)){callback();}
                 return this;
             }
-            initDom.call(this);
+            initDom.call(self);
             if (script.readyState){ //IE
                 script.onreadystatechange = function(){
                     if ("loaded" === script.readyState || "complete" === script.readyState){
@@ -334,7 +335,7 @@
          * Example：
          */
         'import':function(url,baseUrl,suffix,X){
-            var self = this;
+            var self = this || System;
             if(System.isString(url)){
                 var str = url;
                 url = [];
@@ -393,7 +394,7 @@
          * @returns {Loader}返回当前对象可以链式调用
          */
         'print':function(){
-            var self = this;
+            var self = this || System;
             if(files.length < 1){return this;}
             if(!self.Config.render.create){//document.write() 方式引入外部文件(.js|.css)
                 System.print(files.join(''));

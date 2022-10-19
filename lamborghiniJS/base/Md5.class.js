@@ -23,7 +23,7 @@
 	}else{
 		var Md5 = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Md5 :
-		typeof define === 'function' && define.amd ? define(factory) : System.Md5 = Md5;
+		typeof define === 'function' && define.amd ? define(Md5) : System.Md5 = Md5;
 		System.export("System.base.Md5", Md5);
 	}
 

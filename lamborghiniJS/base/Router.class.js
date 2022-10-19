@@ -9,7 +9,7 @@
 	}else{
 		var Router = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Router :
-		typeof define === 'function' && define.amd ? define(factory) : System.Router = Router;
+		typeof define === 'function' && define.amd ? define(Router) : System.Router = Router;
 		System.export("System.base.Router", Router);
 	}
 
@@ -17,7 +17,8 @@
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
     var Browser = System.require("System.base.Browser");
-
+    var CController = System.require("System.base.Controller");
+    
     var FILEPATH = System.classPath+'/base/Router.class.js';
 
     if(!System.isset(System.CONTROLLERS)) throw new Error("LAM.CONTROLLERS undefined");
@@ -177,19 +178,23 @@
         var action = r[1]+'Action';
         var id = r[2];
         var view = null;
+        var temp = null;
         System._content = null;
         id = System.eval(id);
 
     	var controller = new System[ControllerName]();
-    	if(controller instanceof System.Controller){
+        System.export("this", controller);
+    	if(controller instanceof CController){
     		if(action && System.isFunction(controller[action])) {
                 controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
                 controller.init();
-                view = controller[action](id);
-                view = (new System.Template()).getBlock(view);
+                temp = controller[action](id);
+                view = temp.getBlock(temp.content);
+                temp = null;
                 if (System.isset(view) && System.isString(view)) {
                     //生产静态页便于输出
-                    System._content = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and wants to build
+                    System._content = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build
+                    System.export("this.content", view);
                 }
                 if (System.isFunction(System.main)) {
                     view = System.main(view, controller, action, id);

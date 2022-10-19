@@ -1,20 +1,23 @@
 
 //运动框架
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-			typeof define === 'function' && define.amd ? define(factory(System)) :
-			(System['Sport'] = factory(System));
+		var Sport = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Sport :
+		typeof define === 'function' && define.amd ? define(Sport) : System.Sport = Sport;
+		System.export("System.Sport", Sport);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Css','Sport',System.classPath+'/base');
+	var Css = System.require("System.base.Css");
 
 	var __this__=null;
 	var MOVE_TYPE={
@@ -96,7 +99,7 @@
             },15);
 		};
 
-	var Sport = System.Browser.extend({
+	var Sport = Css.extend({
 		constructor: function() {
 			this.base();
 			__this__=this;

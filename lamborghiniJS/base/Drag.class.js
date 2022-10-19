@@ -35,7 +35,7 @@
     }else{
         var Drag = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag :
-		typeof define === 'function' && define.amd ? define(factory) : System.Drag = Drag;
+		typeof define === 'function' && define.amd ? define(Drag) : System.Drag = Drag;
 		System.export("System.base.Drag", Drag);
     }
 

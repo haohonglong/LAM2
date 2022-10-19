@@ -44,7 +44,7 @@
 		if (!namespace) { namespace = {}; }
 		System = factory(global, namespace);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = System :
-		typeof define === 'function' && define.amd ? define(factory) :
+		typeof define === 'function' && define.amd ? define(System) :
 		global['LAM'] = global['LAMJS'] = global[UNIQUE] = global[namespace] = System;
 	}
 
@@ -406,8 +406,18 @@
 			System.configure_cache = System.Config.configure_cache || System.createDict();
 			System.components = System.merge({}, [System.Config.components]) || System.createDict();
 			System.each(System.merge({}, [System.Config]), function (name) { System[name] = this; });
-			System.each(System.merge({}, [System.components, System.Public(System)]), function (name) {
+			System.each(System.merge({}, [System.components]), function (name) {
 				if (!(name in System)) { System[name] = this; }
+			});
+			
+			System.each(System.merge({}, [System.Public(System)]), function (name) {
+				if (!(name in System)) { 
+					if(System.isFunction(this)) {
+						System[name] = this(System); 
+					} else {
+						System[name] = this; 
+					}
+				}
 			});
 			System.BASE64ENCODE = System.isset(System.BASE64ENCODE) && System.isBoolean(System.BASE64ENCODE) ? System.BASE64ENCODE : true;
 			System.routeAutoRun = System.isset(System.routeAutoRun) && System.isBoolean(System.routeAutoRun) ? System.routeAutoRun : true;
@@ -426,27 +436,17 @@
 		/**
 		 * @author: lhh
 		 * 产品介绍：
-		 * 创建日期：2020-3-16
-		 * 修改日期：2022-5-28
-		 * 名称：System.autoload
-		 * 功能：加载基础类
+		 * 创建日期：2022-10-5
+		 * 修改日期：2022-10-5
+		 * 名称：System.getAutoLoadFile
+		 * 功能：获取基础类文件
 		 * 说明：
 		 * 注意：
 		 * Example：
 		 */
-		'autoload': function () {
-			var classPath = System.classPath, tag = 'script',
-				scriptAttribute = System.Config.render.default.script.Attribute,
-				data = scriptAttribute, files = [];
-
-			var autoLoadFile = System.Config.autoLoadFile(System);
-			var srcs = autoLoadFile.files || [],
-				MINI = autoLoadFile.mini || false;
-
-			System.excluded = System.excluded || [];
-
-			// 这种格式可以防止浏览器默认对key自动排序
-			var jses = [
+		'getAutoLoadFile': function(classPath) {
+			classPath = classPath || System.classPath;
+			return [
 				{ 'name': 'jquery', 'path': classPath + '/jQuery/jquery.js' },
 				{ 'name': 'Base', 'path': classPath + '/base/Base.class.js' },
 				{ 'name': 'Object', 'path': classPath + '/base/Object.class.js' },
@@ -471,6 +471,31 @@
 				{ 'name': 'Model', 'path': classPath + '/base/Model.class.js' },
 				{ 'name': 'Router', 'path': classPath + '/base/Router.class.js' }
 			];
+		},
+		/**
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2020-3-16
+		 * 修改日期：2022-5-28
+		 * 名称：System.autoload
+		 * 功能：加载基础类
+		 * 说明：
+		 * 注意：
+		 * Example：
+		 */
+		'autoload': function () {
+			var classPath = System.classPath, tag = 'script',
+				scriptAttribute = System.Config.render.default.script.Attribute,
+				data = scriptAttribute, files = [];
+
+			var autoLoadFile = System.Config.autoLoadFile(System);
+			var srcs = autoLoadFile.files || [],
+				MINI = autoLoadFile.mini || false;
+
+			System.excluded = System.excluded || [];
+
+			// 这种格式可以防止浏览器默认对key自动排序
+			var jses = this.getAutoLoadFile(classPath);
 
 			if (!MINI) {
 				if (srcs.length) {
@@ -1523,55 +1548,55 @@
 		 *
 		 */
 		'tag': function (single, name, Attr, content) {
-			var args = arguments;
-			var len = args.length;
-			if (0 === len || len > 4) { throw new Error('Warning :参数至少有一个，且参数个数不能超过4个'); }
-			if (!System.isBoolean(single)) {
-				name = args[0];
-				Attr = args[1] || {};
-				content = args[2] || '';
-				single = false;
-			} else {
-				if (!System.isString(args[1])) { throw new Error('Warning :缺少标签名称'); }
-				single = args[0];
-				name = args[1] || null;
-				Attr = args[2] || {};
-				content = args[3] || '';
-			}
-			if (System.isString(Attr) || System.isArray(Attr)) {//属性可以省略
-				content = Attr;
-				Attr = {};
-			}
-
-			content = System.isNumeric(content) ? String(content) : content;
-
-			//check
-			if (System.empty(name) || !System.isString(name)) { throw new Error('Warning :标签名称不能为空，只能是字符串！'); }
-			if (Attr && !System.isPlainObject(Attr)) { throw new Error('Warning :<' + name + '>标签的属性,{Attr}参数必须是一个对象！'); }
-			if (content && !(System.isString(content) || System.isArray(content))) { throw new Error('Warning :<' + name + '>标签内容必须是字符串或者是数组'); }
-
-			var tag = [];
-			tag.push('<', name);
-			//拼接属性
-			if (Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)) {
-				Attr = System.toDict(Attr);
-				tag.push(System.renderTagAttributes(Attr).join(''));
-			}
-
-			if (single) {
-				tag.push(' />');
-			} else {
-				tag.push('>');
-				if (!System.empty(content)) {
-					if (System.isArray(content)) {
-						tag.push(content.join(''));
-					} else {
-						tag.push(content);
-					}
+				var args = arguments;
+				var len = args.length;
+				if (0 === len || len > 4) { throw new Error('Warning :参数至少有一个，且参数个数不能超过4个'); }
+				if (!System.isBoolean(single)) {
+					name = args[0];
+					Attr = args[1] || {};
+					content = args[2] || '';
+					single = false;
+				} else {
+					if (!System.isString(args[1])) { throw new Error('Warning :缺少标签名称'); }
+					single = args[0];
+					name = args[1] || null;
+					Attr = args[2] || {};
+					content = args[3] || '';
 				}
-				tag.push('</', name, '>');
-			}
-			return tag.join('');
+				if (System.isString(Attr) || System.isArray(Attr)) {//属性可以省略
+					content = Attr;
+					Attr = {};
+				}
+
+				content = System.isNumeric(content) ? String(content) : content;
+
+				//check
+				if (System.empty(name) || !System.isString(name)) { throw new Error('Warning :标签名称不能为空，只能是字符串！'); }
+				if (Attr && !System.isPlainObject(Attr)) { throw new Error('Warning :<' + name + '>标签的属性,{Attr}参数必须是一个对象！'); }
+				if (content && !(System.isString(content) || System.isArray(content))) { throw new Error('Warning :<' + name + '>标签内容必须是字符串或者是数组'); }
+
+				var tag = [];
+				tag.push('<', name);
+				//拼接属性
+				if (Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)) {
+					Attr = System.toDict(Attr);
+					tag.push(System.renderTagAttributes(Attr).join(''));
+				}
+
+				if (single) {
+					tag.push(' />');
+				} else {
+					tag.push('>');
+					if (!System.empty(content)) {
+						if (System.isArray(content)) {
+							tag.push(content.join(''));
+						} else {
+							tag.push(content);
+						}
+					}
+					tag.push('</', name, '>');
+				}
+				return tag.join('');
 		},
 		/**
 		 *
@@ -1667,7 +1692,7 @@
 			}
 		},
 		/**
- *
+ 		 *
 		 * @param hashLength
 		 * @returns {string}
 		 */
@@ -1692,6 +1717,7 @@
 
 			return Md5.md5(arr.join('')).replace(/[_\s]/g, '');
 		},
+
 		'uniqid': function (hashLength) {
 			return this.hash(System.timestamp().toString(), hashLength);
 		},

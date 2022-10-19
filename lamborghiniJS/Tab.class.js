@@ -9,8 +9,8 @@
 	}else{
 		var Tab = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tab :
-		typeof define === 'function' && define.amd ? define(factory) : System.Tab = Tab;
-		System.export("System.base.Tab", Tab);
+		typeof define === 'function' && define.amd ? define(Tab) : System.Tab = Tab;
+		System.export("System.Tab", Tab);
 	}
 
 })(this,function(System){

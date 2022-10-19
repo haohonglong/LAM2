@@ -22,7 +22,7 @@
 	}else{
 		var VNode = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = VNode :
-		typeof define === 'function' && define.amd ? define(factory) : System.VNode = VNode;
+		typeof define === 'function' && define.amd ? define(VNode) : System.VNode = VNode;
 		System.export("System.base.VNode", VNode);
 	}
 

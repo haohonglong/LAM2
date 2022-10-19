@@ -22,7 +22,7 @@
 	}else{
 		var Xhr = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Xhr :
-		typeof define === 'function' && define.amd ? define(factory) : System.Xhr = Xhr;
+		typeof define === 'function' && define.amd ? define(Xhr) : System.Xhr = Xhr;
 		System.export("System.base.Xhr", Xhr);
 	}
 

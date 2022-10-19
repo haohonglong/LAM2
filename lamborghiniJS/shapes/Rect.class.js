@@ -12,8 +12,8 @@
 	}else{
         var Rect = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Rect :
-		typeof define === 'function' && define.amd ? define(factory) : System['Html5']['Rect'] = Rect;
-		System.export("System.Html5.Rect", Rect);
+		typeof define === 'function' && define.amd ? define(Rect) : System['Html5']['Rect'] = Rect;
+		System.export("System.shapes.Rect", Rect);
 	}
 
 })(this,function(System){

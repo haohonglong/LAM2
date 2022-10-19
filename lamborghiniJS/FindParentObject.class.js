@@ -1,21 +1,24 @@
-(function(IT,factory){
+(function(global,factory){
 	'use strict';
-	var System = IT['LAM_20150910123700_'];
+	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+	var System = global['LAM_20150910123700_'];
 
 	if(!System){
 		return;
 	}else{
-		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-		typeof define === 'function' && define.amd ? define(factory(System)) :
-		(System['FindParentObject'] = factory(System));
+		var FindParentObject = factory(System);
+		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = FindParentObject :
+		typeof define === 'function' && define.amd ? define(FindParentObject) : System.FindParentObject = FindParentObject;
+		System.export("System.FindParentObject", FindParentObject);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','FindParentObject',System.classPath+'/base');
+	var Dom = System.require("System.base.Dom");
 
 	var __this__=null;
-	var Node = System.Dom.extend({
+	var Node = Dom.extend({
 		constructor: function (name,node){
 			this.base();
 			this.name=name;

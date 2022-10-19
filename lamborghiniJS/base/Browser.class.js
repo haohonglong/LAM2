@@ -24,7 +24,7 @@
 	}else{
 		var Browser = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Browser :
-		typeof define === 'function' && define.amd ? define(factory) : System.Browser = Browser;
+		typeof define === 'function' && define.amd ? define(Browser) : System.Browser = Browser;
 		System.export("System.base.Browser", Browser);
 	}
 

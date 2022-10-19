@@ -23,7 +23,7 @@
 	}else{
 		var Widget = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Widget :
-		typeof define === 'function' && define.amd ? define(factory) : System.Widget = Widget;
+		typeof define === 'function' && define.amd ? define(Widget) : System.Widget = Widget;
 		System.export("System.base.Widget", Widget);
 	}
 

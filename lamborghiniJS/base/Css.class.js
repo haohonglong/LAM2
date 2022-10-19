@@ -23,7 +23,7 @@
 	}else{
 		var Css = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Css :
-		typeof define === 'function' && define.amd ? define(factory) : System.Css = Css;
+		typeof define === 'function' && define.amd ? define(Css) : System.Css = Css;
 		System.export("System.base.Css", Css);
 	}
 

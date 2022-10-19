@@ -23,7 +23,7 @@
 	}else{
 		var Fsc = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Fsc :
-		typeof define === 'function' && define.amd ? define(factory) : System.Fsc = Fsc;
+		typeof define === 'function' && define.amd ? define(Fsc) : System.Fsc = Fsc;
 		System.export("System.base.Fsc", Fsc);
 	}
 

@@ -28,8 +28,8 @@
     }else{
         var Drag_xy = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag_xy :
-		typeof define === 'function' && define.amd ? define(factory) : System.Drag_xy = Drag_xy;
-		System.export("System.base.Drag_xy", Drag_xy);
+		typeof define === 'function' && define.amd ? define(Drag_xy) : System.Drag_xy = Drag_xy;
+		System.export("System.Drag_xy", Drag_xy);
     }
 
 })(this,function(System){
@@ -40,7 +40,7 @@
         '/Event.class'
     ],System.classPath+'/base');
     var __this__=null;
-    var fixEvt = System.Event.fixEvt;
+    var fixEvt = System.require("System.base.Event").fixEvt;
     //是否到最后了
     var whetherToLast=function(coord,that){
             switch(coord){
