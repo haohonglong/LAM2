@@ -24,13 +24,13 @@
 		var Object = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Object :
 		typeof define === 'function' && define.amd ? define(Object) : System.Object = Object;
-		System.export("System.base.Object", Object);
+		System.export("lam.base.Object", Object);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Base','Object',System.classPath+'/base');
-	var Base = System.require("System.base.Base");
+	var Base = System.require("lam.base.Base");
 	var __this__=null;
 
 	var Object = Base.extend({

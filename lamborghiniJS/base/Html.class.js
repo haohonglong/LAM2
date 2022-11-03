@@ -10,15 +10,18 @@
 		var Html = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Html :
 		typeof define === 'function' && define.amd ? define(Html) : System.Html = Html;
-		System.export("System.base.Html", Html);
+		System.export("lam.base.Html", Html);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Html',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
-	var Md5 = System.require("System.base.Md5");
-	var Template = System.require("System.base.Template");
+	var Dom = System.require("lam.base.Dom");
+	var Md5 = System.require("lam.base.Md5");
+	var Base64 = System.require("lam.base.Base64");
+	var Compiler = System.require("lam.base.Compiler");
+	var Template = System.require("lam.base.Template");
+	
 
 	var FILEPATH = System.classPath+'/base/Html.class.js';
 
@@ -39,45 +42,42 @@
 			Cache = null;
 
 	function getCache(name){
-			if(!Cache){
-				try{
-							if(System.LAM_ENV_DEV){
-									Cache = new System.Cache(
-											name || 'template'
-											,System.configure_cache.expires || 0);
-							}else{
-									Cache = new System.Storage(
-											name || 'template'
-											,System.configure_cache.type || sessionStorage
-					,System.configure_cache.expires || 0);
-							}
-							
-		}catch (e){
-							throw e;
-					}
+		if(!Cache){
+			try{
+				if(System.LAM_ENV_DEV) {
+					Cache = new System.Cache(
+							name || 'template'
+							,System.configure_cache.expires || 0);
+				} else {
+					Cache = new System.Storage(
+							name || 'template'
+							,System.configure_cache.type || sessionStorage
+							,System.configure_cache.expires || 0);
+				}
 
-
+			}catch (e){
+				throw e;
 			}
-			return Cache;
+
+		}
+		return Cache;
 	}
 
-
-	var temp = null;
+	
 	function ajax_success_callback(data, textStatus, jqXHR) {
-		temp = new Template();
+		var temp = new Template(null, Compiler.getInstance());
 		temp.setData(this.tpData);
 		temp.setDelimiters(this.delimiters);
 		data = temp.parse(data).trim();
-		temp = null;
 
 		if(System.isFunction(this.capture)){data = this.capture(data);}
 		if(parseInt(this.repeat) > 1 && System.isString(data)){data = this.loop(data);}
 		if(this.success && System.isFunction(this.success)){
-				this.success(data,textStatus,jqXHR);
+			this.success(data,textStatus,jqXHR);
 		}else{
-				if(this.$dom){
-						this.$dom.after(data).remove();
-				}
+			if(this.$dom){
+					this.$dom.after(data).remove();
+			}
 		}
 	}
 
@@ -172,11 +172,11 @@
                         	cache.add({
 			                    "path":url.trim(),
 			                    "type":System.isJsFile(url) ? 'js' : '',
-			                    "content": System.Base64.encode(data)
+			                    "content": Base64.encode(data)
 			                });
                         });
                     }else{
-                        ajax_success_callback.call(_this, System.Base64.decode(this.get(index).content), null, null);
+                        ajax_success_callback.call(_this, Base64.decode(this.get(index).content), null, null);
                     }
                 });
             }

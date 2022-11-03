@@ -10,13 +10,13 @@
 		var Linklist = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Linklist :
 		typeof define === 'function' && define.amd ? define(Linklist) : System.Linklist = Linklist;
-		System.export("System.base.Linklist", Linklist);
+		System.export("lam.base.Linklist", Linklist);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Node','Linklist',System.classPath+'/base');
-	var Node = System.require("System.base.Node");
+	var Node = System.require("lam.base.Node");
 	var __this__=null;
 	var Linklist = Node.extend({
 		constructor: function (single,tag,Attr,text,children,comment){

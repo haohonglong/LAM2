@@ -13,13 +13,13 @@
 		var Three = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Three :
 		typeof define === 'function' && define.amd ? define(Three) : System['Html5']['Three'] = Three;
-		System.export("System.base.Three", Three);
+		System.export("lam.base.Three", Three);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Three',System.classPath+'/base');
-	var Shape = System.require("System.base.Shape");
+	var Shape = System.require("lam.base.Shape");
 
 	var __this__=null;
 

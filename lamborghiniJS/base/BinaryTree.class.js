@@ -10,13 +10,13 @@
 		var BinaryTree = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = BinaryTree :
 		typeof define === 'function' && define.amd ? define(BinaryTree) : System.BinaryTree = BinaryTree;
-		System.export("System.base.BinaryTree", BinaryTree);
+		System.export("lam.base.BinaryTree", BinaryTree);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','BinaryTree',System.classPath+'/base');
-	var Helper = System.require("System.base.Helper");
+	var Helper = System.require("lam.base.Helper");
 
 	var None = Helper.extend({
 		constructor: function (root) {

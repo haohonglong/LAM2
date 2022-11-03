@@ -9,13 +9,13 @@
 		var Sort = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Sort :
 		typeof define === 'function' && define.amd ? define(Sort) : System.Sort = Sort;
-		System.export("System.Sort", Sort);
+		System.export("lam.Sort", Sort);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Sort',System.classPath+'/base');
-	var Helper = System.require("System.base.Helper");
+	var Helper = System.require("lam.base.Helper");
 	var __this__=null;
 
 

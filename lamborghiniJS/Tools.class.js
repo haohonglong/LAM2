@@ -25,13 +25,13 @@
 		var Tools = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tools :
 		typeof define === 'function' && define.amd ? define(Tools) : System.Tools = Tools;
-		System.export("System.Tools", Tools);
+		System.export("lam.Tools", Tools);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Html','Tools',System.classPath+'/base');
-	var Html = System.require("System.base.Html");
+	var Html = System.require("lam.base.Html");
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');

@@ -24,13 +24,13 @@
 		var Widget = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Widget :
 		typeof define === 'function' && define.amd ? define(Widget) : System.Widget = Widget;
-		System.export("System.base.Widget", Widget);
+		System.export("lam.base.Widget", Widget);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Html','Widget',System.classPath+'/base');
-	var Html = System.require("System.base.Html");
+	var Html = System.require("lam.base.Html");
 
 	var __this__=null;
 

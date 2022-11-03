@@ -24,13 +24,13 @@
 		var Css = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Css :
 		typeof define === 'function' && define.amd ? define(Css) : System.Css = Css;
-		System.export("System.base.Css", Css);
+		System.export("lam.base.Css", Css);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Css',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
+	var Dom = System.require("lam.base.Dom");
 	var __this__=null;
 
 	var Css = Dom.extend({

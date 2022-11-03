@@ -25,13 +25,13 @@
 		var Cookie = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Cookie :
 		typeof define === 'function' && define.amd ? define(Cookie) : System.Cookie = Cookie;
-		System.export("System.base.Cookie", Cookie);
+		System.export("lam.base.Cookie", Cookie);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Cookie',System.classPath+'/base');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 	var __this__=null;
 	var Cookie = Browser.extend({
 		constructor: function() {

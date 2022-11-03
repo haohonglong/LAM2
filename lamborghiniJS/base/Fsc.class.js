@@ -24,13 +24,13 @@
 		var Fsc = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Fsc :
 		typeof define === 'function' && define.amd ? define(Fsc) : System.Fsc = Fsc;
-		System.export("System.base.Fsc", Fsc);
+		System.export("lam.base.Fsc", Fsc);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Xhr','Fsc',System.classPath+'/base');
-	var Xhr = System.require("System.base.Xhr");
+	var Xhr = System.require("lam.base.Xhr");
 
 	var __this__=null;
 	var Fsc = Xhr.extend({

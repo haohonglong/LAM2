@@ -54,13 +54,13 @@
 		var PopupLayer = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = PopupLayer :
 		typeof define === 'function' && define.amd ? define(PopupLayer) : System.PopupLayer = PopupLayer;
-		System.export("System.PopupLayer", PopupLayer);
+		System.export("lam.PopupLayer", PopupLayer);
 	 }
 
  })(this,function(System){
 	 'use strict';
 	 System.is(System,'Browser','PopupLayer',System.classPath+'/base');
-	 var Browser = System.require("System.base.Browser");
+	 var Browser = System.require("lam.base.Browser");
 
 	 var __this__=null;
 	 var PopupLayer = Browser.extend({

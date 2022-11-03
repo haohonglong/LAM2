@@ -10,13 +10,13 @@
 		var Slider = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Slider :
 		typeof define === 'function' && define.amd ? define(Slider) : System.Slider = Slider;
-		System.export("System.Slider", Slider);
+		System.export("lam.Slider", Slider);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Layout','Slider',System.classPath+'/base');
-	var Layout = System.require("System.base.Layout");
+	var Layout = System.require("lam.base.Layout");
 	var __this__=null;
 	/**
 	 * @author: lhh

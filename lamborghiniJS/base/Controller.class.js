@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:202-08-14
+ * 修改日期:2022-10-21
  * 名称：the base of controller
  * 功能：
  * 说明 : 这个基类不允许被直接实例化，要实例化它的派生类。
@@ -24,13 +24,13 @@
         var Controller = factory(System);
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Controller :
         typeof define === 'function' && define.amd ? define(Controller) : System.Controller = Controller;
-        System.export("System.base.Controller", Controller);
+        System.export("lam.base.Controller", Controller);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Component','Controller',System.classPath+'/base');
-    var Component = System.require("System.base.Component");
+    var Component = System.require("lam.base.Component");
     var __this__=null;
 
     var Controller = Component.extend({
@@ -46,15 +46,13 @@
             this.ajaxConfig = null;
             this.title = 'title';
             this.content = {};
-            this.view = null;
+            this.view = init.view || null;
 
         },
         '_className':'Controller',
         'init':function () {},
+        'setView': function(view){ this.view = view; },
         'getView':function(){
-            if(!(this.view instanceof System.View)){
-                this.view = new System.View();
-            }
             this.view.title      = this.title;
             this.view.ajaxConfig = this.ajaxConfig;
             this.view.viewpath   = this.viewpath;

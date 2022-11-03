@@ -11,13 +11,13 @@
 		var Sport = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Sport :
 		typeof define === 'function' && define.amd ? define(Sport) : System.Sport = Sport;
-		System.export("System.Sport", Sport);
+		System.export("lam.Sport", Sport);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Css','Sport',System.classPath+'/base');
-	var Css = System.require("System.base.Css");
+	var Css = System.require("lam.base.Css");
 
 	var __this__=null;
 	var MOVE_TYPE={

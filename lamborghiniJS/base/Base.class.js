@@ -15,7 +15,7 @@
 		var Base = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Base :
 		typeof define === 'function' && define.amd ? define(Base) : System.Base = Base;
-		System.export("System.base.Base", Base);
+		System.export("lam.base.Base", Base);
 
 	}
 

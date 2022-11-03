@@ -24,13 +24,13 @@
 		var Validation = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Validation :
 		typeof define === 'function' && define.amd ? define(Validation) : System.Validation = Validation;
-		System.export("System.Validation", Validation);
+		System.export("lam.Validation", Validation);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Validation',System.classPath+'/base');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 	var __this__=null;
 	var Validation = Browser.extend({
 		constructor: function (D){

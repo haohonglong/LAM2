@@ -25,13 +25,13 @@
 		var Browser = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Browser :
 		typeof define === 'function' && define.amd ? define(Browser) : System.Browser = Browser;
-		System.export("System.base.Browser", Browser);
+		System.export("lam.base.Browser", Browser);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Browser',System.classPath+'/base');
-	var Helper = System.require("System.base.Helper");
+	var Helper = System.require("lam.base.Helper");
 	return System.run([window,window['document'],jQuery],function(window,document,$,undefined){
 		var __this__=null,
 			isOpera = System.type("Opera");

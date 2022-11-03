@@ -9,13 +9,13 @@
         var Dropdown = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Dropdown :
 		typeof define === 'function' && define.amd ? define(Dropdown) : System.Dropdown = Dropdown;
-		System.export("System.Dropdown", Dropdown);
+		System.export("lam.Dropdown", Dropdown);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Dom','Dropdown',System.classPath+'/base');
-    var Dom = System.require("System.base.Dom");
+    var Dom = System.require("lam.base.Dom");
     var __this__=null;
 
     var Dropdown = Dom.extend({

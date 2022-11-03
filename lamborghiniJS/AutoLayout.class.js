@@ -10,13 +10,13 @@
 		var AutoLayout = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = AutoLayout :
 		typeof define === 'function' && define.amd ? define(AutoLayout) : System.AutoLayout = AutoLayout;
-		System.export("System.AutoLayout", AutoLayout);
+		System.export("lam.AutoLayout", AutoLayout);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Layout','AutoLayout',System.classPath+'/base');
-	var Layout = System.require("System.base.Layout");
+	var Layout = System.require("lam.base.Layout");
 	var __this__=null;
 	/**
 	 * @author: lhh

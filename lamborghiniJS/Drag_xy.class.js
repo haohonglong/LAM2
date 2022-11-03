@@ -7,7 +7,7 @@
  * 参数：(dom_node) dom,
          (Object)   init
  * Example:
-            new window.System.Drag_xy(document.getElementById("first"),{
+            new window.lam.Drag_xy(document.getElementById("first"),{
                                                        'coord':'y',
                                                        'that':F,
                                                        'window_h':window_h,
@@ -29,18 +29,18 @@
         var Drag_xy = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag_xy :
 		typeof define === 'function' && define.amd ? define(Drag_xy) : System.Drag_xy = Drag_xy;
-		System.export("System.Drag_xy", Drag_xy);
+		System.export("lam.Drag_xy", Drag_xy);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Drag','Drag_xy',System.classPath+'/base');
-    var Drag = System.require("System.base.Drag");
+    var Drag = System.require("lam.base.Drag");
     System.import([
         '/Event.class'
     ],System.classPath+'/base');
     var __this__=null;
-    var fixEvt = System.require("System.base.Event").fixEvt;
+    var fixEvt = System.require("lam.base.Event").fixEvt;
     //是否到最后了
     var whetherToLast=function(coord,that){
             switch(coord){

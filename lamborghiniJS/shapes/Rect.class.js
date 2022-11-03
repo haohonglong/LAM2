@@ -13,13 +13,13 @@
         var Rect = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Rect :
 		typeof define === 'function' && define.amd ? define(Rect) : System['Html5']['Rect'] = Rect;
-		System.export("System.shapes.Rect", Rect);
+		System.export("lam.shapes.Rect", Rect);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Rect',System.classPath+'/base');
-    var Shape = System.require("System.base.Shape");
+    var Shape = System.require("lam.base.Shape");
 
 	var __this__=null;
 

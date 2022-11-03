@@ -10,13 +10,13 @@
 		var Layout = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Layout :
 		typeof define === 'function' && define.amd ? define(Layout) : System.Layout = Layout;
-		System.export("System.base.Layout", Layout);
+		System.export("lam.base.Layout", Layout);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Html','Layout',System.classPath+'/base');
-	var Html = System.require("System.base.Html");
+	var Html = System.require("lam.base.Html");
 
 	var __this__=null;
 	/**

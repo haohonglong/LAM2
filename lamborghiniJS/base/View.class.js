@@ -10,17 +10,23 @@
 		var View = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = View :
 		typeof define === 'function' && define.amd ? define(View) : System.View = View;
-		System.export("System.base.View", View);
+		System.export("lam.base.View", View);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','View',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 
 	var __this__=null;
 	var View = Component.extend({
-		constructor: function () {
+		/**
+		 * @author lhh
+		 * 说明：
+		 * 注意：
+		 * @param temp{System.Template}  
+		 */
+		constructor: function (temp) {
 			this.base();
 			__this__ = this;
 			this.suffix = '.html';
@@ -28,7 +34,7 @@
 			this.ajaxConfig = null;
 			this.title = 'title';
 			this.viewName = "";
-			this.temp = new System.Template();
+			this.temp = temp;
 		},
 		'_className':'View',
 		'__constructor':function(){},

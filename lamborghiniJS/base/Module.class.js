@@ -10,13 +10,13 @@
         var Module = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Module :
 		typeof define === 'function' && define.amd ? define(Module) : System.Module = Module;
-		System.export("System.base.Module", Module);
+		System.export("lam.base.Module", Module);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Html','Module',System.classPath+'/base');
-    var Html = System.require("System.base.Html");
+    var Html = System.require("lam.base.Html");
     var __this__=null;
     var jqueryMap = {};
     var Module = Html.extend({

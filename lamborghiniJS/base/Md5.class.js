@@ -24,13 +24,13 @@
 		var Md5 = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Md5 :
 		typeof define === 'function' && define.amd ? define(Md5) : System.Md5 = Md5;
-		System.export("System.base.Md5", Md5);
+		System.export("lam.base.Md5", Md5);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Md5',System.classPath+'/base');
-    var Component = System.require("System.base.Component");
+    var Component = System.require("lam.base.Component");
 	var __this__=null;
 	var Md5 = Component.extend({
 		constructor: function() {

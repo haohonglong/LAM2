@@ -45,6 +45,7 @@
 #### common/config/config.js 里配置相关参数（参考 二十、Config.js 配置参数）		
 
 #### 1.入口文件(index.html)：
+```html
         <!doctype html>
         <html lang="en">
         <head>
@@ -60,6 +61,7 @@
             </script>
         </head>
         </html>
+```
 
 #### 2.浏览器上访问：http://lam2:8080/brandhall/index.html?r=room/list
     room ：控制器名
@@ -172,26 +174,30 @@
 			类结构:(继承参考 六、继承) 继承用basejs方式 
 			
 ## 自定义类模板样例
+```javascript	
 			
-			
-		(function(IT,factory){
+		(function(global,factory){
 			'use strict';
-			var System = IT['LAM_20150910123700_'];
-		
+
+			global = typeof globalThis !== 'undefined' ? globalThis : global || self;
+			var System = global['LAM_20150910123700_'];
+
 			if(!System){
 				return;
 			}else{
-				typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(System) :
-				typeof define === 'function' && define.amd ? define(factory(System)) :
-				(System['View'] = factory(System));
+				var View = factory(System);
+				typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = View :
+				typeof define === 'function' && define.amd ? define(View) : System.View = View;
+				System.export("lam.base.View", View);
 			}
-		
+
 		})(this,function(System){
 			'use strict';
-			System.is(System,'Dom','View',System.classPath+'/base');
+			System.is(System,'Component','View',System.classPath+'/base');
+			var Component = System.require("lam.base.Component");
 		
 			var __this__=null;
-			var View = System.Dom.extend({
+			var View = Component.extend({
 				constructor: function () {
 					this.base();
 					__this__ = this;
@@ -218,7 +224,7 @@
 			return View;
 		});
 
-
+```
 
 ## 三、功能模块扩充
 		功能独立 易于扩充 不影响原有功能
@@ -250,7 +256,13 @@
 		2.如果1 不能执行，就用xhr方式加载 .js ，这种方式可以在.js文件里直接加载其它.js文件
 		3.如果不支持xhr方式，就调用 load() 方法
 			1.下面这种不仅适合脚本文件和样式文件的引入还适合less文件的引入。load方法是加载指定的文件到加载器中，load方法可以链式调用多个不同类型文件，当调用到print方法的时候才会一次性从加载器里输出到页面中
-				LAMJS.Loader
+```javascript
+
+			LAM.run(function(){
+				'use strict';
+				var System = this;
+
+				System.Loader
 					.load({
 						'baseUrl':jsPath,//baseUrl 默认是 项目的根目录（_ROOT_）
 						'suffix':'.js',//
@@ -298,26 +310,44 @@
 							'/lib'
 						]
 					}).print();
-					
+
+
+			});
+				
+```
 			上面依次输出的是js、css、less文件。用对象的方式可以传自定义参数
 
 			2.调用加载器时打印出指定标签(或自定义标签)
-						LAMJS.Loader
-            					.load({//打印指定的标签（tag 属性是打印出指定的标签）
-            						'tag':[
-            							System.Html.tag(true,'meta',{"name":"csrf-param","content":"_csrf"}),
-            							System.Html.tag(true,'meta',{"name":"csrf-param","content":"YWdSbEhVZnElMDUmGRQnMwsQGg4ROFUCDg8qDSlkNggVHmYpAXgtRg=="}),
-            							System.Html.tag('title',{},'PaperPass论文检测_论文查重_免费论文检测系统_毕业论文抄袭检测'),
-            							System.Html.tag(true,'meta',{"name":"description","content":"★PaperPass★论文检测-全球首个中文论文相似度检测网站;提供论文查重,免费论文检测系统,毕业论文抄袭检测。最权威,动态指纹技术保障,已服务超300万人论文检测。"}),
-            							System.Html.tag(true,'meta',{"name":"keywords","content":"论文,论文检测,论文查重,免费论文检测,检测系统,论文抄袭,毕业论文"}),
-            						]
-            					})
-            					.print();
+```javascript
+			LAM.run(function(){
+				'use strict';
+				var System = this;
+
+				System.Loader
+					.load({//打印指定的标签（tag 属性是打印出指定的标签）
+						'tag':[
+							System.Html.tag(true,'meta',{"name":"csrf-param","content":"_csrf"}),
+							System.Html.tag(true,'meta',{"name":"csrf-param","content":"YWdSbEhVZnElMDUmGRQnMwsQGg4ROFUCDg8qDSlkNggVHmYpAXgtRg=="}),
+							System.Html.tag('title',{},'PaperPass论文检测_论文查重_免费论文检测系统_毕业论文抄袭检测'),
+							System.Html.tag(true,'meta',{"name":"description","content":"★PaperPass★论文检测-全球首个中文论文相似度检测网站;提供论文查重,免费论文检测系统,毕业论文抄袭检测。最权威,动态指纹技术保障,已服务超300万人论文检测。"}),
+							System.Html.tag(true,'meta',{"name":"keywords","content":"论文,论文检测,论文查重,免费论文检测,检测系统,论文抄袭,毕业论文"}),
+						]
+					})
+					.print();
+
+			});
+						
+```
 				
 			注意：tag 、js 、css 属性名称在load方法里只能选择一个。选择了tag属性时其余的属性都可不用,打印指定标签时必须要调用Html对象里的静态方法tag
 				
 			3.下面这种仅适合脚本文件的引入（只引入脚本时推荐使用这种方式）
 			用xhr方式加载 System.Xhr.include() 和 System.import() 这俩方法几乎类似,不同的时 System.import() 调用的是jQuery ajax 方式 ，System.Xhr.include() 用的是原生的XMLHttpRequest
+```javascript
+			LAM.run(function(){
+				'use strict';
+				var System = this;
+
 				System.import(['http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'],false);
 
 				System
@@ -346,7 +376,9 @@
 	                    '/Tools.class',
 	                    '/PaintBase.class'
 	                ],System.classPath);
-
+			});
+				
+```
 
 
 ## 六、继承
@@ -738,7 +770,8 @@
 					上面的代码生成下面的字符串
 						<p>这是一个p标签</p>
 					可以嵌套n个标签，方式如下：
-					    LAMJS.run(function () {
+```javascript
+					    LAM.run(function () {
 	                        'use strict';
 	                        var System = this;
 	                        System.Html.tag('nav',{},
@@ -773,10 +806,10 @@
 								);
 	                        
 	                    });
-						
+```
 					
 					上面的代码生成下面的字符串
-					
+```html
 					<nav>
 	                  <ul class="pagination">
 	                    <li>
@@ -796,7 +829,7 @@
 	                    </li>
 	                  </ul>
 	                </nav>
-                
+```
             LAMJS.Html.renderTagAttributes(Attr);
                  名称： Html.renderTagAttributes
                  功能：
@@ -949,7 +982,9 @@
 			2.根据占位符里file参数请求另一个页面，然后替换掉当前占位符
 		警告:有些浏览器要支持跨域才可以!!!，解决方法：在服务器环境里运行
 		步骤：
-			1.自定义标签:<include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" capture="function(s){return LAM.Template.jQCompile(s,
+			1.自定义标签:
+```html
+			<include repeat="0" tp-data="{}"  file="{{LAM.COMPONENTS}}/list.html" capture="function(s){return LAM.Template.jQCompile(s,
                                 {'list':[
                                 {'name':'李晨','style':'新古典,其他,简约'},
                                 {'name':'刘军','style':'地中海-田园,北欧,其他,简约'},
@@ -958,6 +993,7 @@
                                 {'name':'马良','style':'新古典,地中海-田园,北欧,简约'},
                                 {'name':'赵明','style':'新古典,地中海-田园,北欧,其他'}
                                 ]})}"></include>
+```
                  note:
                         beforeSend 属性是可选的，这里的this就是jQuery Ajax的settings,数据被发送之前设置jQuery Ajax提供的所有参数，
                                      这里就可以设置一个beforeSend回调函数，其余的参数都可以在这个函数里设置,
@@ -971,18 +1007,21 @@
    
 			2.先要加载Html.class 类文件
 				//run方法可以修改创建tag方式 
-				LAMJS.run(function(){
+```javascript
+				LAM.run(function(){
 						var System=this;
-						3. Html.include 方法 根据include 标签里的file 找到指定的html 文件替换当前的include 标签
+						// 3. Html.include 方法 根据include 标签里的file 找到指定的html 文件替换当前的include 标签
 						System.Html.include($('include'));
 						
-						也可用Html.load 方法 替代Html.include 不同的是：它调用jQuery load 方法 include 标签里只有一个file属性,把请求的内容包裹在占位符里，而不是像Html.include方法是请求的内容替换占位符。
+						// 也可用Html.load 方法 替代Html.include 不同的是：它调用jQuery load 方法 include 标签里只有一个file属性,把请求的内容包裹在占位符里，
+						// 而不是像Html.include方法是请求的内容替换占位符。
 						System.Html.load($('include'));
 						
 						
 
 				 });
-				 
+```
+
 ## 十七-1、include指令标签 预处理加载引入其他任何文本文件
             跟上面一个最大不同是不依赖dom节点查找！它会递归查找替换每个子页面里的占位符！
             main页面推荐用上面的方式
@@ -1048,7 +1087,7 @@
 													
   2. Controller 范例二、(面向对象方式):
 
-	
+```javascript
 			(function(IT,factory){
                 'use strict';
                 var System = IT['LAM_20150910123700_'];
@@ -1107,7 +1146,7 @@
             });
             
             
-
+```
 
 
 
@@ -1132,6 +1171,7 @@
 												render方法参数3就可以设置一个beforeSend回调函数，其余的参数都可以在这里设置。
 												函数里的两个参数请参考jQuery Ajax API。
 			//views/index/index.html
+```html
 				<!doctype html>
                 <html>
                 <head>
@@ -1171,7 +1211,7 @@
                 </div>
                 </body>
                 </html>
-
+```
 
                 访问url格式：
                 		localhost/project/index.html?r=controllerName/action
@@ -1216,6 +1256,7 @@
                      
 
 ## 二十一、缓存机制
+```javascript
           var cache = new LAM.Cache('m1023432').find('id',1,function (index,i) {
           		var data={
           			"id":id,
@@ -1235,7 +1276,7 @@
           
           		}
           	});
-          	
+```
           	m1023432: 缓存标识符，初始化对象的时候，类似mysql数据库的表名称
           	id: 唯一标识符，类似数据库表字段里的unique id
           	1 : 要查询id的值
@@ -1370,7 +1411,8 @@
         
         <#endBlock> 这里是定义了block结束标识符位置
         
-##### it is usage of case that a page is load that was not via include(不通过include加载页面的用例)：   
+##### it is usage of case that a page is load that was not via include(不通过include加载页面的用例)： 
+```html  
         <script type="text/javascript">
         LAM.run(function () {
                 'use strict';
@@ -1410,7 +1452,7 @@
                 <% });%>
             <#Block:end>
         </script>  
-    
+```
 ## 二十三、参考附录
 	一、闭包：(内部函数总是可以访问的函数外部的变量和参数，即使在外部函数返回)
 			  AB俩函数，A包裹B并返回B的原型后被A外的变量c引用，此时B就是闭包。闭包在外面可以访问到A里面的变量。

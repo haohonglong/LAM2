@@ -10,13 +10,13 @@
         var Event = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Event :
 		typeof define === 'function' && define.amd ? define(Event) : System.Event = Event;
-		System.export("System.base.Event", Event);
+		System.export("lam.base.Event", Event);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Browser','Event',System.classPath+'/base');
-    var Browser = System.require("System.base.Browser");
+    var Browser = System.require("lam.base.Browser");
     var __this__=null;
     var Event = Browser.extend({
         constructor: function(e){

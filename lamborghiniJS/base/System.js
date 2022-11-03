@@ -10,6 +10,7 @@
  * @author：lhh
  * 创建日期:2015-3-20
  * 修改日期:2022-9-1
+ * 		  :2022-10-23
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -51,11 +52,14 @@
 })(this, function (global, namespace, undefined) {
 	'use strict';
 
+	var _module = null;
+
 	/**
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2015-11-22
 	 * 修改日期：2022-9-1
+	 * 		  ：2022-10-23
 	 * 名称：module
 	 * 功能：模块
 	 * 说明：
@@ -63,8 +67,8 @@
 	 * Example：
 	 */
 	function module(System){
-		System.module = System.createDict();
-		System.module.exports = System.createDict();
+		_module = System.createDict();
+		_module.exports = System.createDict();
 	}
 
 	// Used for trimming whitespace
@@ -402,7 +406,7 @@
 			module(System);
 			System.Config = Config || System.isFunction(System.configure) ? System.configure.call(System, System) : (System.isset(System.Config) && System.Config);
 			System.Config.files = System.Config.files || [];
-			System.classPath = System.Config.getClassPath(System);
+			System.classPath = System.LAMPATH = System.Config.getClassPath(System);
 			System.configure_cache = System.Config.configure_cache || System.createDict();
 			System.components = System.merge({}, [System.Config.components]) || System.createDict();
 			System.each(System.merge({}, [System.Config]), function (name) { System[name] = this; });
@@ -447,29 +451,29 @@
 		'getAutoLoadFile': function(classPath) {
 			classPath = classPath || System.classPath;
 			return [
-				{ 'name': 'jquery', 'path': classPath + '/jQuery/jquery.js' },
-				{ 'name': 'Base', 'path': classPath + '/base/Base.class.js' },
-				{ 'name': 'Object', 'path': classPath + '/base/Object.class.js' },
-				{ 'name': 'Component', 'path': classPath + '/base/Component.class.js' },
-				{ 'name': 'Error', 'path': classPath + '/base/Error.class.js' },
-				{ 'name': 'Md5', 'path': classPath + '/base/Md5.class.js' },
-				{ 'name': 'Base64', 'path': classPath + '/base/Base64.class.js' },
-				{ 'name': 'Compiler', 'path': classPath + '/base/Compiler.class.js' },
-				{ 'name': 'Cache', 'path': classPath + '/base/Cache.class.js' },
-				{ 'name': 'PowerCookie', 'path': classPath + '/base/PowerCookie.class.js' },
-				{ 'name': 'Storage', 'path': classPath + '/base/Storage.class.js' },
-				{ 'name': 'HttpRequest', 'path': classPath + '/base/HttpRequest.class.js' },
-				{ 'name': 'Helper', 'path': classPath + '/base/Helper.class.js' },
-				{ 'name': 'Browser', 'path': classPath + '/base/Browser.class.js' },
-				{ 'name': 'Event', 'path': classPath + '/base/Event.class.js' },
-				{ 'name': 'Dom', 'path': classPath + '/base/Dom.class.js' },
-				{ 'name': 'View', 'path': classPath + '/base/View.class.js' },
-				{ 'name': 'Template', 'path': classPath + '/base/Template.class.js' },
-				{ 'name': 'Html', 'path': classPath + '/base/Html.class.js' },
-				{ 'name': 'Loader', 'path': classPath + '/base/Loader.class.js' },
-				{ 'name': 'Controller', 'path': classPath + '/base/Controller.class.js' },
-				{ 'name': 'Model', 'path': classPath + '/base/Model.class.js' },
-				{ 'name': 'Router', 'path': classPath + '/base/Router.class.js' }
+				{ 'name': 'jquery', 'path': classPath + '/jQuery/jquery.js' }
+				,{ 'name': 'Base', 'path': classPath + '/base/Base.class.js' }
+				,{ 'name': 'Object', 'path': classPath + '/base/Object.class.js' }
+				,{ 'name': 'Component', 'path': classPath + '/base/Component.class.js' }
+				,{ 'name': 'Error', 'path': classPath + '/base/Error.class.js' }
+				,{ 'name': 'Md5', 'path': classPath + '/base/Md5.class.js' }
+				,{ 'name': 'Base64', 'path': classPath + '/base/Base64.class.js' }
+				,{ 'name': 'Compiler', 'path': classPath + '/base/Compiler.class.js' }
+				,{ 'name': 'Cache', 'path': classPath + '/base/Cache.class.js' }
+				,{ 'name': 'PowerCookie', 'path': classPath + '/base/PowerCookie.class.js' }
+				,{ 'name': 'Storage', 'path': classPath + '/base/Storage.class.js' }
+				,{ 'name': 'HttpRequest', 'path': classPath + '/base/HttpRequest.class.js' }
+				,{ 'name': 'Helper', 'path': classPath + '/base/Helper.class.js' }
+				,{ 'name': 'Browser', 'path': classPath + '/base/Browser.class.js' }
+				,{ 'name': 'Event', 'path': classPath + '/base/Event.class.js' }
+				,{ 'name': 'Dom', 'path': classPath + '/base/Dom.class.js' }
+				,{ 'name': 'View', 'path': classPath + '/base/View.class.js' }
+				,{ 'name': 'Template', 'path': classPath + '/base/Template.class.js' }
+				,{ 'name': 'Html', 'path': classPath + '/base/Html.class.js' }
+				,{ 'name': 'Loader', 'path': classPath + '/base/Loader.class.js' }
+				,{ 'name': 'Controller', 'path': classPath + '/base/Controller.class.js' }
+				,{ 'name': 'Model', 'path': classPath + '/base/Model.class.js' }
+				// ,{ 'name': 'Router', 'path': classPath + '/base/Router.class.js' }
 			];
 		},
 		/**
@@ -1204,6 +1208,7 @@
 		 * 产品介绍：
 		 * 创建日期：2016-10-23
 		 * 修改日期：2016-11-9
+		 * 		  ：2022-10-23
 		 * 名称：System.require
 		 * 功能：调用export的接口
 		 * 说明：
@@ -1213,17 +1218,23 @@
 		 * Example：
 		 */
 		 'require':function(name){
-			if(System.module.exports[name]){
-				return System.module.exports[name];
-			}else{
-				throw new Error(['Warning: \'',name,'\' 没有定义'].join(''));
+			if(name){
+				if(_module.exports[name]){
+					return _module.exports[name];
+				}else{
+					throw new Error(['Warning: \'',name,'\' 没有定义'].join(''));
+				}
+			} else {
+				return System.clone(true, _module.exports);
 			}
+			
 		},
 		/**
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-10-23
 		 * 修改日期：2016-10-23
+		 * 		  ：2022-10-23
 		 * 名称：System.export
 		 * 功能：设置对外提供接口
 		 * 说明：
@@ -1234,10 +1245,10 @@
 		 * Example：
 		 */
 		'export':function(name,value){
-			if(System.module.exports[name]){
+			if(_module.exports[name]){
 				throw new Error(['Warning: \'',name,'\' 名称已经存在,请换个名字'].join(''));
 			}else{
-				System.module.exports[name] = value;
+				_module.exports[name] = value;
 			}
 		},
 
@@ -1697,7 +1708,7 @@
 		 * @returns {string}
 		 */
 		'hash': function (code, hashLength) {
-			var Md5 = System.require("System.base.Md5");
+			var Md5 = System.require("lam.base.Md5");
 			code = code || null;
 			hashLength = Number(hashLength);
 			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) { hashLength = 32; }

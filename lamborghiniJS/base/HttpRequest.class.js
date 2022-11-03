@@ -24,13 +24,13 @@
 		var HttpRequest = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = HttpRequest :
 		typeof define === 'function' && define.amd ? define(HttpRequest) : System.HttpRequest = HttpRequest;
-		System.export("System.base.HttpRequest", HttpRequest);
+		System.export("lam.base.HttpRequest", HttpRequest);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','HttpRequest',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 
 	var __this__=null;
 

@@ -36,13 +36,13 @@
         var Drag = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Drag :
 		typeof define === 'function' && define.amd ? define(Drag) : System.Drag = Drag;
-		System.export("System.base.Drag", Drag);
+		System.export("lam.base.Drag", Drag);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Browser','Drag',System.classPath+'/base');
-    var Browser = System.require("System.base.Browser");
+    var Browser = System.require("lam.base.Browser");
     System.import([
          '/Event.class'
         ,'/Css.class'

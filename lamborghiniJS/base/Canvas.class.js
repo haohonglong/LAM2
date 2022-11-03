@@ -10,14 +10,14 @@
 		var Canvas = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Canvas :
 		typeof define === 'function' && define.amd ? define(Canvas) : System.Html5.Canvas = Canvas;
-		System.export("System.base.Canvas", Canvas);
+		System.export("lam.base.Canvas", Canvas);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.import(['/Browser.class'],System.classPath+'/base');
 	System.is('System.Browser','System.Html5.Canvas');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 	var __this__=null;
 	/**
 	 *

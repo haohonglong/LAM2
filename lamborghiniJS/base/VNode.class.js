@@ -23,13 +23,13 @@
 		var VNode = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = VNode :
 		typeof define === 'function' && define.amd ? define(VNode) : System.VNode = VNode;
-		System.export("System.base.VNode", VNode);
+		System.export("lam.base.VNode", VNode);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','VNode',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
+	var Dom = System.require("lam.base.Dom");
 	var __this__=null;
 	
 	var VNode = Dom.extend({

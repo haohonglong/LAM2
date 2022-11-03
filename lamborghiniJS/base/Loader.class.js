@@ -32,16 +32,16 @@
         }]);
 
 
-        System.export("System.base.Loader", Loader);
-        System.export("System.base.Loader.import", System.import);
-        System.export("System.base.Loader.loadScript", System.loadScript);
+        System.export("lam.base.Loader", Loader);
+        System.export("lam.base.Loader.import", System.import);
+        System.export("lam.base.Loader.loadScript", System.loadScript);
 
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Html','Loader',System.classPath+'/base');
-    var Html = System.require("System.base.Html");
+    var Html = System.require("lam.base.Html");
     var html,head,body,meta,script,link;
     var create;
     var sAttribute   = System.Config.render.default.script.Attribute;

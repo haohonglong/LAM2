@@ -10,13 +10,13 @@
 		var Model = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Model :
 		typeof define === 'function' && define.amd ? define(Model) : System.Model = Model;
-		System.export("System.base.Model", Model);
+		System.export("lam.base.Model", Model);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Model',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 
 	var __this__=null;
 	var Model = Component.extend({

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-9-7
+ * 修改日期:2022-10-22
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -24,19 +24,19 @@
 		var Template = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Template :
 		typeof define === 'function' && define.amd ? define(Template) : System.Template = Template;
-		System.export("System.base.Template", Template);
+		System.export("lam.base.Template", Template);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Template',System.classPath+'/base');
-    var Component = System.require("System.base.Component");
+    var Component = System.require("lam.base.Component");
+    var Compiler = System.require("lam.base.Compiler");
+    var Cache = System.require("lam.base.Cache");
     
 
     System.listen(function () {
         if(System.isFunction(System.import)){
-            System.import(['/Cache.class'],System.classPath+'/base');
-            System.import(['/Compiler.class'],System.classPath+'/base');
             System.import(['/Html.class'],System.classPath+'/base');
             return true;
         }
@@ -53,7 +53,7 @@
 
 	var __this__=null;
 	var guid=0;
-    var _cache = new System.Cache('block');
+    var _cache = new Cache('block');
     var temp = null;
 
 	var Template = Component.extend({
@@ -64,7 +64,7 @@
 			guid++;
 			this.cache = cache || _cache;
 			_cache = this.cache;
-			this.compiler = compiler || System.Compiler.getInstance();
+			this.compiler = compiler || Compiler.getInstance();
 			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
@@ -700,7 +700,7 @@
                             }
                             if(System.isPlainObject(data.data)){
                                 // content = Template.compile(content,data.data);
-                                content = System.Compiler.jQCompile(content,data.data);
+                                content = Compiler.jQCompile(content,data.data);
                             }
                         }
                         if(System.isFunction(data.func)){
@@ -952,7 +952,7 @@
          */
 		'beforParse':function (s) {
             if(this.datas) {
-                s = Template.compile(s,this.datas,this.delimiters);
+                s = this.compiler.compile(s,this.datas,this.delimiters);
             }
             s = this.define2(this.define(s));
             s = this.empty(s);
@@ -1071,7 +1071,7 @@
      * @returns {*|String}
      */
 	Template.compile=function(S,D,delimiters){
-        return System.Compiler.getInstance().compile(S,D,delimiters);
+        return Compiler.getInstance().compile(S,D,delimiters);
 	};
 
 
@@ -1095,7 +1095,7 @@
         var arr = [];
         while((arr = re.exec(S)) && System.isArray(arr)){
             S = S.replace(arr[0],function () {
-                return System.Compiler.jQCompile(arr[2],D);
+                return Compiler.jQCompile(arr[2],D);
             });
             re.lastIndex = 0;
 		}
@@ -1153,7 +1153,7 @@
                         data = System.merge(data,[json.data]);
                     }
                     if(System.isPlainObject(data)){
-                        content = System.Compiler.jQCompile(content,data);
+                        content = Compiler.jQCompile(content,data);
                     }
                 }
 

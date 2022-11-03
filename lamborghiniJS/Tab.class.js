@@ -10,18 +10,17 @@
 		var Tab = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Tab :
 		typeof define === 'function' && define.amd ? define(Tab) : System.Tab = Tab;
-		System.export("System.Tab", Tab);
+		System.export("lam.Tab", Tab);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','Tab',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
-	System.import([
-		'/Event.class'
-	],System.classPath+'/base');
+	var Dom = System.require("lam.base.Dom");
+	var fixEvt = System.require("lam.base.Event").fixEvt;
+	
 	var __this__=null;
-	var fixEvt = System.Event.fixEvt;
+
 	/**
 	 *
 	 * @author lhh

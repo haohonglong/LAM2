@@ -9,13 +9,13 @@
 		var Roll = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Roll :
 		typeof define === 'function' && define.amd ? define(Roll) : System.Roll = Roll;
-		System.export("System.Roll", Roll);
+		System.export("lam.Roll", Roll);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Roll',System.classPath+'/base');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 
 	var __this__=null;
 	/**

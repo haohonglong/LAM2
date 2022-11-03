@@ -24,13 +24,13 @@
 		var Component = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Component :
 		typeof define === 'function' && define.amd ? define(Component) : System.Component = Component;
-		System.export("System.base.Component", Component);
+		System.export("lam.base.Component", Component);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Object','Component',System.classPath+'/base');
-	var Object = System.require("System.base.Object");
+	var Object = System.require("lam.base.Object");
 	System.merge(null,[{
 		/**
 		 * @author: lhh

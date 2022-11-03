@@ -23,13 +23,13 @@
 		var Dom = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Dom :
 		typeof define === 'function' && define.amd ? define(Dom) : System.Dom = Dom;
-		System.export("System.base.Dom", Dom);
+		System.export("lam.base.Dom", Dom);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Dom',System.classPath+'/base');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 	System.merge(null,[{
             'isHTMLDocument'	: System.type("HTMLDocument"),
             'isHTMLHtmlEment' 	: System.type("HTMLHtmlElement"),

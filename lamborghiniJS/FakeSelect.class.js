@@ -22,13 +22,13 @@
         var FakeSelect = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = FakeSelect :
 		typeof define === 'function' && define.amd ? define(FakeSelect) : System.FakeSelect = FakeSelect;
-		System.export("System.FakeSelect", FakeSelect);
+		System.export("lam.FakeSelect", FakeSelect);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Dom','FakeSelect',System.classPath+'/base');
-    var Dom = System.require("System.base.Dom");
+    var Dom = System.require("lam.base.Dom");
     System.import([
         '/Event.class'
     ],System.classPath+'/base');

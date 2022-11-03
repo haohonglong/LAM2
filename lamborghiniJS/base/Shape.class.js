@@ -13,13 +13,13 @@
 		var Shape = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Shape :
 		typeof define === 'function' && define.amd ? define(Shape) : System['Html5']['Shape'] = Shape;
-		System.export("System.base.Shape", Shape);
+		System.export("lam.base.Shape", Shape);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Canvas','Shape',System.classPath+'/base');
-	var Canvas = System.require("System.base.Canvas");
+	var Canvas = System.require("lam.base.Canvas");
 
 	var __this__=null;
 

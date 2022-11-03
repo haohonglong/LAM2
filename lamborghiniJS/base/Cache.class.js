@@ -54,13 +54,13 @@
 		var Cache = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Cache :
 		typeof define === 'function' && define.amd ? define(Cache) : System.Cache = Cache;
-		System.export("System.base.Cache", Cache);
+		System.export("lam.base.Cache", Cache);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Cache',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 	var __this__=null;
 
 	var Cache = Component.extend({

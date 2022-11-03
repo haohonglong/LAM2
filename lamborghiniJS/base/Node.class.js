@@ -10,13 +10,13 @@
 		var Node = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Node :
 		typeof define === 'function' && define.amd ? define(Node) : System.Node = Node;
-		System.export("System.base.Node", Node);
+		System.export("lam.base.Node", Node);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Helper','Node',System.classPath+'/base');
-    var Helper = System.require("System.base.Helper");
+    var Helper = System.require("lam.base.Helper");
 
 	var __this__=null;
     var node_key = System.Object.key,

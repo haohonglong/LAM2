@@ -24,13 +24,13 @@
 		var Helper = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Helper :
 		typeof define === 'function' && define.amd ? define(Helper) : System.Helper = Helper;
-		System.export("System.base.Helper", Helper);
+		System.export("lam.base.Helper", Helper);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Component','Helper',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 	var __this__=null;
 	var Helper = Component.extend({
 		constructor: function() {

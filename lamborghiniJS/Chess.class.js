@@ -13,13 +13,13 @@
 		var Chess = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Chess :
 		typeof define === 'function' && define.amd ? define(Chess) : System['Html5']['Chess'] = Chess;
-		System.export("System.Chess", Chess);
+		System.export("lam.Chess", Chess);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Chess',System.classPath+'/base');
-	var Shape = System.require("System.base.Shape");
+	var Shape = System.require("lam.base.Shape");
 	var __this__=null;
 	
 	//棋盘与画布的间距

@@ -10,19 +10,22 @@
 		var Router = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Router :
 		typeof define === 'function' && define.amd ? define(Router) : System.Router = Router;
-		System.export("System.base.Router", Router);
+		System.export("lam.base.Router", Router);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Router',System.classPath+'/base');
-    var Browser = System.require("System.base.Browser");
-    var CController = System.require("System.base.Controller");
+    var Browser = System.require("lam.base.Browser");
+    var CController = System.require("lam.base.Controller");
+    var Compiler = System.require("lam.base.Compiler");
+    var Template = System.require("lam.base.Template");
+    var View = System.require("lam.base.View");
     
     var FILEPATH = System.classPath+'/base/Router.class.js';
-
     if(!System.isset(System.CONTROLLERS)) throw new Error("LAM.CONTROLLERS undefined");
-    System.import(['/View.class'],System.classPath+'/base');
+    
+
 
     var isrun = false;
 
@@ -178,19 +181,21 @@
         var action = r[1]+'Action';
         var id = r[2];
         var view = null;
-        var temp = null;
         System._content = null;
         id = System.eval(id);
 
+        var temp = new Template(null, Compiler.getInstance());
+        var _view = new View(temp);
     	var controller = new System[ControllerName]();
+        controller.setView(_view);
         System.export("this", controller);
     	if(controller instanceof CController){
     		if(action && System.isFunction(controller[action])) {
                 controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
                 controller.init();
-                temp = controller[action](id);
+                controller[action](id);
                 view = temp.getBlock(temp.content);
-                temp = null;
+
                 if (System.isset(view) && System.isString(view)) {
                     //生产静态页便于输出
                     System._content = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build

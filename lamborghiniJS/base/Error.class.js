@@ -10,13 +10,13 @@
 		var Error = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Error :
 		typeof define === 'function' && define.amd ? define(Error) : System.Error = Error;
-		System.export("System.base.Error", Error);
+		System.export("lam.base.Error", Error);
 	}
 
 })(this,function(System){
 	//'use strict';
 	System.is(System,'Component','Error',System.classPath+'/base');
-	var Component = System.require("System.base.Component");
+	var Component = System.require("lam.base.Component");
 	var __this__=null;
 	var Error = Component.extend({
 		constructor: function(error, message, path, line){

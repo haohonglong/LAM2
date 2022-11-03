@@ -9,13 +9,13 @@
 		var FindParentObject = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = FindParentObject :
 		typeof define === 'function' && define.amd ? define(FindParentObject) : System.FindParentObject = FindParentObject;
-		System.export("System.FindParentObject", FindParentObject);
+		System.export("lam.FindParentObject", FindParentObject);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','FindParentObject',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
+	var Dom = System.require("lam.base.Dom");
 
 	var __this__=null;
 	var Node = Dom.extend({

@@ -10,13 +10,13 @@
         var Compiler = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Compiler :
         typeof define === 'function' && define.amd ? define(Compiler) : System.Compiler = Compiler;
-		System.export("System.base.Compiler", Compiler);
+		System.export("lam.base.Compiler", Compiler);
     }
 
 })(this,function(System){
     'use strict';
     System.is(System,'Component','Compiler',System.classPath+'/base');
-    var Component = System.require("System.base.Component");
+    var Component = System.require("lam.base.Component");
 
     function setErrorMessage(message) {
         // throw new Error(message);

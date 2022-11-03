@@ -46,13 +46,13 @@
 		var PowerCookie = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = PowerCookie :
 		typeof define === 'function' && define.amd ? define(PowerCookie) : System.PowerCookie = PowerCookie;
-		System.export("System.base.PowerCookie", PowerCookie);
+		System.export("lam.base.PowerCookie", PowerCookie);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Cache','PowerCookie',System.classPath+'/base');
-	var Cache = System.require("System.base.Cache");
+	var Cache = System.require("lam.base.Cache");
 	var __this__=null;
 	var PowerCookie = Cache.extend({
 		/**

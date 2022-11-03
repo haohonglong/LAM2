@@ -13,13 +13,13 @@
 		var Triangle = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Triangle :
 		typeof define === 'function' && define.amd ? define(Triangle) : System['Html5']['Triangle'] = Triangle;
-		System.export("System.shapes.Triangle", Triangle);
+		System.export("lam.shapes.Triangle", Triangle);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System.Html5,'Shape','Triangle',System.classPath+'/base');
-	var Shape = System.require("System.base.Shape");
+	var Shape = System.require("lam.base.Shape");
 
 	var __this__=null;
 

@@ -10,13 +10,13 @@
 		var Thumbnail = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Thumbnail :
 		typeof define === 'function' && define.amd ? define(Thumbnail) : System.Thumbnail = Thumbnail;
-		System.export("System.Thumbnail", Thumbnail);
+		System.export("lam.Thumbnail", Thumbnail);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Layout','Thumbnail',System.classPath+'/base');
-	var Layout = System.require("System.base.Layout");
+	var Layout = System.require("lam.base.Layout");
 	var __this__=null;
 	/**
 	 * @author: lhh

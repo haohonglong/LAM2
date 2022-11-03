@@ -23,13 +23,13 @@
 		var Xhr = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = Xhr :
 		typeof define === 'function' && define.amd ? define(Xhr) : System.Xhr = Xhr;
-		System.export("System.base.Xhr", Xhr);
+		System.export("lam.base.Xhr", Xhr);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Browser','Xhr',System.classPath+'/base');
-	var Browser = System.require("System.base.Browser");
+	var Browser = System.require("lam.base.Browser");
 	var __this__=null;
 	var allTypes = "*/".concat( "*" );
 	// Functions to create xhrs

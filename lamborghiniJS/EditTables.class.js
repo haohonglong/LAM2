@@ -14,13 +14,13 @@
 		var EditTables = factory(System);
 		typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = EditTables :
 		typeof define === 'function' && define.amd ? define(EditTables) : System.EditTables = EditTables;
-		System.export("System.EditTables", EditTables);
+		System.export("lam.EditTables", EditTables);
 	}
 
 })(this,function(System){
 	'use strict';
 	System.is(System,'Dom','EditTables',System.classPath+'/base');
-	var Dom = System.require("System.base.Dom");
+	var Dom = System.require("lam.base.Dom");
 	System.import([
 		'/Event.class'
 	],System.classPath+'/base');
