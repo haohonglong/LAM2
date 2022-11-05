@@ -176,7 +176,7 @@
 			                });
                         });
                     }else{
-                        ajax_success_callback.call(_this, Base64.decode(this.get(index).content), null, null);
+                        ajax_success_callback.call(_this, "", null, null);
                     }
                 });
             }
