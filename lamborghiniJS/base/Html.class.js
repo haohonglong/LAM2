@@ -76,7 +76,7 @@
 			this.success(data,textStatus,jqXHR);
 		}else{
 			if(this.$dom){
-					this.$dom.after(data).remove();
+				this.$dom.after(data).remove();
 			}
 		}
 	}
@@ -88,7 +88,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2022-3-31
+         * 修改日期：2022-11-7
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -105,6 +105,7 @@
          * @param 	(JSON) 		D.tpData               NULL :分配模版里的数据
          * @param 	(Array) 	D.delimiters          NULL :模版分隔符
          * @param 	(Number) 	D.repeat          	  NULL :模版循环次数(测试用)
+         * @param 	(Boolean) 	D.once                NULL :是否只加载一次,（这个属性防止递归无限循环调用include的bug ）默认true，注意：值必须是Boolean，不能用0替代false
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
          * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
@@ -147,8 +148,19 @@
 			this.error 	 	 = $dom && $dom.attr('error') 		&& System.eval($dom.attr('error'))		|| D&&D.error	    ||	0 ;
 			this.done 	 	 = $dom && $dom.attr('done') 		&& System.eval($dom.attr('done'))		|| D&&D.done	    ||	function(){} ;
 			this.preform 	 = $dom && $dom.attr('preform') 	&& System.eval($dom.attr('preform'))	|| D&&D.preform		||	0 ;
+			this.once 		 = true;
 			this.file     = System.template(this.file);
 			this.file_404 = System.template(this.file_404);
+
+			var once = true;
+			if($dom && (once = $dom.attr('once'))) {
+				once = eval(once);
+				if(System.isBoolean(once)) this.once = once;
+			}
+			if(D && System.isBoolean(D.once)) {
+				this.once = D.once;
+			}
+
 			if(System.isFunction(this.preform)){this.preform();}
 
 		},
@@ -157,7 +169,7 @@
 		'init':function () {
             return this;
         },
-        'loop':function (S) {
+        'loop':function (S) { // 便于测试使用，目的：不用ctl+c+v去复制粘贴
             var s = '',total = this.repeat >= 1 ? this.repeat : 1;
             while((total--) > 0){s+=S;}
             return s;
@@ -176,7 +188,11 @@
 			                });
                         });
                     }else{
-                        ajax_success_callback.call(_this, "", null, null);
+						if(_this.once) {
+							ajax_success_callback.call(_this, "", null, null);
+						} else {
+							ajax_success_callback.call(_this, Base64.decode(this.get(index).content), null, null);
+						}
                     }
                 });
             }

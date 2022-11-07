@@ -874,7 +874,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2022-6-22
+         * 修改日期：2022-11-7
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
          * 说明：
@@ -906,6 +906,7 @@
                             case 'tpData':
                             case 'delimiters':
                             case 'repeat':
+                            case 'once':
                             case 'error':
                                 if(!System.empty(v)){
                                     v = System.eval(v);
