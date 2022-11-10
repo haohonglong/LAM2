@@ -88,7 +88,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2022-11-7
+         * 修改日期：2022-11-9
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -105,7 +105,7 @@
          * @param 	(JSON) 		D.tpData               NULL :分配模版里的数据
          * @param 	(Array) 	D.delimiters          NULL :模版分隔符
          * @param 	(Number) 	D.repeat          	  NULL :模版循环次数(测试用)
-         * @param 	(Boolean) 	D.once                NULL :是否只加载一次,（这个属性防止递归无限循环调用include的bug ）默认true，注意：值必须是Boolean，不能用0替代false
+         * @param 	(Boolean) 	D.once                NULL :是否只加载一次,（为防止递归无限循环调用include 引发的这个错误 “stack : RangeError: Maximum call stack size exceeded” ）默认true
          * @param 	(Boolean) 	D.async               NULL :是否异步加载
          * @param 	(Boolean) 	D.cache           	  NULL :是否缓存默认true
          * @param 	(Function)	D.beforeSend       	  NULL :在发送数据之前执行的方法
@@ -152,13 +152,19 @@
 			this.file     = System.template(this.file);
 			this.file_404 = System.template(this.file_404);
 
-			var once = true;
-			if($dom && (once = $dom.attr('once'))) {
-				once = eval(once);
-				if(System.isBoolean(once)) this.once = once;
+			if($dom) {
+				var once = true;
+				if(once = eval($dom.attr('once'))) {
+					if (System.isBoolean(once)&& false === once || 0 === once) {
+						this.once = false;
+					} 
+						
+				}
 			}
-			if(D && System.isBoolean(D.once)) {
-				this.once = D.once;
+			if(D) {
+				if(System.isBoolean(D.once) && false === D.once || 0 === D.once) {
+					this.once = false;
+				}
 			}
 
 			if(System.isFunction(this.preform)){this.preform();}
