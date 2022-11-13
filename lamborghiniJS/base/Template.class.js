@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-10-22
+ * 修改日期:2022-11-13
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -33,6 +33,7 @@
     var Component = System.require("lam.base.Component");
     var Compiler = System.require("lam.base.Compiler");
     var Cache = System.require("lam.base.Cache");
+    var Error = System.require("lam.base.Error");
     
 
     System.listen(function () {
@@ -75,6 +76,7 @@
 			this.escape_reg    = new RegExp('^<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->$','gm');
 			this.del_reg   	   = new RegExp('^<!--Del:begin-->(([\\s\\S])*?)<!--Del:end-->$','gm');
             this.script_reg    = new RegExp('^<!--Script:begin-->(([\\s\\S])*?)<!--Script:end-->\\n$', 'gm');
+			this.remove_reg    = new RegExp('<! (([\\s\\S])*?)-->','gm');
 			this.html=[];
 			this.datas = null;
 			this.delimiters = null;
@@ -117,7 +119,7 @@
                 this.content = view;
                 
 			}catch (e){
-                var error = new System.Error(e,
+                var error = new Error(e,
                  "render指定渲染视图页面路径: " + path, 
                  FILEPATH, 104);
                 setErrorMessage(error.getMessage());
@@ -144,7 +146,7 @@
         	try{
                 return System.eval(vars);
 			}catch (e){
-                var error = new System.Error(e,
+                var error = new Error(e,
                  "analysisVar 解析变量 " + vars + "错误",
                  FILEPATH, 128);
                 setErrorMessage(error.getMessage());
@@ -237,7 +239,7 @@
 
                 return arr.join('');
 			}catch (e){
-                var error = new System.Error(e,
+                var error = new Error(e,
                  "查找模版标签 " + S + "错误",
                   FILEPATH, 220);
                 setErrorMessage(error.getMessage());
@@ -351,7 +353,7 @@
                                         v = System.eval(v);
                                     }
                                 }catch (e){
-                                    var error = new System.Error(e,
+                                    var error = new Error(e,
                                          "解析变量" + v + "发生错误 " + arr_inc[0], 
                                          FILEPATH, 335);
                                     setErrorMessage(error.getMessage());
@@ -367,7 +369,7 @@
                     data.content = S;
                     return data;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "layout " + S + "错误 " + arr_inc[0], 
                      FILEPATH, 346);
                     setErrorMessage(error.getMessage());
@@ -404,7 +406,7 @@
                     S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令define 错误: " + arr_inc[0], 
                      FILEPATH, 394);
                     setErrorMessage(error.getMessage());
@@ -439,7 +441,7 @@
                     });
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令\"<!--Escape:begin--><!--Escape:end-->\" 错误: " + arr_inc[0], 
                      FILEPATH, 416);
                     setErrorMessage(error.getMessage());
@@ -454,7 +456,7 @@
          * 创建日期：2020-05-27
          * 修改日期：2022-6-22
          * 名称：empty
-         * 功能：清空指定的字符串
+         * 功能：清空指定的字符串（在define指令之后执行）
          * 说明：
          * 注意：注意大小写！！！
          * usage：<!--Del:begin-->这里的内容会被清空<!--Del:end-->
@@ -469,7 +471,7 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令\"<!--Del:begin--><!--Del:end-->\" 错误: " + arr_inc[0],
                       FILEPATH, 446);
                     setErrorMessage(error.getMessage());
@@ -503,7 +505,7 @@
                 this.cache.add(data);
                 return id;
             } catch (e) {
-                var error = new System.Error(e,
+                var error = new Error(e,
                  "block_uniqid 生成唯一blockId 错误: ",
                   FILEPATH, 478);
                 setErrorMessage(error.getMessage());
@@ -600,7 +602,7 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令 <#Block:begin id=\"xxx\"> ... <#Block:end> 错误: " + arr_inc[0],
                       FILEPATH, 572);
                     setErrorMessage(error.getMessage());
@@ -639,7 +641,7 @@
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令\"<!--Script:begin--><!--Script:end-->\" 错误:\n\r" + arr_inc[0],
                       FILEPATH, 611);
                     setErrorMessage(error.getMessage());
@@ -711,7 +713,7 @@
                     S = S.replace(arr_inc[0],content);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令 <#=block id=\"xx\" /> 错误: " + arr_inc[0],
                       FILEPATH, 682);
                     setErrorMessage(error.getMessage());
@@ -745,7 +747,7 @@
                     S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
                       FILEPATH, 736);
                     
@@ -859,7 +861,7 @@
 
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令 <#import path=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 829);
                     
@@ -927,7 +929,7 @@
                     },data);
                     reg_inc.lastIndex = 0;
 				}catch (e){
-                    var error = new System.Error(e,
+                    var error = new Error(e,
                      "预处理指令 <#include file=\"\" /> 错误: " + arr_inc[0],
                       FILEPATH, 895);
 
@@ -952,6 +954,7 @@
          * @returns {String}
          */
 		'beforParse':function (s) {
+            s = this.remove(s);
             if(this.datas) {
                 s = this.compiler.compile(s,this.datas,this.delimiters);
             }
@@ -982,6 +985,36 @@
         },
 		'parse':function (s) {
 			return this.afterParse(this.beforParse(s));
+        },
+        /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2022-11-13
+         * 修改日期：2022-11-13
+         * 名称：remove
+         * 功能：清空指定的字符串（在define指令之前执行）
+         * 说明：通常用于注释预处理指令
+         * 注意：
+         * usage：<! 这里的任何内容会被清空-->
+         * @param S{String}     NOT NULL内容
+         * @returns {String}	empty of string
+         */
+         'remove':function(S){
+            var reg_inc = this.remove_reg;
+            var arr_inc = [];
+            while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
+            	try{
+                    S = S.replace(arr_inc[0], '');
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    var error = new Error(e,
+                     "预处理指令\"<! -->\" 错误: " + arr_inc[0],
+                      FILEPATH, 1002);
+                    setErrorMessage(error.getMessage());
+                }
+
+            }
+            return S;
         },
 
 		/**
@@ -1161,7 +1194,7 @@
             });
             return content;
         }catch (e){
-            var error = new System.Error(e,
+            var error = new Error(e,
                  "Template.getBlock 根据id获取对应的block内容错误: ",
               FILEPATH, 1125);
             
