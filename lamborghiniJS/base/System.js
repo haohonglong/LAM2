@@ -141,20 +141,20 @@
 
 
 	/**
- * @author: lhh
- * 产品介绍：
- * 创建日期：2014-12-23
- * 修改日期：2019-1-3
- * 名称：runtime
- * 功能：run 时执行的方法
- * 说明：可传多个参数第一个必须是数组，在回调里接收的参数跟传来的参数一一对应
- * 注意：不能链式调用，如要链式调用，用 System.then方法
- * @param   (Array)args 			   NULL :传入的参数
- * @param   (Function)callback 		NO NULL :callback 里的this 是被克隆后的对象，修改this里面的成员不会影响LAM 的源对象。
- * 											每个沙箱里的this 都是一个单独的克隆，这样可避免污染 LAM 源对象和别的沙箱。
- * @return  {*} 返回callback 里的返回值
- * Example：
- */
+	 * @author: lhh
+	 * 产品介绍：
+	 * 创建日期：2014-12-23
+	 * 修改日期：2019-1-3
+	 * 名称：runtime
+	 * 功能：run 时执行的方法
+	 * 说明：可传多个参数第一个必须是数组，在回调里接收的参数跟传来的参数一一对应
+	 * 注意：不能链式调用，如要链式调用，用 System.then方法
+	 * @param   (Array)args 			   NULL :传入的参数
+	 * @param   (Function)callback 		NO NULL :callback 里的this 是被克隆后的对象，修改this里面的成员不会影响LAM 的源对象。
+	 * 											每个沙箱里的this 都是一个单独的克隆，这样可避免污染 LAM 源对象和别的沙箱。
+	 * @return  {*} 返回callback 里的返回值
+	 * Example：
+	 */
 	function runtime(args, callback) {
 		if (!arguments.length) { throw new Error('Warning: 至少要有一个参数'); }
 		if (System.isFunction(args)) {
@@ -1559,55 +1559,55 @@
 		 *
 		 */
 		'tag': function (single, name, Attr, content) {
-				var args = arguments;
-				var len = args.length;
-				if (0 === len || len > 4) { throw new Error('Warning :参数至少有一个，且参数个数不能超过4个'); }
-				if (!System.isBoolean(single)) {
-					name = args[0];
-					Attr = args[1] || {};
-					content = args[2] || '';
-					single = false;
-				} else {
-					if (!System.isString(args[1])) { throw new Error('Warning :缺少标签名称'); }
-					single = args[0];
-					name = args[1] || null;
-					Attr = args[2] || {};
-					content = args[3] || '';
-				}
-				if (System.isString(Attr) || System.isArray(Attr)) {//属性可以省略
-					content = Attr;
-					Attr = {};
-				}
+			var args = arguments;
+			var len = args.length;
+			if (0 === len || len > 4) { throw new Error('Warning :参数至少有一个，且参数个数不能超过4个'); }
+			if (!System.isBoolean(single)) {
+				name = args[0];
+				Attr = args[1] || {};
+				content = args[2] || '';
+				single = false;
+			} else {
+				if (!System.isString(args[1])) { throw new Error('Warning :缺少标签名称'); }
+				single = args[0];
+				name = args[1] || null;
+				Attr = args[2] || {};
+				content = args[3] || '';
+			}
+			if (System.isString(Attr) || System.isArray(Attr)) {//属性可以省略
+				content = Attr;
+				Attr = {};
+			}
 
-				content = System.isNumeric(content) ? String(content) : content;
+			content = System.isNumeric(content) ? String(content) : content;
 
-				//check
-				if (System.empty(name) || !System.isString(name)) { throw new Error('Warning :标签名称不能为空，只能是字符串！'); }
-				if (Attr && !System.isPlainObject(Attr)) { throw new Error('Warning :<' + name + '>标签的属性,{Attr}参数必须是一个对象！'); }
-				if (content && !(System.isString(content) || System.isArray(content))) { throw new Error('Warning :<' + name + '>标签内容必须是字符串或者是数组'); }
+			//check
+			if (System.empty(name) || !System.isString(name)) { throw new Error('Warning :标签名称不能为空，只能是字符串！'); }
+			if (Attr && !System.isPlainObject(Attr)) { throw new Error('Warning :<' + name + '>标签的属性,{Attr}参数必须是一个对象！'); }
+			if (content && !(System.isString(content) || System.isArray(content))) { throw new Error('Warning :<' + name + '>标签内容必须是字符串或者是数组'); }
 
-				var tag = [];
-				tag.push('<', name);
-				//拼接属性
-				if (Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)) {
-					Attr = System.toDict(Attr);
-					tag.push(System.renderTagAttributes(Attr).join(''));
-				}
+			var tag = [];
+			tag.push('<', name);
+			//拼接属性
+			if (Attr && System.isPlainObject(Attr) && !System.isEmptyObject(Attr)) {
+				Attr = System.toDict(Attr);
+				tag.push(System.renderTagAttributes(Attr).join(''));
+			}
 
-				if (single) {
-					tag.push(' />');
-				} else {
-					tag.push('>');
-					if (!System.empty(content)) {
-						if (System.isArray(content)) {
-							tag.push(content.join(''));
-						} else {
-							tag.push(content);
-						}
+			if (single) {
+				tag.push(' />');
+			} else {
+				tag.push('>');
+				if (!System.empty(content)) {
+					if (System.isArray(content)) {
+						tag.push(content.join(''));
+					} else {
+						tag.push(content);
 					}
-					tag.push('</', name, '>');
 				}
-				return tag.join('');
+				tag.push('</', name, '>');
+			}
+			return tag.join('');
 		},
 		/**
 		 *
@@ -1973,7 +1973,7 @@
 			return this.replace(/(^\s*)|(\s*$)/g, "");
 		})
 		/**
- * trim 指定的字符
+ 		 * trim 指定的字符
 		 */
 		.method('trim_str', function (str) {
 			return trim(this, str);
@@ -2332,18 +2332,18 @@
 		})
 
 		/**
-				* @author: lhh
-				* 产品介绍：
-				* 创建日期：2018.8.30
-				* 修改日期：2018.8.30
-				* 名称：unique
-				* 功能：去重
-				* 说明：
-				* 注意：
-				* 调用方式：
-				* @return  (Array)返回去重后的数组
-				* Example：
-				*/
+		* @author: lhh
+		* 产品介绍：
+		* 创建日期：2018.8.30
+		* 修改日期：2018.8.30
+		* 名称：unique
+		* 功能：去重
+		* 说明：
+		* 注意：
+		* 调用方式：
+		* @return  (Array)返回去重后的数组
+		* Example：
+		*/
 		.method('unique', function (arr) {
 			arr = this;
 			var hash = [];

@@ -155,7 +155,7 @@
 			if($dom) {
 				var once = true;
 				if(once = eval($dom.attr('once'))) {
-					if (System.isBoolean(once)&& false === once || 0 === once) {
+					if(System.isBoolean(once) && false === once || 0 === once) {
 						this.once = false;
 					} 
 						

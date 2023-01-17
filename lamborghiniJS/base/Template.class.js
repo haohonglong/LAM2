@@ -76,7 +76,7 @@
 			this.escape_reg    = new RegExp('^<!--Escape:begin-->(([\\s\\S])*?)<!--Escape:end-->$','gm');
 			this.del_reg   	   = new RegExp('^<!--Del:begin-->(([\\s\\S])*?)<!--Del:end-->$','gm');
             this.script_reg    = new RegExp('^<!--Script:begin-->(([\\s\\S])*?)<!--Script:end-->\\n$', 'gm');
-			this.remove_reg    = new RegExp('<! (([\\s\\S])*?)--!>','gm');
+			this.remove_reg    = new RegExp('<! (([\\s\\S])*?)--/>','gm');
 			this.html=[];
 			this.datas = null;
 			this.delimiters = null;
@@ -995,7 +995,7 @@
          * 功能：清空指定的字符串（在define指令之前执行）
          * 说明：通常用于注释预处理指令
          * 注意：
-         * usage：<! 这里的任何内容会被清空--!>
+         * usage：<! 这里的任何内容会被清空--/>
          * @param S{String}     NOT NULL内容
          * @returns {String}	empty of string
          */
@@ -1008,7 +1008,7 @@
                     reg_inc.lastIndex = 0;
 				}catch (e){
                     var error = new Error(e,
-                     "预处理指令\"<! ...--!>\" 错误: " + arr_inc[0],
+                     "预处理指令\"<! ...--/>\" 错误: " + arr_inc[0],
                       FILEPATH, 1002);
                     setErrorMessage(error.getMessage());
                 }
