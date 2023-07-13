@@ -1222,7 +1222,7 @@
 				if(_module.exports[name]){
 					return _module.exports[name];
 				}else{
-					throw new Error(['Warning: \'',name,'\' 没有定义'].join(''));
+					return null;
 				}
 			} else {
 				return System.clone(true, _module.exports);

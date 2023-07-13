@@ -88,7 +88,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2022-11-9
+         * 修改日期：2023-7-5
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -153,14 +153,12 @@
 			this.file_404 = System.template(this.file_404);
 
 			if($dom) {
-				var once = true;
-				if(once = eval($dom.attr('once'))) {
-					if(System.isBoolean(once) && false === once || 0 === once) {
-						this.once = false;
-					} 
-						
+				var once = eval($dom.attr('once'));
+				if(System.isBoolean(once) && false === once || 0 === once) {
+					this.once = false;	
 				}
 			}
+
 			if(D) {
 				if(System.isBoolean(D.once) && false === D.once || 0 === D.once) {
 					this.once = false;

@@ -21,6 +21,9 @@
     var Compiler = System.require("lam.base.Compiler");
     var Template = System.require("lam.base.Template");
     var View = System.require("lam.base.View");
+
+    var temp = new Template(null, Compiler.getInstance());
+    var _view = new View(temp);
     
     var FILEPATH = System.classPath+'/base/Router.class.js';
     if(!System.isset(System.CONTROLLERS)) throw new Error("LAM.CONTROLLERS undefined");
@@ -84,9 +87,14 @@
 	    if(routeRules){
 	    	System.each(routeRules,function(k,v){
 		    	if(k === r){
-		    		r = v;
-                    System.defaultRoute = r;
-                    System.Browser.pushState(System.INDEX+System.defaultRoute);
+                    if(System.isFunction(v)) {
+                        v();
+                    } else {
+                        r = v;
+                        System.defaultRoute = r;
+                        System.Browser.pushState(System.INDEX+System.defaultRoute);
+                    }
+                    
 		    		return false;
 		    	}
 		    });
@@ -184,9 +192,12 @@
         System._content = null;
         id = System.eval(id);
 
-        var temp = new Template(null, Compiler.getInstance());
-        var _view = new View(temp);
-    	var controller = new System[ControllerName]();
+        
+        var controller = System.require("web.controllerInstance");
+        if(!controller) {
+            controller = new System[ControllerName]();
+        }
+    	
         controller.setView(_view);
         System.export("this", controller);
     	if(controller instanceof CController){
