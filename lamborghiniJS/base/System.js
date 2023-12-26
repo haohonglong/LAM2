@@ -505,8 +505,8 @@
 				if (srcs.length) {
 					for (var i = 0, len = jses.length; i < len; i++) {
 						for (var j = i; j < srcs.length; j++) {
-							if ((srcs[j].name === jses[i].name) || (srcs[j].path === jses[i].path)) { // 同名时优先用配置文件覆盖默认的
-								if ((srcs[j].name === jses[i].name) && (srcs[j].path !== jses[i].path)) jses[i].path = srcs[j].path;
+							if (srcs[j].name === jses[i].name) { // 同名时优先用配置文件覆盖默认的
+								if (srcs[j].path !== jses[i].path) jses[i].path = srcs[j].path;
 								srcs.removeAt(j);
 								break;
 							}
@@ -520,14 +520,15 @@
 				srcs = jses;
 			}
 
-			if (System.excluded.length) {
-				for (var i = 0; i < srcs.length; i++) {
-					if (System.isset(srcs[i].name) && System.excluded.in_array(srcs[i].name)) {
-						srcs.removeAt(i);
+			if (System.excluded.length) { // 不加载autoLoadFiles里指定的js
+				srcs = [];
+				System.each(jses, function(){
+					if (!System.excluded.in_array(this.name)) {
+						srcs.push(this);
 					}
-
-				}
+				});
 			}
+
 			System.autoLoadFiles = srcs;
 
 			System.each(System.autoLoadFiles, function (i) {
