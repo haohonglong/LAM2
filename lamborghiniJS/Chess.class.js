@@ -36,8 +36,8 @@
 		constructor: function(dom, row, col){
 			this.base(dom);
 			__this__=this;
-			this.row = Number(row) || 15;
-			this.col = Number(col) || 15;
+			this.row = Number(row) || 19;
+			this.col = Number(col) || 19;
 			w = this.row *2;
 			this.w_length = (this.row-1)*w;
 			this.h_length = (this.col-1)*w;
@@ -54,6 +54,15 @@
 		},
 		'_className':'Chess',
 		'__constructor':function(){},
+		'isDone': function() {
+			for(var i=0;i<this.row;i++){
+				for(var j=0;j<this.col;j++){
+					if(0 === chessBoard[i][j]) return false;
+					
+				}
+			}
+			return true;
+		},
 		'init':function(){
 			chessBoard=[];
 			wins=[];
@@ -136,27 +145,100 @@
 			}
 		},
 		'run':function(i, j){
-			if(0 === chessBoard[i][j]){
-				this.chess(i,j,color);
-				if(color){
-					chessBoard[i][j] = 1;
-				}else{
-					chessBoard[i][j] = 2;
-				}
-				this.check(color);
-				color = !color;
-			} else {
-				alert("当前格子已经有棋子了");
+			if(this.isDone()) {
+				alert("棋盘已满");
 				return false;
+			} else {
+				if(0 === chessBoard[i][j]){
+					this.chess(i,j,color);
+					if(color){
+						chessBoard[i][j] = 1;
+					}else{
+						chessBoard[i][j] = 2;
+					}
+					this.check(color);
+					color = !color;
+				} else {
+					alert("当前格子已经有棋子了");
+					return false;
+				}
+
 			}
+			
 			return true;
 		},
-		'coupter':function(){
-			var row = 0, col = 0;
+		'coupter':function(i, j){
+			var row = i, col = j;
+			var n = 0;
+
 			
 			while(1) {
-				row = Math.floor(Math.random()*this.row);
-				col = Math.floor(Math.random()*this.col);
+				n++;
+
+				if(n > 999) {
+					if(this.isDone()) {
+						alert("棋盘已满");
+						return false;
+					}
+					outer: for(var i1=0; i1 < this.row; i1++){
+						for(var j1=0; j1 < this.col; j1++){
+							if(0 === chessBoard[i1][j1]) {
+								i = i1;
+								j = j1;
+								break outer;
+							}
+							
+						}
+					}
+
+				} else {
+					if(n > 99) {
+						i = Math.floor(Math.random()*this.row);
+						j = Math.floor(Math.random()*this.col);
+					} else {
+	
+						if(0 === Math.floor(Math.random()*2)) {
+							if(0 === Math.floor(Math.random()*2)) {
+								i = Math.floor(Math.random()*-2);
+								j = Math.floor(Math.random()*-2);
+							} else {
+								i = Math.floor(Math.random()*-3);
+								j = Math.floor(Math.random()*-3);
+		
+							}
+	
+						} else {
+							if(0 === Math.floor(Math.random()*2)) {
+								i = Math.floor(Math.random()*2);
+								j = Math.floor(Math.random()*2);
+							} else {
+								i = Math.floor(Math.random()*3);
+								j = Math.floor(Math.random()*3);
+		
+							}
+						}
+						
+					}
+
+				}
+				
+				
+				if(this.row > row+i && this.col > col+j) {
+					row += i;
+					col += j;
+					
+					console.log("+ ", row, col)
+				}else {
+					row -= i;
+					col -= j;
+					
+					console.log("- ", row, col)
+				}
+				if(row < 0) row =0;
+				if(col < 0) col =0;
+				if(row > this.row) row = this.row - 1;
+				if(col > this.col) col = this.col - 1;
+
 				if(0 == chessBoard[row][col]) {
 					break;
 				}
@@ -176,7 +258,7 @@
 				var j = Math.floor(y/w);
 				if(!haswin){
 					if(self.run(i, j) && !haswin){
-						self.coupter();
+						self.coupter(i, j);
 					}
 				} else {
 					alert("棋局已结束了")

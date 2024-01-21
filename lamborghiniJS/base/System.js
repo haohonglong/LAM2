@@ -9,7 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2022-9-1
+ * 修改日期:2024-1-20
  * 		  :2022-10-23
  * 名称：系统接口
  * 功能：服务于派生类
@@ -72,7 +72,7 @@
 	}
 
 	// Used for trimming whitespace
-	var VERSION = "v2.1.6",
+	var VERSION = "v2.1.6.1",
 		Interface = {},
 		System = {},
 		once = true,
