@@ -11,6 +11,7 @@
  * 创建日期:2015-3-20
  * 修改日期:2024-1-20
  * 		  :2022-10-23
+ * 		  :2024-2-5
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -72,7 +73,7 @@
 	}
 
 	// Used for trimming whitespace
-	var VERSION = "v2.1.6.1",
+	var VERSION = "v2.1.7",
 		Interface = {},
 		System = {},
 		once = true,
@@ -480,7 +481,7 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2020-3-16
-		 * 修改日期：2022-5-28
+		 * 修改日期：2024-2-5
 		 * 名称：System.autoload
 		 * 功能：加载基础类
 		 * 说明：
@@ -543,7 +544,6 @@
 					files.push(System.script(path, scriptAttribute));
 				}
 			});
-			System.files.unshift(System.CONFIGURATION_PATH, classPath + '/base/System.js');
 			System.BUILDPATH = System.isset(System.BUILDPATH) ? System.BUILDPATH : System.ROOT;
 			System.print(files.join(''));
 		},
@@ -1995,6 +1995,23 @@
 		 */
 		.method('filterChar', function () {
 			return Number(this.replace(/[^\d]*/ig, ""));
+		})
+
+		/**
+		 *
+		 * @author：lhh
+		 * 创建日期：2024-2-5
+		 * 修改日期：2024-2-5
+		 * 名称：replaceAll
+		 * 功能：替换所有字符串
+		 * 说明：
+		 * 注意：
+		 * @param(void)
+		 * @return (String)
+		 * Example：String.replaceAll()
+		 */
+		.method('replaceAll', function (search, replace) {
+			return this.replace(new RegExp(search, "gm"), replace);
 		})
 
 		/**

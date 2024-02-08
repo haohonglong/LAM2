@@ -22,8 +22,8 @@
     var Template = System.require("lam.base.Template");
     var View = System.require("lam.base.View");
 
-    var temp = new Template(null, Compiler.getInstance());
-    var _view = new View(temp);
+    if(!System.tempInstance) System.tempInstance = new Template(System.blockCacheInstance || null, Compiler.getInstance());
+    if(!System.viewInstance) System.viewInstance = new View(System.tempInstance);
     
     var FILEPATH = System.classPath+'/base/Router.class.js';
     if(!System.isset(System.CONTROLLERS)) throw new Error("LAM.CONTROLLERS undefined");
@@ -60,10 +60,10 @@
     /**
      *
      * @author lhh
-     * 产品介绍：Router.init
+     * 产品介绍：路由初始化
      * 创建日期：2015-4-2
      * 修改日期：2019-7-24
-     * 名称：destructor
+     * Router.init
      * 功能：
      * 说明：
      * 注意：
@@ -128,36 +128,39 @@
 
 
     /**
-	 *
+	 * 产品介绍：生成一个普通html，用于生产静态页便于输出
+     * 创建日期：2023-1-2
+     * 修改日期：2024-2-5
+     * 名称：generator
      * @param view
-     * @param excluded {Array}
+     * @param excludedFiles {Array}
      * @returns {*|String|string}
      */
-    function generator(view, excluded) {
-        var jses = [],css = [],head = [], excluded_names = ["Controller", "Router"];
-        excluded = excluded || [];
+    function generator(view, excludedFiles) {
+        var jses = [],css = [],head = [];
 
         System.each(System.autoLoadFiles,function () {
-            if (excluded_names.in_array(this.name) && !excluded.in_array(this.path)) {
-                excluded.push(this.path);
+            if(System.beforeBuildExcluded.in_array(this.name)) {// 排除不需要加载的js
+                excludedFiles.push(this.path);
             }
         });
-        System.each(System.files,function () {
-            if(!excluded.in_array(this)) {
-                head.push(System.Html.scriptFile(this));
-                excluded.push(this);
-			}
-        });
-        System.each(System.files,function () {
-            if(System.isJsFile(this)){
-                if(!excluded.in_array(this)){
-                    jses.push(System.Html.scriptFile(this));
+
+        System.each(System.files,function (i) {
+            if(System.isJsFile(this)) { // 只加载不被排除的js路径
+                if(0 === i){
+                    head.push(System.Html.script(`window._ROOT_ = "${System.ROOT}";`));
+                    head.push(System.Html.scriptFile(System.CONFIGURATIONJS));
+                    head.push(System.Html.scriptFile(System.SYSTEMJS));
+                    head.push(System.Html.script('LAM.init();'));
                 }
-            }else{
-                css.push(System.Html.linkFile(this));
+                if(!excludedFiles.in_array(this)) head.push(System.Html.scriptFile(this));
+                
+			}else {
+                if(System.isCssFile(this)) css.push(System.Html.linkFile(this));
             }
             
         });
+
         jses = jses.join("\n");
         head = head.join("\n");
         css = css.join("\n");
@@ -170,7 +173,7 @@
 
 
     /**
-	 * perform controller by url and run the action
+	 * performing a controller what you want and it can be by url and runs the action
      */
 	Router.run=function (r,m) {
 	    if(isrun) return;
@@ -198,14 +201,14 @@
             controller = new System[ControllerName]();
         }
     	
-        controller.setView(_view);
+        controller.setView(System.viewInstance);
         System.export("this", controller);
     	if(controller instanceof CController){
     		if(action && System.isFunction(controller[action])) {
                 controller.viewpath = System.VIEWS + '/' + M + Controller.toLowerCase();
                 controller.init();
                 controller[action](id);
-                view = temp.getBlock(temp.content);
+                view = System.tempInstance.getBlock(System.tempInstance.content);
 
                 if (System.isset(view) && System.isString(view)) {
                     //生产静态页便于输出
