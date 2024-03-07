@@ -130,7 +130,7 @@
     /**
 	 * 产品介绍：生成一个普通html，用于生产静态页便于输出
      * 创建日期：2023-1-2
-     * 修改日期：2024-2-5
+     * 修改日期：2024-3-5
      * 名称：generator
      * @param view
      * @param excludedFiles {Array}
@@ -145,7 +145,7 @@
             }
         });
 
-        System.each(System.files,function (i) {
+        System.each(System.files, function (i) {
             if(System.isJsFile(this)) { // 只加载不被排除的js路径
                 if(0 === i){
                     head.push(System.Html.script(`window._ROOT_ = "${System.ROOT}";`));
@@ -153,7 +153,14 @@
                     head.push(System.Html.scriptFile(System.SYSTEMJS));
                     head.push(System.Html.script('LAM.init();'));
                 }
-                if(!excludedFiles.in_array(this)) head.push(System.Html.scriptFile(this));
+                if(!excludedFiles.in_array(this)) {
+                    var array = System.beforeBuildExcluded;
+                    for (var i = 0; i < array.length; i++) { 
+                        if (this.indexOf(array[i]) !== -1) return; // 过滤掉不需要的js
+                    }
+
+                    jses.push(System.Html.scriptFile(this));
+                }
                 
 			}else {
                 if(System.isCssFile(this)) css.push(System.Html.linkFile(this));
