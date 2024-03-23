@@ -115,7 +115,7 @@
      * @returns {*}
      */
     function rep_placeholder(tag,S,S2){
-        var reg = new RegExp('<!#'+tag+'/>','m');
+        var reg = new RegExp('<!#'+tag+'/>');
         var arr_inc = [];
         if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
             S = S.replace(arr_inc[0],function () {
@@ -130,16 +130,16 @@
     /**
 	 * 产品介绍：生成一个普通html，用于生产静态页便于输出
      * 创建日期：2023-1-2
-     * 修改日期：2024-3-5
+     * 修改日期：2024-3-9
      * 名称：generator
      * @param view
      * @param excludedFiles {Array}
      * @returns {*|String|string}
      */
     function generator(view, excludedFiles) {
-        var jses = [],css = [],head = [];
+        var jses = [],css = [],head = [], LAM_INIT =  [];
 
-        System.each(System.autoLoadFiles,function () {
+        System.each(System.autoLoadFiles, function () {
             if(System.beforeBuildExcluded.in_array(this.name)) {// 排除不需要加载的js
                 excludedFiles.push(this.path);
             }
@@ -147,12 +147,6 @@
 
         System.each(System.files, function (i) {
             if(System.isJsFile(this)) { // 只加载不被排除的js路径
-                if(0 === i){
-                    head.push(System.Html.script(`window._ROOT_ = "${System.ROOT}";`));
-                    head.push(System.Html.scriptFile(System.CONFIGURATIONJS));
-                    head.push(System.Html.scriptFile(System.SYSTEMJS));
-                    head.push(System.Html.script('LAM.init();'));
-                }
                 if(!excludedFiles.in_array(this)) {
                     var array = System.beforeBuildExcluded;
                     for (var i = 0; i < array.length; i++) { 
@@ -168,16 +162,30 @@
             
         });
 
+        if(System.isFunction(System.LAM_INIT)) {
+            LAM_INIT = System.LAM_INIT(System);
+        } else {
+            LAM_INIT.push(System.Html.script(`window._ROOT_ = "${System.ROOT}";`));
+            LAM_INIT.push(System.Html.scriptFile(System.CONFIGURATIONJS));
+            LAM_INIT.push(System.Html.scriptFile(System.SYSTEMJS));
+            LAM_INIT.push(System.Html.script('LAM.init();'));
+        }
+
+        if(System.isFunction(System.head_fn)) {
+            head = System.head_fn(System);
+        }
+
         jses = jses.join("\n");
         head = head.join("\n");
+        LAM_INIT = LAM_INIT.join("\n");
         css = css.join("\n");
         view = rep_placeholder('UTF8',view,'<meta charset="UTF-8">');
+        view = rep_placeholder('LAM_INIT',view,LAM_INIT);
         view = rep_placeholder('HEAD',view,head);
         view = rep_placeholder('CSS',view,css);
         view = rep_placeholder('JS',view,jses);
         return view.trim();
     }
-
 
     /**
 	 * performing a controller what you want and it can be by url and runs the action
@@ -217,13 +225,13 @@
                 controller[action](id);
                 view = System.tempInstance.getBlock(System.tempInstance.content);
 
-                if (System.isset(view) && System.isString(view)) {
-                    //生产静态页便于输出
-                    System._content = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build
-                    System.export("this.content", view);
-                }
+                //生产静态页便于输出
+                var buildHtml = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build
+                System.export("this.buildHtml", buildHtml);
+                
                 if (System.isFunction(System.main)) {
-                    view = System.main(view, controller, action, id);
+                    view = System.main(view, buildHtml, controller, action, id);
+                    System.export("this.content", view);
                     if (System.isset(view) && System.isString(view)) {
                         System.print(view);
                     }

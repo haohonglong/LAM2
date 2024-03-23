@@ -363,17 +363,19 @@
 		 * 产品介绍：
 		 * 创建日期：2014-12-23
 		 * 修改日期：2020-5-12
+		 * 修改日期：2024-3-23 添加 buildHtml 参数
 		 * 名称：System.main
 		 * 功能：程序主方法
 		 * 说明：此方法在Router.run 方法里解析完视图后被调用,这个方法可以在LAM.bootstrap()调用前overwrite
 		 * 注意：
 		 * @param   view       {String}			:视图
+		 * @param   buildHtml  {String}			:要build 生成的html
 		 * @param   controller {Controller} 	:当前控制器实例对象
 		 * @param   action     {String}		    :方法名称
 		 * @param   id         {String}		    :id
 		 * @returns {String}   
 		 */
-		'main': function (view, controller, action, id) { return view },
+		'main': function (view, buildHtml, controller, action, id) { return view },
 		/**
 		 * @author: lhh
 		 * 产品介绍：
