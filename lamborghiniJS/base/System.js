@@ -1238,7 +1238,7 @@
 		 * 创建日期：2016-10-23
 		 * 修改日期：2016-10-23
 		 * 		  ：2022-10-23
-		 * 		  ：2024-4-17 override: 覆盖已存在的值
+		 * 		  ：2024-4-17 override: 覆盖已存在的值，只允许true
 		 * 名称：System.export
 		 * 功能：设置对外提供接口
 		 * 说明：
@@ -1250,9 +1250,9 @@
 		 * Example：
 		 */
 		'export':function(name, value, override){
-			override = override && (true === override || 1 === override) || false;
+			override = override && (true === override) || false;
 			if(_module.exports[name] && !override){
-				throw new Error(['Warning: the name of the \'',name,'\' of the export existed please changes it'].join(''));
+				throw new Error(['Warning: the name of the \'',name,'\' has conflicted in the export'].join(''));
 			}else{
 				_module.exports[name] = value;
 			}
