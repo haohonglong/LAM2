@@ -1250,7 +1250,7 @@
 		 * Example：
 		 */
 		'export':function(name, value, override){
-			override = override || false;
+			override = override && (true === override || 1 === override) || false;
 			if(_module.exports[name] && !override){
 				throw new Error(['Warning: the name of the \'',name,'\' of the export existed please changes it'].join(''));
 			}else{
