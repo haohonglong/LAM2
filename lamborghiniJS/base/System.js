@@ -1252,7 +1252,7 @@
 		'export':function(name, value, override){
 			override = override && (true === override) || false;
 			if(_module.exports[name] && !override){
-				throw new Error(['Warning: the name of the \'',name,'\' has conflicted in the export'].join(''));
+				throw new Error(['Warning: the name of the \'',name,'\' has conflicted during the export'].join(''));
 			}else{
 				_module.exports[name] = value;
 			}
