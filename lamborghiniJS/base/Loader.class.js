@@ -83,8 +83,8 @@
          * 名称： suffix_checkor
          * 功能：检查加载的文件路径是否已经包含后缀名,如果没有就添加返回，有就返回原路径
          * 创建日期：2016-11-3
-         * 修改日期：2016-11-3
-         * 说明：
+         * 修改日期：2024-12-18
+         * 说明：suffix == null 时，就忽略检查后缀名
          *
          * @param {String}str    文件路径
          * @param {String}suffix 对应文件的后缀名
@@ -93,7 +93,7 @@
         'suffix_checkor':function(str,suffix){
             var self = this;
             if(suffix){
-                if(-1 === str.indexOf(suffix)){
+                if("null" != suffix && -1 === str.indexOf(suffix)){
                     return str+suffix;
                 }else{
                     return str;

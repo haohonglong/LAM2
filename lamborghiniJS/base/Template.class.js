@@ -68,6 +68,7 @@
 			this.compiler = compiler || Compiler.getInstance();
 			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
+			this.print_reg      = new RegExp('^#print# (([\\s\\S])*?) #end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('^<#import (([\\s\\S])*?) />$','gm');
 			this.layout_reg    = new RegExp('^<#(layout|extends) (([\\s\\S])*?) />$','gm');
@@ -591,6 +592,9 @@
                                     this.update(index,json);
                                 }
 
+                            }else {
+                                // console.log(id)
+                                // throw new Error(['Warning: the name of the \'',id,'\' has conflicted during the setBlock'].join(''));
                             }
                             
 
@@ -749,7 +753,7 @@
 				}catch (e){
                     var error = new Error(e,
                      "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
-                      FILEPATH, 736);
+                      FILEPATH, 742);
                     
                     setErrorMessage(error.getMessage());
                 }
@@ -757,19 +761,54 @@
             }
             return S;
         },
+         /**
+         * @author: lhh
+         * 产品介绍：
+         * 创建日期：2024-12-19
+         * 修改日期：2024-12-19
+         * 名称：print
+         * 功能：预处理,打印任意字符串
+         * 说明：用document.write()方式打印，当预处理指令import满足不了需求时，可以用此指令
+         * 注意：指令必须单独占一行，头尾都不能有空格或任何别的字符，此指令只是个备用方案，优先用import
+         * usage：#print# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #end#
+         * @param S
+         * @returns {String}
+         */
+        'print':function(S){
+            var reg_inc = this.print_reg;
+            var tag;
+            var arr_inc = [];
+            while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
+            	try{
+                    tag = arr_inc[1];
+                    System.print(tag);
+                    S = S.replace(arr_inc[0],'');
+                    reg_inc.lastIndex = 0;
+				}catch (e){
+                    var error = new Error(e,
+                     "预处理指令 #print# ... #end# 错误: " + arr_inc[0],
+                      FILEPATH, 777);
+                    
+                    setErrorMessage(error.getMessage());
+                }
+
+            }
+            return S;
+
+        },
 
         /**
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2022-6-22
+         * 修改日期：2024-12-18
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割,首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
+         * 说明：多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
-         * 			<#import path="/PopupLayer.class.js" root="__PATH__" />
+         * 			<#import split="," path="/PopupLayer.class.js" root="__PATH__" />
          * @param S
          * @returns {String}
          */
@@ -789,6 +828,7 @@
                         v = arr[1];
                         data[k] =  v;
                     });
+                    data.split   = data.split 	|| ',';
                     data.path    = data.path 	|| null;
                     data.root    = data.root ? data.root : false;
                     data.type    = data.type 	|| 'js';
@@ -799,11 +839,19 @@
 
                     if(data.path) {
                         data.paths = [];
-                        System.each(data.path.split(','),function () {
-                            if(!System.hasIgnored(this)){
-                                data.paths.push(this);
+                        if("null" == data.split){// 禁用多个多个路径
+                            if(!System.hasIgnored(data.path)){
+                                data.paths.push(data.path);
                             }
-                        });
+
+                        }else {
+                            System.each(data.path.split(data.split),function () {
+                                if(!System.hasIgnored(this)){
+                                    data.paths.push(this);
+                                }
+                            });
+
+                        }
                         if('css' === data.type){
                             data.suffix  = data.suffix 	|| '.css';
                             data.rel     = data.rel 	|| 'stylesheet';
@@ -960,6 +1008,7 @@
             }
             s = this.define2(this.define(s));
             s = this.empty(s);
+            s = this.print(s);
             s = this.import(s);
             s = this.exec_script(s);
             

@@ -3,7 +3,7 @@
 	version ：v2.1.7
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2022-9-7
+	修改日期 ：2024-12-18
 
 
 # 产品介绍：
@@ -1303,12 +1303,14 @@
     导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早。
     <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [attr="{}"] />
     导入css 添加属性 type="css" 即可，
-    <#import type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
-    多个文件时,path里用','分割,首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
+    <#import split="," type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
+    多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
          解决方式：要用write="true" 这个属性,默认是fase。
          
+  #### print：#print# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #end#
+    预处理,用document.write()方式打印，当预处理指令import满足不了需求时，可以用此指令
   #### layout：<#layout title="title" name="layoutName" path="layoutPath" data="{}" />
     方便在view里切换layout模版,设置title,可向layout模版里传递数据
   #### extends ：<#extends title="title" name="layoutName" path="layoutPath" data="{}" />

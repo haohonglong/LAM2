@@ -154,13 +154,13 @@
 
 			if($dom) {
 				var once = eval($dom.attr('once'));
-				if(System.isBoolean(once) && false === once || 0 === once) {
+				if(false === once || 0 === once) {
 					this.once = false;	
 				}
 			}
 
 			if(D) {
-				if(System.isBoolean(D.once) && false === D.once || 0 === D.once) {
+				if(false === D.once || 0 === D.once) {
 					this.once = false;
 				}
 			}
