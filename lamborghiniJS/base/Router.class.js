@@ -130,7 +130,7 @@
     /**
 	 * 产品介绍：生成一个普通html，用于生产静态页便于输出
      * 创建日期：2023-1-2
-     * 修改日期：2024-3-9
+     * 修改日期：2025-3-2 防止System.beforeBuildExcluded数组不存在
      * 名称：generator
      * @param view
      * @param excludedFiles {Array}
@@ -139,12 +139,19 @@
     function generator(view, excludedFiles) {
         var jses = [],css = [],head = [], LAM_INIT =  [];
 
-        System.each(System.autoLoadFiles, function () {
-            if(System.beforeBuildExcluded.in_array(this.name)) {// 排除不需要加载的js
-                excludedFiles.push(this.path);
-            }
-        });
+        if(!System.isset(System.beforeBuildExcluded)){
+            return null;
+        }
 
+        if(!System.arr_isEmpty(System.beforeBuildExcluded)){
+            System.each(System.autoLoadFiles, function () {
+                if(System.beforeBuildExcluded.in_array(this.name)) {// 排除不需要加载的js
+                    excludedFiles.push(this.path);
+                }
+            });
+
+        }
+        
         System.each(System.files, function (i) {
             if(System.isJsFile(this)) { // 只加载不被排除的js路径
                 if(!excludedFiles.in_array(this)) {
@@ -156,7 +163,7 @@
                     jses.push(System.Html.scriptFile(this));
                 }
                 
-			}else {
+            }else {
                 if(System.isCssFile(this)) css.push(System.Html.linkFile(this));
             }
             
@@ -170,7 +177,7 @@
             LAM_INIT.push(System.Html.scriptFile(System.SYSTEMJS));
             LAM_INIT.push(System.Html.script('LAM.init();'));
         }
-
+        
         if(System.isFunction(System.head_fn)) {
             head = System.head_fn(System);
         }
@@ -226,8 +233,11 @@
                 view = System.tempInstance.getBlock(System.tempInstance.content);
 
                 //生产静态页便于输出
-                var buildHtml = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build
-                System.export("this.buildHtml", buildHtml);
+                var buildHtml = null;
+                if(System.GENERATOR){
+                    buildHtml = generator(view, [System.CONTROLLERS + controllerPath]); // this is  a content of html that was parsed and want to build
+                    System.export("this.buildHtml", buildHtml);
+                }
                 
                 if (System.isFunction(System.main)) {
                     view = System.main(view, buildHtml, controller, action, id);
