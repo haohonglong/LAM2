@@ -804,7 +804,7 @@
          * 修改日期：2024-12-18
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
-         * 说明：多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
+         * 说明：多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),suffix为"null"时，就忽略检查后缀名。首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
          * 注意：
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
@@ -833,7 +833,7 @@
                     data.root    = data.root ? data.root : false;
                     data.type    = data.type 	|| 'js';
                     data.write   = System.eval(data.write) || false;
-                    data.befor   = System.eval(data.befor) || false;
+                    data.before   = System.eval(data.before) || System.eval(data.befor) || false;
                     data.attr    = System.eval(data.attr)  || null;
                     loader = null;
 
@@ -870,7 +870,7 @@
                                 });
                                 data_css.css = arr;
                             }
-                            if(data.befor){
+                            if(data.before){
                                 System.Loader.load(data_css).print();
                             }else{
                                 loader = System.Loader.load(data_css);

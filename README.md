@@ -3,7 +3,7 @@
 	version ：v2.1.7
 	author  ：lhh
 	创建日期 ：2017-8-27
-	修改日期 ：2024-12-18
+	修改日期 ：2025-3-9
 
 
 # 产品介绍：
@@ -256,6 +256,8 @@
 		2.如果1 不能执行，就用xhr方式加载 .js ，这种方式可以在.js文件里直接加载其它.js文件
 		3.如果不支持xhr方式，就调用 load() 方法
 			1.下面这种不仅适合脚本文件和样式文件的引入还适合less文件的引入。load方法是加载指定的文件到加载器中，load方法可以链式调用多个不同类型文件，当调用到print方法的时候才会一次性从加载器里输出到页面中
+
+		tips: suffix为字符串"null"时，就忽略检查后缀名。
 ```javascript
 
 			LAM.run(function(){
@@ -1304,7 +1306,9 @@
     <#import path="" root="" [write="true|false" [befor="true|false"]] [suffix=".js"] [attr="{}"] />
     导入css 添加属性 type="css" 即可，
     <#import split="," type="css" path="" root="" [befor="true|false"] [suffix=".css"] [rel="stylesheet"] [attr="{}"] />
-    多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
+    多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符',')。
+	suffix为"null"时，就忽略检查后缀名。
+	首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
     befor="true" 使位置在head标签里，默认false 是替换占位符的位置
     注意：如果是跨服务器xhr加载js报错异常:Uncaught TypeError: xxx is not a constructor 。
          解决方式：要用write="true" 这个属性,默认是fase。

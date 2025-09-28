@@ -84,7 +84,7 @@
          * 功能：检查加载的文件路径是否已经包含后缀名,如果没有就添加返回，有就返回原路径
          * 创建日期：2016-11-3
          * 修改日期：2024-12-18
-         * 说明：suffix == null 时，就忽略检查后缀名
+         * 说明：suffix === "null" 时，就忽略检查后缀名
          *
          * @param {String}str    文件路径
          * @param {String}suffix 对应文件的后缀名
@@ -136,7 +136,7 @@
          * @param(Array)D.css		  	     NO NULL:css文件集合
          * @param(String|Boolean)D.baseUrl		  	    NULL:文件路径
          * @param(String)D.suffix		  	    NULL:文件后缀名
-         * 注意：
+         * 注意：suffix为字符串"null"时，就忽略检查后缀名。
          rules:[
          {
             tag: 'css',
