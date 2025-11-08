@@ -234,7 +234,7 @@
 		'error_callback':function (XMLHttpRequest, textStatus, errorThrown) {
             switch(XMLHttpRequest.status) {
 				case 404:
-					throw new Error("the file '"+this.file+"' was not found");
+					throw new Error("the file '"+this.file+"' no found");
 	                break;
 	            default:
 

@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2022-11-13
+ * 修改日期:2025-11-2
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -68,7 +68,7 @@
 			this.compiler = compiler || Compiler.getInstance();
 			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
 			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
-			this.print_reg      = new RegExp('^#print# (([\\s\\S])*?) #end#$','gm');
+			this.print_reg      = new RegExp('^#print#\\s*\\n?(([\\s\\S]*?))\\s*#end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('^<#import (([\\s\\S])*?) />$','gm');
 			this.layout_reg    = new RegExp('^<#(layout|extends) (([\\s\\S])*?) />$','gm');
@@ -765,12 +765,16 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2024-12-19
-         * 修改日期：2024-12-19
+         * 修改日期：2025-11-2
          * 名称：print
          * 功能：预处理,打印任意字符串
          * 说明：用document.write()方式打印，当预处理指令import满足不了需求时，可以用此指令
          * 注意：指令必须单独占一行，头尾都不能有空格或任何别的字符，此指令只是个备用方案，优先用import
          * usage：#print# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #end#
+         * 或者:  #print# 
+         *          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+         *          <meta name="theme-color" content="#ffffff"> 
+         *        #end#
          * @param S
          * @returns {String}
          */
@@ -780,8 +784,10 @@
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
-                    tag = arr_inc[1];
-                    System.print(tag);
+                    tag = arr_inc[1].trim();
+                    if(tag){
+                        System.print(tag);
+                    }
                     S = S.replace(arr_inc[0],'');
                     reg_inc.lastIndex = 0;
 				}catch (e){

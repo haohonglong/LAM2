@@ -28,12 +28,13 @@
 	 * @author: lhh
 	 * 产品介绍：
 	 * 创建日期：2014.6.4
-	 * 修改日期：2019.9.13
-	 * 名称： Canvas
-	 * 功能：
-	 * 说明：
+	 * 修改日期：2025.11.2
+	 * 名称： Shape
+	 * 功能：基本图形绘制类
+	 * 说明：扩展Canvas类，提供各种基本图形的绘制功能
 	 * 注意：
 	 * @param 	(DocumentElement)theCanvas             NO NULL : canvas dom节点
+	 * @param 	(Object)init             			   	  NULL : 初始化参数
 	 * @return (void)
 	 * Example：
 
@@ -46,6 +47,7 @@
 		},
 		'_className':'Shape',
 		'__constructor':function(){},
+
 		/**
 		 *
 		 * @author: lhh
@@ -120,8 +122,6 @@
 			var n 	= D.n;
 			var width 	= D.width;
 
-
-
 			var i,ang;
 			ang = Math.PI*2/n;  //旋转的角度
 
@@ -139,7 +139,6 @@
 				D.callback(this);
 			}
 			this.restore();//返回原始状态
-
 
 			return this;
 		},
@@ -187,13 +186,14 @@
 			return this;
 
 		},
+
 		/**
 		 *
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2017-9-5
 		 * 修改日期：2017-9-5
-		 * 名称： rect
+		 * 名称： roundRect
 		 * 功能：创建圆角矩形
 		 * 说明：
 		 * 注意：
@@ -285,11 +285,10 @@
 
 			this.beginPath().ctx.arc(x,y,r,sAngle,eAngle,D.counterclockwise);
 
-
-
 			return this;
 
 		},
+
 		/**
 		 * @author: lhh
 		 * 产品介绍：
@@ -367,7 +366,6 @@
 			};
 			D = System.isPlainObject(D) ? System.merge({},[D,defaults]) : defaults;
 
-
 			var x = D.position.x;
 			var y = D.position.y;
 			var r = D.r;
@@ -388,14 +386,296 @@
 
 		},
 
+		// ========== 新增方法开始 ==========
 
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： ellipse
+		 * 功能：绘制椭圆
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)x         NO NULL : 椭圆中心x坐标
+		 * @param 	(Number)y         NO NULL : 椭圆中心y坐标
+		 * @param 	(Number)radiusX   NO NULL : 椭圆x轴半径
+		 * @param 	(Number)radiusY   NO NULL : 椭圆y轴半径
+		 * @param 	(Number)rotation  NO NULL : 椭圆旋转角度（弧度）
+		 * @param 	(Number)startAngle NO NULL : 起始角度
+		 * @param 	(Number)endAngle  NO NULL : 结束角度
+		 * @param 	(Boolean)anticlockwise NULL : 是否逆时针
+		 * @param 	(String)fillStyle    NULL : 填充颜色
+		 * @param 	(String)strokeStyle  NULL : 描边颜色
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'ellipse': function(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise, fillStyle, strokeStyle) {
+			this.beginPath();
+			this.ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise);
+			
+			if (fillStyle) {
+				this.fillStyle(fillStyle).fill();
+			}
+			if (strokeStyle) {
+				this.strokeStyle(strokeStyle).stroke();
+			}
+			return this;
+		},
+
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： arrow
+		 * 功能：绘制箭头
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)fromX     NO NULL : 起始点x坐标
+		 * @param 	(Number)fromY     NO NULL : 起始点y坐标
+		 * @param 	(Number)toX       NO NULL : 结束点x坐标
+		 * @param 	(Number)toY       NO NULL : 结束点y坐标
+		 * @param 	(Number)headLen   NO NULL : 箭头长度
+		 * @param 	(Number)angle     NO NULL : 箭头角度
+		 * @param 	(String)color     NO NULL : 箭头颜色
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'arrow': function(fromX, fromY, toX, toY, headLen, angle, color) {
+			var dx = toX - fromX;
+			var dy = toY - fromY;
+			var length = Math.sqrt(dx * dx + dy * dy);
+			var unitDx = dx / length;
+			var unitDy = dy / length;
+			
+			// 计算箭头两个点的位置
+			var arrowX1 = toX - headLen * Math.cos(angle) * unitDx + headLen * Math.sin(angle) * unitDy;
+			var arrowY1 = toY - headLen * Math.cos(angle) * unitDy - headLen * Math.sin(angle) * unitDx;
+			var arrowX2 = toX - headLen * Math.cos(angle) * unitDx - headLen * Math.sin(angle) * unitDy;
+			var arrowY2 = toY - headLen * Math.cos(angle) * unitDy + headLen * Math.sin(angle) * unitDx;
+			
+			this.strokeStyle(color)
+				.lineWidth(2)
+				.beginPath()
+				.moveTo(fromX, fromY)
+				.lineTo(toX, toY)
+				.moveTo(toX, toY)
+				.lineTo(arrowX1, arrowY1)
+				.moveTo(toX, toY)
+				.lineTo(arrowX2, arrowY2)
+				.stroke();
+			
+			return this;
+		},
+
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： heart
+		 * 功能：绘制心形
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)x         NO NULL : 心形中心x坐标
+		 * @param 	(Number)y         NO NULL : 心形中心y坐标
+		 * @param 	(Number)size      NO NULL : 心形大小
+		 * @param 	(String)fillStyle    NULL : 填充颜色
+		 * @param 	(String)strokeStyle  NULL : 描边颜色
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'heart': function(x, y, size, fillStyle, strokeStyle) {
+			this.beginPath();
+			for (var i = 0; i < Math.PI * 2; i += 0.01) {
+				var px = x + size * 16 * Math.pow(Math.sin(i), 3);
+				var py = y - size * (13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i));
+				if (i === 0) {
+					this.moveTo(px, py);
+				} else {
+					this.lineTo(px, py);
+				}
+			}
+			this.closePath();
+			
+			if (fillStyle) {
+				this.fillStyle(fillStyle).fill();
+			}
+			if (strokeStyle) {
+				this.strokeStyle(strokeStyle).stroke();
+			}
+			return this;
+		},
+
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： grid
+		 * 功能：绘制网格
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)spacing   NO NULL : 网格间距
+		 * @param 	(String)color     NO NULL : 网格颜色
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'grid': function(spacing, color) {
+			var width = this.getWidth();
+			var height = this.getHeight();
+			
+			this.strokeStyle(color || '#e0e0e0')
+				.lineWidth(0.5);
+			
+			// 绘制垂直线
+			for (var x = 0; x <= width; x += spacing) {
+				this.beginPath()
+					.moveTo(x, 0)
+					.lineTo(x, height)
+					.stroke();
+			}
+			
+			// 绘制水平线
+			for (var y = 0; y <= height; y += spacing) {
+				this.beginPath()
+					.moveTo(0, y)
+					.lineTo(width, y)
+					.stroke();
+			}
+			
+			return this;
+		},
+
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： coordinateSystem
+		 * 功能：绘制坐标系
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)originX   NO NULL : 原点x坐标
+		 * @param 	(Number)originY   NO NULL : 原点y坐标
+		 * @param 	(Number)scale     NO NULL : 缩放比例
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'coordinateSystem': function(originX, originY, scale) {
+			var width = this.getWidth();
+			var height = this.getHeight();
+			
+			// 绘制坐标轴
+			this.strokeStyle('#333')
+				.lineWidth(2)
+				.beginPath()
+				.moveTo(0, originY)
+				.lineTo(width, originY)
+				.moveTo(originX, 0)
+				.lineTo(originX, height)
+				.stroke();
+			
+			// 绘制刻度
+			this.strokeStyle('#666')
+				.lineWidth(1)
+				.font('12px Arial')
+				.fillStyle('#333');
+			
+			// x轴刻度
+			for (var x = originX + scale; x < width; x += scale) {
+				this.beginPath()
+					.moveTo(x, originY - 5)
+					.lineTo(x, originY + 5)
+					.stroke()
+					.fillText(((x - originX) / scale).toString(), x - 5, originY + 20);
+			}
+			for (var x = originX - scale; x > 0; x -= scale) {
+				this.beginPath()
+					.moveTo(x, originY - 5)
+					.lineTo(x, originY + 5)
+					.stroke()
+					.fillText(((x - originX) / scale).toString(), x - 5, originY + 20);
+			}
+			
+			// y轴刻度
+			for (var y = originY + scale; y < height; y += scale) {
+				this.beginPath()
+					.moveTo(originX - 5, y)
+					.lineTo(originX + 5, y)
+					.stroke()
+					.fillText(((originY - y) / scale).toString(), originX + 10, y + 5);
+			}
+			for (var y = originY - scale; y > 0; y -= scale) {
+				this.beginPath()
+					.moveTo(originX - 5, y)
+					.lineTo(originX + 5, y)
+					.stroke()
+					.fillText(((originY - y) / scale).toString(), originX + 10, y + 5);
+			}
+			
+			return this;
+		},
+
+		/**
+		 *
+		 * @author: lhh
+		 * 产品介绍：
+		 * 创建日期：2025.11.2
+		 * 修改日期：2025.11.2
+		 * 名称： dashedLine
+		 * 功能：绘制虚线
+		 * 说明：
+		 * 注意：
+		 * @param 	(Number)fromX     NO NULL : 起始点x坐标
+		 * @param 	(Number)fromY     NO NULL : 起始点y坐标
+		 * @param 	(Number)toX       NO NULL : 结束点x坐标
+		 * @param 	(Number)toY       NO NULL : 结束点y坐标
+		 * @param 	(Array)pattern    NO NULL : 虚线模式
+		 * @param 	(String)color     NO NULL : 虚线颜色
+		 * @returns {Shape}
+		 * Example：
+
+		 */
+		'dashedLine': function(fromX, fromY, toX, toY, pattern, color) {
+			this.strokeStyle(color)
+				.lineWidth(1);
+			
+			// 设置虚线模式
+			if (this.ctx.setLineDash) {
+				this.ctx.setLineDash(pattern || [5, 5]);
+			}
+			
+			this.beginPath()
+				.moveTo(fromX, fromY)
+				.lineTo(toX, toY)
+				.stroke();
+			
+			// 恢复实线
+			if (this.ctx.setLineDash) {
+				this.ctx.setLineDash([]);
+			}
+			
+			return this;
+		},
 
 		/**
 		 *
 		 * @author lhh
 		 * 产品介绍：析构方法
 		 * 创建日期：2015-4-2
-		 * 修改日期：2015-4-2
+		 * 修改日期：2025.11.2
 		 * 名称：destructor
 		 * 功能：在注销Shape对象时调用此方法
 		 * 说明：
@@ -403,10 +683,10 @@
 		 * @return  ()						:
 		 * Example：
 		 */
-		'destructor':function(){}
+		'destructor':function(){
+			this.base();
+		}
 	});
 
 	return Shape;
 });
-
-

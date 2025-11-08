@@ -103,7 +103,7 @@
 	 *  创建日期：2018-9-12
 	 *  修改日期：2019-3-5
 	 *  名称：View.ERROR_404
-	 *  功能：when the page was not found then display the 404 page
+	 *  功能：when the page no found then display the 404 page
 	 *  说明：
 	 *  注意：
 	 *  @param (Number)code	       NO NULL    code of error

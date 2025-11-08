@@ -248,13 +248,13 @@
                 }
             }else{
                 var error = new System.Error(null,
-                     "the action's name '"+action+"' was not found", 
+                     "the action's name '"+action+"' no found", 
                      FILEPATH, 194);
     			throw new Error(error.getMessage());
     		}
     	} else {
             var error = new System.Error(null,
-                     "the controller's name '"+ControllerName+"' was not found", 
+                     "the controller's name '"+ControllerName+"' no found", 
                      FILEPATH, 203);
             throw new Error(error.getMessage());
         }
