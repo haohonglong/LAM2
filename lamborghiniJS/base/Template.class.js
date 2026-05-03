@@ -2,17 +2,19 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2025-11-2
+ * 修改日期:2026-4-25
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
+ *  1.define_reg 正则由 ([\\S]+) 改为 ([^"]*)，支持 #define 指令的 value 中包含空格
+ *  2.新增 parseAttrs() 函数，用正则匹配 key="value" 对替代 split('" ')+split('="') 的属性解析方式，
+ *    解决属性值中包含空格导致解析截断的问题；同时统一了 layout、setBlock、getBlock、import、include 五处的属性解析逻辑
  *
  * note :
  *
  *
- *
  */
-(function(global,factory){
+ (function(global,factory){
 	'use strict';
 
     global = typeof globalThis !== 'undefined' ? globalThis : global || self;
@@ -51,6 +53,18 @@
         System.View.ERROR_404(404, message);
     }
 
+    function parseAttrs(str) {
+        var data = {};
+        var reg = /(\w[\w-]*)="([^"]*)"/g;
+        var match;
+        while ((match = reg.exec(str)) !== null) {
+            var k = System.camelCase(match[1].trim());
+            var v = match[2];
+            data[k] = v;
+        }
+        return data;
+    }
+
 
 	var __this__=null;
 	var guid=0;
@@ -66,8 +80,8 @@
 			this.cache = cache || _cache;
 			_cache = this.cache;
 			this.compiler = compiler || Compiler.getInstance();
-			this.define_reg    = new RegExp('^<#define ([\\S]+)="([\\S]+)" />$','gm');
-			this.define2_reg   = new RegExp('^#define# (([\\s\\S])*?) (([\\s\\S])*?) #end#$','gm');
+			this.define_reg    = new RegExp('^<#define ([\\S]+)="((?:[^"\\\\]|\\\\.)*)" />$','gm');
+			this.define2_reg   = new RegExp('^#define# (\\S+) (([\\s\\S])*?) #end#$','gm');
 			this.print_reg      = new RegExp('^#print#\\s*\\n?(([\\s\\S]*?))\\s*#end#$','gm');
 			this.include_reg   = new RegExp('<#include (([\\s\\S])*?) />','gm');
 			this.import_reg    = new RegExp('^<#import (([\\s\\S])*?) />$','gm');
@@ -92,11 +106,11 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-03-10
-		 * 修改日期：2022-10-11
+		 * 修改日期：2026-4-25
 		 * 名称：render
 		 * 功能：
 		 * 说明：
-		 * 注意：
+		 * 注意：define_reg 正则由 ([\S]+) 改为 ([^"]*)，支持 #define 指令的 value 中包含空格
 		 * @param {String}path 			NO NULL	:指定渲染视图页面路径
 		 * @param {Object}D	    		NO NULL	:渲染到模版中的数据
 		 * @param {Function}callBack 	   NULL :参数：(解析后模板字符串)
@@ -326,11 +340,11 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2019-3-11
-         * 修改日期：2022-6-22
+         * 修改日期：2026-4-25
 		 * 名称：layout
 		 * 功能：可方便在视图页面里指定layout模版,设置title,可向layout模版里传递数据
 		 * 说明：
-		 * 注意：
+		 * 注意：属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格
 		 * @param S
 		 * @returns {String}
 		 */
@@ -340,30 +354,19 @@
 			var arr_inc = [];
 			if((arr_inc = reg.exec(S)) && System.isArray(arr_inc)){
 				try{
-                    var data ={},arr = arr_inc[2].split('" ');
-                    arr.each(function(){
-                        var arr = this.split('="');
-                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                        k = System.camelCase(arr[0].trim());
-                        v = arr[1];
-                        switch(k){
-                            case 'data':
-                                try{
-                                    if(!System.empty(v)){
-                                        v = System.eval(v);
-                                    }
-                                }catch (e){
-                                    var error = new Error(e,
-                                         "解析变量" + v + "发生错误 " + arr_inc[0], 
-                                         FILEPATH, 335);
-                                    setErrorMessage(error.getMessage());
-                                }
-
+                    var data = parseAttrs(arr_inc[2]);
+                    if(data.data){
+                        try{
+                            if(!System.empty(data.data)){
+                                data.data = System.eval(data.data);
+                            }
+                        }catch (e){
+                            var error = new Error(e,
+                                 "解析变量" + data.data + "发生错误 " + arr_inc[0], 
+                                 FILEPATH, 335);
+                            setErrorMessage(error.getMessage());
                         }
-                        data[k] =  v;
-
-                    });
+                    }
                     S = S.replace(arr_inc[0],function () {
                         return '';
                     });
@@ -401,6 +404,7 @@
             	try{
                     k = arr_inc[1].replace(/(^")|("$)/g,'').trim();
                     v = arr_inc[2].replace(/(^")|("$)/g,'').trim();
+                    v = v.replace(/\\"/g, '"');
                     //找到模版分隔符才会去解析
                     if(v.indexOf(delimiters[0]) > -1) v = this.findTpl(v);
                     
@@ -530,13 +534,14 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-1-29
-         * 修改日期：2022-8-28
+         * 修改日期：2026-4-25
          * 名称：setBlock
          * 功能：预处理block指令灵感来源yii2 的 beginBlock。由一个唯一标识符定义block，可以重复调用（在block定义中调用<#=block id="xxx" />）,
          * 说明：override="true:true" 这个可选属性代表blockid 发生冲突时，可以覆盖之前的block里存储的数据和内容,第一个ture 代表覆盖内容，第二个true代表覆盖数据，它们默认都是false(两者覆盖操作都不执行)。
          *      final="true" 使上面的override属性覆盖功能失效，默认false 允许覆盖
 		 *      data="{}" 可以设置默认数据,func="function(index,id,reg){}" 可以执行一个行为,this代表Template对象
          * 注意：标签名大小写！！！
+         *        属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格
          * usage：<#Block:begin id="xxx" [final="false"] [override="true:true"] [data="{}"] [func="function(){}"]> ... <#Block:end>
          * @param S
          * @returns {String}
@@ -549,16 +554,7 @@
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	try{
                     content = "";
-                    data = System.createDict();
-                    var arr = arr_inc[2].split('" ');
-                    arr.each(function(){
-                        var arr = this.split('="');
-                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                        k = System.camelCase(arr[0].trim());
-                        v = arr[1];
-                        data[k] =  v;
-                    });
+                    data = parseAttrs(arr_inc[2]);
                     data.data    = System.eval(data.data) || null;
                     data.func    = System.eval(data.func) || null;
                     data.final    = System.eval(data.final) || false;
@@ -620,7 +616,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-5-27
-         * 修改日期：2022-6-22
+         * 修改日期：2026-4-25
          * 名称：exec_script
          * 功能：在预处理指令加载时执行javascript代码
          * 说明：例如：block 中是调用不到当前页面的script标签中的脚本，因为预处理执行时间比script标签中的脚本早，解决方法有两种：
@@ -632,6 +628,7 @@
 		 * 如：<!--Del:begin--><script type="text/javascript"><!--Del:end-->
 		 *     <!--Del:begin--></script><!--Del:end-->
          * 注意：标签名大小写！！！
+         *        属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格
          * usage：<!--Script:begin--> ... <!--Script:end-->
          * @param S
          * @returns {String}	empty of string
@@ -659,11 +656,11 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2020-2-5
-         * 修改日期：2022-8-26
+         * 修改日期：2026-4-25
          * 名称：getBlock
          * 功能：预处理-根据id标识符获取之前定义的block，可以由data属性分配数据
-         * 说明：
-         * 注意：
+		 * 说明：
+		 * 注意：属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格
          * usage：<#=block id="xx" [data="{}"] [func="function(){}"] />
          * @param S
          * @returns {String}
@@ -676,15 +673,7 @@
             while ((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)) {
             	try{
                     content = "";
-                    var data =System.createDict(),arr = arr_inc[1].split('" ');
-                    arr.each(function(){
-                        var arr = this.split('="');
-                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                        k = System.camelCase(arr[0].trim());
-                        v = arr[1];
-                        data[k] =  v;
-                    });
+                    var data = parseAttrs(arr_inc[1]);
                     id   = data.id;
                     type = data.type || null;
                     data.data = System.eval(data.data) || null;
@@ -730,11 +719,13 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-25
-         * 修改日期：2022-6-22
+         * 修改日期：2026-4-25
          * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
          * 注意：指令必须单独占一行，头尾都不能有空格或任何别的字符
+         *       key 正则由 (([\s\S])*?) 改为 (\S+)，更精准匹配变量名，避免空格导致 key 截断；
+         *       value 捕获组由 arr_inc[3] 改为 arr_inc[2]，value 中可包含空格
          * usage：#define# __DATA__  <#include repeat="0" tp-data="{}"   file="__CUR__/papertext.json" /> #end#
          * @param S
          * @returns {String}
@@ -746,7 +737,8 @@
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
                     k = arr_inc[1];
-                    v = arr_inc[3];
+                    v = arr_inc[2];
+                    v = v.replace(/\\"/g, '"');
                     v = this.include(v);
                     S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
                     reg_inc.lastIndex = 0;
@@ -807,11 +799,11 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-7
-         * 修改日期：2024-12-18
+         * 修改日期：2026-4-25
          * 名称：import
          * 功能：预处理 导入.js,在模版被解析的时候被加载,这比模版里System.import()方法加载的早
          * 说明：多个文件时,path里用','分割(可用split属性定义别的,null 代表忽略路径分隔符','),suffix为"null"时，就忽略检查后缀名。首字母是'!'此时这个文件就会被忽略加载,type="css" 导入css文件,默认是js可以忽略这个属性,attr属性可以加自定义属性
-         * 注意：
+		 * 注意：属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格
          * @example
          * 			<#define __PATH__="{{LAM.classPath}}" />
          * 			<#import split="," path="/PopupLayer.class.js" root="__PATH__" />
@@ -825,15 +817,7 @@
             var loader = null;
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
-                    var data ={},arr = arr_inc[1].split('" ');
-                    arr.each(function(){
-                        var arr = this.split('="');
-                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                        k = System.camelCase(arr[0].trim());
-                        v = arr[1];
-                        data[k] =  v;
-                    });
+                    var data = parseAttrs(arr_inc[1]);
                     data.split   = data.split 	|| ',';
                     data.path    = data.path 	|| null;
                     data.root    = data.root ? data.root : false;
@@ -930,11 +914,12 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2018-11-27
-         * 修改日期：2022-11-7
+         * 修改日期：2026-4-25
          * 名称：include
          * 功能：预处理 递归查找include外面指定的文件
-         * 说明：
-         * 注意：
+		 * 说明：
+		 * 注意：属性解析由 split('" ')+split('="') 改为 parseAttrs()，支持属性值中包含空格；
+		 *       switch 改为 evalKeys 数组循环，统一需要 System.eval() 的属性名
          * @param S
          * @returns {String}
          */
@@ -944,32 +929,13 @@
             var arr_inc = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
-                    var data ={},arr = arr_inc[1].split('" ');
-                    arr.each(function(){
-                        var arr = this.split('="');
-                        arr[0] = arr[0].replace(/(^")|("$)/g,'');
-                        arr[1] = arr[1].replace(/(^")|("$)/g,'');
-                        k = System.camelCase(arr[0].trim());
-                        v = arr[1];
-                        switch(k){
-                            case 'capture':
-                            case 'preform':
-                            case 'beforeSend':
-                            case 'success':
-                            case 'done':
-                            case 'func':
-                            case 'data':
-                            case 'tpData':
-                            case 'delimiters':
-                            case 'repeat':
-                            case 'once':
-                            case 'error':
-                                if(!System.empty(v)){
-                                    v = System.eval(v);
-                                }
-
+                    var data = parseAttrs(arr_inc[1]);
+                    var evalKeys = ['capture','preform','beforeSend','success','done','func','data','tpData','delimiters','repeat','once','error'];
+                    System.each(evalKeys, function(){
+                        var key = this;
+                        if(data[key] !== undefined && !System.empty(data[key])){
+                            try{ data[key] = System.eval(data[key]); }catch(e){}
                         }
-                        data[k] =  v;
                     });
 
                     System.getFile(data.file,function(content){
@@ -998,7 +964,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-8-25
-         * 修改日期：2022-7-16
+         * 修改日期：2026-4-25
          * 名称：beforParse
          * 功能：
          * 说明：

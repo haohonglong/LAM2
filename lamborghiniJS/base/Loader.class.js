@@ -3,7 +3,7 @@
  * @author: lhh
  * 产品介绍： 文件加载器
  * 创建日期：2014-9-9
- * 修改日期：2022-10-4
+ * 修改日期：2025-4-25
  * 名称：Loader
  * 功能：导入js;css;less 文件
  * 说明 :
@@ -13,7 +13,7 @@
  *
  */
 
-(function(global,factory){
+ (function(global,factory){
     'use strict';
 
     global = typeof globalThis !== 'undefined' ? globalThis : global || self;
@@ -43,7 +43,6 @@
     System.is(System,'Html','Loader',System.classPath+'/base');
     var Html = System.require("lam.base.Html");
     var html,head,body,meta,script,link;
-    var create;
     var sAttribute   = System.Config.render.default.script.Attribute;
     var cAttribute   = System.Config.render.default.css.Attribute;
 
@@ -64,12 +63,10 @@
         script  = H.script;
         link    = H.link;
     }
-    var __this__=null;
     var files = [];
     var Loader = Html.extend({
         constructor: function(Config){
             this.base();
-            __this__ = this;
             this.Config = Config || System.Config;
             this.D = null;
             this.js  =[];
@@ -91,24 +88,21 @@
          * @returns {*}
          */
         'suffix_checkor':function(str,suffix){
-            var self = this;
             if(suffix){
-                if("null" != suffix && -1 === str.indexOf(suffix)){
+                if("null" !== suffix && -1 === str.indexOf(suffix)){
                     return str+suffix;
-                }else{
-                    return str;
                 }
-
+                return str;
             }
             for(var i= 0,
-                    suffixs=self.Config.render.suffixs,
+                    suffixs=this.Config.render.suffixs,
                     len=suffixs.length;
                 i<len;i++){
                 if(str.indexOf(suffixs[i]) !== -1){
-                    return true;
+                    return str;
                 }
             }
-            return false;
+            return str;
         },
         /**
          *
@@ -153,7 +147,7 @@
          */
         'load':function(D){
             var self = this;
-            create = System.Config.render.create;
+            var create = System.Config.render.create;
             var suffix,rel,type,src="",href="",i= 0,node = null;
             var baseUrl=System.isset(D.baseUrl) ? D.baseUrl : System.ROOT;
             //link
@@ -206,7 +200,7 @@
                 System.each(D.css || D.link,function(){
                     var css=this;
                     if(System.isString(css)){
-                        css = __this__.suffix_checkor(css,suffix);
+                        css = self.suffix_checkor(css,suffix);
                         href = baseUrl ? baseUrl+css : css;
                         //是否已加载过了
                         if(System.fileExisted(href)){
@@ -216,7 +210,7 @@
                             self.load({'rules':[{tag: tagName,single:true,use: [href],attr:attr,after_fn:function(){this.style=true;}}]});
                         }
                     }else if(System.isPlainObject(css)){
-                        css.href = __this__.suffix_checkor(css.href,suffix);
+                        css.href = self.suffix_checkor(css.href,suffix);
                         css.rel  = css.rel  || rel;
                         css.type = css.type || type;
                         css.href = baseUrl ? baseUrl+css.href : css.href;
@@ -235,7 +229,7 @@
                 System.each(D.js || D.script,function(){
                     var js=this;
                     if(System.isString(js)){
-                        js = __this__.suffix_checkor(js,suffix);
+                        js = self.suffix_checkor(js,suffix);
                         src = baseUrl ? baseUrl+js : js;
                         //是否已加载过了
                         if(System.fileExisted(src)){
@@ -246,7 +240,7 @@
                             self.load({'rules':[{tag: tagName,use: [src],attr:attr,after_fn:function(){this.script=true;}}]});
                         }
                     }else if(System.isPlainObject(js)){
-                        js.src = __this__.suffix_checkor(js.src,suffix);
+                        js.src = self.suffix_checkor(js.src,suffix);
                         js.src = baseUrl ? baseUrl+js.src : js.src;
                         //是否已加载过了
                         if(System.fileExisted(js.src)){
@@ -283,7 +277,7 @@
          * @returns {Loader}
          */
         'loadScript':function(url, callback){
-            var self = this || System;
+            var self = (this instanceof Loader) ? this : System.Loader;
             var script = document.createElement("script") ;
             script.type = "text/javascript";
             if(System.fileExisted(url)){
@@ -335,11 +329,9 @@
          * Example：
          */
         'import':function(url,baseUrl,suffix,X){
-            var self = this || System;
+            var self = (this instanceof Loader) ? this : System.Loader;
             if(System.isString(url)){
-                var str = url;
-                url = [];
-                url.push(str);
+                url = [url];
             }
             if(!System.isArray(url) || System.arr_isEmpty(url)){return this;}
             suffix = suffix || '.js';
@@ -350,7 +342,7 @@
                 if(System.isset(importScripts) && System.isFunction(importScripts)){
                     url.each(function(){
                         var src=this;
-                        src = __this__.suffix_checkor(src,suffix);
+                        src = self.suffix_checkor(src,suffix);
                         src = baseUrl ? baseUrl+src : src;
                         if(!System.fileExisted(src)){
                             importScripts(src);
@@ -366,21 +358,21 @@
                     var arr=[];
                     System.each(url,function(){
                         var src=this;
-                        src = __this__.suffix_checkor(src,suffix);
+                        src = self.suffix_checkor(src,suffix);
                         src = baseUrl ? baseUrl+src : src;
                         arr.push(src);
                     });
                     xhr_params.dataType='script';
                     System.Html.getFiles(arr,null,System.merge(X && System.isPlainObject(X.params) ? X.params : {},[xhr_params]));
                 }else{
-                    __this__.load({
+                    self.load({
                         'baseUrl':baseUrl,
                         'js':url,
                         'suffix':suffix
                     });
                 }
             }
-            return __this__;
+            return self;
         },
         /**
          *
@@ -394,7 +386,7 @@
          * @returns {Loader}返回当前对象可以链式调用
          */
         'print':function(){
-            var self = this || System;
+            var self = (this instanceof Loader) ? this : System.Loader;
             if(files.length < 1){return this;}
             if(!self.Config.render.create){//document.write() 方式引入外部文件(.js|.css)
                 System.print(files.join(''));

@@ -9,9 +9,7 @@
 /**
  * @author：lhh
  * 创建日期:2015-3-20
- * 修改日期:2024-1-20
- * 		  :2022-10-23
- * 		  :2024-2-5
+ * 修改日期:2026-4-25
  * 名称：系统接口
  * 功能：服务于派生类
  * 标准 : 类及成员名称一旦定义不能轻易修改，如若修改就要升级版本！如若在遇到与第三方插件发生冲突要修改，请参考基类里的说明文档。
@@ -33,7 +31,7 @@
  *
  */
 
-(function (global, factory) {
+ (function (global, factory) {
 	'use strict';
 
 	global = typeof globalThis !== 'undefined' ? globalThis : global || self;
@@ -54,6 +52,9 @@
 	'use strict';
 
 	var _module = null;
+
+	// 哈希字符集常量，避免 hash() 方法每次调用重建
+	var HASH_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+{}<>?:|='.split('');
 
 	/**
 	 * @author: lhh
@@ -134,10 +135,7 @@
 	}
 
 	function is_instanceof_jQuery(obj) {
-		if (obj instanceof jQuery)
-			return true;
-		else
-			return false;
+		return (typeof jQuery !== 'undefined' && obj instanceof jQuery);
 	}
 
 
@@ -740,22 +738,50 @@
 		 * @author: lhh
 		 * 产品介绍：
 		 * 创建日期：2016-8-26
-		 * 修改日期：2016-8-26
+		 * 修改日期：2026-4-25
 		 * 名称：System.eval
 		 * 功能：对json 或 function 的字符串 进行eval 处理
-		 * 说明：
-		 * 注意：
+		 * 说明：按输入特征自动选择解析策略，不再依赖 try-catch 链猜测类型
+		 * 注意：eval 改为 new Function，作用域隔离且不会被 V8 优化器降级；
+		 *       策略1: {或[开头 → JSON.parse；
+		 *       策略2: function开头 → new Function 返回函数；
+		 *       策略3: true/false/数值字面量 → 直接转换；
+		 *       策略4: 变量名或表达式 → new Function 求值
 		 * @param   {String}expression 		NO NULL :表达式字符串
 		 * @return  {*}								:
 		 * Example：
 		 */
 		'eval': function (expression) {
+			if(!isString(expression)){return expression;}
+
+			var first = expression.charAt(0);
+
+			// 策略1: JSON对象/数组 → JSON.parse
+			if(first === '{' || first === '['){
+				try {
+					return JSON.parse(expression);
+				} catch (e) {
+					// 不是合法JSON，尝试作为表达式求值
+				}
+			}
+
+			// 策略2: 函数定义 → new Function 返回函数引用
+			if(expression.indexOf('function') === 0){
+				return (new Function('return (' + expression + ')'))();
+			}
+
+			// 策略3: 布尔/数值字面量 → 直接转换，避免不必要的 new Function
+			if(expression === 'true'){return true;}
+			if(expression === 'false'){return false;}
+			if(first !== '_' && first !== '' && isNumeric(expression)){
+				return Number(expression);
+			}
+
+			// 策略4: 变量名/点号路径/表达式 → new Function 求值
 			try {
-				// if(System.isJson(expression) && System.isJSON(JSON)){
-				return JSON.parse(expression);
-				// }
+				return (new Function('return (' + expression + ')'))();
 			} catch (e) {
-				return eval('(' + expression + ')');
+				return expression;
 			}
 
 
@@ -824,7 +850,6 @@
 		'length': function (D) {
 			if (!isObject(D) && !isArray(D) && !isString(D)) {
 				throw new Error('Warning: 参数必须是Object 或 Array 或 String');
-				return -1;
 			}
 
 			if (isObject(D)) {
@@ -1670,7 +1695,12 @@
 		'print': function () {
 			// var document=System.open();
 			var arr = System.printf.apply(Array, arguments);
-			document.write(arr.join(' '));
+			if (document.readyState === 'loading') {
+				document.write(arr.join(' '));
+			} else {
+				console.warn('System.print: document.write 在页面加载后调用会清空页面，已改为 console 输出');
+				console.log(arr.join(' '));
+			}
 			// System.close(document);
 		},
 		'Json': {
@@ -1718,14 +1748,11 @@
 			code = code || null;
 			hashLength = Number(hashLength);
 			if (!System.isset(hashLength) || !System.isNumeric(hashLength) || hashLength < 1) { hashLength = 32; }
-			var ar = [];
-			ar[0] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-			ar[1] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-			ar[2] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-			ar[3] = code && System.isString(code) && code.split('') || [];
-			ar[4] = "~!@#$%^&*()_+{}<>?:|=";
-			ar[5] = System.timestamp().toString();
-			ar = ar[0].merge(ar[1]).merge(ar[2]).merge(ar[3]).merge(ar[4].split('')).merge(ar[5].split(''));
+			var ar = HASH_CHARS.slice();
+			if (code && System.isString(code)) {
+				ar = ar.concat(code.split(''));
+			}
+			ar = ar.concat(System.timestamp().toString().split(''));
 			var arr = [];
 			var al = ar.length;
 			for (var i = 0; i < hashLength; i++) {
@@ -2367,8 +2394,8 @@
 		* @return  (Array)返回去重后的数组
 		* Example：
 		*/
-		.method('unique', function (arr) {
-			arr = this;
+		.method('unique', function () {
+			var arr = this;
 			var hash = [];
 			for (var i = 0; i < arr.length; i++) {
 				if (hash.indexOf(arr[i]) == -1) {

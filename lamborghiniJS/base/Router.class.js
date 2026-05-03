@@ -215,7 +215,16 @@
         var id = r[2];
         var view = null;
         System._content = null;
-        id = System.eval(id);
+        // 安全过滤：id 来自 URL 参数，禁止作为表达式求值，只做类型转换
+        if(id !== undefined && id !== null){
+            if(System.isNumeric(id)){
+                id = Number(id);
+            }
+        }
+        // 安全过滤：action 名只允许字母数字下划线，防止调用原型链方法
+        if(!/^[a-zA-Z_]\w*$/.test(r[1])){
+            throw new Error("Invalid action name: " + r[1]);
+        }
 
         
         var controller = System.require("web.controllerInstance");

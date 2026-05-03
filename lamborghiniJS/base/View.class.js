@@ -18,7 +18,6 @@
 	System.is(System,'Component','View',System.classPath+'/base');
 	var Component = System.require("lam.base.Component");
 
-	var __this__=null;
 	var View = Component.extend({
 		/**
 		 * @author lhh
@@ -28,7 +27,6 @@
 		 */
 		constructor: function (temp) {
 			this.base();
-			__this__ = this;
 			this.suffix = '.html';
 			this.viewpath = System.VIEWS;
 			this.ajaxConfig = null;
@@ -55,27 +53,23 @@
 		 * @returns {System.Template}
 		 */
 		'render':function (name, data, callback, ajaxConfig) {
-			this.viewName = name;
-			if('/' === this.viewName.trim().substring(0,1)){
-				this.viewName = this.viewName.trim().substring(1);
-			}
+			// 统一规范 viewName：去掉前导 /
+			var normalized = name.trim();
+			this.viewName = normalized.charAt(0) === '/' ? normalized.substring(1) : normalized;
 			data = data || System.createDict();
 			data.title = data.title || this.title;
 			if(!System.isFunction(callback)) {
 					ajaxConfig = callback;
 					callback = null;
 			}
-			data = data || {};
 			ajaxConfig = System.merge({},[ajaxConfig,{
-					file_404:System.ERROR_404,//the path of 404
+					file_404:System.ERROR_404,
 					beforeSend:function(a,b){
 							this.async=false;
 					}
 			}]);
-			if('/' !== name.trim().substring(0,1)){
-					name = '/'+name;
-			}
-			var path = this.viewpath+name+this.suffix;
+			// 拼接路径：确保以 / 开头
+			var path = this.viewpath + '/' + this.viewName + this.suffix;
 			return this.temp.render(path, data, callback, ajaxConfig);
 
 		},
@@ -114,8 +108,8 @@
 	 *  Example:
 	 */
     View.ERROR_404 = function (code,message, url, $dom) {
-    	var arg = arguments;
     	if(!System.isNumber(code)){
+				var arg = arguments;
 				code = 404;
 				message = arg[0];
 				url = arg[1];

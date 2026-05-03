@@ -81,14 +81,13 @@
 		}
 	}
 
-	var __this__=null;
 	var Html = Dom.extend({
         /**
          *
          * @author: lhh
          * 产品介绍：
          * 创建日期：2016-1-15
-         * 修改日期：2023-7-5
+         * 修改日期：2025-4-25
          * 名称： getFile
          * 功能：返回指定的文件
          * 说明：只有两个参数可选,第一个参数是jQuery 对象,第二个是json 对象
@@ -120,7 +119,6 @@
          */
 		constructor: function($dom,D) {
 			this.base();
-			__this__=this;
 			var _this = this;
 			this.symbol=[];
 			//如果第一个是对象且不是jQuery对象
@@ -139,9 +137,9 @@
 			this.delimiters  = $dom && $dom.attr('delimiters') 	&& $dom.attr('delimiters').split(',')	|| D&&D.delimiters  ||	System.Config.templat.delimiters;
 			this.tpData  	 = $dom && $dom.attr('tp-data') 	&& System.eval($dom.attr('tp-data'))	|| D&&D.tpData  	||	null;
 			this.data  		 = $dom && $dom.attr('data') 		&& System.eval($dom.attr('data'))		|| D&&D.data  	 	||	{};
-			this.jump  	     = $dom && $dom.attr('jump') 		&& eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
-			this.async 		 = $dom && $dom.attr('async') 		&& eval($dom.attr('async'))				|| D&&D.async 		||  false;
-			this.cache 		 = $dom && $dom.attr('cache') 		&& eval($dom.attr('cache')) 			|| D&&D.cache 		||	false;
+			this.jump  	     = $dom && $dom.attr('jump') 		&& System.eval($dom.attr('jump'))  			|| D&&D.jump        ||  null;
+			this.async 		 = $dom && $dom.attr('async') 		&& System.eval($dom.attr('async'))				|| D&&D.async 		||  false;
+			this.cache 		 = $dom && $dom.attr('cache') 		&& System.eval($dom.attr('cache')) 			|| D&&D.cache 		||	false;
 			this.beforeSend  = $dom && $dom.attr('beforeSend') 	&& System.eval($dom.attr('beforeSend'))	|| D&&D.beforeSend	||	0 ;
 			this.capture 	 = $dom && $dom.attr('capture') 	&& System.eval($dom.attr('capture'))    || D&&D.capture		||	0 ;
 			this.success 	 = $dom && $dom.attr('success') 	&& System.eval($dom.attr('success'))	|| D&&D.success	    ||	0 ;
@@ -153,9 +151,9 @@
 			this.file_404 = System.template(this.file_404);
 
 			if($dom) {
-				var once = eval($dom.attr('once'));
+				var once = System.eval($dom.attr('once'));
 				if(false === once || 0 === once) {
-					this.once = false;	
+					this.once = false;
 				}
 			}
 
@@ -235,7 +233,6 @@
             switch(XMLHttpRequest.status) {
 				case 404:
 					throw new Error("the file '"+this.file+"' no found");
-	                break;
 	            default:
 
 	        }
@@ -440,7 +437,7 @@
 	 */
 	Html.include=function($dom,D,
                           success){
-        success = D && D.callBack || 0;
+        success = (D && D.callBack) || success || 0;
 		//如果第一个是对象且不是jQuery对象
 		if ($dom && System.isObject($dom) && System.isPlainObject($dom) && !System.is_instanceof_jQuery($dom)) {
 			D = $dom;
@@ -458,7 +455,7 @@
                     success.call(dom,content);
                 };
             }
-            var jump = eval($(this).attr('jump'));
+            var jump = System.eval($(this).attr('jump'));
             var path = $(this).attr('location');
             if(jump && System.isset(path)){
                 location.href = path;
@@ -631,11 +628,11 @@
 	};
 
     Html.code_map={
-    	 '&' : '&#38'
-    	,'"' : '&#34'
-    	,"'" : '&#39'
-    	,'>' : '&#62'
-    	,'<' : '&#60'
+    	 '&' : '&#38;'
+    	,'"' : '&#34;'
+    	,"'" : '&#39;'
+    	,'>' : '&#62;'
+    	,'<' : '&#60;'
 	};
     /**
      * @author: lhh
