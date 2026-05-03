@@ -2,7 +2,7 @@
 /**
  * 创建人：lhh
  * 创建日期:2015-7-22
- * 修改日期:2026-4-25
+ * 修改日期:2026-5-03
  * 名称：模版类
  * 功能：用于对模版标签里内容操作，模版渲染
  * 说明 :
@@ -386,7 +386,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-3-13
-         * 修改日期：2022-6-22
+         * 修改日期：2026-5-03
          * 名称：define
          * 功能：预处理 在模版里定义常量
          * 说明：替换而且解析模版变量
@@ -408,7 +408,7 @@
                     //找到模版分隔符才会去解析
                     if(v.indexOf(delimiters[0]) > -1) v = this.findTpl(v);
                     
-                    S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
+                    S = S.replace(arr_inc[0],'').replace(new RegExp(k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),'g'),v);
                     reg_inc.lastIndex = 0;
 				}catch (e){
                     var error = new Error(e,
@@ -719,7 +719,7 @@
          * @author: lhh
          * 产品介绍：
          * 创建日期：2019-7-25
-         * 修改日期：2026-4-25
+         * 修改日期：2026-5-03
          * 名称：define2
          * 功能：预处理,可以包含include标签
          * 说明：只替换模版变量不解析
@@ -734,14 +734,14 @@
             var reg_inc = this.define2_reg;
             var k,v;
             var arr_inc = [];
+            var defines = [];
             while((arr_inc = reg_inc.exec(S)) && System.isArray(arr_inc)){
             	try{
                     k = arr_inc[1];
                     v = arr_inc[2];
                     v = v.replace(/\\"/g, '"');
                     v = this.include(v);
-                    S = S.replace(arr_inc[0],'').replace(new RegExp(k,'g'),v);
-                    reg_inc.lastIndex = 0;
+                    defines.push({k:k, v:v, raw:arr_inc[0]});
 				}catch (e){
                     var error = new Error(e,
                      "预处理指令 #define# ... #end# 错误: " + arr_inc[0],
@@ -750,6 +750,13 @@
                     setErrorMessage(error.getMessage());
                 }
 
+            }
+            // 先移除所有定义行，再替换变量名，避免定义行中的变量名被误替换
+            for(var i = 0; i < defines.length; i++){
+                S = S.replace(defines[i].raw, '');
+            }
+            for(var i = 0; i < defines.length; i++){
+                S = S.replace(new RegExp(defines[i].k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),'g'), defines[i].v);
             }
             return S;
         },
