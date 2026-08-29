@@ -22,7 +22,7 @@
   "homepage": "https://github.com/haohonglong/LAM2#readme",
   "devDependencies": {
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-js-minify": "0.0.3",
     "gulp-sourcemaps": "^2.6.4",
